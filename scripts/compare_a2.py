@@ -38,6 +38,21 @@ def load_rows(d):
     return rows
 
 
+def replication_verdict(rec, o1, i1):
+    """A3/A4 rule (docs/A3_A4_REPLICATION_PREREGISTRATION.md §4)."""
+    better = {"hr_abs_err_bpm": i1["hr_abs_err_bpm"] < o1["hr_abs_err_bpm"], "morph_corr": i1["morph_corr"] > o1["morph_corr"], "amp_ratio": abs(i1["amp_ratio"] - 1) < abs(o1["amp_ratio"] - 1), "cond_gain_bpm": i1["cond_gain_bpm"] > o1["cond_gain_bpm"]}
+    n_better = sum(better.values())
+    severe = any(np.isfinite(v) and v < -0.25 for v in rec.values())
+    collapse = i1["amp_ratio"] < 0.5 and i1["beats_ratio"] < 0.7
+    if n_better >= 3 and not severe:
+        v = "REPLICATED"
+    elif n_better <= 1 or collapse:
+        v = "NOT REPLICATED"
+    else:
+        v = "PARTIAL"
+    return v, better, severe, collapse
+
+
 def recovery(m, kind, o50, o1, i1):
     if kind == "higher":
         den = o50 - o1
@@ -57,7 +72,16 @@ def main():
     ap.add_argument("--imf", default="outputs/a2_imeanflow_s5_ppgdalia_8s_seed42")
     ap.add_argument("--a0", default="outputs/a0_penguin_otcfm_ppgdalia_8s_seed42", help="source of the deterministic example windows")
     ap.add_argument("--report", default="docs/A2_IMEANFLOW_REPORT.md")
+    ap.add_argument("--manifest", default="data/manifests/split_p0_holdout_seed42.json")
+    ap.add_argument("--processed", default="data/processed/v0_8s")
+    ap.add_argument("--dataset-label", default="PPG-DaLiA")
+    ap.add_argument("--title", default="A2 Improved MeanFlow Report")
+    ap.add_argument("--prereg", default="docs/A2_IMEANFLOW_PREREGISTRATION.md")
     args = ap.parse_args()
+    from ppg2ecg.data.splits import read_manifest
+
+    split = read_manifest(ROOT / args.manifest)[0]
+    test_subject = split["test"][0]
     d_ot, d_imf, d_a0 = ROOT / args.otcfm, ROOT / args.imf, ROOT / args.a0
     o, i = load_rows(d_ot), load_rows(d_imf)
     o50, o4, o1, i1 = o["heun25"], o["heun2"], o["euler1"], i["meanflow1"]
@@ -76,16 +100,21 @@ def main():
         verdict = "FAIL"
     else:
         verdict = "PARTIAL"
-    res = {"arms": {f"{a} {b}": r for a, b, r in arms}, "recovery": rec, "recovery_other": rec_other, "beats_ratio_imf1": i1["beats_ratio"], "beats_ok": beats_ok, "n_metrics_recovered_ge50": n_ge50, "all_lt25": all_lt25, "gain_fail_rule": gain_fail, "verdict": verdict, "training_imf": summ_i, "training_otcfm": json.loads((d_ot / "training_summary.json").read_text())}
+    rep_verdict, better, severe, collapse = replication_verdict(rec, o1, i1)
+    inversion = bool(o1["rmse"] < o50["rmse"] and o1["rmse"] < i1["rmse"] and o1["mae"] < o50["mae"])  # pointwise-error inversion
+    res = {"arms": {f"{a} {b}": r for a, b, r in arms}, "recovery": rec, "recovery_other": rec_other, "beats_ratio_imf1": i1["beats_ratio"], "beats_ok": beats_ok, "n_metrics_recovered_ge50": n_ge50, "all_lt25": all_lt25, "gain_fail_rule": gain_fail, "verdict": verdict, "replication_verdict": rep_verdict, "replication_better": better, "replication_severe_negative": severe, "replication_collapse": collapse, "pointwise_error_inversion": inversion, "test_subject": test_subject, "dataset": args.dataset_label, "training_imf": summ_i, "training_otcfm": json.loads((d_ot / "training_summary.json").read_text())}
     (d_imf / "recovery.json").write_text(json.dumps(res, indent=1, default=str))
 
     # ---------------- figures: A0's deterministic example windows
     met_a0 = json.loads((d_a0 / "metrics.json").read_text())
     idxs = list(met_a0["examples"]["ref_arm_hr_err_quantiles_10_50_90"]) + list(met_a0["examples"]["fixed_positions"])[:3]
-    d = np.load(ROOT / "data/processed/v0_8s/S2.npz")
+    d = np.load(ROOT / args.processed / f"{test_subject}.npz")
     x, y, starts = d["x"], d["y"], d["window_start_s"]
-    raw = load_subject_raw(ROOT / "data/raw", "S2")
-    act_fs = len(raw.activity) / raw.ecg_seconds
+    try:
+        raw = load_subject_raw(ROOT / "data/raw", test_subject)
+        act_fs = len(raw.activity) / raw.ecg_seconds
+    except Exception:  # noqa: BLE001  (non-DaLiA datasets have no activity labels)
+        raw, act_fs = None, None
     preds = {"OT-CFM 50 NFE": np.load(d_ot / "predictions/heun25.npz")["pred"], "OT-CFM 4 NFE": np.load(d_ot / "predictions/heun2.npz")["pred"], "OT-CFM 1 NFE": np.load(d_ot / "predictions/euler1.npz")["pred"], "iMeanFlow 1 NFE": np.load(d_imf / "predictions/meanflow1.npz")["pred"]}
     t = np.arange(x.shape[1]) / FS
     (d_imf / "figures").mkdir(exist_ok=True)
@@ -95,15 +124,18 @@ def main():
             fig, axes = plt.subplots(2 + len(preds), len(wins), figsize=(6.2 * len(wins), 2.0 * (2 + len(preds))), sharex=True, sharey="row")
             axes = np.atleast_2d(axes).reshape(2 + len(preds), len(wins))
             for c, w in enumerate(wins):
-                seg = raw.activity[int(round(starts[w] * act_fs)) : int(round((starts[w] + 8) * act_fs))].astype(int)
-                a = ACT.get(int(np.bincount(seg).argmax()), "?") if len(seg) else "?"
+                if raw is not None:
+                    seg = raw.activity[int(round(starts[w] * act_fs)) : int(round((starts[w] + 8) * act_fs))].astype(int)
+                    a = ACT.get(int(np.bincount(seg).argmax()), "?") if len(seg) else "?"
+                else:
+                    a = ""
                 try:
                     pp = np.asarray(nk.ppg_findpeaks(nk.ppg_clean(x[w].astype(float), sampling_rate=FS), sampling_rate=FS)["PPG_Peaks"], dtype=int)
                 except Exception:  # noqa: BLE001
                     pp = np.zeros(0, int)
                 axes[0, c].plot(t, x[w], color="tab:green", lw=0.9)
                 axes[0, c].plot(pp / FS, x[w][pp], "v", color="darkgreen", ms=5)
-                axes[0, c].set_title(f"S2 window {w} · t = {starts[w]} s · {a}", fontsize=10)
+                axes[0, c].set_title(f"{test_subject} window {w} · t = {starts[w]} s · {a}", fontsize=10)
                 rg = R.detect_rpeaks(y[w], FS)
                 axes[1, c].plot(t, y[w], "k", lw=0.9)
                 axes[1, c].plot(rg / FS, y[w][rg], "r.", ms=6)
@@ -145,7 +177,7 @@ def main():
             analysis[m.group(1).strip()] = m.group(2).strip()
     def nar(k, default="_(to be written after results are inspected)_"):
         return analysis.get(k, default)
-    L = ["# A2 Improved MeanFlow Report", "", f"Generated from `{args.imf}/` vs `{args.otcfm}/`. Pre-registration: `docs/A2_IMEANFLOW_PREREGISTRATION.md`; audit: `docs/IMEANFLOW_AUDIT.md`.", ""]
+    L = [f"# {args.title}", "", f"Generated from `{args.imf}/` vs `{args.otcfm}/` — dataset {args.dataset_label}, test subject(s) {split['test']}, val {split['val']}. Pre-registration: `{args.prereg}`; audit: `docs/IMEANFLOW_AUDIT.md`.", ""]
     L += ["## Research question", "> Can Improved MeanFlow make the long noise→ECG transport jump in one network evaluation while preserving the physiological structure that OT-CFM needs many evaluations to generate?", ""]
     L += ["## Frozen protocol", "Identical to A0-b (data, 8 s windows, split, seed 42, backbone with 4,568,707 parameters, PPG conditioning, AdamW 1e-3 / wd 0.01 / effective batch 64, fp32, patience 20 / min_delta 1e-4 on a deterministic fixed-bank metric). Only the objective/parameterisation changed: OT-CFM → Improved MeanFlow (`V = u + (t−r)·sg(du/dt)`, v-loss with adaptive weighting, (t,r) logit-normal(−0.4,1), 50 % r=t, boundary v_θ, conditioning E(t)+E(h) via the backbone's single embedder). Gradient accumulation 2 × 32 for memory (prereg §8).", ""]
     L += ["## iMeanFlow paper/code audit", "See `docs/IMEANFLOW_AUDIT.md` (papers arXiv:2505.13447 / arXiv:2512.02012 v2; official code `Lyy-iiis/imeanflow` @ bf60cd7, submodule `external/iMeanFlow`).", ""]
@@ -169,10 +201,10 @@ def main():
     L += ["## Qualitative examples", f"A0's deterministic windows (HR-error quantiles 10/50/90 % of the 50-NFE arm and fixed positions): `{args.imf}/figures/controlled_examples_quantile.png`, `controlled_examples_fixed.png` — same PPG, same initial noise, identical y-scale.", "", nar("Qualitative examples"), ""]
     L += ["## Failure taxonomy", nar("Failure taxonomy"), ""]
     L += ["## Limitations", nar("Limitations", "- single seed / single test subject; iMF trained with the baseline optimiser (Adam 1e-4 + EMA in the official recipe) — a deliberate isolation choice; beat-level alignment metrics not interpretable on raw PPG-DaLiA; boundary-condition v_θ instead of the official auxiliary head (parameter-count constraint)."), ""]
-    L += ["## GO / PARTIAL / FAIL", f"**{verdict}** — recovery ≥ 0.5 on {n_ge50}/{len(rec)} physiological metrics; beats/reference {i1['beats_ratio']:.2f} ({'ok' if beats_ok else 'below 0.7'}); all < 0.25: {all_lt25}; gain-fail rule: {gain_fail}.", "", nar("Verdict rationale"), ""]
+    L += ["## GO / PARTIAL / FAIL", f"**{verdict}** (A2 recovery rule) — recovery ≥ 0.5 on {n_ge50}/{len(rec)} physiological metrics; beats/reference {i1['beats_ratio']:.2f} ({'ok' if beats_ok else 'below 0.7'}); all < 0.25: {all_lt25}; gain-fail rule: {gain_fail}.", f"**Replication rule (A3/A4 §4): {rep_verdict}** — iMF-1 better than OT-CFM-1 on {sum(better.values())}/4 of {list(better)}; severe negative recovery: {severe}; collapse signature: {collapse}.", f"**Pointwise-error inversion** (OT-CFM-1 has the best RMSE/MAE while physiology collapses): {'YES' if inversion else 'NO'} (RMSE OT-50 {o50['rmse']:.3f}, OT-1 {o1['rmse']:.3f}, iMF-1 {i1['rmse']:.3f}).", "", nar("Verdict rationale"), ""]
     L += ["## Recommended next research question", nar("Recommended next research question"), ""]
     (ROOT / args.report).write_text("\n".join(L))
-    print(json.dumps({"recovery": rec, "recovery_other": rec_other, "beats_ratio": i1["beats_ratio"], "verdict": verdict}, indent=1))
+    print(json.dumps({"recovery": rec, "recovery_other": rec_other, "beats_ratio": i1["beats_ratio"], "verdict": verdict, "replication_verdict": rep_verdict, "better": better, "pointwise_error_inversion": inversion}, indent=1))
     print("wrote", d_imf / "recovery.json", ROOT / args.report)
 
 

@@ -133,3 +133,10 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   Recovery of the 50→1 gap at 1 NFE: HR 0.96, morph 0.87, amplitude 0.93, conditioning 0.78; beats/ref 1.00 → **SUCCESS** (frozen rule).
   Residuals: morphology 0.595 vs 0.650 (CIs disjoint), occasional spurious spikes, high-HR under-estimation shared with the baseline.
   Report: `docs/A2_IMEANFLOW_REPORT.md`; figures `outputs/a2_…/figures/`.
+
+## 2026-08-26 — Session 3: replication (A3 new DaLiA subject S1, A4 WildPPG)
+- Pre-registered `docs/A3_A4_REPLICATION_PREREGISTRATION.md` (Part I frozen: test S1 / val S11 / train 13, recipes verbatim from A0-b
+  and A2, replication verdict rule; Part II rules for WildPPG with values to be frozen after the audit). Manifest
+  `split_a3_testS1_valS11.json` (sha256 `6d2999bd…`), leakage checks PASS. Generic launchers `scripts/run_exp.sh`, `run_eval_chain.sh`;
+  `compare_a2.py` generalised (manifest-aware, replication verdict, pointwise-error inversion flag). WildPPG audit workflow started
+  (read-only + official download only if no login/consent).

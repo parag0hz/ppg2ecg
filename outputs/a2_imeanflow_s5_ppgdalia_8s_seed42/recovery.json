@@ -209,6 +209,18 @@
  "all_lt25": false,
  "gain_fail_rule": false,
  "verdict": "SUCCESS",
+ "replication_verdict": "REPLICATED",
+ "replication_better": {
+  "hr_abs_err_bpm": true,
+  "morph_corr": true,
+  "amp_ratio": true,
+  "cond_gain_bpm": true
+ },
+ "replication_severe_negative": false,
+ "replication_collapse": false,
+ "pointwise_error_inversion": true,
+ "test_subject": "S2",
+ "dataset": "PPG-DaLiA",
  "training_imf": {
   "exp_name": "a2_imeanflow_s5_ppgdalia_8s_seed42",
   "objective": "improved_meanflow",

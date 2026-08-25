@@ -1,0 +1,32 @@
+{
+  "splits": [
+    {
+      "protocol": "A3-holdout-testS1",
+      "seed": null,
+      "train": [
+        "S2",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9",
+        "S10",
+        "S12",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "val": [
+        "S11"
+      ],
+      "test": [
+        "S1"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "A3 subject-robustness replication: test S1 (never val/test before), val S11 kept to preserve the A0-b/A2 checkpoint-selection environment; frozen before any S1 result"
+  }
+}

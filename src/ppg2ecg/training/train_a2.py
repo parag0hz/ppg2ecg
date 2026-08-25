@@ -57,7 +57,8 @@ def parse_args(argv=None):
     ap.add_argument("--norm-p", type=float, default=1.0)
     ap.add_argument("--norm-eps", type=float, default=0.01)
     ap.add_argument("--jvp-mode", choices=["forward", "double_vjp"], default="forward")
-    ap.add_argument("--h-scale", type=float, default=1000.0, help="scale applied to h = t - r before the shared sinusoidal embedder (1000 = DiT integer-timestep convention)")
+    ap.add_argument("--cond-mode", choices=["h_only", "t_plus_h"], default="h_only", help="time conditioning: h_only = official iMF design (E(h)); t_plus_h = E(t)+E(h_scale*h)")
+    ap.add_argument("--h-scale", type=float, default=1.0, help="scale applied to h before the shared sinusoidal embedder (1 = official; 1000 diverged)")
     ap.add_argument("--micro-batch", type=int, default=32, help="gradient-accumulation chunk; effective batch stays --batch-size (forward-mode JVP needs ~0.51 GiB/sample at T=1024)")
     ap.add_argument("--val-batch", type=int, default=32, help="batch for the fixed-bank validation metric (implementation detail, no effect on values)")
     ap.add_argument("--n-val-banks", type=int, default=4)
@@ -89,7 +90,7 @@ def main(argv=None):
     banks_hash = imf_bank_hash(banks)
 
     backbone = build_penguin_backbone(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio)
-    net = MeanFlowS5(backbone, h_scale=args.h_scale).to(device)
+    net = MeanFlowS5(backbone, cond_mode=args.cond_mode, h_scale=args.h_scale).to(device)
     params = count_params(backbone, exclude_prefixes=("cross_attn", "revin"))
     opt = torch.optim.AdamW(net.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     gen = torch.Generator()
@@ -115,7 +116,7 @@ def main(argv=None):
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
 
-    meta = {"exp_name": args.exp_name, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "cond_mode": args.cond_mode, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "objective", "params", "n_train_windows", "n_val_windows", "T")}))
 
@@ -180,7 +181,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=sel, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": net.state_dict(), "epoch": epoch, "objective": "improved_meanflow", "selection": {"criterion": "fixed_imf_mse", "value": sel, "min_delta": args.min_delta}, "model_cfg": dict(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "imf_cfg": dict(tr_kw, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, cond_mode="t_plus_h", h_scale=args.h_scale), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": net.state_dict(), "epoch": epoch, "objective": "improved_meanflow", "selection": {"criterion": "fixed_imf_mse", "value": sel, "min_delta": args.min_delta}, "model_cfg": dict(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "imf_cfg": dict(tr_kw, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, cond_mode=args.cond_mode, h_scale=args.h_scale), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1

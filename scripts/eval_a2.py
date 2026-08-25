@@ -84,7 +84,7 @@ def main():
     up = assert_upstream_pinned()
     ck = torch.load(ckpt_path, map_location="cpu", weights_only=False)
     imf_cfg = ck.get("imf_cfg", {})
-    net = MeanFlowS5(build_penguin_backbone(**ck["model_cfg"]), cond_mode=imf_cfg.get("cond_mode", "t_plus_h"), h_scale=imf_cfg.get("h_scale", 1.0)).to(device).eval()
+    net = MeanFlowS5(build_penguin_backbone(**ck["model_cfg"]), cond_mode=imf_cfg.get("cond_mode", "h_only"), h_scale=imf_cfg.get("h_scale", 1.0)).to(device).eval()
     net.load_state_dict(ck["state_dict"])
     split = read_manifest(ROOT / args.manifest)[0]
     x_te, y_te, sid, starts = load_test(ROOT / args.processed, split["test"], args.limit_windows)

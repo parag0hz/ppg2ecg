@@ -26,16 +26,18 @@ import torch.nn as nn
 class MeanFlowS5(nn.Module):
     """u_theta(z, ppg, t, h) on top of the UNMODIFIED upstream PENGUIN backbone.
 
-    Conditioning vector = E(t) + E(h_scale * h) using the backbone's single existing `timestep_embedder` for both scalars (shared
-    weights, so the parameter count is identical to the OT-CFM baseline). With h_scale = 1 the sum is almost a function of
-    t + h alone (the sinusoid channels are near-linear on [0, 1]; interval r linearly decodable with R^2 = 0.18 — review finding);
-    with h_scale = 1000 (DiT integer-timestep convention for the SAME embedder) t, h and r are all decodable with R^2 = 1.00 and no
-    parameters are added. `cond_mode="t_only"` reproduces `backbone.forward_step` bit-exactly (parity test).
+    Conditioning modes (all use the backbone's single existing `timestep_embedder`, so the parameter count is identical to the
+    OT-CFM baseline):
+      * "h_only"   : cond = E(h_scale * h)          — the official iMF code's design (imfDiT.py L342-344: condition on h = t - r only;
+                     t is inferred from z_t). Adopted for A2 (pre-registration §9, amendment 2).
+      * "t_plus_h" : cond = E(t) + E(h_scale * h)   — with h_scale = 1 almost a function of t + h alone (r decodable R^2 = 0.18);
+                     with h_scale = 1000 fully decodable but the JVP term is amplified 1000x and training diverged (A2 amendment 2).
+      * "t_only"   : cond = E(t)                    — reproduces `backbone.forward_step` bit-exactly (parity test only).
     """
 
-    def __init__(self, backbone: nn.Module, cond_mode: str = "t_plus_h", h_scale: float = 1000.0):
+    def __init__(self, backbone: nn.Module, cond_mode: str = "h_only", h_scale: float = 1.0):
         super().__init__()
-        assert cond_mode in ("t_plus_h", "t_only")
+        assert cond_mode in ("h_only", "t_plus_h", "t_only")
         self.backbone = backbone
         self.cond_mode = cond_mode
         self.h_scale = float(h_scale)
@@ -45,9 +47,12 @@ class MeanFlowS5(nn.Module):
         bb = self.backbone
         ppg_e = bb.pre_conv_ppg(ppg)
         z_e = bb.pre_conv_target(z)
-        cond = bb.timestep_embedder(t.reshape(-1))
-        if self.cond_mode == "t_plus_h":
-            cond = cond + bb.timestep_embedder(h.reshape(-1) * self.h_scale)
+        if self.cond_mode == "h_only":
+            cond = bb.timestep_embedder(h.reshape(-1) * self.h_scale)
+        else:
+            cond = bb.timestep_embedder(t.reshape(-1))
+            if self.cond_mode == "t_plus_h":
+                cond = cond + bb.timestep_embedder(h.reshape(-1) * self.h_scale)
         all_dx = torch.zeros_like(z_e)
         for blk in bb.flow_ssm_list:
             ppg_e, dx = blk(ppg_e, z_e, cond)

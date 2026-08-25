@@ -113,3 +113,8 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   `E(t)+E(h)` may under-resolve the interval `h` early in training** — kept as pre-registered, parameter-count constraint; logged as
   a candidate failure cause F7 for the taxonomy and as a limitation), 6 refuted (stale premises: driver/eval scripts exist,
   batch-64 infeasibility handled by accumulation, verdict rules made exhaustive), 21 low-severity notes.
+- **A2 restarted (19:40)** at commit `1a2f9da` after a pre-result amendment: the shared-embedder conditioning `E(t)+E(h)` left the
+  MeanFlow interval nearly invisible (cond variance 99.3 % explained by t+h; r decodable R² 0.18), so `h` is now scaled by 1000
+  before the same sinusoidal embedder (t, h, r all decodable R² 1.00, **no added parameters**; DiT integer-timestep convention).
+  The h_scale=1 run was stopped after epoch 1 (kept in `outputs/aborted/a2_hscale1_aborted_epoch1/`, no test result produced).
+  Details in `docs/A2_IMEANFLOW_PREREGISTRATION.md` §9.

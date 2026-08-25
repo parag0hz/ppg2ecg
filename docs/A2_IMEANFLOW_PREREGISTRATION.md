@@ -16,10 +16,10 @@ evaluation code, paired noise seed 0, PPG-shuffle derangement seed 1, quantile e
 
 ## 3. The only change: training objective / flow parameterisation (`src/ppg2ecg/flow/imeanflow.py`, `docs/IMEANFLOW_AUDIT.md`)
 - Convention: t = 1 noise, t = 0 data; `z_t = (1−t)x + t e`, `v = e − x`.
-- Network `u_θ(z, PPG, t, h = t − r)`: the unmodified backbone with conditioning vector `E(t) + E(1000·h)` from its single existing
-  timestep embedder (shared weights; **parameter count unchanged**). *Amended before any result (see §9): with `E(t) + E(h)` the
-  interval is almost invisible to the network (review finding); scaling `h` by 1000 — the DiT integer-timestep convention for the same
-  sinusoidal embedder — makes t, h and r fully decodable without new parameters.*
+- Network `u_θ(z, PPG, h = t − r)`: the unmodified backbone conditioned on **`E(h)` only** through its single existing timestep
+  embedder — the official iMF code's design (`imfDiT.py` L342-344; t is inferred from z_t). **Parameter count unchanged.**
+  *Amended twice before any result (see §9): `E(t)+E(h)` left the interval nearly invisible; `E(t)+E(1000·h)` resolved it but
+  amplified the JVP term 1000× and diverged.*
 - Loss (iMF Eq. 12 / Alg. 1, official `imf.py` L347-393 without CFG/labels/aux-head):
   `V = u_θ(z_t, r, t) + (t − r)·sg[JVP(u_θ; (v_θ, 0, 1))]`, `v_θ = u_θ(z_t, t, t)` (boundary condition, gradient-free),
   `loss = mean_b[ Σ_T (V − (e − x))² · sg(1/(Σ_T(V − (e−x))² + 0.01)^1) ]`.
@@ -83,3 +83,10 @@ hyper-parameter search, re-synchronisation of PPG-DaLiA, cherry-picked examples.
   `outputs/aborted/a2_hscale1_aborted_epoch1/`; epoch-1 diagnostic HR 24.5 / morph 0.41 / amp 0.81 — no test-set result was
   produced or examined). Alternative considered and rejected for the frozen parameter count: a second embedder for h (+49 k params,
   the MeanFlow paper's design).
+- **2026-08-25 19:50 — conditioning `E(t)+E(1000·h)` → `E(h)` only (official iMF design).** The h_scale = 1000 run diverged
+  within two epochs (train MSE 10.6 → 395, |du/dt| 9.7 → 20.7, validation MSE 27 → 38 vs 0.30 / 0.56 / 0.24 for h_scale = 1):
+  scaling h by 1000 multiplies ∂u/∂h — and therefore the JVP term of the MeanFlow identity — by 1000, making the compound V
+  ill-conditioned. Log kept in `outputs/aborted/a2_hscale1000_aborted_epoch2/`. The official implementation conditions on
+  h = t − r only (no t; `imfDiT.py` L342-344, following arXiv:2502.13129), which resolves h completely (R² 1.00) with O(1)
+  derivatives and no added parameters; adopted. The pre-result decision sequence (E(t)+E(h) → ×1000 → h-only) is recorded here
+  in full; no test-set number was produced by either aborted run.

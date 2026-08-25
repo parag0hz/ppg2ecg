@@ -1,0 +1,33 @@
+{
+ "split": {
+  "protocol": "A3-holdout-testS1",
+  "seed": null,
+  "train": [
+   "S2",
+   "S3",
+   "S4",
+   "S5",
+   "S6",
+   "S7",
+   "S8",
+   "S9",
+   "S10",
+   "S12",
+   "S13",
+   "S14",
+   "S15"
+  ],
+  "val": [
+   "S11"
+  ],
+  "test": [
+   "S1"
+  ]
+ },
+ "manifest_sha256": "6d2999bdab628f0dfa45a4b194228adc54e3b01ff0d0e7f3e3f6bb16a0d0bf30",
+ "n_windows": {
+  "train": 13899,
+  "val": 1131,
+  "test": 1151
+ }
+}

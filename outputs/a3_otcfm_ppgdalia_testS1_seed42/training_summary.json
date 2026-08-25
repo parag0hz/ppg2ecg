@@ -1,0 +1,13 @@
+{
+ "exp_name": "a3_otcfm_ppgdalia_testS1_seed42",
+ "epochs_run": 114,
+ "best_epoch": 93,
+ "selection_criterion": "fixed_cfm",
+ "best_selection_metric": 0.15997714304902932,
+ "best_val_mae_batchmean": null,
+ "early_stopped": true,
+ "total_train_time_s": 8465.547951424494,
+ "peak_mem_MiB": 18408.654296875,
+ "finished": "2026-08-26T03:51:22",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a3_otcfm_ppgdalia_testS1_seed42/checkpoint_best.pt"
+}

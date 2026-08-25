@@ -1,0 +1,13 @@
+{
+ "exp_name": "a3_imeanflow_ppgdalia_testS1_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 36,
+ "best_epoch": 15,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 0.17127123884165002,
+ "early_stopped": true,
+ "total_train_time_s": 5140.804811129579,
+ "peak_mem_MiB": 16902.89404296875,
+ "finished": "2026-08-26T05:28:01",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a3_imeanflow_ppgdalia_testS1_seed42/checkpoint_best.pt"
+}

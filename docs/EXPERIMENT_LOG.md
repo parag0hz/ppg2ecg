@@ -140,3 +140,10 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   `split_a3_testS1_valS11.json` (sha256 `6d2999bd…`), leakage checks PASS. Generic launchers `scripts/run_exp.sh`, `run_eval_chain.sh`;
   `compare_a2.py` generalised (manifest-aware, replication verdict, pointwise-error inversion flag). WildPPG audit workflow started
   (read-only + official download only if no login/consent).
+- WildPPG audit done (`docs/WILDPPG_AUDIT.md`): official ETH polybox share, anonymous download (19.6 GB, sha256), CC BY-NC-SA 4.0 (stale
+  "review only" clause noted), 16 participants, 4 synchronised sites, green PPG 128 Hz, sternum lead-I ECG 128 Hz, no NaN (constant-filled
+  gaps), 3 noisy-ECG participants. PENGUIN uses green PPG at all 4 sites (ECG tiled ×4); bookkeeping = 8 s windows.
+- A4 Part II values frozen (prereg amendment): channel = PENGUIN's (4 green sites), 8 s @ 128 Hz, gap windows dropped (861, 0.22 %),
+  split `split_a4_wildppg_seed42.json` (val an0,k2s / test kjd,ssx / train 12; sha256 `bc168144…`), val/test subsets ≤ 4096 windows,
+  rounds of 220 steps. Processed `data/processed/wildppg_8s/` (389,355 windows). Leakage gate PASS (subject, window-hash, normalisation).
+  Evaluation pipeline dry-run on WildPPG arrays with smoke checkpoints OK. A4 pipeline armed to start after A3 finishes (single GPU).

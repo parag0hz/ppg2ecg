@@ -87,6 +87,7 @@ def parse_args(argv=None):
     ap.add_argument("--gen-diag-every", type=int, default=1)
     ap.add_argument("--gen-diag-windows", type=int, default=128)
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
+    ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
@@ -104,6 +105,9 @@ def main(argv=None):
     processed = root / args.processed if not Path(args.processed).is_absolute() else Path(args.processed)
     x_tr, y_tr, _ = load_arrays(processed, split["train"], args.limit_windows)
     x_va, y_va, _ = load_arrays(processed, split["val"], args.limit_windows)
+    if args.val_subsample and len(x_va) > args.val_subsample:
+        stride = -(-len(x_va) // args.val_subsample)
+        x_va, y_va = x_va[::stride], y_va[::stride]
     T = x_tr.shape[1]
     x_tr_t, y_tr_t = torch.from_numpy(x_tr).to(device), torch.from_numpy(y_tr).to(device)
     x_va_t, y_va_t = torch.from_numpy(x_va).to(device), torch.from_numpy(y_va).to(device)

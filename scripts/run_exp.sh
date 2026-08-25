@@ -8,11 +8,12 @@ OUT="$ROOT/outputs/$EXP"
 export PYTHONPATH="$ROOT/src" PYTHONDONTWRITEBYTECODE=1
 cd "$ROOT"
 COMMON_SEL="--select fixed_cfm --min-delta 1e-4 --n-val-banks 4 --bank-seed 1000 --val-mae-every 0"
+PRE_EXTRA="${PREFLIGHT_EXTRA:-}"   # e.g. --dataset WildPPG --raw-checksums data/raw/WildPPG/CHECKSUMS.sha256 --val-subsample 4096 --val-every-steps 220
 if [ "$OBJ" = "otcfm" ]; then
-  "$ROOT/.venv/bin/python" scripts/preflight_a0.py --out-dir "$OUT" --exp-name "$EXP" --seed 42 --window-s 8 --patience 20 --manifest "$MANIFEST" --processed "$PROCESSED" $COMMON_SEL --gen-diag-every 5
+  "$ROOT/.venv/bin/python" scripts/preflight_a0.py --out-dir "$OUT" --exp-name "$EXP" --seed 42 --window-s 8 --patience 20 --manifest "$MANIFEST" --processed "$PROCESSED" $COMMON_SEL --gen-diag-every 5 $PRE_EXTRA
   nohup "$ROOT/.venv/bin/python" -m ppg2ecg.training.train_a0 --out-dir "$OUT" --exp-name "$EXP" --seed 42 --patience 20 --epochs 300 $COMMON_SEL --gen-diag-every 5 --gen-diag-windows 128 --processed "$PROCESSED" --manifest "$MANIFEST" "$@" > "$OUT/train.log" 2>&1 &
 elif [ "$OBJ" = "imf" ]; then
-  "$ROOT/.venv/bin/python" scripts/preflight_a0.py --out-dir "$OUT" --exp-name "$EXP" --seed 42 --window-s 8 --patience 20 --manifest "$MANIFEST" --processed "$PROCESSED" --objective imeanflow $COMMON_SEL --gen-diag-every 1 --n-step 1
+  "$ROOT/.venv/bin/python" scripts/preflight_a0.py --out-dir "$OUT" --exp-name "$EXP" --seed 42 --window-s 8 --patience 20 --manifest "$MANIFEST" --processed "$PROCESSED" --objective imeanflow $COMMON_SEL --gen-diag-every 1 --n-step 1 $PRE_EXTRA
   nohup "$ROOT/.venv/bin/python" -m ppg2ecg.training.train_a2 --out-dir "$OUT" --exp-name "$EXP" --seed 42 --patience 20 --min-delta 1e-4 --epochs 300 --n-val-banks 4 --bank-seed 1000 --gen-diag-every 1 --gen-diag-windows 128 --cond-mode h_only --h-scale 1 --micro-batch 32 --val-batch 32 --processed "$PROCESSED" --manifest "$MANIFEST" "$@" > "$OUT/train.log" 2>&1 &
 else
   echo "unknown objective $OBJ"; exit 1

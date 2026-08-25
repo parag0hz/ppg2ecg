@@ -1,0 +1,34 @@
+{
+  "splits": [
+    {
+      "protocol": "A4-wildppg-holdout",
+      "seed": 42,
+      "rule": "sorted participant ids -> random.Random(42).sample -> val = first 2, test = next 2 (PENGUIN shape 16//8), train = remaining 12",
+      "train": [
+        "e61",
+        "fex",
+        "l38",
+        "n31",
+        "ngh",
+        "p5d",
+        "p9p",
+        "qm9",
+        "trh",
+        "tz8",
+        "u7y",
+        "w4p"
+      ],
+      "val": [
+        "an0",
+        "k2s"
+      ],
+      "test": [
+        "kjd",
+        "ssx"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "frozen before any WildPPG training/result; noisy-ECG participants (fex, kjd, p5d) are NOT excluded (PENGUIN keeps them)"
+  }
+}

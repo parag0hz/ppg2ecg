@@ -70,6 +70,7 @@ def main():
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--noise-seed", type=int, default=0)
     ap.add_argument("--limit-windows", type=int, default=None)
+    ap.add_argument("--subsample", type=int, default=None, help="deterministic uniform stride subsample of the test windows to at most N (applied identically to all arms)")
     ap.add_argument("--diversity-seeds", type=int, default=4)
     ap.add_argument("--diversity-windows", type=int, default=256)
     ap.add_argument("--bench-repeats", type=int, default=10)
@@ -88,7 +89,11 @@ def main():
     net.load_state_dict(ck["state_dict"])
     split = read_manifest(ROOT / args.manifest)[0]
     x_te, y_te, sid, starts = load_test(ROOT / args.processed, split["test"], args.limit_windows)
+    if args.subsample and len(x_te) > args.subsample:
+        stride = -(-len(x_te) // args.subsample)
+        x_te, y_te, sid, starts = x_te[::stride], y_te[::stride], sid[::stride], starts[::stride]
     n, T = x_te.shape
+    np.savez_compressed(out / "predictions" / "test_inputs.npz", x=x_te, y=y_te, sid=sid, starts=starts)
     g = torch.Generator().manual_seed(args.noise_seed)
     e_all = torch.randn(n, 1, T, generator=g)  # IDENTICAL tensor to the OT-CFM arms' paired x0 (same seed, same draw)
     perm = derangement(n, args.noise_seed + 1)

@@ -87,3 +87,18 @@ inconsistent) / NOT ROBUST (only A2). Recorded as it comes out.
 
 ### 9. Not done in this stage
 seeds 43/44, 5-fold, new architecture/loss, PPG alignment modules, temporal-shift correction in the model input, hyper-parameter search.
+
+---
+## Part II amendment — WildPPG values (frozen 2026-08-26 after `docs/WILDPPG_AUDIT.md`, before any A4 training)
+| Item | Frozen value | Basis |
+|---|---|---|
+| Source / licence | ETH polybox official share (anonymous, no consent form); CC BY-NC-SA 4.0 data licence; 19.6 GB, sha256 recorded | audit §1 |
+| PPG channel / site | **green (530 nm) PPG at sternum, head, wrist, ankle; each site's windows are separate samples paired with the tiled sternum ECG** | rule 1: PENGUIN's shipped config/loader |
+| Window / rate | 8 s @ 128 Hz (1024 samples); PENGUIN filters; per-window z-score + min-max | PENGUIN bookkeeping = 8 s; identical to DaLiA A0-b/A2 |
+| Gap handling | drop windows with non-finite or zero-variance PPG or ECG (861 = 0.22 %); noisy-ECG participants kept | documented deviation; identical for both objectives |
+| Split | `split_a4_wildppg_seed42.json` (sha256 `bc168144…`): val an0, k2s · test kjd, ssx · train 12 | deterministic rule (sorted ids, `random.Random(42)`, 16//8 shape) |
+| Val / test subsets | uniform stride to ≤ 4096 windows of the concatenated val and test arrays (site-major, temporal order); identical subset for all arms; banks on the val subset | compute (≈ 47–49 k windows per split) |
+| Schedule | validation round = min(epoch, 220 steps); patience 20 rounds; min_delta 1e-4; max 300 rounds; OT-CFM gen-diag every 5 rounds, iMF every round | Part II §7 |
+| Recipes | `run_exp.sh otcfm|imf` with `--val-every-steps 220 --val-subsample 4096`; everything else verbatim A0-b / A2 | frozen components |
+| Evaluation | `run_eval_chain.sh` with `--subsample 4096`; OT-CFM 50/20/10/4/2/1 NFE (primary 50/4/1), iMF 1 (+2/4); recovery + replication verdict as Part I §4; qualitative windows from the A4 OT-CFM 50-NFE HR-error quantiles of the test subset | Part I §3–4 |
+Order: A4 starts only after A3 has finished (single GPU); OT-CFM first, then iMF.

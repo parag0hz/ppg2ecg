@@ -60,6 +60,10 @@ def main():
     ap.add_argument("--val-mae-every", type=int, default=1)
     ap.add_argument("--gen-diag-every", type=int, default=0)
     ap.add_argument("--objective", choices=["otcfm", "imeanflow"], default="otcfm")
+    ap.add_argument("--raw-checksums", default="data/raw/CHECKSUMS.sha256")
+    ap.add_argument("--dataset", default="PPG-DaLiA")
+    ap.add_argument("--val-subsample", type=int, default=None)
+    ap.add_argument("--val-every-steps", type=int, default=None)
     args = ap.parse_args()
     out = ROOT / args.out_dir if not Path(args.out_dir).is_absolute() else Path(args.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -78,11 +82,12 @@ def main():
     for s, info in man["files"].items():
         if sha256_file(ROOT / info["path"]) != info["sha256"]:
             failures.append(f"processed file hash changed: {s}")
-    raw_checksums = (ROOT / "data/raw/CHECKSUMS.sha256").read_text().splitlines()
+    raw_checksums = (ROOT / args.raw_checksums).read_text().splitlines()
     # split
     manifest_path = ROOT / args.manifest
     split = read_manifest(manifest_path)[0]
-    subj = check_subject_disjoint(split, SUBJECTS)
+    expected = SUBJECTS if args.dataset == "PPG-DaLiA" else sorted(set(split["train"]) | set(split["val"]) | set(split["test"]))
+    subj = check_subject_disjoint(split, expected)
     if not subj["ok"]:
         failures.append(f"subject overlap: {subj}")
     arrays = {k: np.concatenate([np.load(processed / f"{s}.npz")["x"] for s in split[k]]) for k in ("train", "val", "test")}
@@ -95,13 +100,16 @@ def main():
         failures.append(f"normalisation not window-local: {norm} {norm_y}")
     # fixed validation banks (deterministic selection metric)
     T = arrays["val"].shape[1]
-    banks = make_banks(len(arrays["val"]), T, args.n_val_banks, args.bank_seed) if args.n_val_banks > 0 else []
+    n_val_eff = len(arrays["val"])
+    if args.val_subsample and n_val_eff > args.val_subsample:
+        n_val_eff = len(arrays["val"][:: -(-n_val_eff // args.val_subsample)])
+    banks = make_banks(n_val_eff, T, args.n_val_banks, args.bank_seed) if args.n_val_banks > 0 else []
     banks_h = bank_hash(banks) if banks else None
     imf = None
     if args.objective == "imeanflow":
         from ppg2ecg.flow.imeanflow import imf_bank_hash, make_imf_banks
 
-        imf = {"objective": "improved_meanflow", "paper": "arXiv:2512.02012 v2 (CVPR 2026)", "official_code": "Lyy-iiis/imeanflow @ bf60cd7", "p_mean": -0.4, "p_std": 1.0, "data_proportion": 0.5, "norm_p": 1.0, "norm_eps": 0.01, "jvp": "torch.func.jvp (forward-mode)", "v_theta": "boundary u(z,t,t)", "cond": "h_only: E(h) with the backbone embedder (official iMF design), h_scale=1", "bank_hash": imf_bank_hash(make_imf_banks(len(arrays["val"]), T, args.n_val_banks, args.bank_seed)), "selection": "fixed_imf_mse"}
+        imf = {"objective": "improved_meanflow", "paper": "arXiv:2512.02012 v2 (CVPR 2026)", "official_code": "Lyy-iiis/imeanflow @ bf60cd7", "p_mean": -0.4, "p_std": 1.0, "data_proportion": 0.5, "norm_p": 1.0, "norm_eps": 0.01, "jvp": "torch.func.jvp (forward-mode)", "v_theta": "boundary u(z,t,t)", "cond": "h_only: E(h) with the backbone embedder (official iMF design), h_scale=1", "bank_hash": imf_bank_hash(make_imf_banks(n_val_eff, T, args.n_val_banks, args.bank_seed)), "selection": "fixed_imf_mse"}
         banks_h = imf["bank_hash"]
     # model
     model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate)
@@ -111,12 +119,12 @@ def main():
     cfg = {
         "exp_name": args.exp_name, "arm": "A2" if args.objective == "imeanflow" else "A0", "model": "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + " + ("Improved MeanFlow" if args.objective == "imeanflow" else "OT-CFM"), "imeanflow": imf,
         "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=128, ssm_block_num=4, ssm_ratio=2.0, mlp_ratio=2.0),
-        "dataset": "PPG-DaLiA", "window_s": args.window_s, "sample_rate": args.sample_rate, "samples_per_window": args.sample_rate * args.window_s,
+        "dataset": args.dataset, "window_s": args.window_s, "sample_rate": args.sample_rate, "samples_per_window": args.sample_rate * args.window_s,
         "preprocess": {"ppg": PPG_KW, "ecg": ECG_KW, "per_window_stats": True, "global_stats": None},
         "split": {"manifest": args.manifest, "sha256": sha256_file(manifest_path), **{k: split[k] for k in ("protocol", "seed", "train", "val", "test")}},
         "seed": args.seed, "optimizer": "AdamW(betas=(0.9,0.999))", "lr": args.lr, "weight_decay": args.weight_decay, "batch_size": args.batch_size,
         "epochs_max": args.epochs, "early_stopping": {"metric": "val_mae_batchmean (full n_step Heun samples)" if args.select == "val_mae" else f"val_cfm_fixed (deterministic CFM loss on {args.n_val_banks} fixed (t,z) banks, seed {args.bank_seed})", "patience": args.patience, "min_delta": args.min_delta}, "checkpoint": "best " + ("val MAE" if args.select == "val_mae" else "val_cfm_fixed"),
-        "selection": {"criterion": args.select, "min_delta": args.min_delta, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_h, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every},
+        "selection": {"criterion": args.select, "min_delta": args.min_delta, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_h, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps},
         "sampler_train_val": {"solver": "meanflow", "steps": 1, "nfe": 1} if args.objective == "imeanflow" else {"solver": "heun", "steps": args.n_step, "nfe": 2 * args.n_step},
         "precision": {"dtype": "float32", "amp": False, "bf16": False, "tf32_matmul": torch.backends.cuda.matmul.allow_tf32, "cudnn_tf32": torch.backends.cudnn.allow_tf32},
         "deterministic": {"cudnn_deterministic": True, "use_deterministic_algorithms": "True (warn_only)"},

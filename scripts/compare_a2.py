@@ -108,8 +108,15 @@ def main():
     # ---------------- figures: A0's deterministic example windows
     met_a0 = json.loads((d_a0 / "metrics.json").read_text())
     idxs = list(met_a0["examples"]["ref_arm_hr_err_quantiles_10_50_90"]) + list(met_a0["examples"]["fixed_positions"])[:3]
-    d = np.load(ROOT / args.processed / f"{test_subject}.npz")
-    x, y, starts = d["x"], d["y"], d["window_start_s"]
+    ti = d_imf / "predictions" / "test_inputs.npz"
+    if ti.exists():  # exact arrays the arms were evaluated on (subsampled / multi-subject)
+        d = np.load(ti, allow_pickle=True)
+        x, y, starts = d["x"], d["y"], d["starts"]
+        sids = d["sid"]
+    else:
+        d = np.load(ROOT / args.processed / f"{test_subject}.npz")
+        x, y, starts = d["x"], d["y"], d["window_start_s"]
+        sids = np.array([test_subject] * len(x))
     try:
         raw = load_subject_raw(ROOT / "data/raw", test_subject)
         act_fs = len(raw.activity) / raw.ecg_seconds
@@ -135,7 +142,7 @@ def main():
                     pp = np.zeros(0, int)
                 axes[0, c].plot(t, x[w], color="tab:green", lw=0.9)
                 axes[0, c].plot(pp / FS, x[w][pp], "v", color="darkgreen", ms=5)
-                axes[0, c].set_title(f"{test_subject} window {w} · t = {starts[w]} s · {a}", fontsize=10)
+                axes[0, c].set_title(f"{sids[w]} window {w} · t = {starts[w]} s · {a}", fontsize=10)
                 rg = R.detect_rpeaks(y[w], FS)
                 axes[1, c].plot(t, y[w], "k", lw=0.9)
                 axes[1, c].plot(rg / FS, y[w][rg], "r.", ms=6)

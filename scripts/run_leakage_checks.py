@@ -30,11 +30,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--manifest", default=str(ROOT / "data/manifests/split_p0_holdout_seed42.json"))
     ap.add_argument("--processed", default=str(ROOT / "data/processed/v0"))
+    ap.add_argument("--expected", default="dalia", help="dalia = S1..S15; auto = union of the manifest split")
     args = ap.parse_args()
     ok_all = True
     for split in read_manifest(args.manifest):
         rep = {"split": {k: split[k] for k in ("protocol", "seed", "train", "val", "test") if k in split}}
-        rep["subject_disjoint"] = check_subject_disjoint(split, SUBJECTS)
+        expected = SUBJECTS if args.expected == "dalia" else sorted(set(split["train"]) | set(split["val"]) | set(split["test"]))
+        rep["subject_disjoint"] = check_subject_disjoint(split, expected)
         arrays = {k: load_processed(Path(args.processed), split[k]) for k in ("train", "val", "test")}
         if all(v is not None for v in arrays.values()):
             rep["window_disjoint"] = check_window_disjoint(arrays)
@@ -42,7 +44,8 @@ def main():
         else:
             rep["window_disjoint"] = {"ok": None, "note": f"processed arrays not found under {args.processed}; skipped"}
             sample = np.random.default_rng(0).standard_normal((64, 256))
-        rep["windowwise_normalization"] = check_windowwise_normalization(lambda a: preprocess_windows(a, 128, 4, **PPG_KW), sample)
+        seg = sample.shape[1] // 128
+        rep["windowwise_normalization"] = check_windowwise_normalization(lambda a: preprocess_windows(a, 128, seg, **PPG_KW), sample)
         ok = all(v.get("ok") is not False for v in rep.values() if isinstance(v, dict) and "ok" in v)
         ok_all &= ok
         print(json.dumps(rep, indent=1, default=str))

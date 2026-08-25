@@ -10,7 +10,7 @@ vendored *unmodified* under `external/PENGUIN/` and imported in place.
 1. Reproduce PENGUIN on PPG-DaLiA (arm A0) — `docs/PENGUIN_AUDIT.md`, `configs/upstream/`.
 2. Inference-only **NFE curve** on the same checkpoint: Euler {25,10,5,2,1} NFE, Heun {50,20,10,4,2} NFE (arm A1).
 3. Decide from pre-registered margins whether 1-NFE fails on morphology or conditioning — `docs/PREREGISTRATION_V0.md`.
-4. Only then: swap the objective (OT-CFM → iMeanFlow) on the identical backbone (arm A2).
+4. Only then: swap the objective (OT-CFM → iMeanFlow) on the identical backbone (arm A2). **Status 2026-08-25: A0 → A0-b → gate GO → A2 done; iMeanFlow recovers the 50-NFE OT-CFM quality in 1 NFE (see `docs/A2_IMEANFLOW_REPORT.md`).**
 
 Principles: strong baseline first; one factor at a time; metrics and thresholds documented before results;
 strict subject/normalisation leakage checks; no code copied from other projects without explicit approval.
@@ -41,6 +41,9 @@ bash scripts/download_dalia.sh && .venv/bin/python scripts/verify_dalia.py
 bash scripts/run_a0.sh                      # writes outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/{provenance.json,training_log.csv,checkpoint_best.pt}
 .venv/bin/python scripts/eval_a0_nfe_curve.py --out-dir outputs/a0_penguin_otcfm_ppgdalia_8s_seed42   # NFE curve, metrics, figures
 .venv/bin/python scripts/make_a0_report.py  # docs/A0_PENGUIN_REPRODUCTION_REPORT.md
+# A0-b (deterministic checkpoint selection) and A2 (Improved MeanFlow, 1 NFE, identical backbone):
+bash scripts/run_a0b.sh && bash scripts/run_a0b_eval.sh      # docs/A0B_BASELINE_STABILIZATION_REPORT.md
+bash scripts/run_a2.sh  && bash scripts/run_a2_eval.sh       # docs/A2_IMEANFLOW_REPORT.md (verdict SUCCESS, 2026-08-25)
 # the official upstream loop (glob-order split) is still available for comparison:
 bash scripts/run_upstream_preprocess.sh && bash scripts/run_upstream_train.sh
 ```

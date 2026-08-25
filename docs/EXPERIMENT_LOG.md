@@ -118,3 +118,18 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   before the same sinusoidal embedder (t, h, r all decodable R² 1.00, **no added parameters**; DiT integer-timestep convention).
   The h_scale=1 run was stopped after epoch 1 (kept in `outputs/aborted/a2_hscale1_aborted_epoch1/`, no test result produced).
   Details in `docs/A2_IMEANFLOW_PREREGISTRATION.md` §9.
+- **A2 restarted again (19:52, commit `62c2b15`)** — amendment 2: the h_scale=1000 run diverged in 2 epochs (train MSE 10.6 → 395,
+  |du/dt| 9.7 → 20.7): the ×1000 scale amplifies the JVP term of the MeanFlow identity. Switched to the **official iMF conditioning:
+  h-only (`cond = E(h)`, t inferred from z_t)** — resolves the interval fully with O(1) derivatives and no added parameters.
+  Both aborted runs kept under `outputs/aborted/` (no test-set numbers produced). Prereg §9 records the full sequence.
+- **A2 done (22:47)**: 81 epochs, best 61 (fixed-bank iMF MSE 0.1738), 3.24 h, peak 16.9 GiB, stable. Test S2, same paired noise as A0-b:
+  | arm | NFE | HR err | morph | amp | gain | RMSE | seed std | ms/batch64 |
+  |---|---:|---:|---:|---:|---:|---:|---:|---:|
+  | OT-CFM Heun 25 (A0-b) | 50 | 8.08 | 0.650 | 0.95 | 5.69 | 0.435 | 0.242 | 4171 |
+  | OT-CFM Euler 1 (A0-b) | 1 | 41.96 | 0.217 | 0.15 | 0.24 | 0.304 | 0.033 | 82 |
+  | **iMeanFlow 1 step** | **1** | **9.58** | **0.595** | **0.90** | **4.47** | 0.443 | 0.254 | 82 |
+  | iMeanFlow 2 steps | 2 | 8.00 | 0.660 | 0.92 | 5.60 | 0.445 | 0.256 | 163 |
+  | iMeanFlow 4 steps | 4 | 7.02 | 0.719 | 0.93 | 6.59 | 0.439 | 0.251 | 327 |
+  Recovery of the 50→1 gap at 1 NFE: HR 0.96, morph 0.87, amplitude 0.93, conditioning 0.78; beats/ref 1.00 → **SUCCESS** (frozen rule).
+  Residuals: morphology 0.595 vs 0.650 (CIs disjoint), occasional spurious spikes, high-HR under-estimation shared with the baseline.
+  Report: `docs/A2_IMEANFLOW_REPORT.md`; figures `outputs/a2_…/figures/`.

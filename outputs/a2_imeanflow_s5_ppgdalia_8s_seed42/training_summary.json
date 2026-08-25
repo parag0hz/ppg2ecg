@@ -1,0 +1,13 @@
+{
+ "exp_name": "a2_imeanflow_s5_ppgdalia_8s_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 81,
+ "best_epoch": 60,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 0.17381609575435927,
+ "early_stopped": true,
+ "total_train_time_s": 11660.134808944771,
+ "peak_mem_MiB": 16903.87841796875,
+ "finished": "2026-08-25T22:47:09",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a2_imeanflow_s5_ppgdalia_8s_seed42/checkpoint_best.pt"
+}

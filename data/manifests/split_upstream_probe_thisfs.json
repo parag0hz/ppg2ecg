@@ -1,0 +1,14 @@
+{
+  "splits": [
+    {
+      "protocol": "upstream-glob-random-seed42",
+      "seed": 42,
+      "note": "What external/PENGUIN/src/utils/load_data.py::load_dataset_path selects on THIS filesystem (glob order is directory-order dependent). Recorded by scripts/upstream_split_probe.py on 2026-08-25 against data/processed/upstream/PPG-DaLiA. subject{i}.pkl == S{i+1}.",
+      "glob_order_files": ["subject8","subject9","subject14","subject12","subject2","subject11","subject7","subject10","subject13","subject6","subject3","subject5","subject4","subject0","subject1"],
+      "train": ["S1","S2","S3","S5","S6","S7","S8","S9","S11","S12","S13","S14","S15"],
+      "val": ["S4"],
+      "test": ["S10"]
+    }
+  ],
+  "extra": {"warning": "Re-run the probe if data/processed/upstream is regenerated or moved; a fresh directory can list in a different order."}
+}

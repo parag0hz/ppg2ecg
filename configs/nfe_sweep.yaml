@@ -1,0 +1,22 @@
+# Arm A1 (docs/PREREGISTRATION_V0.md): inference-only NFE curve on the SAME trained OT-CFM+S5 checkpoint.
+# NFE = number of velocity-network evaluations (ppg2ecg.flow.samplers.NFECounter).
+checkpoint: outputs/upstream/PENGUIN_PPG-DaLiA_/ckpt/pretrain_ckpt.pth   # arm A0 output (path pattern from train.py L35,L173)
+batch_size: 64
+dtype: float32
+compile: false
+noise_seeds: [0, 1, 2, 3, 4, 5, 6, 7]    # x0 seeds per window for diversity / averaging diagnostics
+sweep:
+  - {solver: euler, steps: 25, nfe: 25}
+  - {solver: euler, steps: 10, nfe: 10}
+  - {solver: euler, steps: 5,  nfe: 5}
+  - {solver: euler, steps: 2,  nfe: 2}
+  - {solver: euler, steps: 1,  nfe: 1}
+  - {solver: heun,  steps: 25, nfe: 50}   # = upstream default
+  - {solver: heun,  steps: 10, nfe: 20}
+  - {solver: heun,  steps: 5,  nfe: 10}
+  - {solver: heun,  steps: 2,  nfe: 4}
+  - {solver: heun,  steps: 1,  nfe: 2}
+metrics: [mae, rmse, pcc, rpeak_precision, rpeak_recall, rpeak_f1, hr_abs_err, rr_mae_ms, qrs_width_err_ms, morph_corr, hr_err_penguin, nfe, latency_ms, samples_per_s, peak_mem_MiB]
+conditional_fidelity:
+  ppg_shuffle: {enabled: true, pairing: derangement_within_test_set, seed: 0}
+  seed_diversity: {enabled: true, n_seeds: 8}

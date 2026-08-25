@@ -1,0 +1,32 @@
+{
+  "splits": [
+    {
+      "protocol": "P0-holdout",
+      "seed": 42,
+      "train": [
+        "S1",
+        "S3",
+        "S4",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9",
+        "S10",
+        "S12",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "val": [
+        "S11"
+      ],
+      "test": [
+        "S2"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "13/1/1 subjects; shape matches upstream fold_num=8 (15//8=1) but subjects chosen from a SORTED list with random.Random(seed)"
+  }
+}

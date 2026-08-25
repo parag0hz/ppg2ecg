@@ -1,0 +1,93 @@
+{
+ "parity": {
+  "S1": {
+   "shape_ours": [
+    [
+     2303,
+     512
+    ],
+    [
+     2303,
+     512
+    ]
+   ],
+   "shape_upstream": [
+    [
+     2303,
+     512
+    ],
+    [
+     2303,
+     512
+    ]
+   ],
+   "max_abs_diff_x": 0.0,
+   "max_abs_diff_y": 0.0,
+   "bit_exact": true
+  },
+  "S6": {
+   "shape_ours": [
+    [
+     1312,
+     512
+    ],
+    [
+     1312,
+     512
+    ]
+   ],
+   "shape_upstream": [
+    [
+     1312,
+     512
+    ],
+    [
+     1312,
+     512
+    ]
+   ],
+   "max_abs_diff_x": 0.0,
+   "max_abs_diff_y": 0.0,
+   "bit_exact": true
+  },
+  "S15": {
+   "shape_ours": [
+    [
+     1984,
+     512
+    ],
+    [
+     1984,
+     512
+    ]
+   ],
+   "shape_upstream": [
+    [
+     1984,
+     512
+    ],
+    [
+     1984,
+     512
+    ]
+   ],
+   "max_abs_diff_x": 0.0,
+   "max_abs_diff_y": 0.0,
+   "bit_exact": true
+  }
+ },
+ "window_disjoint_p0": {
+  "ok": true,
+  "overlaps": {
+   "train\u2229val": 0,
+   "train\u2229test": 0,
+   "val\u2229test": 0
+  },
+  "n_unique": {
+   "train": 28055,
+   "val": 2262,
+   "test": 2051
+  }
+ },
+ "total_windows": 32368
+}

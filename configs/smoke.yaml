@@ -1,0 +1,4 @@
+# scripts/smoke_test_penguin.py settings (random data, no training)
+tiny: {h_dim: 16, ssm_block_num: 2, ssm_ratio: 2.0, mlp_ratio: 2.0, sample_rate: 128, n_step: 2, batch: 8}
+full: {h_dim: 128, ssm_block_num: 4, ssm_ratio: 2.0, mlp_ratio: 2.0, sample_rate: 128, n_step: 25, batch: 64}
+steps: [1, 2, 5, 10, 25]

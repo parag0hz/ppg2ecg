@@ -1,0 +1,142 @@
+{
+  "splits": [
+    {
+      "protocol": "P1-kfold",
+      "seed": 42,
+      "fold": 0,
+      "n_folds": 5,
+      "train": [
+        "S1",
+        "S3",
+        "S5",
+        "S6",
+        "S7",
+        "S8",
+        "S9",
+        "S12",
+        "S13",
+        "S14"
+      ],
+      "val": [
+        "S2",
+        "S10"
+      ],
+      "test": [
+        "S4",
+        "S11",
+        "S15"
+      ]
+    },
+    {
+      "protocol": "P1-kfold",
+      "seed": 42,
+      "fold": 1,
+      "n_folds": 5,
+      "train": [
+        "S4",
+        "S5",
+        "S6",
+        "S8",
+        "S9",
+        "S11",
+        "S12",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "val": [
+        "S1",
+        "S3"
+      ],
+      "test": [
+        "S2",
+        "S7",
+        "S10"
+      ]
+    },
+    {
+      "protocol": "P1-kfold",
+      "seed": 42,
+      "fold": 2,
+      "n_folds": 5,
+      "train": [
+        "S2",
+        "S4",
+        "S5",
+        "S7",
+        "S9",
+        "S10",
+        "S11",
+        "S13",
+        "S14",
+        "S15"
+      ],
+      "val": [
+        "S6",
+        "S12"
+      ],
+      "test": [
+        "S1",
+        "S3",
+        "S8"
+      ]
+    },
+    {
+      "protocol": "P1-kfold",
+      "seed": 42,
+      "fold": 3,
+      "n_folds": 5,
+      "train": [
+        "S1",
+        "S2",
+        "S3",
+        "S4",
+        "S7",
+        "S8",
+        "S9",
+        "S10",
+        "S11",
+        "S15"
+      ],
+      "val": [
+        "S5",
+        "S13"
+      ],
+      "test": [
+        "S6",
+        "S12",
+        "S14"
+      ]
+    },
+    {
+      "protocol": "P1-kfold",
+      "seed": 42,
+      "fold": 4,
+      "n_folds": 5,
+      "train": [
+        "S1",
+        "S2",
+        "S3",
+        "S6",
+        "S7",
+        "S8",
+        "S10",
+        "S12",
+        "S14",
+        "S15"
+      ],
+      "val": [
+        "S4",
+        "S11"
+      ],
+      "test": [
+        "S5",
+        "S9",
+        "S13"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "5 folds x 3 test subjects, 2 val subjects, 10 train subjects"
+  }
+}

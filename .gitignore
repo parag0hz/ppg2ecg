@@ -1,0 +1,66 @@
+# --- data (never commit raw/processed data) ---
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/raw/CHECKSUMS.sha256
+# manifests ARE committed (small JSON split files)
+
+# --- outputs / artifacts: ignored by default; only small experiment results are re-included below ---
+outputs/*
+artifacts/*
+!outputs/.gitkeep
+!artifacts/.gitkeep
+!outputs/a0_*/
+outputs/a0_*/*
+!outputs/a0_*/provenance.json
+!outputs/a0_*/config.yaml
+!outputs/a0_*/split_manifest.json
+!outputs/a0_*/training_log.csv
+!outputs/a0_*/metrics.json
+!outputs/a0_*/nfe_curve.csv
+!outputs/a0_*/figures/
+outputs/a0_*/figures/*
+!outputs/a0_*/figures/*.png
+logs/
+wandb/
+multirun/
+.hydra/
+runs/
+tb/
+tensorboard/
+events.out.tfevents*
+
+# --- large binaries never tracked ---
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.npy
+*.npz
+*.zip
+*.tar
+*.tar.gz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+*.parquet
+
+# --- external/PENGUIN is a git SUBMODULE pinned at 6cd70cd (see .gitmodules); do not ignore it ---
+
+# --- python ---
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+build/
+dist/
+
+# --- misc ---
+*.log
+.DS_Store
+.ipynb_checkpoints/

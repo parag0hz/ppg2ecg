@@ -1,0 +1,43 @@
+[project]
+name = "ppg2ecg-one-step"
+version = "0.0.1"
+description = "Can PPG-conditioned ECG reconstruction be reduced to one-step generation without sacrificing clinically meaningful ECG morphology and conditional fidelity?"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+dependencies = [
+  # NOTE: torch is provided by the environment (torch 2.11.0+cu130 for RTX 5090 / sm_120); see docs/ENVIRONMENT.md
+  "numpy>=2.3",
+  "scipy>=1.16",
+  "hydra-core>=1.3.2",
+  "omegaconf>=2.3",
+  "neurokit2==0.2.12",   # pinned to PENGUIN uv.lock
+  "biosppy>=2.2.3",      # PENGUIN HR-error pipeline (hamilton_segmenter)
+  "peakutils",           # biosppy runtime dep not pulled automatically
+  "thop",
+  "einops",
+  "tqdm",
+  "matplotlib",
+  "pandas",
+  "pyyaml",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff"]
+logging = ["wandb"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+exclude = [".venv", "external"]

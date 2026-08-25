@@ -1,0 +1,3 @@
+[submodule "external/PENGUIN"]
+	path = external/PENGUIN
+	url = https://github.com/Neurogica/PENGUIN.git

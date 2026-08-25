@@ -1,0 +1,68 @@
+# Canonical, human-readable record of the PENGUIN PPG-DaLiA baseline as AUDITED from upstream code (commit 6cd70cd).
+# This file is documentation + the source of truth for our own loop later; arm A0 itself runs upstream train.py
+# with configs/upstream (see scripts/run_upstream_train.sh). Every value cites where it comes from.
+name: penguin_dalia_baseline_v0
+upstream_commit: 6cd70cdefb91f10efeb8dce34019b5067cb25344
+
+data:
+  dataset: PPG-DaLiA                 # 15 subjects S1..S15
+  ppg_fs_native: 64                  # Empatica E4 BVP
+  ecg_fs_native: 700                 # RespiBAN chest ECG
+  resample_rate: 128                 # preprocess.yaml
+  segment_len_s: 4                   # preprocess.yaml -> 512 samples/window
+  window_stride_s: 4                 # non-overlapping (sliding_window_view[::win], load_data.py L86-93)
+  resample_method: scipy.signal.resample (FFT), per window   # preprocess.py L37
+  ppg:  {bandpass: true, freq_range: [0.5, 4], butter_order: 4, zero_phase: filtfilt, zscore: per_window, minmax: per_window_[-1,1]}
+  ecg:  {bandpass: true, freq_range: [0.5, -1], butter_order: 4, zero_phase: filtfilt, zscore: per_window, minmax: per_window_[-1,1]}  # [0.5,-1] = 0.5 Hz high-pass
+  global_statistics: none            # nothing fitted on train; no target stats enter the input path
+
+split:
+  upstream: {type: single_random_holdout, val_subjects: 1, test_subjects: 1, train_subjects: 13, rule: "subject_num // fold_num = 15 // 8", seed: 42, reproducible_across_machines: false}  # glob order
+  ours_P0:  {manifest: data/manifests/split_p0_holdout_seed42.json}
+  ours_P1:  {manifest: data/manifests/split_p1_kfold5_seed42.json}
+
+model:                               # model.yaml PENGUIN block + PENGUIN.py constructor
+  backbone: upstream PENGUIN Flow-SSM (S5), unmodified
+  h_dim: 128
+  ssm_block_num: 4
+  ssm_ratio: 2.0                     # S5 state width = 256
+  mlp_ratio: 2.0
+  pre_conv_kernel: 32                # sample_rate // 4
+  timestep_embedding: {sinusoidal_dim: 256, mlp_out: h_dim, max_period: 10000}
+  conditioning: {timestep: adaLN-Zero (12 chunks per block), ppg: parallel S5 stream added into target stream via pre/post MLPs}
+  s5: {bidir: true, discretization: zoh, bcInit: dense (lecun_normal), dt_min: 0.001, dt_max: 0.1, block_count: 1, hippo: DPLR-LegS}
+  dead_modules: [cross_attn]         # nn.MultiheadAttention constructed per block, never called
+
+objective:
+  type: conditional_flow_matching    # "OT-CFM" = Lipman conditional OT path, sigma_min=0, independent coupling (no minibatch OT)
+  interpolant: x_t = (1 - t) * x0 + t * x1, x0 ~ N(0,I), x1 = ECG   # t=0 noise -> t=1 data
+  target: x1 - x0
+  loss: mse
+  t_distribution: uniform(0,1)
+
+sampler:
+  solver: heun                       # PENGUIN.heun_step
+  n_step: 25
+  nfe: 50                            # 2 evaluations per Heun step; no Euler last step
+  time_grid: linspace(0, 1, n_step + 1)
+  x0: N(0,I)
+
+optim:
+  optimizer: AdamW
+  lr: 1.0e-3
+  weight_decay: 0.01
+  batch_size: 64
+  lr_schedule: none
+  grad_clip: none
+  ema: none                          # train.yaml ema_decay=0.999 is never read by the code
+  epochs_max: 300
+  early_stopping: {metric: val_mae, patience: 10}
+  val_every_epoch: true              # val MAE is computed with the full 25-step Heun sampler (50 NFE) every epoch
+  checkpoint: best_val_mae           # single file pretrain_ckpt.pth, loaded with strict=False
+
+eval_upstream:
+  mae: mean over batches of per-batch mean |pred - target| in [-1,1] space
+  heart_rate_error: {window_s: 8, segments_concat: 2, pred_clean: nk.ecg_clean pantompkins1985, target_clean: none, detector: biosppy.hamilton_segmenter + correct_rpeaks(tol 0.05) + extract_heartbeats, hr: tools.get_heart_rate(smooth, size 3), mask: both != -1, empty_mask_value: 0.0}
+  inference_time: wall-clock per batch (cuda synchronize)
+
+seed: 42                             # fix_seed: random/numpy/torch/cuda; cudnn.deterministic; use_deterministic_algorithms NOT actually called

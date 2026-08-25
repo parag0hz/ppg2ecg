@@ -147,3 +147,12 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   split `split_a4_wildppg_seed42.json` (val an0,k2s / test kjd,ssx / train 12; sha256 `bc168144…`), val/test subsets ≤ 4096 windows,
   rounds of 220 steps. Processed `data/processed/wildppg_8s/` (389,355 windows). Leakage gate PASS (subject, window-hash, normalisation).
   Evaluation pipeline dry-run on WildPPG arrays with smoke checkpoints OK. A4 pipeline armed to start after A3 finishes (single GPU).
+- **A3 done (05:29)**: OT-CFM(S1) 114 epochs (best 94, 2.35 h); iMF(S1) 36 epochs (best 16, 1.43 h). Test S1 (1,151 windows):
+  | arm | NFE | HR | morph | amp | gain | RMSE |
+  |---|---:|---:|---:|---:|---:|---:|
+  | OT-CFM 50 | 50 | 8.16 | 0.683 | 0.87 | 8.77 | 0.448 |
+  | OT-CFM 4 | 4 | 16.40 | 0.407 | 1.34 | 3.05 | 0.499 |
+  | OT-CFM 1 | 1 | 35.23 | 0.168 | 0.21 | 0.28 | 0.347 |
+  | **iMF 1** | **1** | **11.96** | **0.581** | **0.71** | **4.78** | 0.449 |
+  Recovery HR 0.86 / morph 0.80 / amp 0.76 / gain 0.53; beats 1.03 → **REPLICATED** (A2 rule SUCCESS); pointwise-error inversion YES.
+  Report `docs/A3_SUBJECT_REPLICATION_REPORT.md`. A4 (WildPPG) pipeline started automatically.

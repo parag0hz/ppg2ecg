@@ -15,6 +15,7 @@ from pathlib import Path
 
 import matplotlib
 import numpy as np
+import ppg2ecg.utils.mkl_warmup  # noqa: F401  (MKL warm-up must precede `import torch`, docs/ENVIRONMENT.md)
 import torch
 
 matplotlib.use("Agg")

@@ -97,3 +97,8 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
 - **A0-b done (18:46)**: 85 epochs, best 65, 1.77 h, val_cfm_fixed 0.1645 (A0 ckpt 0.1904 → A0 under-trained: YES). Test S2, 50 NFE:
   HR err **8.08** bpm (A0 10.99), morph 0.650 (0.662), amp 0.95 (0.83), cond gain 5.69 (3.84), RMSE 0.435. 1 NFE Euler: HR 41.96, morph 0.217,
   amp 0.145, gain 0.24 → all four collapse criteria fail → **gate GO** (`outputs/a0b_…/comparison.json`, `docs/A0B_BASELINE_STABILIZATION_REPORT.md`).
+- **Environment incident (19:00)**: the numpy-MKL `eigh`-after-torch segfault became deterministic for 256×256 complex matrices
+  (S5 init) — every model build crashed, including the iMF memory probe. Not caused by the jax install (reproduced after uninstalling).
+  Fixed by importing `ppg2ecg.utils.mkl_warmup` (a numpy LAPACK call) before torch in every entry point (docs/ENVIRONMENT.md). All A0/A0-b results were produced before the incident and are unaffected (same threaded-MKL numerics).
+- iMeanFlow implemented (`src/ppg2ecg/flow/imeanflow.py`, 10 unit tests incl. analytic identity + JAX port of the official objective,
+  all passing); adversarial review workflow launched; A2 training loop written (`ppg2ecg.training.train_a2`).

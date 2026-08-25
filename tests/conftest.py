@@ -1,3 +1,4 @@
+import ppg2ecg.utils.mkl_warmup  # noqa: F401  (MKL warm-up before any test module imports torch, docs/ENVIRONMENT.md)
 import numpy as np
 import pytest
 

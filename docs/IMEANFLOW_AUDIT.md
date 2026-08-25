@@ -34,7 +34,7 @@ the JAX loss file was additionally read line by line by the author of this docum
 |---|---|---|---|
 | Backbone | iMF-DiT (Transformer, RoPE, in-context tokens) | **upstream PENGUIN Flow-SSM/S5, unmodified, same 4,568,707 parameters** | controlled comparison: objective is the only change |
 | Condition | class label + CFG tokens | **PPG signal through the unchanged PPG stream** (no CFG, no dropout, no guidance interval) | our condition is a same-length waveform; CFG is ImageNet-specific |
-| Time inputs | `h` only (code) / `(t, h)` (MF paper) | **`cond = E(t) + E(h)`, `h = t − r`, using the backbone's single existing `TimestepEmbedder` for both (shared weights → parameter count unchanged)** | keeps the baseline's `t`-conditioning path; `E(h)` adds the interval information without new parameters. h-only (official) noted as an alternative, not adopted |
+| Time inputs | `h` only (code) / `(t, h)` (MF paper) | **`cond = E(t) + E(h)`, `h = t − r`, using the backbone's single existing `TimestepEmbedder` for both (shared weights → parameter count unchanged)** | keeps the baseline's `t`-conditioning path; `E(h)` adds the interval information without new parameters. `E(t)+E(h)` is symmetric in (t, h); within 0 ≤ h ≤ t ≤ 1 the only self-collisions are the trivial r = 0 points, so no valid (r, t) pairs alias. h-only (official) noted as an alternative, not adopted |
 | `v_θ` | auxiliary v-head (+8 blocks) | **boundary condition `v_θ = u_θ(z, t, t)` (h = 0), paper Alg. 1** | an aux head would add parameters and change the backbone |
 | JVP | `jax.jvp(u_fn, (z, t, r), (v_c, 1, 0))` | `torch.func.jvp(u_fn, (z, t, r), (v_θ.detach(), 1, 0))` — forward-mode AD verified through the S5 scan (§4); double-vjp `torch.autograd.functional.jvp` as verified fallback | exact same tangents |
 | Stop-gradient | on `du/dt` and on the target `v_g` | identical: `V = u + (t − r)·du_dt.detach()`, target `(e − x)` (constant) | — |
@@ -43,7 +43,7 @@ the JAX loss file was additionally read line by line by the author of this docum
 | Time convention | `t = 1` noise | **kept as iMF (t = 1 noise, z_t = (1−t)x + t e)** inside `imeanflow.py`; the backbone only sees scalars `t`, `h` | avoids sign errors; the baseline's `τ = 1 − t` convention is irrelevant to the sample-level comparison |
 | Sampling | `z_1 − u(z_1, 0, 1)` | identical 1-NFE; multi-step `z_r = z_t − (t − r)u` available for diagnostics | — |
 | Optimiser / schedule | Adam(0.9,0.95) 1e-4 + warm-up, EMA 0.9999, wd 0 | **AdamW 1e-3, wd 0.01, batch 64, no EMA — the A0/A0-b baseline settings** (pre-registered rule: keep baseline optimiser; change only with a literature-based, logged reason if training is unstable) | isolate the objective |
-| Selection | FID on EMA weights | deterministic fixed-bank **iMF loss** on the validation set (same 4 banks: `z` reused as `e`, `t` reused, `r` drawn once per bank with seed) | mirrors A0-b's criterion |
+| Selection | FID on EMA weights | deterministic fixed-bank **iMF MSE** on the validation set: 4 banks, `(t_b, r_b, e_b)` drawn once with seed 1000+b via `sample_tr`/`randn` (bank hash recorded) | mirrors A0-b's criterion |
 
 ## 4. JVP feasibility on the frozen backbone (measured 2026-08-25, tiny config h_dim 16 / 2 blocks)
 - `torch.func.jvp` (forward-mode AD) runs through the upstream S5 stack (`torch.vmap` + associative scan + `torch.jit.script`

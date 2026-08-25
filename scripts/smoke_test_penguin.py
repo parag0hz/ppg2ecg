@@ -13,6 +13,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+import ppg2ecg.utils.mkl_warmup  # noqa: F401  (MKL warm-up must precede `import torch`, docs/ENVIRONMENT.md)
 import torch
 
 from ppg2ecg.evaluation.efficiency import benchmark

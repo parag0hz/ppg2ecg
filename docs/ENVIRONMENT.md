@@ -61,6 +61,14 @@ FFT resampling / filtfilt are scipy-version dependent at the 1e-12 level only.
   failure mode is environment-sensitive, `scripts/run_upstream_*.sh` run a probe first and export `MKL_THREADING_LAYER=SEQUENTIAL`
   only if the probe fails (affects CPU numpy threading only; GPU numerics untouched). Alternative mitigations verified by the auditor:
   `OMP_NUM_THREADS=1 MKL_NUM_THREADS=1`, `LD_PRELOAD=$CONDA_PREFIX/lib/libgomp.so.1`, or one `np.linalg.eigh` call before `import torch`.
+- **UPDATE 2026-08-25 19:00 — the segfault became deterministic**: `import torch` followed by a threaded complex 256×256
+  `numpy.linalg.eigh` (exactly PENGUIN's S5 init) crashed on every attempt (real matrices and small complex ones were fine), even
+  though identical model builds had worked minutes earlier in the same venv. Root cause: torch's bundled `libgomp.so.1` (GOMP_5.0)
+  is mapped before MKL initialises its GNU-OpenMP threading layer. **Fix in place**: every entry point (training loops, preflight, evaluation,
+  `tests/conftest.py`) does `import ppg2ecg.utils.mkl_warmup` **before** `import torch`; the module runs `numpy.linalg.eigh(np.eye(2))`
+  at import time, which initialises MKL's threading layer first. Verified to remove the crash while keeping threaded-MKL numerics.
+  (A venv `sitecustomize.py` does not work: Anaconda's own `lib/python3.13/sitecustomize.py` shadows it.) `MKL_THREADING_LAYER=SEQUENTIAL` and
+  `MKL_NUM_THREADS=1` also work (different MKL execution path); `LD_PRELOAD` of Anaconda's libgomp does **not**.
 - `ruff` inside `.venv` resolves to the conda-base package (`--system-site-packages`); use `/home/kwy00/anaconda3/bin/ruff`.
 
 ## Determinism notes

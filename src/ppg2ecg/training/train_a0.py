@@ -24,11 +24,13 @@ from torch.utils.data import DataLoader, TensorDataset
 
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.flow.cfm import cfm_loss, cfm_targets
+from ppg2ecg.flow.samplers import heun_sample
+from ppg2ecg.training.valbank import bank_hash, fixed_cfm_loss, make_banks
 from ppg2ecg.models import build_penguin_backbone, count_params
 from ppg2ecg.utils.seed import seed_everything
 from ppg2ecg.utils.upstream import UPSTREAM_COMMIT, assert_upstream_pinned
 
-LOG_FIELDS = ["epoch", "train_loss", "train_mae_monitor", "val_mae_batchmean", "val_mae_window", "val_cfm_loss", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
+LOG_FIELDS = ["epoch", "train_loss", "train_mae_monitor", "val_mae_batchmean", "val_mae_window", "val_cfm_loss", "val_cfm_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
 
 
 def load_arrays(processed: Path, subjects: list[str], limit: int | None = None):
@@ -73,6 +75,13 @@ def parse_args(argv=None):
     ap.add_argument("--sample-rate", type=int, default=128)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--limit-windows", type=int, default=None, help="smoke: cap windows per subject")
+    ap.add_argument("--select", choices=["val_mae", "fixed_cfm"], default="val_mae", help="checkpoint/early-stopping criterion (A0: val_mae; A0-b: fixed_cfm)")
+    ap.add_argument("--min-delta", type=float, default=0.0, help="required improvement of the selection metric")
+    ap.add_argument("--n-val-banks", type=int, default=4)
+    ap.add_argument("--bank-seed", type=int, default=1000)
+    ap.add_argument("--val-mae-every", type=int, default=1, help="epochs between stochastic 50-NFE val MAE passes (0 = never)")
+    ap.add_argument("--gen-diag-every", type=int, default=0, help="epochs between fixed-noise generation diagnostics on a val subset (0 = never)")
+    ap.add_argument("--gen-diag-windows", type=int, default=128)
     return ap.parse_args(argv)
 
 
@@ -93,6 +102,9 @@ def main(argv=None):
     assert T == args.sample_rate * 8 or args.limit_windows, f"expected 8 s windows ({args.sample_rate*8}), got T={T}"
     x_tr_t, y_tr_t = torch.from_numpy(x_tr).to(device), torch.from_numpy(y_tr).to(device)
     x_va_t, y_va_t = torch.from_numpy(x_va).to(device), torch.from_numpy(y_va).to(device)
+
+    banks = make_banks(len(x_va), T, args.n_val_banks, args.bank_seed) if args.n_val_banks > 0 else []
+    banks_hash = bank_hash(banks) if banks else None
 
     model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio).to(device)
     params = count_params(model, exclude_prefixes=("cross_attn", "revin"))
@@ -119,7 +131,7 @@ def main(argv=None):
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
 
-    meta = {"exp_name": args.exp_name, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "selection": {"criterion": args.select, "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "torch": torch.__version__, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "params", "n_train_windows", "n_val_windows", "T")}))
 
@@ -141,6 +153,25 @@ def main(argv=None):
                 cfm.append(cfm_loss(model.forward_step(x_t, ppg.unsqueeze(1), t), v_star).item())
         return float(np.mean(batch_maes)), sum_abs / n_win, float(np.mean(cfm))
 
+    def gen_diag():
+        """50-NFE Heun generation on the first gen_diag_windows val windows with fixed noise (bank 0) -> HR err, morph corr, amplitude ratio."""
+        from ppg2ecg.evaluation.metrics import rhythm_morphology_metrics
+
+        m = min(args.gen_diag_windows, len(x_va))
+        model.eval()
+        preds = []
+        with torch.no_grad():
+            for i in range(0, m, args.batch_size):
+                ppg = x_va_t[i : min(i + args.batch_size, m)]
+                z = banks[0][1][i : min(i + args.batch_size, m)].to(device)
+                x1, _ = heun_sample(lambda x, t: model.forward_step(x, ppg.unsqueeze(1), t), z, args.n_step)  # noqa: B023
+                preds.append(x1.squeeze(1).cpu().numpy())
+        pred = np.concatenate(preds)
+        tgt = y_va[:m]
+        rm = rhythm_morphology_metrics(pred, tgt, args.sample_rate)
+        amp = float(np.mean(pred.std(axis=1) / (tgt.std(axis=1) + 1e-8)))
+        return float(np.nanmean(rm["hr_abs_err"])), float(np.nanmean(rm["morph_corr"])), amp
+
     try:
         for epoch in range(state["epoch"], args.epochs):
             t0 = time.perf_counter()
@@ -152,16 +183,21 @@ def main(argv=None):
                 loss = model.optimize(pred, ecg, opt)  # MSE(v_pred, x1 - x0); AdamW step
                 losses.append(loss.item())
                 maes.append((pred - ecg).abs().mean().item())
-            val_bm, val_win, val_cfm = run_val(epoch)
+            do_val_mae = args.val_mae_every > 0 and (epoch + 1) % args.val_mae_every == 0
+            val_bm, val_win, val_cfm = run_val(epoch) if do_val_mae else (float("nan"), float("nan"), float("nan"))
+            val_fixed = fixed_cfm_loss(model.eval(), x_va_t, y_va_t, banks, args.batch_size)[0] if banks else float("nan")
+            do_diag = args.gen_diag_every > 0 and ((epoch + 1) % args.gen_diag_every == 0 or epoch == 0)
+            d_hr, d_morph, d_amp = gen_diag() if do_diag else (float("nan"),) * 3
+            sel = val_bm if args.select == "val_mae" else val_fixed
             ep_time = time.perf_counter() - t0
             state["elapsed"] += ep_time
             peak = torch.cuda.max_memory_allocated() / 2**20 if device.type == "cuda" else 0.0
             state["peak_mem"] = max(state["peak_mem"], peak)
-            is_best = val_bm < state["best"]
+            is_best = sel < state["best"] - args.min_delta
             event = ""
             if is_best:
-                state.update(best=val_bm, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                state.update(best=sel, best_epoch=epoch, no_improve=0)
+                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "selection": {"criterion": args.select, "value": sel, "min_delta": args.min_delta}, "val_cfm_fixed": val_fixed, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1
@@ -170,13 +206,13 @@ def main(argv=None):
             stop = state["no_improve"] >= args.patience
             if stop:
                 event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
-            row = dict(epoch=epoch, train_loss=np.mean(losses), train_mae_monitor=np.mean(maes), val_mae_batchmean=val_bm, val_mae_window=val_win, val_cfm_loss=val_cfm, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
+            row = dict(epoch=epoch, train_loss=np.mean(losses), train_mae_monitor=np.mean(maes), val_mae_batchmean=val_bm, val_mae_window=val_win, val_cfm_loss=val_cfm, val_cfm_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
             with open(log_path, "a", newline="") as f:
                 csv.DictWriter(f, fieldnames=LOG_FIELDS).writerow(row)
-            print(f"epoch {epoch+1:3d}/{args.epochs} loss {row['train_loss']:.4f} trainMAE(monitor) {row['train_mae_monitor']:.4f} valMAE {val_bm:.4f} (win {val_win:.4f}) valCFM {val_cfm:.4f} {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
+            print(f"epoch {epoch+1:3d}/{args.epochs} loss {row['train_loss']:.4f} trainMAE(monitor) {row['train_mae_monitor']:.4f} valMAE {val_bm:.4f} valCFMfixed {val_fixed:.5f} sel {sel:.5f} diag(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
             if stop:
                 break
-        summary = {"exp_name": args.exp_name, "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "best_val_mae_batchmean": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
+        summary = {"exp_name": args.exp_name, "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": args.select, "best_selection_metric": state["best"], "best_val_mae_batchmean": state["best"] if args.select == "val_mae" else None, "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
         (out / "training_summary.json").write_text(json.dumps(summary, indent=1))
         (out / "TRAINING_DONE").write_text(json.dumps(summary))
         print("TRAINING_DONE", json.dumps(summary), flush=True)

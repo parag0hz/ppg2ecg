@@ -32,7 +32,7 @@ from ppg2ecg.utils.upstream import assert_upstream_pinned  # noqa: E402
 ROOT = Path(os.environ.get("PPG2ECG_ROOT") or Path(__file__).resolve().parents[1])
 FS = 128
 DEFAULT_ARMS = "heun:25,heun:10,heun:5,heun:2,heun:1,euler:1"
-CSV_FIELDS = ["solver", "solver_steps", "actual_NFE", "hr_abs_err_bpm", "rpeak_f1", "rpeak_precision", "rpeak_recall", "rr_mae_ms", "mae", "rmse", "pcc", "qrs_width_err_ms", "morph_corr", "hr_err_penguin_corrected", "hr_err_penguin_as_shipped", "hf_ratio_pred", "hf_ratio_target", "cond_gain_bpm", "hr_err_shuffled_right_target", "hr_err_shuffled_wrong_target", "seed_std_mean", "seed_pairwise_corr", "latency_ms_batch64", "samples_per_s", "peak_mem_MiB", "n_windows", "frac_windows_no_pred_beats"]
+CSV_FIELDS = ["solver", "solver_steps", "actual_NFE", "hr_abs_err_bpm", "rpeak_f1", "rpeak_precision", "rpeak_recall", "rr_mae_ms", "mae", "rmse", "pcc", "qrs_width_err_ms", "morph_corr", "hr_err_penguin_corrected", "hr_err_penguin_as_shipped", "amp_ratio", "amp_ratio_median", "hf_ratio_pred", "hf_ratio_target", "cond_gain_bpm", "hr_err_shuffled_right_target", "hr_err_shuffled_wrong_target", "seed_std_mean", "seed_pairwise_corr", "latency_ms_batch64", "samples_per_s", "peak_mem_MiB", "n_windows", "frac_windows_no_pred_beats"]
 
 
 def load_test(processed: Path, subjects, limit=None):
@@ -116,6 +116,7 @@ def main():
         preds[key] = pred
         ev = evaluate_windows(pred, y_te, fs=FS, hr_window_segments=1, detector=args.detector)
         summ = summarize(ev, n_boot=1000, seed=0)
+        amp = pred.std(axis=1) / (y_te.std(axis=1) + 1e-8)
         hr_c = penguin_hr_error(pred, y_te, window_s=8, mode="corrected")
         hr_s = penguin_hr_error(pred, y_te, window_s=8, mode="as_shipped")
         # efficiency (fixed batch of 64, median of repeats)
@@ -136,10 +137,10 @@ def main():
         seed_std = float(sp.std(axis=0).mean())
         corrs = [float(np.mean([np.corrcoef(sp[a, i], sp[b, i])[0, 1] for i in range(m)])) for a in range(len(sp)) for b in range(a + 1, len(sp))]
         np.savez_compressed(out / "predictions" / f"{key}.npz", pred=pred.astype(np.float32), pred_shuffled=pred_sh.astype(np.float32), perm=perm, solver=solver, steps=steps, nfe=nfe, **{f"pw_{k}": v for k, v in ev["signal"].items()}, **{f"pw_{k}": v for k, v in ev["rhythm"].items()})
-        row = dict(solver=solver, solver_steps=steps, actual_NFE=nfe, hr_abs_err_bpm=summ["hr_abs_err"]["mean"], rpeak_f1=summ["rpeak_f1"]["mean"], rpeak_precision=summ["rpeak_precision"]["mean"], rpeak_recall=summ["rpeak_recall"]["mean"], rr_mae_ms=summ["rr_mae_ms"]["mean"], mae=summ["mae"]["mean"], rmse=summ["rmse"]["mean"], pcc=summ["pcc"]["mean"], qrs_width_err_ms=summ["qrs_width_err_ms"]["mean"], morph_corr=summ["morph_corr"]["mean"], hr_err_penguin_corrected=hr_c, hr_err_penguin_as_shipped=hr_s, hf_ratio_pred=float(hf_energy_ratio(pred).mean()), hf_ratio_target=hf_t, cond_gain_bpm=hr_wrong - hr_right, hr_err_shuffled_right_target=hr_right, hr_err_shuffled_wrong_target=hr_wrong, seed_std_mean=seed_std, seed_pairwise_corr=float(np.mean(corrs)) if corrs else np.nan, latency_ms_batch64=eff["latency_ms_median"], samples_per_s=eff["samples_per_s"], peak_mem_MiB=eff.get("peak_mem_MiB"), n_windows=int(n), frac_windows_no_pred_beats=float(np.mean(ev["rhythm"]["n_pred_beats"] == 0)))
+        row = dict(solver=solver, solver_steps=steps, actual_NFE=nfe, hr_abs_err_bpm=summ["hr_abs_err"]["mean"], rpeak_f1=summ["rpeak_f1"]["mean"], rpeak_precision=summ["rpeak_precision"]["mean"], rpeak_recall=summ["rpeak_recall"]["mean"], rr_mae_ms=summ["rr_mae_ms"]["mean"], mae=summ["mae"]["mean"], rmse=summ["rmse"]["mean"], pcc=summ["pcc"]["mean"], qrs_width_err_ms=summ["qrs_width_err_ms"]["mean"], morph_corr=summ["morph_corr"]["mean"], hr_err_penguin_corrected=hr_c, hr_err_penguin_as_shipped=hr_s, amp_ratio=float(amp.mean()), amp_ratio_median=float(np.median(amp)), hf_ratio_pred=float(hf_energy_ratio(pred).mean()), hf_ratio_target=hf_t, cond_gain_bpm=hr_wrong - hr_right, hr_err_shuffled_right_target=hr_right, hr_err_shuffled_wrong_target=hr_wrong, seed_std_mean=seed_std, seed_pairwise_corr=float(np.mean(corrs)) if corrs else np.nan, latency_ms_batch64=eff["latency_ms_median"], samples_per_s=eff["samples_per_s"], peak_mem_MiB=eff.get("peak_mem_MiB"), n_windows=int(n), frac_windows_no_pred_beats=float(np.mean(ev["rhythm"]["n_pred_beats"] == 0)))
         rows.append(row)
         full["arms"][key] = {"row": row, "summary": summ, "efficiency": eff, "shuffle": {"hr_right": hr_right, "hr_wrong": hr_wrong, "morph_corr_right": float(np.nanmean(rm_right["morph_corr"])), "rpeak_f1_right": float(np.nanmean(rm_right["rpeak_f1"]))}, "diversity": {"n_seeds": len(sp), "n_windows": m, "std_mean": seed_std, "pairwise_corr": corrs}}
-        print(f"{solver:5s} steps={steps:2d} NFE={nfe:2d} | HRerr {row['hr_abs_err_bpm']:.2f} F1 {row['rpeak_f1']:.3f} RR {row['rr_mae_ms']:.1f}ms RMSE {row['rmse']:.3f} PCC {row['pcc']:.3f} QRS {row['qrs_width_err_ms']:.1f}ms morph {row['morph_corr']:.3f} | up-corr {hr_c:.2f} up-ship {hr_s:.2f} | gain {row['cond_gain_bpm']:.2f} seedstd {seed_std:.3f} | {eff['latency_ms_median']:.0f} ms", flush=True)
+        print(f"{solver:5s} steps={steps:2d} NFE={nfe:2d} | HRerr {row['hr_abs_err_bpm']:.2f} amp {row['amp_ratio']:.2f} F1 {row['rpeak_f1']:.3f} RR {row['rr_mae_ms']:.1f}ms RMSE {row['rmse']:.3f} PCC {row['pcc']:.3f} QRS {row['qrs_width_err_ms']:.1f}ms morph {row['morph_corr']:.3f} | up-corr {hr_c:.2f} up-ship {hr_s:.2f} | gain {row['cond_gain_bpm']:.2f} seedstd {seed_std:.3f} | {eff['latency_ms_median']:.0f} ms", flush=True)
 
     with open(out / "nfe_curve.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=CSV_FIELDS)

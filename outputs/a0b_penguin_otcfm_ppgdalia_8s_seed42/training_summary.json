@@ -1,0 +1,13 @@
+{
+ "exp_name": "a0b_penguin_otcfm_ppgdalia_8s_seed42",
+ "epochs_run": 85,
+ "best_epoch": 64,
+ "selection_criterion": "fixed_cfm",
+ "best_selection_metric": 0.16445091611826768,
+ "best_val_mae_batchmean": null,
+ "early_stopped": true,
+ "total_train_time_s": 6365.350902552484,
+ "peak_mem_MiB": 18409.638671875,
+ "finished": "2026-08-25T18:45:53",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/checkpoint_best.pt"
+}

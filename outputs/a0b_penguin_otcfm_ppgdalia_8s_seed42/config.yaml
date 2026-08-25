@@ -1,0 +1,86 @@
+exp_name: a0b_penguin_otcfm_ppgdalia_8s_seed42
+arm: A0
+model: PENGUIN (upstream class, unmodified) Flow-SSM/S5 + OT-CFM
+model_cfg:
+  n_step: 25
+  sample_rate: 128
+  h_dim: 128
+  ssm_block_num: 4
+  ssm_ratio: 2.0
+  mlp_ratio: 2.0
+dataset: PPG-DaLiA
+window_s: 8
+sample_rate: 128
+samples_per_window: 1024
+preprocess:
+  ppg:
+    bandpass: true
+    freq_range:
+    - 0.5
+    - 4
+    zscore: true
+    normalize: true
+  ecg:
+    bandpass: true
+    freq_range:
+    - 0.5
+    - -1
+    zscore: true
+    normalize: true
+  per_window_stats: true
+  global_stats: null
+split:
+  manifest: data/manifests/split_p0_holdout_seed42.json
+  sha256: 11c154e471b65e15d245d221a14c74dcb6207d6a197b8f59901cdd67842284a4
+  protocol: P0-holdout
+  seed: 42
+  train:
+  - S1
+  - S3
+  - S4
+  - S5
+  - S6
+  - S7
+  - S8
+  - S9
+  - S10
+  - S12
+  - S13
+  - S14
+  - S15
+  val:
+  - S11
+  test:
+  - S2
+seed: 42
+optimizer: AdamW(betas=(0.9,0.999))
+lr: 0.001
+weight_decay: 0.01
+batch_size: 64
+epochs_max: 300
+early_stopping:
+  metric: val_cfm_fixed (deterministic CFM loss on 4 fixed (t,z) banks, seed 1000)
+  patience: 20
+  min_delta: 0.0001
+checkpoint: best val_cfm_fixed
+selection:
+  criterion: fixed_cfm
+  min_delta: 0.0001
+  n_val_banks: 4
+  bank_seed: 1000
+  bank_hash: 6b5c0139b34c2862a97858e8b7a4ccc012e75686e0748e7ae09a75e9d64a9e97
+  val_mae_every: 0
+  gen_diag_every: 5
+sampler_train_val:
+  solver: heun
+  steps: 25
+  nfe: 50
+precision:
+  dtype: float32
+  amp: false
+  bf16: false
+  tf32_matmul: false
+  cudnn_tf32: true
+deterministic:
+  cudnn_deterministic: true
+  use_deterministic_algorithms: True (warn_only)

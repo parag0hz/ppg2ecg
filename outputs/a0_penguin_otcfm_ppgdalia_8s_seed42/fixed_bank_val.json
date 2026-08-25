@@ -1,0 +1,16 @@
+{
+ "checkpoint": "outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/checkpoint_best.pt",
+ "epoch": 10,
+ "val_subject": [
+  "S11"
+ ],
+ "n_val": 1131,
+ "bank_hash": "6b5c0139b34c2862a97858e8b7a4ccc012e75686e0748e7ae09a75e9d64a9e97",
+ "val_cfm_fixed": 0.19044844288408597,
+ "per_bank": [
+  0.19067163324060954,
+  0.18880604474972457,
+  0.1887256118916074,
+  0.19359048165440243
+ ]
+}

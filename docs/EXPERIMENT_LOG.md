@@ -73,3 +73,27 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   clean rest, ~20 ms/min drift) → beat-aligned metrics invalid on this dataset (DATA_PROTOCOL §6, PREREGISTRATION §9).
 - Report: `docs/A0_PENGUIN_REPRODUCTION_REPORT.md`. Verdict: H1 confirmed (collapse at ≤ 2 NFE, morphology first at 4 NFE); GO for
   the objective-swap line with a weak-baseline caveat; next = A0-b (selection criterion + seeds) and a re-synchronised beat protocol.
+
+## 2026-08-25 — Session 2: A0-b baseline stabilisation → iMeanFlow gate
+- Pre-registered `docs/A0B_BASELINE_STABILIZATION_PREREGISTRATION.md` (only change vs A0: checkpoint selection = deterministic
+  fixed-bank val CFM loss, 4 banks seed 1000, min_delta 1e-4, patience 20; 50-NFE generation diagnostic every 5 epochs on 128 val
+  windows; stochastic val MAE no longer computed). Frozen in a local commit before launch.
+- A0 checkpoint scored post hoc on the same fixed banks: **val_cfm_fixed = 0.19045** (bank hash `6b5c0139…`) — the reference for
+  the "was A0 under-trained?" rule.
+- A0-b launched (`scripts/run_a0b.sh`, seed 42, identical data/split/model/optimizer). iMeanFlow paper/code *audit* workflow
+  started in parallel (read-only: locate + verify official sources, pinned clone under `external/iMeanFlow`); implementation waits
+  for the mechanical gate.
+- iMeanFlow audit (`docs/IMEANFLOW_AUDIT.md`): papers verified (MF arXiv:2505.13447 NeurIPS'25 oral; iMF arXiv:2512.02012 v2 CVPR'26
+  highlight), official repo `Lyy-iiis/imeanflow` verified and cloned read-only to `external/iMeanFlow` @ `bf60cd7`. Core: `V = u + (t−r)·sg(du/dt)`,
+  JVP tangent = model's own v, v-loss with adaptive weighting (p=1, c=0.01), (t,r) logit-normal(−0.4,1), 50 % r=t, 1-NFE `z0 = z1 − u(z1,0,1)`.
+  Feasibility: forward-mode `torch.func.jvp` works through the unmodified S5 backbone and matches finite differences (CPU, O(ε²)).
+- **Git authorship fix (2026-08-25 18:05):** the author e-mail used for the first commits (an e-mail registered to an unrelated account) is linked on GitHub to
+  a different account (an unrelated third-party account), so GitHub attributed our commits to it. History was rewritten (author/committer →
+  `parag0hz <131474134+parag0hz@users.noreply.github.com>`, trees byte-identical, root commit `9fd4ce5` untouched) and force-pushed
+  with lease; the pre-rewrite history is kept locally as branch `backup/main-before-author-fix`. **SHA mapping (old → new):**
+  `6330fa2 → a15b354` (session 0), `6e5a4f1 → f2d814b` (merge; A0 provenance.json records `6e5a4f1`), `55e2f17 → 20cc6cd` (A0 results),
+  `8998371 → 1ae155c` (A0-b freeze; A0-b provenance.json records `8998371`). Provenance files are left as written — resolve old SHAs
+  via the backup branch or this table.
+- **A0-b done (18:46)**: 85 epochs, best 65, 1.77 h, val_cfm_fixed 0.1645 (A0 ckpt 0.1904 → A0 under-trained: YES). Test S2, 50 NFE:
+  HR err **8.08** bpm (A0 10.99), morph 0.650 (0.662), amp 0.95 (0.83), cond gain 5.69 (3.84), RMSE 0.435. 1 NFE Euler: HR 41.96, morph 0.217,
+  amp 0.145, gain 0.24 → all four collapse criteria fail → **gate GO** (`outputs/a0b_…/comparison.json`, `docs/A0B_BASELINE_STABILIZATION_REPORT.md`).

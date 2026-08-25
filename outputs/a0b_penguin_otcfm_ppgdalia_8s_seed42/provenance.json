@@ -1,0 +1,303 @@
+{
+ "created": "2026-08-25T16:59:40",
+ "git": {
+  "commit": "89983716e68b11a077a600df70eb3ad9f64e8ad7",
+  "branch": "main",
+  "dirty_files": []
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": [],
+  "expected": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "url": "https://github.com/Neurogica/PENGUIN.git"
+ },
+ "dataset": {
+  "raw_checksums_sha256": [
+   "5772387956e34e2e2dc4c2ddbeb98cb70569d5112fa4c13ee98a17680b84a1f3  ppg+dalia.zip",
+   "bed48c8e38bdaed8fbd5e3f662b49d240119a98dfe4619e4902931a0335f4e4f  PPG-DaLiA/PPG_FieldStudy/S10/S10.pkl",
+   "5c5c4c0308478df56e2f464810fa949abbf25450c9c934edc5cb00beb7cecff5  PPG-DaLiA/PPG_FieldStudy/S11/S11.pkl",
+   "a7a5c802f0005a633c86956fe92dfe60b350f80b27bd2509880e50582dedd406  PPG-DaLiA/PPG_FieldStudy/S12/S12.pkl",
+   "7ca31b91bf1825083707a4be1ce65612d864c7effa077d6780154419df5d9813  PPG-DaLiA/PPG_FieldStudy/S13/S13.pkl",
+   "c192b9090ac3c0107000d8424c038ccd11292cded1f6c46c97e2cae85c725392  PPG-DaLiA/PPG_FieldStudy/S14/S14.pkl",
+   "1f080cbce67be7a0638787e745c3a73a50bab7db4be0da3b6c84288d42aa3497  PPG-DaLiA/PPG_FieldStudy/S15/S15.pkl",
+   "e4a35dfe711368d447a2a383e5dd98191594928ccb2ca8deeeda06cd6e628c14  PPG-DaLiA/PPG_FieldStudy/S1/S1.pkl",
+   "5655a60bbc7c5e560f64bc238218284613c9528ae9e3c5517946d476fa8e4399  PPG-DaLiA/PPG_FieldStudy/S2/S2.pkl",
+   "0fe923d3a7e7fd60e5245e655a9c1d0a1c2c106ea3128e2dfe79ba0f2266f799  PPG-DaLiA/PPG_FieldStudy/S3/S3.pkl",
+   "539c0f112507a5b8b21d90f648f932ad4ba8acaeb76fb3b06d1d06b033cafda2  PPG-DaLiA/PPG_FieldStudy/S4/S4.pkl",
+   "e9593717aa524e4c0ab37ba5603f7e6190fff1385251d5a9615342f38f55afb1  PPG-DaLiA/PPG_FieldStudy/S5/S5.pkl",
+   "c9fece7217d0ffd648e55ec9d139237bfb37b9958efb6cff072d438e46ba34e4  PPG-DaLiA/PPG_FieldStudy/S6/S6.pkl",
+   "ea669d42137d1a90127bb7be3c5c5613f636a00814cd04c604c42586868b0390  PPG-DaLiA/PPG_FieldStudy/S7/S7.pkl",
+   "4072e197ff7ddbd184d721b6643215dd7101af93e1a9c00cbcca7827c94b4969  PPG-DaLiA/PPG_FieldStudy/S8/S8.pkl",
+   "68853d6ae4cc5d22dcf0b3a693a367305a6c28287cf5248a99c6f0f49c65cf56  PPG-DaLiA/PPG_FieldStudy/S9/S9.pkl"
+  ],
+  "processed_manifest": {
+   "built": "2026-08-25T15:10:00",
+   "segment_len_s": 8,
+   "resample_rate": 128,
+   "samples_per_window": 1024,
+   "total_windows": 16181
+  },
+  "processed_files": {
+   "S1": {
+    "path": "data/processed/v0_8s/S1.npz",
+    "n_windows": 1151,
+    "sha256": "60489ddf6bff0172106c2224b428fd163de61a7958f03a9a1c648c36867867e1",
+    "raw_sha256": "e4a35dfe711368d447a2a383e5dd98191594928ccb2ca8deeeda06cd6e628c14"
+   },
+   "S2": {
+    "path": "data/processed/v0_8s/S2.npz",
+    "n_windows": 1025,
+    "sha256": "f0acfac8606dad5be31e2210b455bd0bae88cd1294af76dc77ae232eabed871f",
+    "raw_sha256": "5655a60bbc7c5e560f64bc238218284613c9528ae9e3c5517946d476fa8e4399"
+   },
+   "S3": {
+    "path": "data/processed/v0_8s/S3.npz",
+    "n_windows": 1092,
+    "sha256": "e58c469909f1871e8532e8dbb5d61fb117b79fc68a82938e5a390c5d3e60cbc7",
+    "raw_sha256": "0fe923d3a7e7fd60e5245e655a9c1d0a1c2c106ea3128e2dfe79ba0f2266f799"
+   },
+   "S4": {
+    "path": "data/processed/v0_8s/S4.npz",
+    "n_windows": 1143,
+    "sha256": "ac576bd03f7e6b9c6debf39301a6f4e38442ba15695ae51f44087c8b4c9a3338",
+    "raw_sha256": "539c0f112507a5b8b21d90f648f932ad4ba8acaeb76fb3b06d1d06b033cafda2"
+   },
+   "S5": {
+    "path": "data/processed/v0_8s/S5.npz",
+    "n_windows": 1163,
+    "sha256": "101e6839f7815beb9a010af53bec3effd9f3d3028ae4fcf0826c3eee7f503c79",
+    "raw_sha256": "e9593717aa524e4c0ab37ba5603f7e6190fff1385251d5a9615342f38f55afb1"
+   },
+   "S6": {
+    "path": "data/processed/v0_8s/S6.npz",
+    "n_windows": 656,
+    "sha256": "6e89e4ef5ccee1a3c39f984535c94314bf3c82fba9670aa9277bf1760ca69310",
+    "raw_sha256": "c9fece7217d0ffd648e55ec9d139237bfb37b9958efb6cff072d438e46ba34e4"
+   },
+   "S7": {
+    "path": "data/processed/v0_8s/S7.npz",
+    "n_windows": 1167,
+    "sha256": "dd3265087d20aa0eaad8d322797d097ee76251df07498ac5fa6c3edc278093f4",
+    "raw_sha256": "ea669d42137d1a90127bb7be3c5c5613f636a00814cd04c604c42586868b0390"
+   },
+   "S8": {
+    "path": "data/processed/v0_8s/S8.npz",
+    "n_windows": 1010,
+    "sha256": "f8daff0acf2aeb5c9fc37f36c9498d6aa913875b3e7a7c32e45d749b64e006ba",
+    "raw_sha256": "4072e197ff7ddbd184d721b6643215dd7101af93e1a9c00cbcca7827c94b4969"
+   },
+   "S9": {
+    "path": "data/processed/v0_8s/S9.npz",
+    "n_windows": 1070,
+    "sha256": "815ba37c89d03bc5482949cd54f6b00963088733cb170b280a9af2e2b181b3c7",
+    "raw_sha256": "68853d6ae4cc5d22dcf0b3a693a367305a6c28287cf5248a99c6f0f49c65cf56"
+   },
+   "S10": {
+    "path": "data/processed/v0_8s/S10.npz",
+    "n_windows": 1331,
+    "sha256": "771c6c4173b766f725eeb04f97725631b66ae240e7c5eb524b0a73974667250e",
+    "raw_sha256": "bed48c8e38bdaed8fbd5e3f662b49d240119a98dfe4619e4902931a0335f4e4f"
+   },
+   "S11": {
+    "path": "data/processed/v0_8s/S11.npz",
+    "n_windows": 1131,
+    "sha256": "8447b91f17fa05e6c7e4bfe39f81112c732ae6cc121f0e034cd8e2a4687d0c77",
+    "raw_sha256": "5c5c4c0308478df56e2f464810fa949abbf25450c9c934edc5cb00beb7cecff5"
+   },
+   "S12": {
+    "path": "data/processed/v0_8s/S12.npz",
+    "n_windows": 989,
+    "sha256": "e151f89fc5ecc98c1951d7db45f7d60a0f6abc2b1a190b0cd9b21b727bccb17d",
+    "raw_sha256": "a7a5c802f0005a633c86956fe92dfe60b350f80b27bd2509880e50582dedd406"
+   },
+   "S13": {
+    "path": "data/processed/v0_8s/S13.npz",
+    "n_windows": 1142,
+    "sha256": "9c8016c63547008680cd709fcfe39987dc2a017e3163595101c44cdd6463534b",
+    "raw_sha256": "7ca31b91bf1825083707a4be1ce65612d864c7effa077d6780154419df5d9813"
+   },
+   "S14": {
+    "path": "data/processed/v0_8s/S14.npz",
+    "n_windows": 1119,
+    "sha256": "d433a5007dab8cc69fa0d31bf05d1217eb79439db61a36dd49793844950be1d2",
+    "raw_sha256": "c192b9090ac3c0107000d8424c038ccd11292cded1f6c46c97e2cae85c725392"
+   },
+   "S15": {
+    "path": "data/processed/v0_8s/S15.npz",
+    "n_windows": 992,
+    "sha256": "28046ca19123a24ce1731e90de91e11803dbe98bbfbacc5e684cac81af3f54df",
+    "raw_sha256": "1f080cbce67be7a0638787e745c3a73a50bab7db4be0da3b6c84288d42aa3497"
+   }
+  }
+ },
+ "leakage_checks": {
+  "subject_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": [],
+    "train\u2229test": [],
+    "val\u2229test": []
+   },
+   "sizes": {
+    "train": 13,
+    "val": 1,
+    "test": 1
+   },
+   "missing": [],
+   "unexpected": []
+  },
+  "window_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": 0,
+    "train\u2229test": 0,
+    "val\u2229test": 0
+   },
+   "n_unique": {
+    "train": 14025,
+    "val": 1131,
+    "test": 1025
+   }
+  },
+  "windowwise_normalization_ppg": {
+   "ok": true,
+   "row": 8,
+   "max_abs_diff": 0.0
+  },
+  "windowwise_normalization_ecg": {
+   "ok": true,
+   "row": 1,
+   "max_abs_diff": 0.0
+  }
+ },
+ "n_windows": {
+  "train": 14025,
+  "val": 1131,
+  "test": 1025
+ },
+ "model_params": {
+  "total": 4568707,
+  "excluded": 264194,
+  "effective": 4304513
+ },
+ "hardware": {
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 5090",
+   "total_MiB": 32109.0,
+   "capability": [
+    12,
+    0
+   ]
+  },
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "cudnn": 91900,
+  "python": "3.13.9"
+ },
+ "config": {
+  "exp_name": "a0b_penguin_otcfm_ppgdalia_8s_seed42",
+  "arm": "A0",
+  "model": "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + OT-CFM",
+  "model_cfg": {
+   "n_step": 25,
+   "sample_rate": 128,
+   "h_dim": 128,
+   "ssm_block_num": 4,
+   "ssm_ratio": 2.0,
+   "mlp_ratio": 2.0
+  },
+  "dataset": "PPG-DaLiA",
+  "window_s": 8,
+  "sample_rate": 128,
+  "samples_per_window": 1024,
+  "preprocess": {
+   "ppg": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     4
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "ecg": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     -1
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "per_window_stats": true,
+   "global_stats": null
+  },
+  "split": {
+   "manifest": "data/manifests/split_p0_holdout_seed42.json",
+   "sha256": "11c154e471b65e15d245d221a14c74dcb6207d6a197b8f59901cdd67842284a4",
+   "protocol": "P0-holdout",
+   "seed": 42,
+   "train": [
+    "S1",
+    "S3",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S10",
+    "S12",
+    "S13",
+    "S14",
+    "S15"
+   ],
+   "val": [
+    "S11"
+   ],
+   "test": [
+    "S2"
+   ]
+  },
+  "seed": 42,
+  "optimizer": "AdamW(betas=(0.9,0.999))",
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "batch_size": 64,
+  "epochs_max": 300,
+  "early_stopping": {
+   "metric": "val_cfm_fixed (deterministic CFM loss on 4 fixed (t,z) banks, seed 1000)",
+   "patience": 20,
+   "min_delta": 0.0001
+  },
+  "checkpoint": "best val_cfm_fixed",
+  "selection": {
+   "criterion": "fixed_cfm",
+   "min_delta": 0.0001,
+   "n_val_banks": 4,
+   "bank_seed": 1000,
+   "bank_hash": "6b5c0139b34c2862a97858e8b7a4ccc012e75686e0748e7ae09a75e9d64a9e97",
+   "val_mae_every": 0,
+   "gen_diag_every": 5
+  },
+  "sampler_train_val": {
+   "solver": "heun",
+   "steps": 25,
+   "nfe": 50
+  },
+  "precision": {
+   "dtype": "float32",
+   "amp": false,
+   "bf16": false,
+   "tf32_matmul": false,
+   "cudnn_tf32": true
+  },
+  "deterministic": {
+   "cudnn_deterministic": true,
+   "use_deterministic_algorithms": "True (warn_only)"
+  }
+ },
+ "failures": [],
+ "ok": true
+}

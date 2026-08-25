@@ -32,6 +32,27 @@ from ppg2ecg.utils.upstream import UPSTREAM_COMMIT, assert_upstream_pinned
 LOG_FIELDS = ["epoch", "train_loss_weighted", "train_mse", "train_u_abs", "train_dudt_abs", "val_imf_mse_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "diag_beats_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
 
 
+def batch_rounds(loader, steps_per_round):
+    """Yield one 'validation round' of batches at a time. steps_per_round=None: one round == one epoch (A0-b/A2 behaviour).
+    Otherwise a round ends after steps_per_round optimizer steps OR at the end of the epoch, whichever comes first
+    (A3/A4 pre-registration Part II §7: round = min(epoch, N steps)); the underlying epoch order/shuffle is unchanged."""
+    if not steps_per_round:
+        while True:
+            yield iter(loader)
+        return
+    it = iter(loader)
+    while True:
+        chunk = []
+        while len(chunk) < steps_per_round:
+            try:
+                chunk.append(next(it))
+            except StopIteration:
+                it = iter(loader)
+                if chunk:
+                    break
+        yield chunk
+
+
 def parse_args(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--exp-name", default="a2_imeanflow_s5_ppgdalia_8s_seed42")
@@ -65,6 +86,7 @@ def parse_args(argv=None):
     ap.add_argument("--bank-seed", type=int, default=1000)
     ap.add_argument("--gen-diag-every", type=int, default=1)
     ap.add_argument("--gen-diag-windows", type=int, default=128)
+    ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
@@ -139,13 +161,14 @@ def main(argv=None):
         return float(np.nanmean(rm["hr_abs_err"])), float(np.nanmean(rm["morph_corr"])), amp, beats
 
     try:
-        for epoch in range(state["epoch"], args.epochs):
+        round_iter = batch_rounds(train_loader, args.val_every_steps)
+        for epoch in range(state["epoch"], args.epochs):  # "epoch" == validation round (== true epoch unless --val-every-steps)
             t0 = time.perf_counter()
             if device.type == "cuda":
                 torch.cuda.reset_peak_memory_stats()
             net.train()
             lw, lm, ua, da = [], [], [], []
-            for ppg, ecg in train_loader:
+            for ppg, ecg in next(round_iter):
                 B = len(ppg)
                 opt.zero_grad()
                 acc = {"loss": 0.0, "mse": 0.0, "u": 0.0, "d": 0.0}

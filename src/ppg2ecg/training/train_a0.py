@@ -56,6 +56,27 @@ def git_sha(root: Path) -> dict:
     return {"commit": g("rev-parse", "HEAD"), "dirty_files": len([ln for ln in g("status", "--porcelain").splitlines() if ln.strip() and not ln.startswith("?? outputs")])}
 
 
+def batch_rounds(loader, steps_per_round):
+    """Yield one 'validation round' of batches at a time. steps_per_round=None: one round == one epoch (A0-b/A2 behaviour).
+    Otherwise a round ends after steps_per_round optimizer steps OR at the end of the epoch, whichever comes first
+    (A3/A4 pre-registration Part II §7: round = min(epoch, N steps)); the underlying epoch order/shuffle is unchanged."""
+    if not steps_per_round:
+        while True:
+            yield iter(loader)
+        return
+    it = iter(loader)
+    while True:
+        chunk = []
+        while len(chunk) < steps_per_round:
+            try:
+                chunk.append(next(it))
+            except StopIteration:
+                it = iter(loader)
+                if chunk:
+                    break
+        yield chunk
+
+
 def parse_args(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--exp-name", default="a0_penguin_otcfm_ppgdalia_8s_seed42")
@@ -74,6 +95,7 @@ def parse_args(argv=None):
     ap.add_argument("--ssm-ratio", type=float, default=2.0)
     ap.add_argument("--mlp-ratio", type=float, default=2.0)
     ap.add_argument("--sample-rate", type=int, default=128)
+    ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--limit-windows", type=int, default=None, help="smoke: cap windows per subject")
     ap.add_argument("--select", choices=["val_mae", "fixed_cfm"], default="val_mae", help="checkpoint/early-stopping criterion (A0: val_mae; A0-b: fixed_cfm)")
@@ -174,12 +196,13 @@ def main(argv=None):
         return float(np.nanmean(rm["hr_abs_err"])), float(np.nanmean(rm["morph_corr"])), amp
 
     try:
-        for epoch in range(state["epoch"], args.epochs):
+        round_iter = batch_rounds(train_loader, args.val_every_steps)
+        for epoch in range(state["epoch"], args.epochs):  # "epoch" == validation round (== true epoch unless --val-every-steps)
             t0 = time.perf_counter()
             torch.cuda.reset_peak_memory_stats() if device.type == "cuda" else None
             model.train()
             losses, maes = [], []
-            for ppg, ecg in train_loader:
+            for ppg, ecg in next(round_iter):
                 pred = model(ppg, target_signal=ecg)  # upstream train_flow: one-step Euler x1 estimate (monitor only)
                 loss = model.optimize(pred, ecg, opt)  # MSE(v_pred, x1 - x0); AdamW step
                 losses.append(loss.item())

@@ -78,6 +78,17 @@ def test_shapes_and_conditioning():
     assert torch.allclose(u[0], u2[0]) and torch.allclose(u[2], u2[2])  # ... and batch elements are independent
 
 
+def test_h_scale_resolves_interval():
+    """With the shared embedder, h must be visible to the network: u(z, t, h) changes with h and h_scale is applied."""
+    bb = tiny_backbone()
+    z, ppg, t = torch.randn(2, 1, 128), torch.randn(2, 1, 128), torch.full((2, 1), 0.8)
+    net = MeanFlowS5(bb, h_scale=1000.0)
+    u_a, u_b = net.u(z, ppg, t, torch.full((2, 1), 0.2)), net.u(z, ppg, t, torch.full((2, 1), 0.3))
+    assert not torch.allclose(u_a, u_b)
+    net1 = MeanFlowS5(bb, h_scale=1.0)
+    assert torch.equal(net1.u(z, ppg, t, torch.full((2, 1), 0.2)), MeanFlowS5(bb, h_scale=2.0).u(z, ppg, t, torch.full((2, 1), 0.1)))
+
+
 def test_backbone_parity_t_only():
     """cond_mode='t_only' must reproduce the upstream forward_step bit-exactly (same modules, same arithmetic)."""
     bb = tiny_backbone()
@@ -87,7 +98,8 @@ def test_backbone_parity_t_only():
 
 
 def test_jvp_matches_finite_differences_on_backbone():
-    net = MeanFlowS5(tiny_backbone())
+    """Finite differences need an unscaled h (h_scale=1) to be valid at eps=0.01; the AD paths are then cross-checked at h_scale=1000."""
+    net = MeanFlowS5(tiny_backbone(), h_scale=1.0)
     torch.manual_seed(2)
     B, T = 2, 256
     z, ppg = torch.randn(B, 1, T), torch.randn(B, 1, T)
@@ -105,6 +117,10 @@ def test_jvp_matches_finite_differences_on_backbone():
     assert float((dudt - fd).abs().max() / (fd.abs().max() + 1e-8)) < 5e-3
     _, dudt2, _ = compound_V(u_fn, z, t, r, v, jvp_mode="double_vjp")
     assert torch.allclose(dudt, dudt2, atol=1e-5)
+    net.h_scale = 1000.0  # production conditioning: forward-mode and double-VJP must still agree
+    _, d1, _ = compound_V(u_fn, z, t, r, v)
+    _, d2, _ = compound_V(u_fn, z, t, r, v, jvp_mode="double_vjp")
+    assert torch.allclose(d1, d2, atol=1e-4) and d1.abs().max() > 0
 
 
 def test_stop_gradient_on_jvp_term():

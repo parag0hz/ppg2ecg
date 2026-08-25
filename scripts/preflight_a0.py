@@ -101,7 +101,7 @@ def main():
     if args.objective == "imeanflow":
         from ppg2ecg.flow.imeanflow import imf_bank_hash, make_imf_banks
 
-        imf = {"objective": "improved_meanflow", "paper": "arXiv:2512.02012 v2 (CVPR 2026)", "official_code": "Lyy-iiis/imeanflow @ bf60cd7", "p_mean": -0.4, "p_std": 1.0, "data_proportion": 0.5, "norm_p": 1.0, "norm_eps": 0.01, "jvp": "torch.func.jvp (forward-mode)", "v_theta": "boundary u(z,t,t)", "cond": "E(t)+E(h) shared embedder", "bank_hash": imf_bank_hash(make_imf_banks(len(arrays["val"]), T, args.n_val_banks, args.bank_seed)), "selection": "fixed_imf_mse"}
+        imf = {"objective": "improved_meanflow", "paper": "arXiv:2512.02012 v2 (CVPR 2026)", "official_code": "Lyy-iiis/imeanflow @ bf60cd7", "p_mean": -0.4, "p_std": 1.0, "data_proportion": 0.5, "norm_p": 1.0, "norm_eps": 0.01, "jvp": "torch.func.jvp (forward-mode)", "v_theta": "boundary u(z,t,t)", "cond": "E(t)+E(1000*h) shared embedder (h_scale=1000)", "bank_hash": imf_bank_hash(make_imf_banks(len(arrays["val"]), T, args.n_val_banks, args.bank_seed)), "selection": "fixed_imf_mse"}
         banks_h = imf["bank_hash"]
     # model
     model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate)

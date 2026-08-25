@@ -143,7 +143,8 @@ def main():
     if (d_imf / "analysis.md").exists():
         for m in re.finditer(r"^## (.+?)\n(.*?)(?=^## |\Z)", (d_imf / "analysis.md").read_text(), re.S | re.M):
             analysis[m.group(1).strip()] = m.group(2).strip()
-    nar = lambda k: analysis.get(k, "_(to be written after results are inspected)_")  # noqa: E731
+    def nar(k, default="_(to be written after results are inspected)_"):
+        return analysis.get(k, default)
     L = ["# A2 Improved MeanFlow Report", "", f"Generated from `{args.imf}/` vs `{args.otcfm}/`. Pre-registration: `docs/A2_IMEANFLOW_PREREGISTRATION.md`; audit: `docs/IMEANFLOW_AUDIT.md`.", ""]
     L += ["## Research question", "> Can Improved MeanFlow make the long noise→ECG transport jump in one network evaluation while preserving the physiological structure that OT-CFM needs many evaluations to generate?", ""]
     L += ["## Frozen protocol", "Identical to A0-b (data, 8 s windows, split, seed 42, backbone with 4,568,707 parameters, PPG conditioning, AdamW 1e-3 / wd 0.01 / effective batch 64, fp32, patience 20 / min_delta 1e-4 on a deterministic fixed-bank metric). Only the objective/parameterisation changed: OT-CFM → Improved MeanFlow (`V = u + (t−r)·sg(du/dt)`, v-loss with adaptive weighting, (t,r) logit-normal(−0.4,1), 50 % r=t, boundary v_θ, conditioning E(t)+E(h) via the backbone's single embedder). Gradient accumulation 2 × 32 for memory (prereg §8).", ""]

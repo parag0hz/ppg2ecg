@@ -102,3 +102,14 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   Fixed by importing `ppg2ecg.utils.mkl_warmup` (a numpy LAPACK call) before torch in every entry point (docs/ENVIRONMENT.md). All A0/A0-b results were produced before the incident and are unaffected (same threaded-MKL numerics).
 - iMeanFlow implemented (`src/ppg2ecg/flow/imeanflow.py`, 10 unit tests incl. analytic identity + JAX port of the official objective,
   all passing); adversarial review workflow launched; A2 training loop written (`ppg2ecg.training.train_a2`).
+- **A2 launched (19:19)** at freeze commit `5276bb9` (preflight OK: same split/data/backbone, iMF bank hash `0f15f0d2…`, seed 42).
+  Implementation review (multi-agent, adversarial) found no substantive deviation from the official objective; applied its
+  recommendations before launch: body-level jax skip, validation JVP without autograd graph, bank-length assert, random row
+  assignment of the r = t half in validation banks, 1-NFE diagnostics every epoch, non-finite checks on unweighted MSE/JVP,
+  gradient-parity test vs the official JAX objective (float64, 1e-9). Memory: forward-mode JVP ≈ 0.51 GiB/sample ⇒ effective
+  batch 64 via 2 × 32 accumulation (prereg §8).
+- Implementation review (15 agents, 4 lenses + adversarial verification): 5 confirmed (2× jax-skip decorator — fixed; validation
+  `enable_grad` — fixed; validation-bank r=t rows fixed to the first half — fixed by random row assignment; **shared-embedder
+  `E(t)+E(h)` may under-resolve the interval `h` early in training** — kept as pre-registered, parameter-count constraint; logged as
+  a candidate failure cause F7 for the taxonomy and as a limitation), 6 refuted (stale premises: driver/eval scripts exist,
+  batch-64 infeasibility handled by accumulation, verdict rules made exhaustive), 21 low-severity notes.

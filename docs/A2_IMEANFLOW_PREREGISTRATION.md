@@ -16,8 +16,10 @@ evaluation code, paired noise seed 0, PPG-shuffle derangement seed 1, quantile e
 
 ## 3. The only change: training objective / flow parameterisation (`src/ppg2ecg/flow/imeanflow.py`, `docs/IMEANFLOW_AUDIT.md`)
 - Convention: t = 1 noise, t = 0 data; `z_t = (1−t)x + t e`, `v = e − x`.
-- Network `u_θ(z, PPG, t, h = t − r)`: the unmodified backbone with conditioning vector `E(t) + E(h)` from its single existing
-  timestep embedder (shared weights; **parameter count unchanged**).
+- Network `u_θ(z, PPG, t, h = t − r)`: the unmodified backbone with conditioning vector `E(t) + E(1000·h)` from its single existing
+  timestep embedder (shared weights; **parameter count unchanged**). *Amended before any result (see §9): with `E(t) + E(h)` the
+  interval is almost invisible to the network (review finding); scaling `h` by 1000 — the DiT integer-timestep convention for the same
+  sinusoidal embedder — makes t, h and r fully decodable without new parameters.*
 - Loss (iMF Eq. 12 / Alg. 1, official `imf.py` L347-393 without CFG/labels/aux-head):
   `V = u_θ(z_t, r, t) + (t − r)·sg[JVP(u_θ; (v_θ, 0, 1))]`, `v_θ = u_θ(z_t, t, t)` (boundary condition, gradient-free),
   `loss = mean_b[ Σ_T (V − (e − x))² · sg(1/(Σ_T(V − (e−x))² + 0.01)^1) ]`.
@@ -71,3 +73,13 @@ hyper-parameter search, re-synchronisation of PPG-DaLiA, cherry-picked examples.
 - **MKL warm-up** (`ppg2ecg.utils.mkl_warmup`) imported before torch in all entry points (docs/ENVIRONMENT.md incident of 19:00).
 - Numerics: fp32, `torch.func.jvp`, deterministic-algorithms warn-only, same shuffle generator seed as A0/A0-b; `(t, r)` from a
   separate CPU generator (seed 43); `e` from the CUDA RNG (seed 42).
+
+## 9. Amendments (all before any A2 result was examined)
+- **2026-08-25 19:35 — conditioning `E(t)+E(h)` → `E(t)+E(1000·h)`.** The adversarial implementation review showed that with the
+  shared embedder and `h ∈ [0,1]` the conditioning vector is 99.3 % explained by `t + h` alone (linear decodability of `r`: R² = 0.18;
+  official h-only design: 1.00), i.e. the MeanFlow interval would be nearly invisible to the network during training — a confound
+  against the objective under test. Measured on the backbone's embedder (fresh and A0-b weights): scaling `h` by 1000 gives
+  R² = 1.00 for t, h and r with **no added parameters**. The first A2 run (h_scale = 1) was stopped after epoch 1 (its log is kept in
+  `outputs/aborted/a2_hscale1_aborted_epoch1/`; epoch-1 diagnostic HR 24.5 / morph 0.41 / amp 0.81 — no test-set result was
+  produced or examined). Alternative considered and rejected for the frozen parameter count: a second embedder for h (+49 k params,
+  the MeanFlow paper's design).

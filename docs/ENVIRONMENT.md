@@ -46,6 +46,7 @@ then `pip install neurokit2==0.2.12 biosppy peakutils thop wandb einops pytest r
 | thop | 0.1.1.post2209072238 | same | only for upstream `summarize()` |
 | wandb | 0.28.2 | 0.21.4 | imported at top of upstream `train.py` even when disabled |
 | einops, pytest, ruff | 0.8.2 / 8.4.2 / – | – | ours only |
+| jax[cpu] | 0.11.1 | – | optional; only `tests/test_imeanflow.py::test_parity_with_official_jax_objective` (skipped if absent) |
 
 Known differences vs upstream's locked environment: Python 3.13 (upstream ≥ 3.12), torch 2.11 vs 2.8. Numerics of
 FFT resampling / filtfilt are scipy-version dependent at the 1e-12 level only.

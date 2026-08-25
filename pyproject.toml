@@ -23,7 +23,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff"]
+dev = ["pytest>=8", "ruff", "jax[cpu]"]  # jax: optional, only for the official-objective parity test (skipped if absent)
 logging = ["wandb"]
 
 [build-system]

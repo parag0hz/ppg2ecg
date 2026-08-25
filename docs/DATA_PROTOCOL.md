@@ -60,3 +60,18 @@ Consequences that the evaluation must respect:
 - Official upstream preprocessing ran end-to-end (`scripts/run_upstream_preprocess.sh`, 39 s) →
   `data/processed/upstream/PPG-DaLiA/subject{0..14}.pkl` (subject{i} = S{i+1}); upstream tree stays clean.
 - `scripts/check_processed_parity.py`: our `ppg2ecg.data` pipeline vs upstream-written arrays — see docs/EXPERIMENT_LOG.md.
+
+## 6. Beat-level synchronisation of wrist PPG vs chest ECG (found 2026-08-25 during A0 evaluation)
+`scripts/diagnose_dalia_sync.py` measures, for every dataset-provided R-peak, the delay to the next wrist-PPG pulse peak.
+In clean, motionless minutes the delay is tight (within-minute IQR 65–130 ms) but its value is **800–900 ms for S2/S11 and
+500–640 ms for S1** (a physiological wrist pulse-arrival time is ~250–400 ms), and it **drifts by ~20 ms/min** (S1: 493 → 640 ms
+over 6 min), wrapping through the RR interval repeatedly over the 2 h recordings (per-minute medians span 100–900 ms; figure
+`outputs/a0_…/figures/dalia_sync.png`). Interpretation: the E4 (wrist) and RespiBAN (chest) streams are aligned at the
+second level only, with relative clock drift — adequate for the dataset's original HR-estimation purpose, **not for beat-level
+PPG→ECG alignment**. Consequences for this project:
+- beat-aligned metrics on raw DaLiA windows (R-peak F1 at 50 ms, PCC, beat-matched RR MAE) measure a data artefact, not the
+  model; they are reported but must not be used as quality criteria on this dataset;
+- alignment-invariant metrics (HR error, RR-interval statistics, beat-template morphology after per-beat alignment, QRS width)
+  remain valid;
+- any future beat-level protocol needs an explicit, documented re-synchronisation step (per-segment lag estimated from the
+  ECG/PPG pair) — a protocol change relative to PENGUIN that must be pre-registered before use.

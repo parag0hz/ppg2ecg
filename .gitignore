@@ -17,8 +17,13 @@ outputs/a0_*/*
 !outputs/a0_*/config.yaml
 !outputs/a0_*/split_manifest.json
 !outputs/a0_*/training_log.csv
+!outputs/a0_*/training_summary.json
+!outputs/a0_*/train_meta.json
 !outputs/a0_*/metrics.json
 !outputs/a0_*/nfe_curve.csv
+!outputs/a0_*/diagnostics.json
+!outputs/a0_*/dalia_sync_diagnostic.json
+!outputs/a0_*/analysis.md
 !outputs/a0_*/figures/
 outputs/a0_*/figures/*
 !outputs/a0_*/figures/*.png

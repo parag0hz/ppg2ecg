@@ -36,6 +36,13 @@ bash scripts/download_dalia.sh && .venv/bin/python scripts/verify_dalia.py
 .venv/bin/python -m pytest
 .venv/bin/python scripts/smoke_test_penguin.py --full
 .venv/bin/python scripts/make_split_manifest.py && .venv/bin/python scripts/run_leakage_checks.py
-# baseline reproduction (arm A0) — not run in session 0:
+# arm A0 (PENGUIN, PPG-DaLiA, 8 s, seed 42) with our deterministic split — preflight gate + background training:
+.venv/bin/python scripts/build_processed_v0.py --segment-len 8
+bash scripts/run_a0.sh                      # writes outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/{provenance.json,training_log.csv,checkpoint_best.pt}
+.venv/bin/python scripts/eval_a0_nfe_curve.py --out-dir outputs/a0_penguin_otcfm_ppgdalia_8s_seed42   # NFE curve, metrics, figures
+.venv/bin/python scripts/make_a0_report.py  # docs/A0_PENGUIN_REPRODUCTION_REPORT.md
+# the official upstream loop (glob-order split) is still available for comparison:
 bash scripts/run_upstream_preprocess.sh && bash scripts/run_upstream_train.sh
 ```
+
+Cloning: `git clone --recurse-submodules https://github.com/parag0hz/ppg2ecg.git` (upstream PENGUIN is a submodule pinned at `6cd70cd`).

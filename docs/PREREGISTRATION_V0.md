@@ -111,4 +111,9 @@ uniform), classifier-free guidance, any use of the dataset's reference `rpeaks` 
 - 2026-08-25 (before training): §6 window-length / split / seed decisions added from the audit. A0 is trained with our own loop
   (`ppg2ecg.training.train_a0`) that mirrors upstream `train.py` step-for-step but reads the manifest split; the upstream model
   class is imported unchanged. Val/test sampling runs under `torch.no_grad()` (numerically identical; upstream omits it).
+- 2026-08-25 (after A0 evaluation, before any decision on A2): the PPG↔ECG streams in PPG-DaLiA are not beat-synchronised
+  (`docs/DATA_PROTOCOL.md` §6). The §5 rule "R-peak F1 drop > 0.02" cannot discriminate models on this dataset (F1 ≈ 0.14 even
+  at 50 NFE, random phase). No threshold is changed; instead the F1 criterion is flagged **not interpretable on raw DaLiA**, and the
+  remaining primary metrics (HR abs error, beat-aligned template correlation — computed on matched beats, alignment-invariant —
+  and QRS-width error) carry the decision. A beat-level protocol (re-synchronised windows) will be pre-registered separately.
 Log entries go to `docs/EXPERIMENT_LOG.md`.

@@ -1,0 +1,33 @@
+{
+ "split": {
+  "protocol": "P0-holdout",
+  "seed": 42,
+  "train": [
+   "S1",
+   "S3",
+   "S4",
+   "S5",
+   "S6",
+   "S7",
+   "S8",
+   "S9",
+   "S10",
+   "S12",
+   "S13",
+   "S14",
+   "S15"
+  ],
+  "val": [
+   "S11"
+  ],
+  "test": [
+   "S2"
+  ]
+ },
+ "manifest_sha256": "11c154e471b65e15d245d221a14c74dcb6207d6a197b8f59901cdd67842284a4",
+ "n_windows": {
+  "train": 14025,
+  "val": 1131,
+  "test": 1025
+ }
+}

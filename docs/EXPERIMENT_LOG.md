@@ -46,3 +46,30 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
 - Built `data/processed/v0_8s/` (ours, 16,181 windows, per-file sha256 in `MANIFEST.json`) and `data/processed/upstream_8s/`
   (unmodified upstream `preprocess.py` with `preprocess.segment_len=8`) for parity checking.
 - `external/PENGUIN` registered as a git **submodule** pinned at `6cd70cd` (existing clone reused; nothing deleted).
+- GitHub: `origin = https://github.com/parag0hz/ppg2ecg.git`. The remote was NOT empty (GitHub "Initial commit" `9fd4ce5` with a 9-byte
+  README). Local snapshot committed as `6330fa2` ("session 0: audit PENGUIN and prepare reproducible baseline", 67 files, 0.20 MB,
+  gitlink `external/PENGUIN` @ 6cd70cd), then merged with the remote history (`--allow-unrelated-histories`, README conflict → local
+  kept) as `6e5a4f1`, pushed to `main` (no force). Author identity set repo-locally (an e-mail later found to belong to an unrelated account); push used the
+  existing `gh` login as a one-off credential helper (`git -c credential.helper='!gh auth git-credential'`), no config/credential created.
+- A0 preflight (`scripts/preflight_a0.py`) PASSED at commit `6e5a4f1` (0 dirty): subject/window/normalisation leakage checks OK,
+  8 s @ 128 Hz, seed 42, 4,568,707 params, RTX 5090. Training launched via `scripts/run_a0.sh` → `outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/`.
+- A0 training finished 16:08: **21 epochs, early-stopped (patience 10), best epoch 11** (val MAE batch-mean 0.2989 on S11 with 50-NFE Heun
+  samples), 2,997 s total (≈143 s/epoch), peak 18.4 GiB. Val MAE is noisy epoch-to-epoch (fresh sampling noise each epoch; e.g. 0.332 →
+  0.435 → 0.369 → …), so upstream-style early stopping is partly driven by sampling noise — recorded as a limitation. Train CFM loss
+  0.339 → 0.172 (still decreasing at stop). Evaluation (`scripts/eval_a0_nfe_curve.py`) launched on `checkpoint_best.pt`.
+- A0 evaluation (`scripts/eval_a0_nfe_curve.py`, checkpoint_best = epoch 11, test S2, 1025 × 8 s windows, paired noise seed 0):
+  | solver | steps | NFE | HR err (bpm) | R-F1 | RR MAE ms | RMSE | PCC | QRS err ms | morph corr | ms / batch 64 |
+  |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+  | Heun | 25 | 50 | **10.99** | 0.141 | 34.9 | 0.472 | 0.002 | 33.7 | 0.662 | 4175 |
+  | Heun | 10 | 20 | 11.59 | 0.140 | 35.2 | 0.471 | 0.002 | 33.7 | 0.664 | 1652 |
+  | Heun | 5 | 10 | 12.25 | 0.138 | 36.0 | 0.466 | 0.002 | 33.1 | 0.639 | 825 |
+  | Heun | 2 | 4 | 11.17 | 0.146 | 34.6 | 0.444 | 0.001 | 33.9 | **0.475** | 329 |
+  | Heun | 1 | 2 | **36.32** | 0.087 | 37.3 | 0.479 | −0.001 | 33.9 | 0.230 | 165 |
+  | Euler | 1 | 1 | **39.22** | 0.087 | 33.9 | 0.295 | 0.007 | 32.8 | 0.136 | 82 |
+  Upstream `HeartRateError` at 50 NFE: corrected 11.74 bpm, as-shipped (diagnostic) 25.14 bpm. Paper: 15.64 → **PASS** (≤ 17.2).
+- Diagnostics (`scripts/diagnose_a0_alignment.py`, `scripts/diagnose_dalia_sync.py`): beat counts match (10.5/10.5 per window) but
+  prediction↔target lag is uniform over ±0.5 s (F1 0.14 even after per-window best shift → 0.27); predicted-vs-reference HR r = 0.40
+  with regression to the mean; **raw PPG-DaLiA wrist/chest streams are not beat-synchronised** (pulse-arrival delay 800–900 ms in
+  clean rest, ~20 ms/min drift) → beat-aligned metrics invalid on this dataset (DATA_PROTOCOL §6, PREREGISTRATION §9).
+- Report: `docs/A0_PENGUIN_REPRODUCTION_REPORT.md`. Verdict: H1 confirmed (collapse at ≤ 2 NFE, morphology first at 4 NFE); GO for
+  the objective-swap line with a weak-baseline caveat; next = A0-b (selection criterion + seeds) and a re-synchronised beat protocol.

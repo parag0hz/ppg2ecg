@@ -1,0 +1,5 @@
+model,total,effective
+PENGUIN OT-CFM,4568707,4304513
+iMeanFlow (same backbone),4568707,4304513
+A5 regressor (state token),3990787,2907393
+A6 full-backbone MSE,4568707,4304513

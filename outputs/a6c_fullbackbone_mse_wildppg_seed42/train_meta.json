@@ -1,0 +1,99 @@
+{
+ "exp_name": "a6c_fullbackbone_mse_wildppg_seed42",
+ "objective": "mse_regression",
+ "model": "S5FullBackboneRegressor",
+ "model_cfg": {
+  "sample_rate": 128,
+  "h_dim": 128,
+  "ssm_block_num": 4,
+  "ssm_ratio": 2.0,
+  "mlp_ratio": 2.0,
+  "x_const": 0.1,
+  "t_const": 0.5,
+  "cond_scale": 0.05
+ },
+ "args": {
+  "exp_name": "a6c_fullbackbone_mse_wildppg_seed42",
+  "out_dir": "outputs/a6c_fullbackbone_mse_wildppg_seed42",
+  "processed": "data/processed/wildppg_8s",
+  "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+  "seed": 42,
+  "epochs": 300,
+  "patience": 20,
+  "min_delta": 0.0001,
+  "batch_size": 64,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "h_dim": 128,
+  "blocks": 4,
+  "ssm_ratio": 2.0,
+  "mlp_ratio": 2.0,
+  "sample_rate": 128,
+  "val_every_steps": 220,
+  "val_subsample": 4096,
+  "gen_diag_every": 1,
+  "gen_diag_windows": 128,
+  "model": "full_backbone",
+  "x_const": "0.1",
+  "t_const": 0.5,
+  "cond_scale": 0.05,
+  "resume": false,
+  "limit_windows": null
+ },
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "n_train_windows": 293271,
+ "n_val_windows": 3785,
+ "T": 1024,
+ "split": {
+  "protocol": "A4-wildppg-holdout",
+  "seed": 42,
+  "rule": "sorted participant ids -> random.Random(42).sample -> val = first 2, test = next 2 (PENGUIN shape 16//8), train = remaining 12",
+  "train": [
+   "e61",
+   "fex",
+   "l38",
+   "n31",
+   "ngh",
+   "p5d",
+   "p9p",
+   "qm9",
+   "trh",
+   "tz8",
+   "u7y",
+   "w4p"
+  ],
+  "val": [
+   "an0",
+   "k2s"
+  ],
+  "test": [
+   "kjd",
+   "ssx"
+  ]
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": []
+ },
+ "git": {
+  "commit": "f4a115f9dae02cf27d57c357de99d01a7ecee728",
+  "dirty_files": 0
+ },
+ "device": "cuda",
+ "torch": "2.11.0+cu130",
+ "selection": {
+  "criterion": "val_mse (deterministic)",
+  "min_delta": 0.0001,
+  "patience": 20,
+  "val_subsample": 4096,
+  "val_every_steps": 220
+ },
+ "started": "2026-08-27T03:09:45"
+}

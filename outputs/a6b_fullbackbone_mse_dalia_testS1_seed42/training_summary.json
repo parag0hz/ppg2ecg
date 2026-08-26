@@ -1,0 +1,20 @@
+{
+ "exp_name": "a6b_fullbackbone_mse_dalia_testS1_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 26,
+ "best_epoch": 5,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 0.08882400393486023,
+ "early_stopped": true,
+ "total_train_time_s": 1780.614920906024,
+ "peak_mem_MiB": 18407.404296875,
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "finished": "2026-08-27T03:08:51",
+ "checkpoint_best": "outputs/a6b_fullbackbone_mse_dalia_testS1_seed42/checkpoint_best.pt"
+}

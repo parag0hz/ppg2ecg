@@ -75,3 +75,11 @@ mechanism behind the SUBJECT-ROBUST, DATASET-UNCERTAIN pattern above: on WildPPG
 rhythm and PPG dependence, so iMF-1's gains are confined to amplitude/morphology and come with less precise beat placement (F1 0.385,
 RR MAE 25.7 ms vs 16.7 ms for the regressor). Caveat: the originally pre-registered zero-state regressor was untrainable (adaLN-Zero
 dead-start) and was replaced, before the amended runs, by a learned constant state token (Amendment 1).
+
+## A6 — Capacity-matched control (added 2026-08-27; `docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_REPORT.md`)
+The A5 regressor had fewer effective parameters (2.9 M vs 4.3 M). A6 re-ran the MSE control on the **unmodified full PENGUIN backbone**
+(4,568,707 params = OT-CFM/iMF; deterministic constant state x = 0.1, fixed t = 0.5, cond = 0.05·E(t), both fixed by a pre-registered
+hard test) on the same three splits: S2 morph 0.175 / amp 0.06 / RMSE 0.286; S1 0.184 / 0.04 / 0.321; WildPPG 0.316 / 0.24 / 0.350 with
+F1 0.421 and gain 4.95 — within 0.035 (morph), 0.015 (amp) and 0.007 (RMSE) of the A5 regressor, waveform RMSE between the two
+0.04–0.05; OT-CFM 1-NFE remains the closest generative model (3/3 datasets, 3/3 votes). **Verdict: CAPACITY OBJECTION RESOLVED** — the
+conditional-mean-like attenuation is a property of the MSE objective on this backbone, not of reduced capacity.

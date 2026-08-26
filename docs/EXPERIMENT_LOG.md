@@ -201,3 +201,9 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   (OT-CFM A0-b recipe, iMF A2 recipe, A6 MSE proxy), A4 schedule unit, ABP metrics (`ppg2ecg.evaluation.abp_metrics`, unit-tested),
   ±150 ms systolic-peak region, shuffle penalties, H7.1–7.4, recovery score, verdict thresholds. Pipeline `scripts/run_a7_pipeline.sh`
   queued behind A6 (waits for `outputs/A6_DONE`).
+- **A6 results (2026-08-27 01:46–04:16)**: a6a 44 epochs (best 24, val MSE 0.0883, 51 min), a6b 26 (best 6, 0.0888, 30 min), a6c 54
+  rounds (best 34, 0.0837, 65 min). Full-backbone regressor: S2 HR 33.8 / morph 0.175 / amp 0.06 / RMSE 0.286; S1 30.9 / 0.184 / 0.04 /
+  0.321; WildPPG 20.2 / 0.316 / 0.24 / 0.350, F1 0.421, gain 4.95 — same as A5 (waveform RMSE Rfull–Rsmall 0.042/0.044/0.045). Closest
+  generative model to Rfull: OT-CFM-1 on 3/3 datasets (RMSE 0.082/0.120/0.078 vs 0.26–0.35 for OT-50/iMF-1). Frozen verdict
+  **CAPACITY OBJECTION RESOLVED**. Report `docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_REPORT.md`, artefacts `artifacts/a6_capacity_control/`.
+  A7 pipeline started automatically on `outputs/A6_DONE`.

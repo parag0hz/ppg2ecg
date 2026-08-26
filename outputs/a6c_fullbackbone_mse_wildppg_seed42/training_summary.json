@@ -1,0 +1,20 @@
+{
+ "exp_name": "a6c_fullbackbone_mse_wildppg_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 54,
+ "best_epoch": 33,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 0.08366949111223221,
+ "early_stopped": true,
+ "total_train_time_s": 3907.59003896825,
+ "peak_mem_MiB": 20721.177734375,
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "finished": "2026-08-27T04:14:56",
+ "checkpoint_best": "outputs/a6c_fullbackbone_mse_wildppg_seed42/checkpoint_best.pt"
+}

@@ -15,7 +15,7 @@ import torch
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.evaluation.efficiency import benchmark
 from ppg2ecg.evaluation.metrics import evaluate_windows, hf_energy_ratio, penguin_hr_error, rhythm_morphology_metrics, summarize
-from ppg2ecg.models.regressor import S5ConditionalMeanRegressor, count_regressor_params
+from ppg2ecg.models.regressor import REGRESSOR_MODELS
 from ppg2ecg.utils.seed import seed_everything
 from ppg2ecg.utils.upstream import assert_upstream_pinned
 
@@ -70,9 +70,10 @@ def main():
     device = torch.device("cuda")
     up = assert_upstream_pinned()
     ck = torch.load(ckpt_path, map_location="cpu", weights_only=False)
-    model = S5ConditionalMeanRegressor(**ck["model_cfg"]).to(device).eval()
+    model_cls, count_fn = REGRESSOR_MODELS[ck.get("model_key", "state_token")]
+    model = model_cls(**ck["model_cfg"]).to(device).eval()
     model.load_state_dict(ck["state_dict"])
-    params = count_regressor_params(model)
+    params = count_fn(model)
     split = read_manifest(ROOT / args.manifest)[0]
     x_te, y_te, sid, starts = load_test(ROOT / args.processed, split["test"], args.limit_windows)
     if args.subsample and len(x_te) > args.subsample:
@@ -97,7 +98,7 @@ def main():
         w = csv.DictWriter(f, fieldnames=CSV_FIELDS)
         w.writeheader()
         w.writerow(row)
-    (out / "metrics.json").write_text(json.dumps({"checkpoint": str(ckpt_path), "checkpoint_epoch": ck.get("epoch"), "objective": "mse_regression", "params": params, "test_subjects": split["test"], "n_windows": int(n), "T": int(T), "upstream": up, "created": datetime.now().isoformat(timespec="seconds"), "arms": {"regressor": {"row": row, "summary": summ, "efficiency": eff, "shuffle": {"hr_right": hr_right, "hr_wrong": hr_wrong}}}}, indent=1, default=str))
+    (out / "metrics.json").write_text(json.dumps({"checkpoint": str(ckpt_path), "checkpoint_epoch": ck.get("epoch"), "objective": "mse_regression", "model": model_cls.__name__, "params": params, "test_subjects": split["test"], "n_windows": int(n), "T": int(T), "upstream": up, "created": datetime.now().isoformat(timespec="seconds"), "arms": {"regressor": {"row": row, "summary": summ, "efficiency": eff, "shuffle": {"hr_right": hr_right, "hr_wrong": hr_wrong}}}}, indent=1, default=str))
     print(f"regressor 1 fwd | HRerr {row['hr_abs_err_bpm']:.2f} amp {row['amp_ratio']:.2f} beats {row['beats_ratio']:.2f} F1 {row['rpeak_f1']:.3f} RMSE {row['rmse']:.3f} MAE {row['mae']:.3f} morph {row['morph_corr']:.3f} HF {row['hf_ratio_pred']:.3f} | gain {row['cond_gain_bpm']:.2f} | {eff['latency_ms_median']:.0f} ms | params {params['total']}", flush=True)
     print("wrote", out / "nfe_curve.csv")
 

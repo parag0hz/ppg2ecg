@@ -18,7 +18,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 from ppg2ecg.data.splits import read_manifest
-from ppg2ecg.models.regressor import S5ConditionalMeanRegressor, count_regressor_params
+from ppg2ecg.models.regressor import REGRESSOR_MODELS
 from ppg2ecg.training.train_a0 import batch_rounds, git_sha, load_arrays
 from ppg2ecg.utils.seed import seed_everything
 from ppg2ecg.utils.upstream import UPSTREAM_COMMIT, assert_upstream_pinned
@@ -48,6 +48,10 @@ def parse_args(argv=None):
     ap.add_argument("--val-subsample", type=int, default=None)
     ap.add_argument("--gen-diag-every", type=int, default=1)
     ap.add_argument("--gen-diag-windows", type=int, default=128)
+    ap.add_argument("--model", choices=list(REGRESSOR_MODELS), default="state_token", help="state_token = A5 regressor; full_backbone = A6 capacity-matched control")
+    ap.add_argument("--x-const", default=None, help="full_backbone only: constant state input (float) or fixed_normal:<seed>")
+    ap.add_argument("--t-const", type=float, default=None, help="full_backbone only: fixed auxiliary time constant")
+    ap.add_argument("--cond-scale", type=float, default=1.0, help="full_backbone only (hard-test diagnostic): cond = cond_scale * E(t_const)")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
@@ -71,8 +75,15 @@ def main(argv=None):
     T = x_tr.shape[1]
     x_tr_t, y_tr_t = torch.from_numpy(x_tr).to(device), torch.from_numpy(y_tr).to(device)
     x_va_t, y_va_t = torch.from_numpy(x_va).to(device), torch.from_numpy(y_va).to(device)
-    model = S5ConditionalMeanRegressor(sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio).to(device)
-    params = count_regressor_params(model)
+    model_cls, count_fn = REGRESSOR_MODELS[args.model]
+    model_cfg = dict(sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio)
+    if args.model == "full_backbone":
+        xc = args.x_const
+        model_cfg.update(x_const=(float(xc) if xc is not None and ":" not in xc else xc), t_const=args.t_const, cond_scale=args.cond_scale)
+    model = model_cls(**model_cfg).to(device)
+    if args.model == "full_backbone":
+        model_cfg.update(x_const=model.x_const, t_const=model.t_const)  # resolved defaults, saved with the checkpoint
+    params = count_fn(model)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     gen = torch.Generator()
     gen.manual_seed(args.seed)
@@ -91,7 +102,7 @@ def main(argv=None):
     else:
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
-    meta = {"exp_name": args.exp_name, "objective": "mse_regression", "model": "S5ConditionalMeanRegressor", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "val_mse (deterministic)", "min_delta": args.min_delta, "patience": args.patience, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps}, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "objective": "mse_regression", "model": model_cls.__name__, "model_cfg": model_cfg, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "val_mse (deterministic)", "min_delta": args.min_delta, "patience": args.patience, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps}, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "model", "params", "n_train_windows", "n_val_windows", "T")}), flush=True)
 
@@ -141,7 +152,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=vm, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "objective": "mse_regression", "model": "S5ConditionalMeanRegressor", "val_mse": vm, "model_cfg": dict(sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "objective": "mse_regression", "model": model_cls.__name__, "model_key": args.model, "val_mse": vm, "model_cfg": model_cfg, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1

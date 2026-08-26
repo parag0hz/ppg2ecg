@@ -1,0 +1,611 @@
+{
+ "model": "S5FullBackboneRegressor",
+ "objective": "mse",
+ "x_const": 0.1,
+ "t_const": 0.5,
+ "cond_scale": 0.05,
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "steps": {
+  "0": {
+   "loss": 0.11753808706998825,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 0.0,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 4
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.0,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 4
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 4
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 8
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 0.0,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 20
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 0.0,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 48
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 0.0,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 32
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 0.0,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 20
+    },
+    "final_layer": {
+     "grad_norm": 5.449707690746973,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 2
+    }
+   }
+  },
+  "1": {
+   "loss": 0.11870817840099335,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 0.0,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 4
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.3091900166609052,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 4
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.010292697739637681,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 0.0,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 20
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 0.0,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 48
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 0.0,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 32
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 0.0,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 20
+    },
+    "final_layer": {
+     "grad_norm": 4.964996999629,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "5": {
+   "loss": 0.06924675405025482,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 6.750653705768144e-09,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.03177522063627796,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0011026471719370835,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0010584429659434382,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 1.923645303930257e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 7.981336848961061e-06,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 8.946253682704521e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 3.5054597846509686e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 2.8035744494978094,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "20": {
+   "loss": 0.059041623026132584,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 4.276678671447076e-09,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.0073153554416513535,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0007409580322183463,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0005883428554371973,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 1.0972914855788578e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 1.3343594258271793e-06,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 3.126893289474729e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 1.490208342393359e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 0.8202915370709383,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "50": {
+   "loss": 0.0683731660246849,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 1.8949344988019244e-09,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.019215931490918298,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0006188714078420661,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0009276869906094975,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 5.896947693987148e-11,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 8.832076640575412e-07,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 2.7520521003655638e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 8.971033681107444e-11,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 2.711607741379537,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "100": {
+   "loss": 0.060606248676776886,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 7.732116690269218e-10,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.007781935120238259,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.0001639419882704059,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0003588363137115418,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 2.463360331901387e-11,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 2.99027222262985e-07,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 1.1645261104593876e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 2.9857044266430436e-11,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 1.2031346346933942,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "200": {
+   "loss": 0.07998037338256836,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 4.670627815466582e-09,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.016652363468263355,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 0.00024035370722849932,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0010720324731016897,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 1.4435845803630755e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 2.284686611232069e-06,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 8.918496491691101e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 2.832845287539659e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 3.216410842955529,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  },
+  "300": {
+   "loss": 0.06047497317194939,
+   "groups": {
+    "revin (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 2,
+     "n_tensors": 1,
+     "n_zero_grad_tensors": 1
+    },
+    "pre_conv_ppg (PPG stem)": {
+     "grad_norm": 2.097851303615696e-08,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "pre_conv_target (state stem)": {
+     "grad_norm": 0.004751491595280581,
+     "n_params": 528640,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "timestep_embedder": {
+     "grad_norm": 6.667176591402147e-05,
+     "n_params": 49408,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    },
+    "adaLN_modulation (blocks)": {
+     "grad_norm": 0.0005279847047534073,
+     "n_params": 792576,
+     "n_tensors": 8,
+     "n_zero_grad_tensors": 0
+    },
+    "cross_attn (never called)": {
+     "grad_norm": 0.0,
+     "n_params": 264192,
+     "n_tensors": 16,
+     "n_zero_grad_tensors": 16
+    },
+    "ssm_ppg (PPG-stream S5)": {
+     "grad_norm": 6.589461393891885e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "pre/post_attn (cross-stream MLPs)": {
+     "grad_norm": 1.829129775120523e-06,
+     "n_params": 791040,
+     "n_tensors": 48,
+     "n_zero_grad_tensors": 0
+    },
+    "mlp_ppg/mlp_target": {
+     "grad_norm": 6.057711164197986e-05,
+     "n_params": 527360,
+     "n_tensors": 32,
+     "n_zero_grad_tensors": 4
+    },
+    "ssm_target (target-stream S5)": {
+     "grad_norm": 2.1872618305377127e-10,
+     "n_params": 526848,
+     "n_tensors": 20,
+     "n_zero_grad_tensors": 0
+    },
+    "final_layer": {
+     "grad_norm": 1.1666781964252055,
+     "n_params": 33153,
+     "n_tensors": 4,
+     "n_zero_grad_tensors": 0
+    }
+   }
+  }
+ },
+ "checks": {
+  "final_layer_input_abs_mean_init": 0.10420968383550644,
+  "final_layer_input_nonzero": true,
+  "deterministic": true,
+  "no_target_in_forward_signature": true,
+  "output_identically_zero_at_init (upstream zero-init of final linear)": true,
+  "output_depends_on_ppg_after_training_steps": false,
+  "output_not_constant_over_time_after_training_steps": true,
+  "mse_correct_ppg": 0.057615015655756,
+  "mse_shuffled_ppg": 0.057615019381046295,
+  "shuffle_penalty_positive": true,
+  "only_final_layer_at_step0 (adaLN-Zero design, same as generative model)": true,
+  "all_active_groups_nonzero_at_steps_ge5": true,
+  "pathway_gradients_grow_from_step5_to_last": {
+   "pre_conv_target (state stem)": false,
+   "timestep_embedder": false,
+   "pre_conv_ppg (PPG stem)": true,
+   "ssm_ppg (PPG-stream S5)": true,
+   "ssm_target (target-stream S5)": false,
+   "adaLN_modulation (blocks)": false,
+   "pre/post_attn (cross-stream MLPs)": false,
+   "mlp_ppg/mlp_target": false,
+   "final_layer": false
+  },
+  "never_called_groups_zero": true,
+  "PASS": true
+ }
+}

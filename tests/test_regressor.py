@@ -73,3 +73,85 @@ def test_zero_state_input_is_a_permanent_dead_start_and_state_token_fixes_it():
     with torch.no_grad():
         out = reg(torch.randn(4, 1, 256))
     assert float(out.std(dim=(1, 2)).min()) > 0 and not torch.equal(out[0], out[1])  # input-dependent (still small after 8 steps)
+
+
+# ---------------------------------------------------------------- A6: capacity-matched full-backbone deterministic control
+def test_full_backbone_regressor_param_parity_and_determinism():
+    from ppg2ecg.models.regressor import S5FullBackboneRegressor, count_full_backbone_params
+
+    torch.manual_seed(3)
+    reg = S5FullBackboneRegressor(h_dim=16, ssm_block_num=2)
+    bb = build_penguin_backbone(n_step=1, sample_rate=128, h_dim=16, ssm_block_num=2, ssm_ratio=2.0, mlp_ratio=2.0)
+    assert {n for n, _ in reg.backbone.named_parameters()} == {n for n, _ in bb.named_parameters()}  # identical module set
+    assert count_full_backbone_params(reg)["total"] == count_params(bb)["total"]
+    full = S5FullBackboneRegressor()
+    assert count_full_backbone_params(full)["total"] == 4568707 and count_full_backbone_params(full)["effective"] == 4304513
+    ppg = torch.randn(3, 1, 256)
+    with torch.no_grad():  # at init the upstream zero-initialised final linear makes the output identically 0 -> perturb as in the A5 test
+        for n, p in reg.named_parameters():
+            if "final_layer.linear" in n or "adaLN_modulation" in n:
+                p.add_(0.05 * torch.randn_like(p))
+        a, b, c = reg(ppg), reg(ppg), reg(ppg + 0.5)
+    assert torch.equal(a, b) and a.shape == (3, 1, 256) and not torch.allclose(a, c)
+    assert "target" not in S5FullBackboneRegressor.forward.__code__.co_varnames  # no target information in the forward pass
+
+
+def test_full_backbone_regressor_no_dead_start():
+    """Prereg A6 §6: at step 0 only the final layer has gradient (upstream zero-initialises final_layer.linear.weight — identical in the
+    generative model); by step 5 the state stem / timestep embedder / adaLN / final layer and by step 20 every pathway incl. the S5
+    blocks and the PPG stem receive non-zero gradient, unlike the A5 zero-state dead start where nothing ever does."""
+    from ppg2ecg.models.regressor import S5FullBackboneRegressor
+
+    torch.manual_seed(4)
+    reg = S5FullBackboneRegressor(h_dim=16, ssm_block_num=2)
+    opt = torch.optim.AdamW(reg.parameters(), lr=1e-3, weight_decay=0.01)
+    g = torch.Generator().manual_seed(0)
+    groups = {"pre_conv_target": "backbone.pre_conv_target", "timestep_embedder": "backbone.timestep_embedder", "pre_conv_ppg": "backbone.pre_conv_ppg", "ssm_ppg": ".ssm_ppg", "ssm_target": ".ssm_target", "adaLN": "adaLN_modulation", "final_layer": "backbone.final_layer"}
+    feats = {}
+    reg.backbone.final_layer.register_forward_hook(lambda m, i, o: feats.__setitem__("in", i[0].detach()))
+    early = {"pre_conv_target", "timestep_embedder", "adaLN", "final_layer"}
+    for step in range(21):
+        x, y = torch.randn(4, 1, 256, generator=g), torch.randn(4, 1, 256, generator=g)
+        opt.zero_grad()
+        ((reg(x) - y) ** 2).mean().backward()
+        gn = {name: sum(float(p.grad.norm()) for n, p in reg.named_parameters() if pat in n and p.grad is not None) for name, pat in groups.items()}
+        if step == 0:
+            assert float(feats["in"].abs().max()) > 0  # final-layer input non-zero (x_const stem output)
+            assert gn["final_layer"] > 0 and all(gn[k] == 0 for k in groups if k != "final_layer"), gn
+        if step == 5:
+            assert all(gn[k] > 0 for k in early), gn
+        if step == 20:
+            assert all(v > 0 for v in gn.values()), gn
+        opt.step()
+
+
+def test_full_backbone_cond_scale_keeps_every_pathway_trainable():
+    """A6 Amendment (prereg §2c): cond = cond_scale * E(t_const) with cond_scale = 0.05 keeps the adaLN weights active (cond != 0),
+    matches upstream forward_step when cond_scale = 1, and all pathways receive gradient by step 20."""
+    from ppg2ecg.models.regressor import S5FullBackboneRegressor
+
+    torch.manual_seed(5)
+    reg = S5FullBackboneRegressor(h_dim=16, ssm_block_num=2, x_const=1.0, t_const=0.5, cond_scale=0.05)
+    ref = S5FullBackboneRegressor(h_dim=16, ssm_block_num=2, x_const=1.0, t_const=0.5, cond_scale=1.0)
+    ref.load_state_dict(reg.state_dict())
+    with torch.no_grad():
+        for m in (reg, ref):
+            for n, p in m.named_parameters():
+                if "final_layer.linear" in n or "adaLN_modulation" in n:
+                    torch.manual_seed(6)
+                    p.add_(0.05 * torch.randn_like(p))
+        x = torch.randn(2, 1, 256)
+        ref.cond_scale = 0.05
+        assert torch.allclose(reg(x), ref(x), atol=1e-5)  # explicit path == upstream path with a scaled cond
+        ref.cond_scale = 1.0
+        assert not torch.allclose(reg(x), ref(x))  # the scale matters (adaLN inputs differ)
+    opt = torch.optim.AdamW(reg.parameters(), lr=1e-3, weight_decay=0.01)
+    g = torch.Generator().manual_seed(0)
+    for step in range(21):
+        xb, yb = torch.randn(4, 1, 256, generator=g), torch.randn(4, 1, 256, generator=g)
+        opt.zero_grad()
+        ((reg(xb) - yb) ** 2).mean().backward()
+        if step == 20:
+            for pat in ("pre_conv_target", "timestep_embedder", "pre_conv_ppg", ".ssm_ppg", ".ssm_target", "adaLN_modulation.1.weight", "final_layer"):
+                assert sum(float(p.grad.norm()) for n, p in reg.named_parameters() if pat in n and p.grad is not None) > 0, pat
+        opt.step()

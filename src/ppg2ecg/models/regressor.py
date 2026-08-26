@@ -55,3 +55,61 @@ def count_regressor_params(model: S5ConditionalMeanRegressor) -> dict:
     dead = sum(p.numel() for n, p in model.named_parameters() if "cross_attn" in n or n.endswith("revin"))
     inactive = sum(p.numel() for n, p in model.named_parameters() if "adaLN_modulation" in n and n.endswith("weight"))
     return {"total": total, "dead_cross_attn_revin": dead, "inactive_adaln_weights_cond0": inactive, "effective": total - dead - inactive, "state_token": model.state_token.numel()}
+
+
+class S5FullBackboneRegressor(nn.Module):
+    """A6 capacity-matched deterministic MSE control (docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_PREREGISTRATION.md).
+
+    The UNMODIFIED upstream PENGUIN model is instantiated with all of its modules (target stem, timestep embedder, Flow-SSM
+    blocks, adaLN, final layer) and run through the upstream `forward_step` with a deterministic, sample-independent,
+    non-learnable state input `x_const = ones_like(target)` and a fixed auxiliary time constant `t_const = 0.5`; the output is
+    interpreted directly as the ECG prediction and trained with MSE. Same total parameter count as the generative models
+    (4,568,707; effective 4,304,513 with the identical cross_attn/revin exclusion). No noise, no r, no target information.
+    """
+
+    X_CONST = 1.0  # default constant state (float) or "fixed_normal:<seed>" = one frozen N(0,1) pattern shared by every sample
+    T_CONST = 0.5
+
+    def __init__(self, sample_rate: int = 128, h_dim: int = 128, ssm_block_num: int = 4, ssm_ratio: float = 2.0, mlp_ratio: float = 2.0, x_const=None, t_const: float | None = None, cond_scale: float = 1.0):
+        super().__init__()
+        self.backbone = build_penguin_backbone(n_step=1, sample_rate=sample_rate, h_dim=h_dim, ssm_block_num=ssm_block_num, ssm_ratio=ssm_ratio, mlp_ratio=mlp_ratio)
+        self.x_const = self.X_CONST if x_const is None else x_const
+        self.t_const = self.T_CONST if t_const is None else float(t_const)
+        self.cond_scale = float(cond_scale)  # diagnostic lever for the hard test: cond = cond_scale * E(t_const); 1.0 = upstream path, 0.0 = cond off
+        if isinstance(self.x_const, str):  # frozen, sample-independent, non-learnable pattern (registered buffer, saved with the checkpoint)
+            mode, seed = self.x_const.split(":")
+            assert mode == "fixed_normal", self.x_const
+            g = torch.Generator().manual_seed(int(seed))
+            self.register_buffer("state_pattern", torch.randn(1, 1, 8 * sample_rate, generator=g), persistent=True)
+        else:
+            self.state_pattern = None
+
+    def state_input(self, ppg: torch.Tensor) -> torch.Tensor:
+        if self.state_pattern is not None:
+            assert self.state_pattern.shape[-1] == ppg.shape[-1], (self.state_pattern.shape, ppg.shape)
+            return self.state_pattern.to(ppg.dtype).expand(ppg.shape[0], -1, -1)
+        return torch.full_like(ppg, float(self.x_const))
+
+    def forward(self, ppg: torch.Tensor) -> torch.Tensor:
+        """ppg [B, 1, T] -> ECG prediction [B, 1, T] = upstream forward_step(x_const, ppg, t_const)."""
+        t_const = torch.full((ppg.shape[0],), self.t_const, dtype=ppg.dtype, device=ppg.device)
+        if self.cond_scale == 1.0:
+            return self.backbone.forward_step(self.state_input(ppg), ppg, t_const)
+        bb = self.backbone  # upstream forward_step with the conditioning vector scaled (line-for-line otherwise)
+        ppg_e = bb.pre_conv_ppg(ppg)
+        x_e = bb.pre_conv_target(self.state_input(ppg))
+        cond = bb.timestep_embedder(t_const.reshape(-1)) * self.cond_scale
+        all_dx = torch.zeros_like(x_e)
+        for blk in bb.flow_ssm_list:
+            ppg_e, dx = blk(ppg_e, x_e, cond)
+            all_dx = all_dx + dx
+        return bb.final_layer(all_dx, cond)
+
+
+def count_full_backbone_params(model: S5FullBackboneRegressor) -> dict:
+    total = sum(p.numel() for p in model.parameters())
+    dead = sum(p.numel() for n, p in model.named_parameters() if "cross_attn" in n or n.endswith("revin"))
+    return {"total": total, "dead_cross_attn_revin": dead, "inactive_adaln_weights_cond0": 0, "effective": total - dead, "state_token": 0}
+
+
+REGRESSOR_MODELS = {"state_token": (S5ConditionalMeanRegressor, count_regressor_params), "full_backbone": (S5FullBackboneRegressor, count_full_backbone_params)}

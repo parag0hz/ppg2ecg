@@ -94,3 +94,26 @@ OT-50 / OT-1 / iMF-1; R-peak markers on all rows; same y-scale.
 ## 15. GPU scheduling note
 A5 trainings run sequentially (a → b → c) and only start when the GPU has ≥ 22 GiB free (an unrelated vLLM process occupied ~30 GiB at
 the time of writing); waiting does not alter the protocol.
+
+## 16. Amendment 1 — zero target-stream input is untrainable (2026-08-26, after the first A5a run, before any amended result)
+**Observation.** The pre-registered regressor (§3: x_t-embedding = 0, cond = 0) converged on A5a to a **constant** output
+(training-set mean −0.348; per-window std 2.5e-7; no beats; RMSE 0.290 on S2, worse than the constant GT-mean predictor 0.250);
+the amplitude diagnostic was 0.00 from epoch 1. A5b showed the same behaviour at epoch 1 and was stopped. Both runs are archived
+under `outputs/aborted/a5{a,b}_…_zero_state_deadstart/` and are reported as an **implementation failure of the control, not a finding**.
+**Mechanism (verified by a gradient check at initialisation, `tests/test_regressor.py`).** In the upstream block the target-stream
+output is `dx_t = x_t_emb + gate·(…)`; with `x_t_emb = 0` and all adaLN gates zero-initialised, `all_dx ≡ 0`. Upstream also
+zero-initialises `final_layer.linear.weight`, so the only non-zero gradient anywhere is `final_layer.linear.bias` — the block
+parameters, the adaLN biases and the final weight receive exactly zero gradient at every step (each depends on the others being
+non-zero). The generative backbone never hits this because `x_t_emb = pre_conv_target(x_t) ≠ 0`.
+**Change (minimal).** The target stream is fed a **learned constant state token** `s ∈ R^{h_dim}` (128 parameters, N(0, 0.02²) init
+under the run seed) broadcast over time — the deterministic, information-free analogue of the 1-NFE noise input. Everything else in
+§3–§13 is unchanged (no PPG re-routing, no time conditioning, cond = 0, MSE only, same optimiser/selection/splits/metrics/rules).
+Parameter count becomes **3,990,787** (= 4,568,707 − 528,640 − 49,408 + 128). Of these, 264,194 (`cross_attn`, `revin`) are never
+called (as in upstream) and **819,200 adaLN `Linear.weight`s receive identically zero gradient because cond = 0** (SiLU(0) = 0; they are
+functionally redundant with the adaLN biases, which do train) — effective trainable count **2,907,393**; the last block's PPG-stream
+MLP is also unused (its output is not consumed), exactly as in the generative backbone. Gradient flow to every other parameter within
+≤ 5 optimiser steps is unit-tested. A5a → A5b → A5c are re-run from scratch with the amended model; the frozen hypotheses, thresholds
+and wording rules (§2, §10–§13) are not modified.
+**NaN convention (declared here, before amended results).** If a model produces no detectable beats on a test set, template
+correlation, conditioning gain and R-peak P/R/F1 are undefined; for rule evaluation and distance computation they are set to 0 and
+the substitution is recorded in `summary.json` (`nan_convention`); HR error stays undefined and ranks last.

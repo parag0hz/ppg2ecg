@@ -156,3 +156,13 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   | **iMF 1** | **1** | **11.96** | **0.581** | **0.71** | **4.78** | 0.449 |
   Recovery HR 0.86 / morph 0.80 / amp 0.76 / gain 0.53; beats 1.03 → **REPLICATED** (A2 rule SUCCESS); pointwise-error inversion YES.
   Report `docs/A3_SUBJECT_REPLICATION_REPORT.md`. A4 (WildPPG) pipeline started automatically.
+- **A4 OT-CFM (WildPPG) done 10:42**: 210 rounds × 220 steps (best 190, ~5 h, peak 20.7 GiB). Test subset (4,096 of 46.9 k windows, kjd+ssx):
+  50 NFE HR 9.43 / morph 0.670 / amp 0.98 / gain 7.16 / **R-peak F1 0.44, PCC 0.07** (beat-level metrics carry information here — WildPPG's four
+  devices are time-synchronised, unlike DaLiA's wrist/chest pair); 4 NFE HR 15.4 / morph 0.38 / amp 1.48; **1 NFE Euler: HR 15.6, morph 0.38,
+  amp 0.32, QRS-width err 75 ms, gain 6.64, F1 0.48, seed std 0.035, RMSE 0.355** — i.e. on beat-synchronised data the 1-NFE conditional mean
+  keeps rhythm/conditioning but loses amplitude and QRS sharpness (morphology collapse rather than total structural collapse as on DaLiA).
+  Pointwise-error inversion again (RMSE 0.355 < 0.440). iMF (WildPPG) training launched automatically.
+- **A4 iMF (WildPPG) done 14:43** (66 rounds, best 46, 3.6 h, peak 19.2 GiB). Test subset: iMF-1 HR 11.85 / morph 0.551 / amp 1.04 / gain 4.29 /
+  beats 0.93 / F1 0.385 / RMSE 0.485. Recovery HR 0.61, morph 0.59, amp 0.91, gain **−4.5** (OT-1 already retains 6.64 of 7.16) →
+  **PARTIAL** (both rules); inversion YES. Per site iMF-1 improves HR at all four sites. Reports: `docs/A4_WILDPPG_REPLICATION_REPORT.md`,
+  `docs/REPLICATION_SUMMARY.md` → integrated verdict **SUBJECT-ROBUST, DATASET-UNCERTAIN** (A2 REPLICATED, A3 REPLICATED, A4 PARTIAL).

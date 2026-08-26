@@ -1,0 +1,13 @@
+{
+ "exp_name": "a4_imeanflow_wildppg_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 66,
+ "best_epoch": 45,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 0.11945885431656277,
+ "early_stopped": true,
+ "total_train_time_s": 12982.768480838742,
+ "peak_mem_MiB": 19216.22998046875,
+ "finished": "2026-08-26T14:42:10",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt"
+}

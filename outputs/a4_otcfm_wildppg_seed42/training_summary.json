@@ -1,0 +1,13 @@
+{
+ "exp_name": "a4_otcfm_wildppg_seed42",
+ "epochs_run": 210,
+ "best_epoch": 189,
+ "selection_criterion": "fixed_cfm",
+ "best_selection_metric": 0.10485093741624799,
+ "best_val_mae_batchmean": null,
+ "early_stopped": true,
+ "total_train_time_s": 18530.244464784395,
+ "peak_mem_MiB": 20722.427734375,
+ "finished": "2026-08-26T10:41:28",
+ "checkpoint_best": "/home/kwy00/ppg2ecg-one-step/outputs/a4_otcfm_wildppg_seed42/checkpoint_best.pt"
+}

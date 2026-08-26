@@ -59,3 +59,19 @@ Pre-registration: `docs/A3_A4_REPLICATION_PREREGISTRATION.md`. All runs: seed 42
   4 PPG sites pooled as in PENGUIN; constant-gap windows dropped (0.22 %).
 - The conditioning-gain recovery score is ill-conditioned when the OT-CFM 1-NFE baseline already retains the gain (A4).
 - All runs use the OT-CFM baseline optimiser for the objective-only comparison; the official iMF recipe (EMA, lr 1e-4, aux head) was not used.
+
+## A5 — Conditional-mean control (added 2026-08-27; `docs/A5_CONDITIONAL_MEAN_CONTROL_REPORT.md`)
+An MSE regressor on the same S5 backbone (generative inputs removed; 3,990,787 params, 2,907,393 effective) was trained on the A2, A3 and A4
+splits and compared with the frozen OT-CFM-1/OT-CFM-50/iMF-1 predictions on identical test windows.
+| Dataset | R: HR / morph / amp / gain / RMSE | closest model to R (wave RMSE) | attenuation(R) | timing+conditioning kept (WildPPG) |
+|---|---|---|---|---|
+| DaLiA S2 | 35.7 / 0.160 / 0.06 / 2.37 / **0.289** | OT-1 (0.085; OT-50 0.310, iMF-1 0.314) | ✓ | — |
+| DaLiA S1 | 32.3 / 0.148 / 0.05 / 1.32 / **0.318** | OT-1 (0.134; 0.316, 0.290) | ✓ | — |
+| WildPPG | 19.2 / 0.331 / 0.25 / 5.70 / **0.343** | OT-1 (0.079, PCC 0.52; 0.260, 0.349) | ✓ | ✓ F1 0.436 (OT-50 0.440), gain 5.70 (7.16) |
+Pre-registered verdict **STRONG SUPPORT**: OT-CFM 1-NFE empirically approaches the behaviour of an MSE-trained conditional-mean proxy —
+lowest RMSE of all models with the strongest amplitude/morphology attenuation (pointwise-error inversion for the regressor on 3/3
+datasets) — and temporal alignment decides what the proxy keeps (beat-free on DaLiA; aligned attenuated beats on WildPPG). This is the
+mechanism behind the SUBJECT-ROBUST, DATASET-UNCERTAIN pattern above: on WildPPG the one-step conditional-mean-like solution already carries
+rhythm and PPG dependence, so iMF-1's gains are confined to amplitude/morphology and come with less precise beat placement (F1 0.385,
+RR MAE 25.7 ms vs 16.7 ms for the regressor). Caveat: the originally pre-registered zero-state regressor was untrainable (adaLN-Zero
+dead-start) and was replaced, before the amended runs, by a learned constant state token (Amendment 1).

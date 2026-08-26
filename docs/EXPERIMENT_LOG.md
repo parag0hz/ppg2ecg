@@ -166,3 +166,23 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   beats 0.93 / F1 0.385 / RMSE 0.485. Recovery HR 0.61, morph 0.59, amp 0.91, gain **−4.5** (OT-1 already retains 6.64 of 7.16) →
   **PARTIAL** (both rules); inversion YES. Per site iMF-1 improves HR at all four sites. Reports: `docs/A4_WILDPPG_REPLICATION_REPORT.md`,
   `docs/REPLICATION_SUMMARY.md` → integrated verdict **SUBJECT-ROBUST, DATASET-UNCERTAIN** (A2 REPLICATED, A3 REPLICATED, A4 PARTIAL).
+- **2026-08-26 A5 pre-registered (`cc28ad9`)** — Conditional-mean control: `S5ConditionalMeanRegressor` (PENGUIN backbone minus
+  `pre_conv_target`/`timestep_embedder`, MSE only, AdamW 1e-3/wd 0.01/batch 64/seed 42, selection by deterministic validation MSE, patience
+  20/min_delta 1e-4), three runs on the A2/A3/A4 manifests, H1–H4, QRS window ±100 ms, verdict thresholds, forbidden wording. GPU was
+  occupied by an unrelated vLLM process (29.7 GB) at launch → pipeline gated on ≥ 22 GiB free; started 19:43 once it exited.
+- **A5a zero-state run (aborted as a control failure)**: converged to a constant output (−0.348, per-window std 2.5e-7; val MSE plateau
+  0.0983; RMSE 0.290 on S2, worse than the constant GT-mean predictor 0.250); A5b showed the same at epoch 1 and was stopped. Cause
+  (gradient check): with x_t-embedding = 0 the block outputs are identically 0 and upstream zero-initialises `final_layer.linear.weight`,
+  so only `final_layer.linear.bias` ever receives gradient. Archived `outputs/aborted/a5{a,b}_*_zero_state_deadstart/`.
+- **Amendment 1 (`d961000`, before amended results)**: target stream fed a learned constant state token (128 params; total 3,990,787;
+  819,200 adaLN weights inactive with cond = 0 → effective 2,907,393); mechanism + gradient flow unit-tested; NaN convention declared;
+  everything else unchanged. Pipeline re-run 20:33 → 23:03: A5a 40 epochs (best 20, val MSE 0.0881, 45 min), A5b 31 (best 11, 0.0878,
+  35 min), A5c 54 rounds (best 34, 0.0854, 64 min); peak 18.3 / 18.3 / 20.6 GiB.
+- **A5 results**: regressor HR / morph / amp / gain / RMSE = S2 35.7 / 0.160 / 0.06 / 2.37 / 0.289; S1 32.3 / 0.148 / 0.05 / 1.32 / 0.318;
+  WildPPG 19.2 / 0.331 / 0.25 / 5.70 / 0.343 with F1 0.436 (OT-50 0.440), RR MAE 16.7 ms. Closest model to the regressor on every dataset and
+  every distance: OT-CFM 1-NFE (waveform RMSE 0.085 / 0.134 / 0.079 vs 0.26–0.35 for OT-50 and iMF-1; PCC 0.52 on WildPPG). Regressor has the
+  best RMSE/MAE of all four models on 3/3 datasets while ranking last on amplitude/morphology (inversion YES ×3); QRS-window energy 15–27 %
+  of GT for R (O1 27–35 %, O50 72–88 %, M1 61–109 %). Pareto: regressor dominated by iMF-1 at one evaluation everywhere. Frozen verdict
+  **STRONG SUPPORT** (attenuation + closest(O1→R) on 3/3, WildPPG timing/conditioning preserved; H1–H4 all ✓). Report
+  `docs/A5_CONDITIONAL_MEAN_CONTROL_REPORT.md`; artefacts `artifacts/a5_conditional_mean_control/`. Note: JAX-parity test in
+  `tests/test_imeanflow.py` fails/hangs while another process holds the GPU (JAX init) — passes with the GPU free.

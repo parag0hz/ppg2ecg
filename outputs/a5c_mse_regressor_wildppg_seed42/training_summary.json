@@ -1,0 +1,20 @@
+{
+ "exp_name": "a5c_mse_regressor_wildppg_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 54,
+ "best_epoch": 33,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 0.085353322327137,
+ "early_stopped": true,
+ "total_train_time_s": 3861.9203925172333,
+ "peak_mem_MiB": 20615.4521484375,
+ "params": {
+  "total": 3990787,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 819200,
+  "effective": 2907393,
+  "state_token": 128
+ },
+ "finished": "2026-08-26T23:00:42",
+ "checkpoint_best": "outputs/a5c_mse_regressor_wildppg_seed42/checkpoint_best.pt"
+}

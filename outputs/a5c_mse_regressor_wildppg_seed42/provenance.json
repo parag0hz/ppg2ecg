@@ -1,0 +1,496 @@
+{
+ "created": "2026-08-26T21:56:08",
+ "git": {
+  "commit": "d96100064239bad24d60bca7b600d1add452e6da",
+  "branch": "main",
+  "dirty_files": [
+   "?? outputs/a5a_mse_regressor_dalia_testS2_seed42/",
+   "?? outputs/a5b_mse_regressor_dalia_testS1_seed42/"
+  ]
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": [],
+  "expected": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "url": "https://github.com/Neurogica/PENGUIN.git"
+ },
+ "dataset": {
+  "raw_checksums_sha256": [
+   "66cc6f526793661a336d93b832683887ab6d97f7c504c65de597b78b8ea17643  github_image.zip",
+   "ff5169418d86beaf8ea841c52ba8d694ee4c3892837f48f8196421385a894a25  WildPPG_Part_an0.mat",
+   "2d1500baf936d85f15291f7da85268ef000446ada5c7f876ffba3b0ca6b8fa2a  WildPPG_Part_e61.mat",
+   "c59f56e989d3df6638290e2839bee42c113ee30813a344c6f71fc348e34a3cb1  WildPPG_Part_fex.mat",
+   "a09fa1c0e6a32664806392cb76d3fc477e5cf759699462ad2b7ed8304208d17a  WildPPG_Part_k2s.mat",
+   "67271481074610f74aac2d8dad101e3cbbff949757761e8b5f40863b856e9123  WildPPG_Part_kjd.mat",
+   "86f2e6cf02977c78a455cbe49b3fe990d33ae2719c00f7f23ecb8020869fd1e5  WildPPG_Part_l38.mat",
+   "9a453f4e4d964b694ca0da7070500ad3bb35f05f352b9bf574c0feb7db040117  WildPPG_Part_n31.mat",
+   "1982c3c55d316014480b752d805ca12bb1587917a8b57da74f5de6cdb9530738  WildPPG_Part_ngh.mat",
+   "8dcbb9738feafbe1882746de3af6629de6aea65183fe834455664fa7ca0351fb  WildPPG_Part_p5d.mat",
+   "ad4cc58916c0de65878bbb7d9484e370854f22d9e3ec0e061ec16dd62e62eca4  WildPPG_Part_p9p.mat",
+   "ef288b66de55a01a7b1a3bc0927e0eed16637f0d0d0d55d30fba717bad8568cf  WildPPG_Part_qm9.mat",
+   "8621c948f845d552581b59b35874445098786312393c932c5906bef1863870b6  WildPPG_Part_ssx.mat",
+   "d86bbb489a4487296dff44f5178e1994948788ace36968c1a5b0a48c232c6fa9  WildPPG_Part_trh.mat",
+   "12e0068c480eecb0702d0014ee492f935324015063fcd0d3054e2c3a2525ae2a  WildPPG_Part_tz8.mat",
+   "8d5b8439ea66234da07004bb0e12e18752fba594425daa1141fc37adaa7b0001  WildPPG_Part_u7y.mat",
+   "9ded5fb6ee4d57627f98aaaa1854c2ecff599caeb7649de2f449892ab2613ec3  WildPPG_Part_w4p.mat"
+  ],
+  "processed_manifest": {
+   "built": "2026-08-26T02:19:20",
+   "segment_len_s": 8,
+   "resample_rate": 128,
+   "samples_per_window": 1024,
+   "total_windows": 389355
+  },
+  "processed_files": {
+   "an0": {
+    "path": "data/processed/wildppg_8s/an0.npz",
+    "raw_file": "WildPPG_Part_an0.mat",
+    "raw_sha256": "ff5169418d86beaf8ea841c52ba8d694ee4c3892837f48f8196421385a894a25",
+    "n_windows": 22183,
+    "n_dropped_nonfinite_or_constant": 1,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5546,
+     "head": 5546,
+     "wrist": 5546,
+     "ankle": 5545
+    },
+    "sha256": "19f50105d851485f9959d810c069bc86f73d852aef592400e74661bb553b250a",
+    "notes": "The ankle device experienced an interruption in recording of 15 seconds in legth. Index 284544 to 286401 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "e61": {
+    "path": "data/processed/wildppg_8s/e61.npz",
+    "raw_file": "WildPPG_Part_e61.mat",
+    "raw_sha256": "2d1500baf936d85f15291f7da85268ef000446ada5c7f876ffba3b0ca6b8fa2a",
+    "n_windows": 22228,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5557,
+     "head": 5557,
+     "wrist": 5557,
+     "ankle": 5557
+    },
+    "sha256": "a424571e65977eb03b340cc34f113246d02ea4a3c2ed2945fdf9e4859b5c194a",
+    "notes": ""
+   },
+   "fex": {
+    "path": "data/processed/wildppg_8s/fex.npz",
+    "raw_file": "WildPPG_Part_fex.mat",
+    "raw_sha256": "c59f56e989d3df6638290e2839bee42c113ee30813a344c6f71fc348e34a3cb1",
+    "n_windows": 24072,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6018,
+     "head": 6018,
+     "wrist": 6018,
+     "ankle": 6018
+    },
+    "sha256": "573f7f901b18a7ebc66b044fb7a5669fc15a5e516396cd3dea8580f326d6dbd9",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "k2s": {
+    "path": "data/processed/wildppg_8s/k2s.npz",
+    "raw_file": "WildPPG_Part_k2s.mat",
+    "raw_sha256": "a09fa1c0e6a32664806392cb76d3fc477e5cf759699462ad2b7ed8304208d17a",
+    "n_windows": 27017,
+    "n_dropped_nonfinite_or_constant": 399,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6854,
+     "head": 6852,
+     "wrist": 6457,
+     "ankle": 6854
+    },
+    "sha256": "4eebd99a38fa201a2e9014eb2aab1e6769ac19f0507e86fcbb8af0561fa19539",
+    "notes": "The wrist device experienced an interruption in recording of 53 minutes in legth. Index 3786940 to 4194811 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "kjd": {
+    "path": "data/processed/wildppg_8s/kjd.npz",
+    "raw_file": "WildPPG_Part_kjd.mat",
+    "raw_sha256": "67271481074610f74aac2d8dad101e3cbbff949757761e8b5f40863b856e9123",
+    "n_windows": 24094,
+    "n_dropped_nonfinite_or_constant": 6,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6025,
+     "head": 6019,
+     "wrist": 6025,
+     "ankle": 6025
+    },
+    "sha256": "bb262175897d47e9cbb2a7ab8774be6c6e94b113001a04d2bc78389991f31acd",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "l38": {
+    "path": "data/processed/wildppg_8s/l38.npz",
+    "raw_file": "WildPPG_Part_l38.mat",
+    "raw_sha256": "86f2e6cf02977c78a455cbe49b3fe990d33ae2719c00f7f23ecb8020869fd1e5",
+    "n_windows": 23714,
+    "n_dropped_nonfinite_or_constant": 262,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5975,
+     "head": 5954,
+     "wrist": 5791,
+     "ankle": 5994
+    },
+    "sha256": "93d330dab41bbb1b55197d96e1f6d4c28c444cfe75c6abba9bbb71078c15f0e8",
+    "notes": "The wrist device experienced an interruption in recording of 27 minutes in legth. Index 4337573 to 4545544 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "n31": {
+    "path": "data/processed/wildppg_8s/n31.npz",
+    "raw_file": "WildPPG_Part_n31.mat",
+    "raw_sha256": "9a453f4e4d964b694ca0da7070500ad3bb35f05f352b9bf574c0feb7db040117",
+    "n_windows": 23840,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5960,
+     "head": 5960,
+     "wrist": 5960,
+     "ankle": 5960
+    },
+    "sha256": "ce386d0698645b432d31e1e0a8edd65775ed79044e1e45aa92fcde3a5f8cf44a",
+    "notes": ""
+   },
+   "ngh": {
+    "path": "data/processed/wildppg_8s/ngh.npz",
+    "raw_file": "WildPPG_Part_ngh.mat",
+    "raw_sha256": "1982c3c55d316014480b752d805ca12bb1587917a8b57da74f5de6cdb9530738",
+    "n_windows": 26440,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6610,
+     "head": 6610,
+     "wrist": 6610,
+     "ankle": 6610
+    },
+    "sha256": "5cd8e5773eae285f50c0ef197d7c23d77c6682a6f00a8d740c5c01a2da26648e",
+    "notes": ""
+   },
+   "p5d": {
+    "path": "data/processed/wildppg_8s/p5d.npz",
+    "raw_file": "WildPPG_Part_p5d.mat",
+    "raw_sha256": "8dcbb9738feafbe1882746de3af6629de6aea65183fe834455664fa7ca0351fb",
+    "n_windows": 26025,
+    "n_dropped_nonfinite_or_constant": 7,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6508,
+     "head": 6508,
+     "wrist": 6501,
+     "ankle": 6508
+    },
+    "sha256": "0d9647eca9931f26ec4c65068f639b051fe945bc7f1ac877c4e8cbb648194a26",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "p9p": {
+    "path": "data/processed/wildppg_8s/p9p.npz",
+    "raw_file": "WildPPG_Part_p9p.mat",
+    "raw_sha256": "ad4cc58916c0de65878bbb7d9484e370854f22d9e3ec0e061ec16dd62e62eca4",
+    "n_windows": 22508,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5627,
+     "head": 5627,
+     "wrist": 5627,
+     "ankle": 5627
+    },
+    "sha256": "50a619b6b4c7ce8a14ce7174309debc3f9154e85e850ef7a0dea7e8d9b4576ad",
+    "notes": ""
+   },
+   "qm9": {
+    "path": "data/processed/wildppg_8s/qm9.npz",
+    "raw_file": "WildPPG_Part_qm9.mat",
+    "raw_sha256": "ef288b66de55a01a7b1a3bc0927e0eed16637f0d0d0d55d30fba717bad8568cf",
+    "n_windows": 23541,
+    "n_dropped_nonfinite_or_constant": 155,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5769,
+     "head": 5924,
+     "wrist": 5924,
+     "ankle": 5924
+    },
+    "sha256": "b276413a4aaa357ab0124f85d24a4935fd3ef067338a8716b6f486b4d54ad6a0",
+    "notes": ""
+   },
+   "ssx": {
+    "path": "data/processed/wildppg_8s/ssx.npz",
+    "raw_file": "WildPPG_Part_ssx.mat",
+    "raw_sha256": "8621c948f845d552581b59b35874445098786312393c932c5906bef1863870b6",
+    "n_windows": 22790,
+    "n_dropped_nonfinite_or_constant": 6,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5699,
+     "head": 5693,
+     "wrist": 5699,
+     "ankle": 5699
+    },
+    "sha256": "37ef520313ff035f48e475cf5f437e3623d1ba48cd06c8b029f4e78bbdf833bc",
+    "notes": ""
+   },
+   "trh": {
+    "path": "data/processed/wildppg_8s/trh.npz",
+    "raw_file": "WildPPG_Part_trh.mat",
+    "raw_sha256": "d86bbb489a4487296dff44f5178e1994948788ace36968c1a5b0a48c232c6fa9",
+    "n_windows": 25912,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6478,
+     "head": 6478,
+     "wrist": 6478,
+     "ankle": 6478
+    },
+    "sha256": "90a4001cdf02416e173a94a87be3960239b0ec9d47d88b0211a21becd7b12ad9",
+    "notes": ""
+   },
+   "tz8": {
+    "path": "data/processed/wildppg_8s/tz8.npz",
+    "raw_file": "WildPPG_Part_tz8.mat",
+    "raw_sha256": "12e0068c480eecb0702d0014ee492f935324015063fcd0d3054e2c3a2525ae2a",
+    "n_windows": 26115,
+    "n_dropped_nonfinite_or_constant": 25,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6535,
+     "head": 6510,
+     "wrist": 6535,
+     "ankle": 6535
+    },
+    "sha256": "f386410a10fc8ef6788c89a22e81980753dc9eb9db38c24b92c683c43ab250c6",
+    "notes": ""
+   },
+   "u7y": {
+    "path": "data/processed/wildppg_8s/u7y.npz",
+    "raw_file": "WildPPG_Part_u7y.mat",
+    "raw_sha256": "8d5b8439ea66234da07004bb0e12e18752fba594425daa1141fc37adaa7b0001",
+    "n_windows": 23856,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5964,
+     "head": 5964,
+     "wrist": 5964,
+     "ankle": 5964
+    },
+    "sha256": "4a550338b45bcd00f0c21f567745957e18a1968bd9cd4f58a4c1d024cd57f59e",
+    "notes": ""
+   },
+   "w4p": {
+    "path": "data/processed/wildppg_8s/w4p.npz",
+    "raw_file": "WildPPG_Part_w4p.mat",
+    "raw_sha256": "9ded5fb6ee4d57627f98aaaa1854c2ecff599caeb7649de2f449892ab2613ec3",
+    "n_windows": 25020,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6255,
+     "head": 6255,
+     "wrist": 6255,
+     "ankle": 6255
+    },
+    "sha256": "844e2be546115c9d0312bf1e915443c6b9c6727708be4c2489cf037ac0ab5fdd",
+    "notes": ""
+   }
+  }
+ },
+ "leakage_checks": {
+  "subject_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": [],
+    "train\u2229test": [],
+    "val\u2229test": []
+   },
+   "sizes": {
+    "train": 12,
+    "val": 2,
+    "test": 2
+   },
+   "missing": [],
+   "unexpected": []
+  },
+  "window_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": 0,
+    "train\u2229test": 0,
+    "val\u2229test": 0
+   },
+   "n_unique": {
+    "train": 293271,
+    "val": 49200,
+    "test": 46884
+   }
+  },
+  "windowwise_normalization_ppg": {
+   "ok": true,
+   "row": 8,
+   "max_abs_diff": 0.0
+  },
+  "windowwise_normalization_ecg": {
+   "ok": true,
+   "row": 1,
+   "max_abs_diff": 0.0
+  }
+ },
+ "n_windows": {
+  "train": 293271,
+  "val": 49200,
+  "test": 46884
+ },
+ "model_params": {
+  "total": 3990787,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 819200,
+  "effective": 2907393,
+  "state_token": 128
+ },
+ "hardware": {
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 5090",
+   "total_MiB": 32109.0,
+   "capability": [
+    12,
+    0
+   ]
+  },
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "cudnn": 91900,
+  "python": "3.13.9"
+ },
+ "config": {
+  "exp_name": "a5c_mse_regressor_wildppg_seed42",
+  "arm": "A5",
+  "model": "S5ConditionalMeanRegressor (PENGUIN backbone minus pre_conv_target/timestep_embedder) + MSE conditional-mean proxy",
+  "imeanflow": null,
+  "model_cfg": {
+   "n_step": 25,
+   "sample_rate": 128,
+   "h_dim": 128,
+   "ssm_block_num": 4,
+   "ssm_ratio": 2.0,
+   "mlp_ratio": 2.0
+  },
+  "dataset": "WildPPG",
+  "window_s": 8,
+  "sample_rate": 128,
+  "samples_per_window": 1024,
+  "preprocess": {
+   "ppg": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     4
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "ecg": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     -1
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "per_window_stats": true,
+   "global_stats": null
+  },
+  "split": {
+   "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+   "sha256": "bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4",
+   "protocol": "A4-wildppg-holdout",
+   "seed": 42,
+   "train": [
+    "e61",
+    "fex",
+    "l38",
+    "n31",
+    "ngh",
+    "p5d",
+    "p9p",
+    "qm9",
+    "trh",
+    "tz8",
+    "u7y",
+    "w4p"
+   ],
+   "val": [
+    "an0",
+    "k2s"
+   ],
+   "test": [
+    "kjd",
+    "ssx"
+   ]
+  },
+  "seed": 42,
+  "optimizer": "AdamW(betas=(0.9,0.999))",
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "batch_size": 64,
+  "epochs_max": 300,
+  "early_stopping": {
+   "metric": "val_mse (deterministic regression MSE on the validation set)",
+   "patience": 20,
+   "min_delta": 0.0001
+  },
+  "checkpoint": "best val_mse",
+  "selection": {
+   "criterion": "val_mse",
+   "min_delta": 0.0001,
+   "n_val_banks": 0,
+   "bank_seed": 1000,
+   "bank_hash": null,
+   "val_mae_every": 1,
+   "gen_diag_every": 0,
+   "val_subsample": 4096,
+   "val_every_steps": 220
+  },
+  "sampler_train_val": {
+   "solver": "regressor",
+   "steps": 1,
+   "nfe": 1,
+   "note": "one deterministic forward evaluation; not a generative NFE"
+  },
+  "precision": {
+   "dtype": "float32",
+   "amp": false,
+   "bf16": false,
+   "tf32_matmul": false,
+   "cudnn_tf32": true
+  },
+  "deterministic": {
+   "cudnn_deterministic": true,
+   "use_deterministic_algorithms": "True (warn_only)"
+  }
+ },
+ "failures": [],
+ "ok": true
+}

@@ -1,0 +1,20 @@
+{
+ "exp_name": "a5b_mse_regressor_dalia_testS1_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 31,
+ "best_epoch": 10,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 0.08783742040395737,
+ "early_stopped": true,
+ "total_train_time_s": 2097.8324360875413,
+ "peak_mem_MiB": 18302.4287109375,
+ "params": {
+  "total": 3990787,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 819200,
+  "effective": 2907393,
+  "state_token": 128
+ },
+ "finished": "2026-08-26T21:54:42",
+ "checkpoint_best": "outputs/a5b_mse_regressor_dalia_testS1_seed42/checkpoint_best.pt"
+}

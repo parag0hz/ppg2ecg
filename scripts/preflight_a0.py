@@ -59,7 +59,7 @@ def main():
     ap.add_argument("--bank-seed", type=int, default=1000)
     ap.add_argument("--val-mae-every", type=int, default=1)
     ap.add_argument("--gen-diag-every", type=int, default=0)
-    ap.add_argument("--objective", choices=["otcfm", "imeanflow"], default="otcfm")
+    ap.add_argument("--objective", choices=["otcfm", "imeanflow", "mse_regression"], default="otcfm")
     ap.add_argument("--raw-checksums", default="data/raw/CHECKSUMS.sha256")
     ap.add_argument("--dataset", default="PPG-DaLiA")
     ap.add_argument("--val-subsample", type=int, default=None)
@@ -112,20 +112,26 @@ def main():
         imf = {"objective": "improved_meanflow", "paper": "arXiv:2512.02012 v2 (CVPR 2026)", "official_code": "Lyy-iiis/imeanflow @ bf60cd7", "p_mean": -0.4, "p_std": 1.0, "data_proportion": 0.5, "norm_p": 1.0, "norm_eps": 0.01, "jvp": "torch.func.jvp (forward-mode)", "v_theta": "boundary u(z,t,t)", "cond": "h_only: E(h) with the backbone embedder (official iMF design), h_scale=1", "bank_hash": imf_bank_hash(make_imf_banks(n_val_eff, T, args.n_val_banks, args.bank_seed)), "selection": "fixed_imf_mse"}
         banks_h = imf["bank_hash"]
     # model
-    model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate)
-    params = count_params(model, exclude_prefixes=("cross_attn", "revin"))
+    if args.objective == "mse_regression":  # A5: same backbone minus the generative-input modules
+        from ppg2ecg.models.regressor import S5ConditionalMeanRegressor, count_regressor_params
+
+        model = S5ConditionalMeanRegressor(sample_rate=args.sample_rate)
+        params = count_regressor_params(model)
+    else:
+        model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate)
+        params = count_params(model, exclude_prefixes=("cross_attn", "revin"))
     # hardware
     gpu = {"name": torch.cuda.get_device_name(0), "total_MiB": torch.cuda.get_device_properties(0).total_memory / 2**20, "capability": torch.cuda.get_device_capability(0)} if torch.cuda.is_available() else None
     cfg = {
-        "exp_name": args.exp_name, "arm": "A2" if args.objective == "imeanflow" else "A0", "model": "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + " + ("Improved MeanFlow" if args.objective == "imeanflow" else "OT-CFM"), "imeanflow": imf,
+        "exp_name": args.exp_name, "arm": {"imeanflow": "A2", "mse_regression": "A5"}.get(args.objective, "A0"), "model": {"imeanflow": "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + Improved MeanFlow", "mse_regression": "S5ConditionalMeanRegressor (PENGUIN backbone minus pre_conv_target/timestep_embedder) + MSE conditional-mean proxy"}.get(args.objective, "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + OT-CFM"), "imeanflow": imf,
         "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=128, ssm_block_num=4, ssm_ratio=2.0, mlp_ratio=2.0),
         "dataset": args.dataset, "window_s": args.window_s, "sample_rate": args.sample_rate, "samples_per_window": args.sample_rate * args.window_s,
         "preprocess": {"ppg": PPG_KW, "ecg": ECG_KW, "per_window_stats": True, "global_stats": None},
         "split": {"manifest": args.manifest, "sha256": sha256_file(manifest_path), **{k: split[k] for k in ("protocol", "seed", "train", "val", "test")}},
         "seed": args.seed, "optimizer": "AdamW(betas=(0.9,0.999))", "lr": args.lr, "weight_decay": args.weight_decay, "batch_size": args.batch_size,
-        "epochs_max": args.epochs, "early_stopping": {"metric": "val_mae_batchmean (full n_step Heun samples)" if args.select == "val_mae" else f"val_cfm_fixed (deterministic CFM loss on {args.n_val_banks} fixed (t,z) banks, seed {args.bank_seed})", "patience": args.patience, "min_delta": args.min_delta}, "checkpoint": "best " + ("val MAE" if args.select == "val_mae" else "val_cfm_fixed"),
-        "selection": {"criterion": args.select, "min_delta": args.min_delta, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_h, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps},
-        "sampler_train_val": {"solver": "meanflow", "steps": 1, "nfe": 1} if args.objective == "imeanflow" else {"solver": "heun", "steps": args.n_step, "nfe": 2 * args.n_step},
+        "epochs_max": args.epochs, "early_stopping": {"metric": "val_mse (deterministic regression MSE on the validation set)" if args.objective == "mse_regression" else "val_mae_batchmean (full n_step Heun samples)" if args.select == "val_mae" else f"val_cfm_fixed (deterministic CFM loss on {args.n_val_banks} fixed (t,z) banks, seed {args.bank_seed})", "patience": args.patience, "min_delta": args.min_delta}, "checkpoint": "best " + ("val_mse" if args.objective == "mse_regression" else "val MAE" if args.select == "val_mae" else "val_cfm_fixed"),
+        "selection": {"criterion": "val_mse" if args.objective == "mse_regression" else args.select, "min_delta": args.min_delta, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_h, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps},
+        "sampler_train_val": {"solver": "meanflow", "steps": 1, "nfe": 1} if args.objective == "imeanflow" else {"solver": "regressor", "steps": 1, "nfe": 1, "note": "one deterministic forward evaluation; not a generative NFE"} if args.objective == "mse_regression" else {"solver": "heun", "steps": args.n_step, "nfe": 2 * args.n_step},
         "precision": {"dtype": "float32", "amp": False, "bf16": False, "tf32_matmul": torch.backends.cuda.matmul.allow_tf32, "cudnn_tf32": torch.backends.cudnn.allow_tf32},
         "deterministic": {"cudnn_deterministic": True, "use_deterministic_algorithms": "True (warn_only)"},
     }

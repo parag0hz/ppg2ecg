@@ -186,3 +186,18 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   **STRONG SUPPORT** (attenuation + closest(O1→R) on 3/3, WildPPG timing/conditioning preserved; H1–H4 all ✓). Report
   `docs/A5_CONDITIONAL_MEAN_CONTROL_REPORT.md`; artefacts `artifacts/a5_conditional_mean_control/`. Note: JAX-parity test in
   `tests/test_imeanflow.py` fails/hangs while another process holds the GPU (JAX init) — passes with the GPU free.
+- **2026-08-27 A6 pre-registered (`2fc7841`)** — capacity-matched control `S5FullBackboneRegressor` (unmodified PENGUIN backbone,
+  4,568,707 / 4,304,513 effective params, deterministic constant state + fixed t, MSE). Hard test before training: the spec's example
+  (`x = ones`, `cond = E(0.5)`) does not train (constant solution, train MSE flat 0.1198 for 12 epochs; identical with x = 0.1); root cause
+  isolated by 12-epoch runs: the *unscaled* fixed conditioning vector (coherent adaLN-weight updates ≈ 25× the bias rate) and a large
+  constant stem output each block training; `cond = 0` or `cond = 0.05·E(0.5)` with x = 0.1 train (amp 0.11, beats 0.24); x = 1.0 with
+  the scaled cond still fails. Frozen by the pre-stated order: **x_const 0.1, t 0.5, cond_scale 0.05** (all adaLN weights active).
+  Screening traces `outputs/gradcheck_a6_*` (not results) summarised in `artifacts/a6_capacity_control/state_constant_screening.json`;
+  gradient-flow artefacts (`gradient_flow*.json`). A6 pipeline started 01:46 (a → b → c).
+- **A7 dataset audit (`docs/A7_ABP_DATASET_AUDIT.md`)**: MIMIC-BP v2.2 selected (UCI-BP has no subject identifiers); 878 MB downloaded
+  from Harvard Dataverse (md5 OK), 1,524 subjects × 30 × 30 s @125 Hz, ABP raw mmHg, official train/val/test 1,100/195/229; PENGUIN
+  ABP preprocessing = resample only (no normalisation), SBP/DBP = window max/min in mmHg; processed `data/processed/mimicbp_8s`
+  (137,160 windows = PENGUIN's `sample_num`, 0 dropped). A7 pre-registered (`docs/A7_ABP_PREREGISTRATION.md`): three frozen models
+  (OT-CFM A0-b recipe, iMF A2 recipe, A6 MSE proxy), A4 schedule unit, ABP metrics (`ppg2ecg.evaluation.abp_metrics`, unit-tested),
+  ±150 ms systolic-peak region, shuffle penalties, H7.1–7.4, recovery score, verdict thresholds. Pipeline `scripts/run_a7_pipeline.sh`
+  queued behind A6 (waits for `outputs/A6_DONE`).

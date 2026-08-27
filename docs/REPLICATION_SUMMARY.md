@@ -110,3 +110,19 @@ is far from deterministic (ECG), not where it is nearly deterministic (ABP).
    everywhere), but only on ECG does that proximity imply lost structure — on ABP the proxy itself is the best waveform model.
 3. MeanFlow structural recovery is **ECG-specific** under the frozen recipe; on ABP iMF-1 degrades every structural metric.
 4. Pointwise-metric inversion is likewise ECG-specific: on ABP, RMSE ranks the models exactly as physiology does.
+
+## A8 — ABP target-scale sensitivity control (added 2026-08-28; `docs/A8_ABP_SCALE_SENSITIVITY_REPORT.md`)
+A7's iMeanFlow failure on MIMIC-BP was tested against one frozen intervention: a global **train-only** affine target transform
+(mu 77.571767, sigma 22.275611 mmHg from the 1,100 train subjects); everything else identical, predictions inverse-transformed to mmHg.
+| Model | Eval | SBP MAE | DBP MAE | Morph | Slope ratio | HF (GT .043) | Peak F1 | RMSE |
+|---|---|---|---|---|---|---|---|---|
+| MSE proxy raw → z | 1 fwd | 14.31 → **14.05** | 8.72 → **8.69** | 0.929 → 0.929 | 0.91 → 0.91 | 0.022 → 0.019 | 0.945 → 0.948 | 13.10 → **13.03** |
+| OT-CFM 1 raw → z | 1 NFE | 15.09 → **13.95** | 9.51 → 8.98 | 0.904 → 0.934 | 0.93 → 1.00 | 0.024 → 0.022 | 0.913 → 0.947 | 14.64 → 13.43 |
+| OT-CFM 50 raw → z | 50 NFE | 15.94 → 18.08 | 9.80 → 12.30 | 0.884 → 0.922 | 1.20 → 1.19 | 0.037 → 0.036 | 0.883 → 0.901 | 16.12 → 17.79 |
+| iMeanFlow 1 raw → z | 1 NFE | 16.28 → 18.75 | 21.82 → **11.98** | 0.140 → **0.876** | 6.13 → **1.49** | 0.550 → **0.050** | 0.336 → **0.874** | 32.27 → **18.20** |
+**Verdict: SCALE SENSITIVITY CONFIRMED** (all four frozen criteria). Pre-training audit: target/prior norm ratio 81.6 → 0.95, prior share
+of the interpolant energy at t = 0.5 0.0001 → 0.488. Objective diagnostics move into the ECG regime (δ² 1.2e5 → 130 vs 124.5 for A4-ECG;
+adaptive-weight median 1.9e-5 → 1.3e-2 vs 9.8e-3). Baselines are not materially changed (0 flags for the MSE proxy and OT-CFM-1), so the
+A7 conclusions stand in both target representations: no one-step structural attenuation on ABP, no pointwise-error inversion, OT-CFM-1
+still closest to the deterministic proxy (PCC 0.976 after normalisation), and the deterministic proxy remains the best or joint-best
+model — a generative one-step model is still not required for this ABP protocol.

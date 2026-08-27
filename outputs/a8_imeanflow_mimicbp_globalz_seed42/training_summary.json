@@ -1,0 +1,13 @@
+{
+ "exp_name": "a8_imeanflow_mimicbp_globalz_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 88,
+ "best_epoch": 67,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 0.12125868754318128,
+ "early_stopped": true,
+ "total_train_time_s": 15420.91539763892,
+ "peak_mem_MiB": 17696.10400390625,
+ "finished": "2026-08-27T23:47:00",
+ "checkpoint_best": "outputs/a8_imeanflow_mimicbp_globalz_seed42/checkpoint_best.pt"
+}

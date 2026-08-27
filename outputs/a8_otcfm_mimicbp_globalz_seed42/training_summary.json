@@ -1,0 +1,13 @@
+{
+ "exp_name": "a8_otcfm_mimicbp_globalz_seed42",
+ "epochs_run": 207,
+ "best_epoch": 186,
+ "selection_criterion": "fixed_cfm",
+ "best_selection_metric": 0.12244717269881158,
+ "best_val_mae_batchmean": null,
+ "early_stopped": true,
+ "total_train_time_s": 16091.097239233553,
+ "peak_mem_MiB": 19202.294921875,
+ "finished": "2026-08-27T19:13:34",
+ "checkpoint_best": "outputs/a8_otcfm_mimicbp_globalz_seed42/checkpoint_best.pt"
+}

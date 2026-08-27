@@ -218,3 +218,21 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   Frozen verdict **NOT GENERALIZED**. Pareto-optimal: MSE proxy + OT-CFM 4/10/20; OT-50 dominated. Report
   `docs/A7_ABP_GENERALIZATION_REPORT.md`, artefacts `artifacts/a7_abp_generalization/`. **STOP after A7 as pre-registered** (no
   respiration experiments, no new methods).
+- **2026-08-27 A8 pre-registered (`d6ca9dd`)** — ABP target-scale sensitivity control: one global train-only affine target transform
+  (mu 77.571767 / sigma 22.275611 mmHg, 101,376,000 samples from 1,100 train subjects, leakage-guarded), everything else frozen from A7.
+  Pre-training transport audit: ‖y‖/‖e‖ 81.58 → 0.95, ‖y−e‖ 2608 → 44.8, prior share of interpolant energy at t=0.5 0.0001 → 0.488.
+  Also corrected a withdrawn A7 claim: the weighted iMF loss ≈ 1 by construction in *all* runs (ECG included), so it never distinguished
+  the datasets; δ², w and ‖u‖ do.
+- **A8 results (2026-08-27 14:44 → 2026-08-28 01:03)**: OT-CFM 207 rounds (best 187, 4.5 h), iMF 88 (best 68, 4.3 h), MSE 68 (best 48,
+  1.2 h). Inverse-transformed to mmHg: MSE 14.05/8.69, morph 0.929, F1 0.948, RMSE 13.03; OT-1 13.95/8.98, 0.934, 0.947, 13.43; OT-50
+  18.08/12.30, 0.922, 0.901, 17.79; **iMF-1 18.75/11.98, morph 0.876, slope 1.49, HF 0.050, F1 0.874, RMSE 18.20** (raw: 0.140 / 6.13 /
+  0.550 / 0.336 / 32.27). Objective diagnostics: δ² 1.2e5 → 130, w median 1.9e-5 → 1.3e-2 (A4-ECG reference 124.5 / 9.8e-3).
+  Frozen verdict **SCALE SENSITIVITY CONFIRMED** (3/4 metrics ≥ +10 %, HF excess −90.9 %, slope error −90.5 %, non-degenerate diagnostics);
+  baselines not materially changed (0 flags for MSE and OT-1) → not confounded. No pointwise inversion in either scale; OT-1 remains the
+  closest model to the MSE proxy (PCC 0.976). Anomaly recorded: normalised OT-CFM at 4 NFE is worse than at 1 and 50 NFE (slope 3.62,
+  HF 0.164) — the intermediate-NFE instability seen on ECG at 2 NFE. Report `docs/A8_ABP_SCALE_SENSITIVITY_REPORT.md`.
+  **STOP after A8 as pre-registered.**
+- **Repository hygiene (2026-08-27)**: history rewritten once more to redact a third-party e-mail/account name quoted in an old log entry
+  and to re-assert `parag0hz` as author *and* committer on all 26 commits (file contents unchanged; diff old-tip vs new-tip empty),
+  force-pushed with lease; local backup branch, filter-branch leftovers, reflog and unreachable objects deleted. SHA mapping:
+  `docs/COMMIT_SHA_MAPPING.md` (cited SHAs in all docs updated in place; `outputs/*/provenance.json` keep the run-time SHA).

@@ -83,3 +83,30 @@ hard test) on the same three splits: S2 morph 0.175 / amp 0.06 / RMSE 0.286; S1 
 F1 0.421 and gain 4.95 — within 0.035 (morph), 0.015 (amp) and 0.007 (RMSE) of the A5 regressor, waveform RMSE between the two
 0.04–0.05; OT-CFM 1-NFE remains the closest generative model (3/3 datasets, 3/3 votes). **Verdict: CAPACITY OBJECTION RESOLVED** — the
 conditional-mean-like attenuation is a property of the MSE objective on this backbone, not of reduced capacity.
+
+## A7 — Cross-target test: PPG→ABP on MIMIC-BP (added 2026-08-27; `docs/A7_ABP_GENERALIZATION_REPORT.md`)
+Same three objectives (OT-CFM, iMeanFlow, A6 full-backbone MSE proxy) on MIMIC-BP's official subject split, ABP in raw mmHg.
+| Model | Eval | SBP MAE | DBP MAE | Morph | PP ratio | slope ratio | HF (GT 0.043) | Peak F1 | RMSE |
+|---|---|---|---|---|---|---|---|---|---|
+| MSE proxy | 1 fwd | **14.31** | **8.72** | **0.929** | 0.96 | 0.91 | 0.022 | **0.945** | **13.10** |
+| OT-CFM | 1 NFE | 15.09 | 9.51 | 0.904 | 0.92 | 0.93 | 0.024 | 0.913 | 14.64 |
+| OT-CFM | 50 NFE | 15.94 | 9.80 | 0.884 | 1.05 | 1.20 | 0.037 | 0.883 | 16.12 |
+| iMeanFlow | 1 NFE | 16.28 | 21.82 | 0.140 | 1.30 | 6.13 | 0.550 | 0.336 | 32.27 |
+**Verdict: NOT GENERALIZED.** On ABP the one-step arm loses nothing (it is slightly *better* than 50 NFE), the conditional-mean proxy is
+the best model overall rather than an attenuated shortcut, pointwise error and physiology rank identically (no inversion), and iMeanFlow-1
+injects high-frequency noise (HF 12.9× GT) and loses PPG conditioning. Interpretation: attenuation appears where the PPG→target relation
+is far from deterministic (ECG), not where it is nearly deterministic (ABP).
+
+### Integrated ECG + ABP picture
+| Task / dataset | Target | OT50 morph | OT1 morph | MSE morph | iMF1 morph | OT1 amp/PP | MSE amp/PP | iMF1 amp/PP |
+|---|---|---|---|---|---|---|---|---|
+| DaLiA S2 | ECG | 0.650 | 0.217 | 0.175 | 0.595 | 0.145 | 0.064 | 0.896 |
+| DaLiA S1 | ECG | 0.683 | 0.168 | 0.184 | 0.581 | 0.207 | 0.036 | 0.711 |
+| WildPPG | ECG | 0.670 | 0.379 | 0.316 | 0.551 | 0.321 | 0.241 | 1.039 |
+| MIMIC-BP | ABP | 0.884 | 0.904 | 0.929 | 0.140 | 0.92 (PP) | 0.96 (PP) | 1.30 (PP) |
+(MSE column = the capacity-matched A6 regressor for ECG, the identical model for ABP.)
+1. Structural attenuation is **target-dependent**, not universal: it is severe on ECG at 1 NFE and absent on ABP.
+2. Conditional-mean-like behaviour of the one-step sample holds on both targets in the *distance* sense (OT-1 is closest to the MSE proxy
+   everywhere), but only on ECG does that proximity imply lost structure — on ABP the proxy itself is the best waveform model.
+3. MeanFlow structural recovery is **ECG-specific** under the frozen recipe; on ABP iMF-1 degrades every structural metric.
+4. Pointwise-metric inversion is likewise ECG-specific: on ABP, RMSE ranks the models exactly as physiology does.

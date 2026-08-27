@@ -207,3 +207,12 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   generative model to Rfull: OT-CFM-1 on 3/3 datasets (RMSE 0.082/0.120/0.078 vs 0.26–0.35 for OT-50/iMF-1). Frozen verdict
   **CAPACITY OBJECTION RESOLVED**. Report `docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_REPORT.md`, artefacts `artifacts/a6_capacity_control/`.
   A7 pipeline started automatically on `outputs/A6_DONE`.
+- **A7 results (2026-08-27 04:17–11:45, MIMIC-BP official split, 3,435-window test subset)**: OT-CFM 117 rounds (best 97, 2.5 h,
+  val CFM 6.49); iMF 70 (best 50, 3.5 h, val 112.5); MSE proxy 66 (best 46, 1.2 h, val 219 mmHg²). SBP/DBP MAE [mmHg] — MSE 14.31/8.72,
+  OT-1 15.09/9.51, OT-4 14.89/9.39, OT-50 15.94/9.80, iMF-1 16.28/21.82; pulse-template correlation 0.929 / 0.904 / 0.909 / 0.884 / 0.140;
+  slope ratio 0.91 / 0.93 / 0.97 / 1.20 / 6.13; HF (>5 Hz) 0.022 / 0.024 / 0.022 / 0.037 / 0.550 (GT 0.043); systolic-peak F1 0.945 /
+  0.913 / 0.919 / 0.883 / 0.336; RMSE 13.10 / 14.64 / 14.69 / 16.12 / 32.27. No attenuation at 1 NFE (it beats 50 NFE), MSE proxy best on
+  every metric, no pointwise inversion, iMF-1 injects HF noise and loses conditioning (shuffle penalty 0.05 mmHg vs 1.93 for the proxy).
+  Frozen verdict **NOT GENERALIZED**. Pareto-optimal: MSE proxy + OT-CFM 4/10/20; OT-50 dominated. Report
+  `docs/A7_ABP_GENERALIZATION_REPORT.md`, artefacts `artifacts/a7_abp_generalization/`. **STOP after A7 as pre-registered** (no
+  respiration experiments, no new methods).

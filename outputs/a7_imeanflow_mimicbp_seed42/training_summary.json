@@ -1,0 +1,13 @@
+{
+ "exp_name": "a7_imeanflow_mimicbp_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 70,
+ "best_epoch": 49,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 112.48838011043364,
+ "early_stopped": true,
+ "total_train_time_s": 12452.083032195223,
+ "peak_mem_MiB": 17696.09716796875,
+ "finished": "2026-08-27T10:31:56",
+ "checkpoint_best": "outputs/a7_imeanflow_mimicbp_seed42/checkpoint_best.pt"
+}

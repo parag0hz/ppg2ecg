@@ -1,0 +1,20 @@
+{
+ "exp_name": "a7_mse_fullbackbone_mimicbp_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 66,
+ "best_epoch": 45,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 218.9570770263672,
+ "early_stopped": true,
+ "total_train_time_s": 4227.810341320932,
+ "peak_mem_MiB": 19201.044921875,
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "finished": "2026-08-27T11:44:16",
+ "checkpoint_best": "outputs/a7_mse_fullbackbone_mimicbp_seed42/checkpoint_best.pt"
+}

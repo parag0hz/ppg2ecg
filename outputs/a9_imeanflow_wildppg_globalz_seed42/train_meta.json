@@ -1,0 +1,108 @@
+{
+ "exp_name": "a9_imeanflow_wildppg_globalz_seed42",
+ "target_norm": {
+  "mu": 1.5754169346247968,
+  "sigma": 10501.669121754265,
+  "source": "artifacts/a9_ecg_representation_control/normalization.json"
+ },
+ "objective": "improved_meanflow",
+ "args": {
+  "exp_name": "a9_imeanflow_wildppg_globalz_seed42",
+  "out_dir": "outputs/a9_imeanflow_wildppg_globalz_seed42",
+  "processed": "data/processed/wildppg_8s_prenorm",
+  "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+  "seed": 42,
+  "epochs": 300,
+  "patience": 20,
+  "min_delta": 0.0001,
+  "batch_size": 64,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "h_dim": 128,
+  "blocks": 4,
+  "ssm_ratio": 2.0,
+  "mlp_ratio": 2.0,
+  "sample_rate": 128,
+  "p_mean": -0.4,
+  "p_std": 1.0,
+  "data_proportion": 0.5,
+  "norm_p": 1.0,
+  "norm_eps": 0.01,
+  "jvp_mode": "forward",
+  "cond_mode": "h_only",
+  "h_scale": 1.0,
+  "micro_batch": 32,
+  "val_batch": 32,
+  "n_val_banks": 4,
+  "bank_seed": 1000,
+  "gen_diag_every": 0,
+  "gen_diag_windows": 128,
+  "val_every_steps": 220,
+  "val_subsample": 4096,
+  "resume": false,
+  "target_norm": "artifacts/a9_ecg_representation_control/normalization.json",
+  "limit_windows": null
+ },
+ "params": {
+  "total": 4568707,
+  "excluded": 264194,
+  "effective": 4304513
+ },
+ "n_train_windows": 293271,
+ "n_val_windows": 3785,
+ "T": 1024,
+ "split": {
+  "protocol": "A4-wildppg-holdout",
+  "seed": 42,
+  "rule": "sorted participant ids -> random.Random(42).sample -> val = first 2, test = next 2 (PENGUIN shape 16//8), train = remaining 12",
+  "train": [
+   "e61",
+   "fex",
+   "l38",
+   "n31",
+   "ngh",
+   "p5d",
+   "p9p",
+   "qm9",
+   "trh",
+   "tz8",
+   "u7y",
+   "w4p"
+  ],
+  "val": [
+   "an0",
+   "k2s"
+  ],
+  "test": [
+   "kjd",
+   "ssx"
+  ]
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": []
+ },
+ "git": {
+  "commit": "fc3519d9385777298dada892e120cae2cd293ae8",
+  "dirty_files": 2
+ },
+ "device": "cuda",
+ "torch": "2.11.0+cu130",
+ "selection": {
+  "criterion": "fixed_imf_mse",
+  "min_delta": 0.0001,
+  "patience": 20,
+  "n_val_banks": 4,
+  "bank_seed": 1000,
+  "bank_hash": "2cd144684498f2796451d0eaaaed11b1ebd4b2a9112fb0efb56d502cdf383564",
+  "cond_mode": "h_only",
+  "h_scale": 1.0,
+  "micro_batch": 32,
+  "effective_batch": 64,
+  "val_batch": 32,
+  "gen_diag_every": 0,
+  "gen_diag_windows": 128
+ },
+ "started": "2026-08-28T06:29:24"
+}

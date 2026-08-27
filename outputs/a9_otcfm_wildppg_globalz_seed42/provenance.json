@@ -1,0 +1,496 @@
+{
+ "created": "2026-08-28T02:53:35",
+ "git": {
+  "commit": "fc3519d9385777298dada892e120cae2cd293ae8",
+  "branch": "main",
+  "dirty_files": [
+   "?? outputs/a9_mse_fullbackbone_wildppg_globalz_seed42/",
+   "?? scripts/eval_a9.py",
+   "?? scripts/run_a9_pipeline.sh"
+  ]
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": [],
+  "expected": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "url": "https://github.com/Neurogica/PENGUIN.git"
+ },
+ "dataset": {
+  "raw_checksums_sha256": [
+   "66cc6f526793661a336d93b832683887ab6d97f7c504c65de597b78b8ea17643  github_image.zip",
+   "ff5169418d86beaf8ea841c52ba8d694ee4c3892837f48f8196421385a894a25  WildPPG_Part_an0.mat",
+   "2d1500baf936d85f15291f7da85268ef000446ada5c7f876ffba3b0ca6b8fa2a  WildPPG_Part_e61.mat",
+   "c59f56e989d3df6638290e2839bee42c113ee30813a344c6f71fc348e34a3cb1  WildPPG_Part_fex.mat",
+   "a09fa1c0e6a32664806392cb76d3fc477e5cf759699462ad2b7ed8304208d17a  WildPPG_Part_k2s.mat",
+   "67271481074610f74aac2d8dad101e3cbbff949757761e8b5f40863b856e9123  WildPPG_Part_kjd.mat",
+   "86f2e6cf02977c78a455cbe49b3fe990d33ae2719c00f7f23ecb8020869fd1e5  WildPPG_Part_l38.mat",
+   "9a453f4e4d964b694ca0da7070500ad3bb35f05f352b9bf574c0feb7db040117  WildPPG_Part_n31.mat",
+   "1982c3c55d316014480b752d805ca12bb1587917a8b57da74f5de6cdb9530738  WildPPG_Part_ngh.mat",
+   "8dcbb9738feafbe1882746de3af6629de6aea65183fe834455664fa7ca0351fb  WildPPG_Part_p5d.mat",
+   "ad4cc58916c0de65878bbb7d9484e370854f22d9e3ec0e061ec16dd62e62eca4  WildPPG_Part_p9p.mat",
+   "ef288b66de55a01a7b1a3bc0927e0eed16637f0d0d0d55d30fba717bad8568cf  WildPPG_Part_qm9.mat",
+   "8621c948f845d552581b59b35874445098786312393c932c5906bef1863870b6  WildPPG_Part_ssx.mat",
+   "d86bbb489a4487296dff44f5178e1994948788ace36968c1a5b0a48c232c6fa9  WildPPG_Part_trh.mat",
+   "12e0068c480eecb0702d0014ee492f935324015063fcd0d3054e2c3a2525ae2a  WildPPG_Part_tz8.mat",
+   "8d5b8439ea66234da07004bb0e12e18752fba594425daa1141fc37adaa7b0001  WildPPG_Part_u7y.mat",
+   "9ded5fb6ee4d57627f98aaaa1854c2ecff599caeb7649de2f449892ab2613ec3  WildPPG_Part_w4p.mat"
+  ],
+  "processed_manifest": {
+   "built": "2026-08-28T01:21:54",
+   "segment_len_s": 8,
+   "resample_rate": 128,
+   "samples_per_window": 1024,
+   "total_windows": 389355
+  },
+  "processed_files": {
+   "an0": {
+    "path": "data/processed/wildppg_8s_prenorm/an0.npz",
+    "raw_file": "WildPPG_Part_an0.mat",
+    "raw_sha256": "ff5169418d86beaf8ea841c52ba8d694ee4c3892837f48f8196421385a894a25",
+    "n_windows": 22183,
+    "n_dropped_nonfinite_or_constant": 1,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5546,
+     "head": 5546,
+     "wrist": 5546,
+     "ankle": 5545
+    },
+    "sha256": "c8617045d9a29a810aaa105a887e89156063edd5d0cbed512144781b85c880bb",
+    "notes": "The ankle device experienced an interruption in recording of 15 seconds in legth. Index 284544 to 286401 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "e61": {
+    "path": "data/processed/wildppg_8s_prenorm/e61.npz",
+    "raw_file": "WildPPG_Part_e61.mat",
+    "raw_sha256": "2d1500baf936d85f15291f7da85268ef000446ada5c7f876ffba3b0ca6b8fa2a",
+    "n_windows": 22228,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5557,
+     "head": 5557,
+     "wrist": 5557,
+     "ankle": 5557
+    },
+    "sha256": "c46e3c160cfacd7303f1744d57a1bf30699f0e0adc8226ef0c5a58c78aeb44e8",
+    "notes": ""
+   },
+   "fex": {
+    "path": "data/processed/wildppg_8s_prenorm/fex.npz",
+    "raw_file": "WildPPG_Part_fex.mat",
+    "raw_sha256": "c59f56e989d3df6638290e2839bee42c113ee30813a344c6f71fc348e34a3cb1",
+    "n_windows": 24072,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6018,
+     "head": 6018,
+     "wrist": 6018,
+     "ankle": 6018
+    },
+    "sha256": "63fc920764ae59ad3a1a065c67d04363ea3c7599396f1a228582e0feb6c8eb08",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "k2s": {
+    "path": "data/processed/wildppg_8s_prenorm/k2s.npz",
+    "raw_file": "WildPPG_Part_k2s.mat",
+    "raw_sha256": "a09fa1c0e6a32664806392cb76d3fc477e5cf759699462ad2b7ed8304208d17a",
+    "n_windows": 27017,
+    "n_dropped_nonfinite_or_constant": 399,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6854,
+     "head": 6852,
+     "wrist": 6457,
+     "ankle": 6854
+    },
+    "sha256": "b5419114592303d7723d60536a73ed8179d1f1bcea11660c5d130dd634cc6c26",
+    "notes": "The wrist device experienced an interruption in recording of 53 minutes in legth. Index 3786940 to 4194811 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "kjd": {
+    "path": "data/processed/wildppg_8s_prenorm/kjd.npz",
+    "raw_file": "WildPPG_Part_kjd.mat",
+    "raw_sha256": "67271481074610f74aac2d8dad101e3cbbff949757761e8b5f40863b856e9123",
+    "n_windows": 24094,
+    "n_dropped_nonfinite_or_constant": 6,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6025,
+     "head": 6019,
+     "wrist": 6025,
+     "ankle": 6025
+    },
+    "sha256": "15bbea25730e8537843579cbe6a6cacbb306dd0cd84524663300ebffb80cb96a",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "l38": {
+    "path": "data/processed/wildppg_8s_prenorm/l38.npz",
+    "raw_file": "WildPPG_Part_l38.mat",
+    "raw_sha256": "86f2e6cf02977c78a455cbe49b3fe990d33ae2719c00f7f23ecb8020869fd1e5",
+    "n_windows": 23714,
+    "n_dropped_nonfinite_or_constant": 262,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5975,
+     "head": 5954,
+     "wrist": 5791,
+     "ankle": 5994
+    },
+    "sha256": "8b6b67f64d26fc37a8d4ef791ba32017d3c30db8e985f6393f385d843308d813",
+    "notes": "The wrist device experienced an interruption in recording of 27 minutes in legth. Index 4337573 to 4545544 of all data from the wrist should be excluded from analysis (Matlab-indexing, starting at 1, including end)."
+   },
+   "n31": {
+    "path": "data/processed/wildppg_8s_prenorm/n31.npz",
+    "raw_file": "WildPPG_Part_n31.mat",
+    "raw_sha256": "9a453f4e4d964b694ca0da7070500ad3bb35f05f352b9bf574c0feb7db040117",
+    "n_windows": 23840,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5960,
+     "head": 5960,
+     "wrist": 5960,
+     "ankle": 5960
+    },
+    "sha256": "dbba1143fc6204b99c05a8238b682008d5270be1306b2ad72d9491f4ae8aaae0",
+    "notes": ""
+   },
+   "ngh": {
+    "path": "data/processed/wildppg_8s_prenorm/ngh.npz",
+    "raw_file": "WildPPG_Part_ngh.mat",
+    "raw_sha256": "1982c3c55d316014480b752d805ca12bb1587917a8b57da74f5de6cdb9530738",
+    "n_windows": 26440,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6610,
+     "head": 6610,
+     "wrist": 6610,
+     "ankle": 6610
+    },
+    "sha256": "1ff44be35b80d2c2139b8760b58c61c64ce946bc7d58b7ac040f1ae0efc73ff6",
+    "notes": ""
+   },
+   "p5d": {
+    "path": "data/processed/wildppg_8s_prenorm/p5d.npz",
+    "raw_file": "WildPPG_Part_p5d.mat",
+    "raw_sha256": "8dcbb9738feafbe1882746de3af6629de6aea65183fe834455664fa7ca0351fb",
+    "n_windows": 26025,
+    "n_dropped_nonfinite_or_constant": 7,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6508,
+     "head": 6508,
+     "wrist": 6501,
+     "ankle": 6508
+    },
+    "sha256": "7eebb73ef75d8aaa92fa2acbc0e0490d9162a2925d7ca6d9f83bd39db772480b",
+    "notes": "ECG recordings of this participant are noisy."
+   },
+   "p9p": {
+    "path": "data/processed/wildppg_8s_prenorm/p9p.npz",
+    "raw_file": "WildPPG_Part_p9p.mat",
+    "raw_sha256": "ad4cc58916c0de65878bbb7d9484e370854f22d9e3ec0e061ec16dd62e62eca4",
+    "n_windows": 22508,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5627,
+     "head": 5627,
+     "wrist": 5627,
+     "ankle": 5627
+    },
+    "sha256": "eceb661b855b9c6ee8a8fc21f9a1ff864ee8ebec61c6c94c6b020b72f6a154be",
+    "notes": ""
+   },
+   "qm9": {
+    "path": "data/processed/wildppg_8s_prenorm/qm9.npz",
+    "raw_file": "WildPPG_Part_qm9.mat",
+    "raw_sha256": "ef288b66de55a01a7b1a3bc0927e0eed16637f0d0d0d55d30fba717bad8568cf",
+    "n_windows": 23541,
+    "n_dropped_nonfinite_or_constant": 155,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5769,
+     "head": 5924,
+     "wrist": 5924,
+     "ankle": 5924
+    },
+    "sha256": "304fd0195281b57804eb994df07a8673c1b93d559c94a47486620aff7915ae24",
+    "notes": ""
+   },
+   "ssx": {
+    "path": "data/processed/wildppg_8s_prenorm/ssx.npz",
+    "raw_file": "WildPPG_Part_ssx.mat",
+    "raw_sha256": "8621c948f845d552581b59b35874445098786312393c932c5906bef1863870b6",
+    "n_windows": 22790,
+    "n_dropped_nonfinite_or_constant": 6,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5699,
+     "head": 5693,
+     "wrist": 5699,
+     "ankle": 5699
+    },
+    "sha256": "50b960ddbb905722521bd986f23e59cd8d51e6da3c4f2b1f2bc25bfe03a14c99",
+    "notes": ""
+   },
+   "trh": {
+    "path": "data/processed/wildppg_8s_prenorm/trh.npz",
+    "raw_file": "WildPPG_Part_trh.mat",
+    "raw_sha256": "d86bbb489a4487296dff44f5178e1994948788ace36968c1a5b0a48c232c6fa9",
+    "n_windows": 25912,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6478,
+     "head": 6478,
+     "wrist": 6478,
+     "ankle": 6478
+    },
+    "sha256": "1e5cea02199a9825202fadef28b1fa05e9111ed774010b6bd2b58e803d2287a5",
+    "notes": ""
+   },
+   "tz8": {
+    "path": "data/processed/wildppg_8s_prenorm/tz8.npz",
+    "raw_file": "WildPPG_Part_tz8.mat",
+    "raw_sha256": "12e0068c480eecb0702d0014ee492f935324015063fcd0d3054e2c3a2525ae2a",
+    "n_windows": 26115,
+    "n_dropped_nonfinite_or_constant": 25,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6535,
+     "head": 6510,
+     "wrist": 6535,
+     "ankle": 6535
+    },
+    "sha256": "0455f2fc26cfa0ea245ff186689fc744c3ab2097c6a0c14354f0ce453669bfac",
+    "notes": ""
+   },
+   "u7y": {
+    "path": "data/processed/wildppg_8s_prenorm/u7y.npz",
+    "raw_file": "WildPPG_Part_u7y.mat",
+    "raw_sha256": "8d5b8439ea66234da07004bb0e12e18752fba594425daa1141fc37adaa7b0001",
+    "n_windows": 23856,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 5964,
+     "head": 5964,
+     "wrist": 5964,
+     "ankle": 5964
+    },
+    "sha256": "077fa1d94c46227761b71f08937e9a82cb8b8dc4a016141dac6d61888ba1edca",
+    "notes": ""
+   },
+   "w4p": {
+    "path": "data/processed/wildppg_8s_prenorm/w4p.npz",
+    "raw_file": "WildPPG_Part_w4p.mat",
+    "raw_sha256": "9ded5fb6ee4d57627f98aaaa1854c2ecff599caeb7649de2f449892ab2613ec3",
+    "n_windows": 25020,
+    "n_dropped_nonfinite_or_constant": 0,
+    "fs_ppg": 128,
+    "fs_ecg": 128,
+    "sites": {
+     "sternum": 6255,
+     "head": 6255,
+     "wrist": 6255,
+     "ankle": 6255
+    },
+    "sha256": "d12495f1db7d772cb86cb6b036ca2b84233be097096f369ef5fef8fb059e649c",
+    "notes": ""
+   }
+  }
+ },
+ "leakage_checks": {
+  "subject_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": [],
+    "train\u2229test": [],
+    "val\u2229test": []
+   },
+   "sizes": {
+    "train": 12,
+    "val": 2,
+    "test": 2
+   },
+   "missing": [],
+   "unexpected": []
+  },
+  "window_disjoint": {
+   "ok": true,
+   "overlaps": {
+    "train\u2229val": 0,
+    "train\u2229test": 0,
+    "val\u2229test": 0
+   },
+   "n_unique": {
+    "train": 293271,
+    "val": 49200,
+    "test": 46884
+   }
+  },
+  "windowwise_normalization_ppg": {
+   "ok": true,
+   "row": 8,
+   "max_abs_diff": 0.0
+  },
+  "windowwise_normalization_ecg": {
+   "ok": true,
+   "row": 1,
+   "max_abs_diff": 0.0
+  }
+ },
+ "n_windows": {
+  "train": 293271,
+  "val": 49200,
+  "test": 46884
+ },
+ "target_stats_mmHg": null,
+ "model_params": {
+  "total": 4568707,
+  "excluded": 264194,
+  "effective": 4304513
+ },
+ "hardware": {
+  "gpu": {
+   "name": "NVIDIA GeForce RTX 5090",
+   "total_MiB": 32109.0,
+   "capability": [
+    12,
+    0
+   ]
+  },
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0",
+  "cudnn": 91900,
+  "python": "3.13.9"
+ },
+ "config": {
+  "exp_name": "a9_otcfm_wildppg_globalz_seed42",
+  "arm": "A0",
+  "model": "PENGUIN (upstream class, unmodified) Flow-SSM/S5 + OT-CFM",
+  "imeanflow": null,
+  "model_cfg": {
+   "n_step": 25,
+   "sample_rate": 128,
+   "h_dim": 128,
+   "ssm_block_num": 4,
+   "ssm_ratio": 2.0,
+   "mlp_ratio": 2.0
+  },
+  "dataset": "WildPPG",
+  "window_s": 8,
+  "sample_rate": 128,
+  "samples_per_window": 1024,
+  "preprocess": {
+   "ppg": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     4
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "target": {
+    "bandpass": true,
+    "freq_range": [
+     0.5,
+     -1
+    ],
+    "zscore": true,
+    "normalize": true
+   },
+   "per_window_stats": true,
+   "global_stats": null,
+   "target_kind": "ECG"
+  },
+  "split": {
+   "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+   "sha256": "bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4",
+   "protocol": "A4-wildppg-holdout",
+   "seed": 42,
+   "train": [
+    "e61",
+    "fex",
+    "l38",
+    "n31",
+    "ngh",
+    "p5d",
+    "p9p",
+    "qm9",
+    "trh",
+    "tz8",
+    "u7y",
+    "w4p"
+   ],
+   "val": [
+    "an0",
+    "k2s"
+   ],
+   "test": [
+    "kjd",
+    "ssx"
+   ]
+  },
+  "seed": 42,
+  "optimizer": "AdamW(betas=(0.9,0.999))",
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "batch_size": 64,
+  "epochs_max": 300,
+  "early_stopping": {
+   "metric": "val_cfm_fixed (deterministic CFM loss on 4 fixed (t,z) banks, seed 1000)",
+   "patience": 20,
+   "min_delta": 0.0001
+  },
+  "checkpoint": "best val_cfm_fixed",
+  "selection": {
+   "criterion": "fixed_cfm",
+   "min_delta": 0.0001,
+   "n_val_banks": 4,
+   "bank_seed": 1000,
+   "bank_hash": "ed7cd22b6e79a08a5e3fa217601d669bd0834d60bcd152baf1a8a12c87f6db08",
+   "val_mae_every": 1,
+   "gen_diag_every": 0,
+   "val_subsample": 4096,
+   "val_every_steps": 220
+  },
+  "sampler_train_val": {
+   "solver": "heun",
+   "steps": 25,
+   "nfe": 50
+  },
+  "precision": {
+   "dtype": "float32",
+   "amp": false,
+   "bf16": false,
+   "tf32_matmul": false,
+   "cudnn_tf32": true
+  },
+  "deterministic": {
+   "cudnn_deterministic": true,
+   "use_deterministic_algorithms": "True (warn_only)"
+  }
+ },
+ "failures": [],
+ "ok": true
+}

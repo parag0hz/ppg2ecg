@@ -1,0 +1,96 @@
+{
+ "exp_name": "a9_otcfm_wildppg_globalz_seed42",
+ "target_norm": {
+  "mu": 1.5754169346247968,
+  "sigma": 10501.669121754265,
+  "source": "artifacts/a9_ecg_representation_control/normalization.json"
+ },
+ "args": {
+  "exp_name": "a9_otcfm_wildppg_globalz_seed42",
+  "out_dir": "outputs/a9_otcfm_wildppg_globalz_seed42",
+  "processed": "data/processed/wildppg_8s_prenorm",
+  "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+  "seed": 42,
+  "epochs": 300,
+  "patience": 20,
+  "batch_size": 64,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "n_step": 25,
+  "h_dim": 128,
+  "blocks": 4,
+  "ssm_ratio": 2.0,
+  "mlp_ratio": 2.0,
+  "sample_rate": 128,
+  "val_every_steps": 220,
+  "val_subsample": 4096,
+  "resume": false,
+  "target_norm": "artifacts/a9_ecg_representation_control/normalization.json",
+  "limit_windows": null,
+  "select": "fixed_cfm",
+  "min_delta": 0.0001,
+  "n_val_banks": 4,
+  "bank_seed": 1000,
+  "val_mae_every": 0,
+  "gen_diag_every": 0,
+  "gen_diag_windows": 128
+ },
+ "params": {
+  "total": 4568707,
+  "excluded": 264194,
+  "effective": 4304513
+ },
+ "n_train_windows": 293271,
+ "n_val_windows": 3785,
+ "T": 1024,
+ "split": {
+  "protocol": "A4-wildppg-holdout",
+  "seed": 42,
+  "rule": "sorted participant ids -> random.Random(42).sample -> val = first 2, test = next 2 (PENGUIN shape 16//8), train = remaining 12",
+  "train": [
+   "e61",
+   "fex",
+   "l38",
+   "n31",
+   "ngh",
+   "p5d",
+   "p9p",
+   "qm9",
+   "trh",
+   "tz8",
+   "u7y",
+   "w4p"
+  ],
+  "val": [
+   "an0",
+   "k2s"
+  ],
+  "test": [
+   "kjd",
+   "ssx"
+  ]
+ },
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": []
+ },
+ "git": {
+  "commit": "fc3519d9385777298dada892e120cae2cd293ae8",
+  "dirty_files": 2
+ },
+ "device": "cuda",
+ "selection": {
+  "criterion": "fixed_cfm",
+  "min_delta": 0.0001,
+  "patience": 20,
+  "n_val_banks": 4,
+  "bank_seed": 1000,
+  "bank_hash": "ed7cd22b6e79a08a5e3fa217601d669bd0834d60bcd152baf1a8a12c87f6db08",
+  "val_mae_every": 0,
+  "gen_diag_every": 0,
+  "gen_diag_windows": 128
+ },
+ "torch": "2.11.0+cu130",
+ "started": "2026-08-28T02:53:42"
+}

@@ -1,0 +1,35 @@
+{
+ "split": {
+  "protocol": "A4-wildppg-holdout",
+  "seed": 42,
+  "rule": "sorted participant ids -> random.Random(42).sample -> val = first 2, test = next 2 (PENGUIN shape 16//8), train = remaining 12",
+  "train": [
+   "e61",
+   "fex",
+   "l38",
+   "n31",
+   "ngh",
+   "p5d",
+   "p9p",
+   "qm9",
+   "trh",
+   "tz8",
+   "u7y",
+   "w4p"
+  ],
+  "val": [
+   "an0",
+   "k2s"
+  ],
+  "test": [
+   "kjd",
+   "ssx"
+  ]
+ },
+ "manifest_sha256": "bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4",
+ "n_windows": {
+  "train": 293271,
+  "val": 49200,
+  "test": 46884
+ }
+}

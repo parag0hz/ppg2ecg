@@ -236,3 +236,18 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   and to re-assert `parag0hz` as author *and* committer on all 26 commits (file contents unchanged; diff old-tip vs new-tip empty),
   force-pushed with lease; local backup branch, filter-branch leftovers, reflog and unreachable objects deleted. SHA mapping:
   `docs/COMMIT_SHA_MAPPING.md` (cited SHAs in all docs updated in place; `outputs/*/provenance.json` keep the run-time SHA).
+- **2026-08-28 A9 pre-registered (`fc3519d`)** — ECG target-representation mirror control (WildPPG only). Built
+  `data/processed/wildppg_8s_prenorm` (resample + 0.5 Hz high-pass, no per-window normalisation; PPG/window-index/site bit-identical to
+  `wildppg_8s`, 389,355 windows, 861 dropped) and froze a global train-only affine ECG transform (mu 1.575417, sigma 10501.669122,
+  300,309,504 samples of the 12 train subjects, leakage-guarded). Pre-training audits: both representations O(1) vs the prior
+  (‖y‖/‖e‖ 0.49 window-norm vs 0.71 global-z) so this isolates local-vs-global normalisation; global-z keeps a 9.8× inter-subject
+  amplitude spread (per-window std sd 0.04 → 1.00) → the pre-registered amplitude statistic is the median; HF ratio identical (affine
+  invariance); the frozen R-peak detector gives identical beats in 100.0 % of the 3,907 test windows.
+- **A9 results (2026-08-28 01:28 → 08:05)**: MSE 69 rounds (best 49, 1.4 h), OT-CFM 134 (best 114, 3.2 h), iMF 28 (best 8, 1.5 h).
+  Global-z: MSE HR 13.71 / morph 0.345 / ampMed 0.64 / HF 0.008 / F1 0.487; OT-1 20.89 / 0.325 / 0.52 / 0.079 / 0.434; OT-50 10.48 /
+  0.644 / 1.72 / 0.225 / 0.398; iMF-1 10.52 / 0.605 / 0.89 / 0.244 / 0.382. Attenuation of MSE and OT-1 persists (QRS energy retention
+  0.26 / 0.14 vs OT-50 2.00; max-slope ratio 0.12 / 0.19 vs 1.06); OT-1 still closest to the MSE proxy (0.134 vs 0.525 / 0.288, 3/3 votes);
+  iMF morphology recovery 0.88 (window-norm 0.59); timing-vs-morphology dissociation and pointwise-error inversion both persist. Frozen
+  verdict **REPRESENTATION-ROBUST**. Anomaly recorded: OT-CFM at 2 NFE is the worst arm in both representations; the global-z iMF run
+  early-stopped at round 28 (best 8) and may be under-trained. Report `docs/A9_ECG_TARGET_REPRESENTATION_REPORT.md`.
+  **STOP after A9 as pre-registered** (no DaLiA control, no respiration, no multi-seed run without a new pre-registration).

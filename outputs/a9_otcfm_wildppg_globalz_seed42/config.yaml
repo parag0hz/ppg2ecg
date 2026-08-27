@@ -1,0 +1,91 @@
+exp_name: a9_otcfm_wildppg_globalz_seed42
+arm: A0
+model: PENGUIN (upstream class, unmodified) Flow-SSM/S5 + OT-CFM
+imeanflow: null
+model_cfg:
+  n_step: 25
+  sample_rate: 128
+  h_dim: 128
+  ssm_block_num: 4
+  ssm_ratio: 2.0
+  mlp_ratio: 2.0
+dataset: WildPPG
+window_s: 8
+sample_rate: 128
+samples_per_window: 1024
+preprocess:
+  ppg:
+    bandpass: true
+    freq_range:
+    - 0.5
+    - 4
+    zscore: true
+    normalize: true
+  target:
+    bandpass: true
+    freq_range:
+    - 0.5
+    - -1
+    zscore: true
+    normalize: true
+  per_window_stats: true
+  global_stats: null
+  target_kind: ECG
+split:
+  manifest: data/manifests/split_a4_wildppg_seed42.json
+  sha256: bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4
+  protocol: A4-wildppg-holdout
+  seed: 42
+  train:
+  - e61
+  - fex
+  - l38
+  - n31
+  - ngh
+  - p5d
+  - p9p
+  - qm9
+  - trh
+  - tz8
+  - u7y
+  - w4p
+  val:
+  - an0
+  - k2s
+  test:
+  - kjd
+  - ssx
+seed: 42
+optimizer: AdamW(betas=(0.9,0.999))
+lr: 0.001
+weight_decay: 0.01
+batch_size: 64
+epochs_max: 300
+early_stopping:
+  metric: val_cfm_fixed (deterministic CFM loss on 4 fixed (t,z) banks, seed 1000)
+  patience: 20
+  min_delta: 0.0001
+checkpoint: best val_cfm_fixed
+selection:
+  criterion: fixed_cfm
+  min_delta: 0.0001
+  n_val_banks: 4
+  bank_seed: 1000
+  bank_hash: ed7cd22b6e79a08a5e3fa217601d669bd0834d60bcd152baf1a8a12c87f6db08
+  val_mae_every: 1
+  gen_diag_every: 0
+  val_subsample: 4096
+  val_every_steps: 220
+sampler_train_val:
+  solver: heun
+  steps: 25
+  nfe: 50
+precision:
+  dtype: float32
+  amp: false
+  bf16: false
+  tf32_matmul: false
+  cudnn_tf32: true
+deterministic:
+  cudnn_deterministic: true
+  use_deterministic_algorithms: True (warn_only)

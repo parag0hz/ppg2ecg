@@ -1,0 +1,20 @@
+{
+ "exp_name": "a9_mse_fullbackbone_wildppg_globalz_seed42",
+ "objective": "mse_regression",
+ "epochs_run": 69,
+ "best_epoch": 48,
+ "selection_criterion": "val_mse",
+ "best_selection_metric": 0.5080568790435791,
+ "early_stopped": true,
+ "total_train_time_s": 4955.693272146396,
+ "peak_mem_MiB": 20721.177734375,
+ "params": {
+  "total": 4568707,
+  "dead_cross_attn_revin": 264194,
+  "inactive_adaln_weights_cond0": 0,
+  "effective": 4304513,
+  "state_token": 0
+ },
+ "finished": "2026-08-28T02:51:08",
+ "checkpoint_best": "outputs/a9_mse_fullbackbone_wildppg_globalz_seed42/checkpoint_best.pt"
+}

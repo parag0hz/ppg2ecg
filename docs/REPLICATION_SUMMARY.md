@@ -126,3 +126,21 @@ adaptive-weight median 1.9e-5 → 1.3e-2 vs 9.8e-3). Baselines are not materiall
 A7 conclusions stand in both target representations: no one-step structural attenuation on ABP, no pointwise-error inversion, OT-CFM-1
 still closest to the deterministic proxy (PCC 0.976 after normalisation), and the deterministic proxy remains the best or joint-best
 model — a generative one-step model is still not required for this ABP protocol.
+
+## A9 — ECG target-representation mirror control (added 2026-08-28; `docs/A9_ECG_TARGET_REPRESENTATION_REPORT.md`)
+Tests the last single-factor objection to the ECG line: that the one-step attenuation is an artefact of **per-window** ECG target
+normalisation. WildPPG only; ECG targets rebuilt from raw through the identical pipeline but stopped before per-window normalisation
+(PPG bit-identical), then a single global train-only affine transform (mu 1.575417, sigma 10501.669122 over 300.3 M train samples).
+| Model | NFE | HR err (win → z) | Morph (win → z) | Amp median | HF (GT .26/.28) | R-peak F1 | RMSE* |
+|---|---|---|---|---|---|---|---|
+| MSE proxy | 1 | 20.21 → 13.71 | 0.316 → 0.345 | 0.19 → 0.64 | 0.007 → 0.008 | 0.421 → **0.487** | 0.350 → 0.314 |
+| OT-CFM 1 | 1 | 15.59 → 20.89 | 0.379 → 0.325 | 0.25 → 0.52 | 0.065 → 0.079 | 0.481 → 0.434 | 0.355 → 0.313 |
+| OT-CFM 50 | 50 | 9.43 → 10.48 | 0.670 → 0.644 | 0.97 → 1.72 | 0.263 → 0.225 | 0.440 → 0.398 | 0.440 → 0.620 |
+| iMeanFlow 1 | 1 | 11.85 → 10.52 | 0.551 → 0.605 | 1.00 → 0.89 | 0.220 → 0.244 | 0.385 → 0.382 | 0.485 → 0.406 |
+(*RMSE is representation-internal only and is never compared across representations.)
+**Verdict: REPRESENTATION-ROBUST.** Under global normalisation the MSE proxy and OT-CFM-1 still attenuate morphology and HF energy
+(QRS energy retention 0.26 / 0.14 vs 2.00 for OT-50), OT-CFM-1 is still by far the closest model to the deterministic proxy (waveform
+RMSE 0.134 vs 0.525 / 0.288; 3/3 statistic votes), iMeanFlow-1 still recovers morphology (recovery 0.88, up from 0.59), the
+timing-vs-morphology dissociation persists (mean-like models have the best R-peak F1 and RR MAE and the worst morphology), and the
+pointwise-error inversion reappears. Both representations are O(1) against the prior, so this isolates local vs global normalisation, and
+the frozen R-peak detector is exactly invariant between them (identical beats in 100 % of test windows).

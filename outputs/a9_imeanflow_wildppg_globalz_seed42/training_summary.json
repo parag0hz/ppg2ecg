@@ -1,0 +1,13 @@
+{
+ "exp_name": "a9_imeanflow_wildppg_globalz_seed42",
+ "objective": "improved_meanflow",
+ "epochs_run": 28,
+ "best_epoch": 7,
+ "selection_criterion": "fixed_imf_mse",
+ "best_selection_metric": 0.3620665758356078,
+ "early_stopped": true,
+ "total_train_time_s": 5502.812345441431,
+ "peak_mem_MiB": 19216.23681640625,
+ "finished": "2026-08-28T08:01:09",
+ "checkpoint_best": "outputs/a9_imeanflow_wildppg_globalz_seed42/checkpoint_best.pt"
+}

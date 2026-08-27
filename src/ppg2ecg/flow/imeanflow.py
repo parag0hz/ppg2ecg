@@ -120,7 +120,13 @@ def imeanflow_loss(net: MeanFlowS5, x: torch.Tensor, ppg: torch.Tensor, e: torch
     delta2 = ((V - v_tgt) ** 2).flatten(1).sum(1)  # per-sample sum over dims (imf.py L385)
     w = 1.0 / (delta2.detach() + norm_eps) ** norm_p  # adaptive weight, stop-gradient (MF Eq. 22; imf.py L380-382)
     loss = (delta2 * w).mean()
-    info = {"mse": ((V - v_tgt) ** 2).mean().detach(), "delta2_mean": delta2.mean().detach(), "u_abs_mean": u.abs().mean().detach(), "dudt_abs_mean": dudt.abs().mean().detach(), "v_tangent_abs_mean": v_tangent.abs().mean().detach()}
+    # diagnostics only (A8 §11) — the loss above is unchanged; w is already stop-gradiented
+    wd = w.detach()
+    info = {"mse": ((V - v_tgt) ** 2).mean().detach(), "delta2_mean": delta2.mean().detach(), "u_abs_mean": u.abs().mean().detach(), "dudt_abs_mean": dudt.abs().mean().detach(), "v_tangent_abs_mean": v_tangent.abs().mean().detach(),
+            "w_mean": wd.mean(), "w_std": wd.std(), "w_min": wd.min(), "w_max": wd.max(), "w_median": wd.median(),
+            "w_p01": torch.quantile(wd, 0.01), "w_p10": torch.quantile(wd, 0.10), "w_p25": torch.quantile(wd, 0.25), "w_p75": torch.quantile(wd, 0.75), "w_p90": torch.quantile(wd, 0.90), "w_p99": torch.quantile(wd, 0.99),
+            "w_saturation_frac": (wd - 1.0).abs().lt(1e-6).float().mean(), "w_near_lower_frac": wd.lt(1e-4).float().mean(),
+            "loss_before_weighting": delta2.mean().detach(), "loss_after_weighting": loss.detach()}
     return loss, info
 
 

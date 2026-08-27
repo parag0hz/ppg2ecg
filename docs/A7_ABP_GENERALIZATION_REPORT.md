@@ -100,10 +100,18 @@ slightly better and OT-50 adds visible high-frequency ripple. iMeanFlow-1 produc
    two tasks are not perfectly comparable.
 3. **Spectral content**: the ABP GT has 4.3 % of its energy above 5 Hz versus 20–32 % above 15 Hz for ECG; there is simply less sharp
    structure to lose.
-4. **iMF hyper-parameters**: the frozen A2 recipe (adaptive weighting with c = 0.01, logit-normal (t, r), no EMA) was tuned for
-   z-scored targets in [−1, 1]; on raw-mmHg targets the adaptive weight is effectively 1.0 throughout training (observed `lossW 1.0000`),
-   so its variance-normalising role is lost. This is a plausible cause of the iMF failure and is a limitation of the controlled design,
-   not evidence about MeanFlow in general.
+4. **Target scale / transport geometry**: the frozen A2 recipe was tuned for z-scored targets in [−1, 1]; MIMIC-BP targets are raw mmHg
+   (mean ≈ 77.6, std ≈ 16.7) against a standard-normal prior, so the interpolant `z_t = (1−t)x + t·e` is dominated by the target for
+   almost all t and the conditional velocity `e − x ≈ −x` is two orders of magnitude larger than in the ECG runs. This is a plausible
+   cause of the iMF failure and a limitation of the controlled design, not evidence about MeanFlow in general. **A8 tests it directly.**
+
+**Correction (2026-08-27, made during the A8 preflight, after this report was first committed).** An earlier version of this section
+stated that "the adaptive weight is effectively 1.0 throughout training (observed `lossW 1.0000`), so its variance-normalising role is
+lost". That was a misreading of the log: `train_loss_weighted` is the *weighted loss* `mean(δ² · w)`, which is ≈ 1 by construction
+whenever `δ² ≫ c = 0.01` — and it is also ≈ 1.0000 in the ECG runs (A2: 0.99996, A4: 0.99995). The observation therefore does **not**
+distinguish ABP from ECG and is withdrawn. What does differ is the magnitude of `δ²` itself (per-element MSE 0.17 on ECG vs 136.9 on
+raw-mmHg ABP, i.e. `δ²` ≈ 176 vs ≈ 140,000 summed over 1024 dims) and hence the target/prior scale ratio; the corrected statement is the
+transport-geometry one above. No number in this report changes.
 
 ## 10. Limitations
 - One seed per model; one dataset for ABP; 3,435-window test subset; ICU/arterial-line population with the known MIMIC-BP caveats.

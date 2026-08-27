@@ -23,13 +23,15 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 from ppg2ecg.data.splits import read_manifest
+from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.imeanflow import MeanFlowS5, fixed_imf_mse, imeanflow_loss, imf_bank_hash, make_imf_banks, sample_meanflow, sample_tr
 from ppg2ecg.models import build_penguin_backbone, count_params
 from ppg2ecg.training.train_a0 import git_sha, load_arrays
 from ppg2ecg.utils.seed import seed_everything
 from ppg2ecg.utils.upstream import UPSTREAM_COMMIT, assert_upstream_pinned
 
-LOG_FIELDS = ["epoch", "train_loss_weighted", "train_mse", "train_u_abs", "train_dudt_abs", "val_imf_mse_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "diag_beats_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
+WSTAT_KEYS = ("w_mean", "w_median", "w_p01", "w_p10", "w_p25", "w_p75", "w_p90", "w_p99", "w_min", "w_max", "w_std", "w_saturation_frac", "w_near_lower_frac", "delta2_mean")
+LOG_FIELDS = ["epoch", "train_loss_weighted", "train_mse", "train_u_abs", "train_dudt_abs", "w_mean", "w_median", "w_p01", "w_p10", "w_p25", "w_p75", "w_p90", "w_p99", "w_min", "w_max", "w_std", "w_saturation_frac", "w_near_lower_frac", "delta2_mean", "val_imf_mse_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "diag_beats_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
 
 
 def batch_rounds(loader, steps_per_round):
@@ -89,6 +91,7 @@ def parse_args(argv=None):
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
 
@@ -105,6 +108,10 @@ def main(argv=None):
     processed = root / args.processed if not Path(args.processed).is_absolute() else Path(args.processed)
     x_tr, y_tr, _ = load_arrays(processed, split["train"], args.limit_windows)
     x_va, y_va, _ = load_arrays(processed, split["val"], args.limit_windows)
+    tnorm = TargetNorm.load(args.target_norm) if args.target_norm else TargetNorm.identity()
+    if not tnorm.is_identity:  # A8: TARGET ONLY; the PPG inputs are untouched (bit-exact with the raw-scale run)
+        y_tr, y_va = tnorm.forward(y_tr), tnorm.forward(y_va)
+        print(f"target normalisation: y_norm = (y - {tnorm.mu:.6f}) / {tnorm.sigma:.6f}  [{tnorm.source}]", flush=True)
     if args.val_subsample and len(x_va) > args.val_subsample:
         stride = -(-len(x_va) // args.val_subsample)
         x_va, y_va = x_va[::stride], y_va[::stride]
@@ -142,7 +149,7 @@ def main(argv=None):
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
 
-    meta = {"exp_name": args.exp_name, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "cond_mode": args.cond_mode, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "cond_mode": args.cond_mode, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "objective", "params", "n_train_windows", "n_val_windows", "T")}))
 
@@ -171,7 +178,7 @@ def main(argv=None):
             if device.type == "cuda":
                 torch.cuda.reset_peak_memory_stats()
             net.train()
-            lw, lm, ua, da = [], [], [], []
+            lw, lm, ua, da, ws = [], [], [], [], []
             for ppg, ecg in next(round_iter):
                 B = len(ppg)
                 opt.zero_grad()
@@ -190,11 +197,14 @@ def main(argv=None):
                     acc["mse"] += float(info["mse"]) * Bc / B
                     acc["u"] += float(info["u_abs_mean"]) * Bc / B
                     acc["d"] += float(info["dudt_abs_mean"]) * Bc / B
+                    for _k in WSTAT_KEYS:  # A8 §11 diagnostics (no effect on the objective)
+                        acc[_k] = acc.get(_k, 0.0) + float(info[_k]) * Bc / B
                 opt.step()
                 lw.append(acc["loss"])
                 lm.append(acc["mse"])
                 ua.append(acc["u"])
                 da.append(acc["d"])
+                ws.append({_k: acc[_k] for _k in WSTAT_KEYS})
             net.eval()
             val_fixed = fixed_imf_mse(net, x_va_t, y_va_t, banks, args.val_batch, args.jvp_mode)[0]
             do_diag = args.gen_diag_every > 0 and ((epoch + 1) % args.gen_diag_every == 0 or epoch == 0)
@@ -208,7 +218,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=sel, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": net.state_dict(), "epoch": epoch, "objective": "improved_meanflow", "selection": {"criterion": "fixed_imf_mse", "value": sel, "min_delta": args.min_delta}, "model_cfg": dict(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "imf_cfg": dict(tr_kw, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, cond_mode=args.cond_mode, h_scale=args.h_scale), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": net.state_dict(), "epoch": epoch, "objective": "improved_meanflow", "selection": {"criterion": "fixed_imf_mse", "value": sel, "min_delta": args.min_delta}, "model_cfg": dict(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "imf_cfg": dict(tr_kw, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, cond_mode=args.cond_mode, h_scale=args.h_scale), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1
@@ -217,10 +227,11 @@ def main(argv=None):
             stop = state["no_improve"] >= args.patience
             if stop:
                 event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
-            row = dict(epoch=epoch, train_loss_weighted=np.mean(lw), train_mse=np.mean(lm), train_u_abs=np.mean(ua), train_dudt_abs=np.mean(da), val_imf_mse_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, diag_beats_ratio=d_beats, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
+            wrow = {k: float(np.mean([w[k] for w in ws])) for k in WSTAT_KEYS} if ws else {k: float("nan") for k in WSTAT_KEYS}
+            row = dict(epoch=epoch, train_loss_weighted=np.mean(lw), train_mse=np.mean(lm), train_u_abs=np.mean(ua), train_dudt_abs=np.mean(da), **wrow, val_imf_mse_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, diag_beats_ratio=d_beats, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
             with open(log_path, "a", newline="") as f:
                 csv.DictWriter(f, fieldnames=LOG_FIELDS).writerow(row)
-            print(f"epoch {epoch+1:3d}/{args.epochs} lossW {row['train_loss_weighted']:.4f} mse {row['train_mse']:.4f} |u| {row['train_u_abs']:.3f} |dudt| {row['train_dudt_abs']:.3f} valMSEfixed {val_fixed:.5f} diag1NFE(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f} beats {d_beats:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
+            print(f"epoch {epoch+1:3d}/{args.epochs} lossW {row['train_loss_weighted']:.4f} mse {row['train_mse']:.4f} |u| {row['train_u_abs']:.3f} |dudt| {row['train_dudt_abs']:.3f} valMSEfixed {val_fixed:.5f} w(med {row['w_median']:.2e} p10 {row['w_p10']:.2e} p90 {row['w_p90']:.2e} sat {row['w_saturation_frac']:.3f}) diag1NFE(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f} beats {d_beats:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
             if stop:
                 break
         summary = {"exp_name": args.exp_name, "objective": "improved_meanflow", "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": "fixed_imf_mse", "best_selection_metric": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}

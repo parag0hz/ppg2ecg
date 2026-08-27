@@ -24,6 +24,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 from ppg2ecg.data.splits import read_manifest
+from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.cfm import cfm_loss, cfm_targets
 from ppg2ecg.flow.samplers import heun_sample
 from ppg2ecg.training.valbank import bank_hash, fixed_cfm_loss, make_banks
@@ -98,6 +99,7 @@ def parse_args(argv=None):
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None, help="smoke: cap windows per subject")
     ap.add_argument("--select", choices=["val_mae", "fixed_cfm"], default="val_mae", help="checkpoint/early-stopping criterion (A0: val_mae; A0-b: fixed_cfm)")
     ap.add_argument("--min-delta", type=float, default=0.0, help="required improvement of the selection metric")
@@ -122,6 +124,10 @@ def main(argv=None):
 
     x_tr, y_tr, _ = load_arrays(processed, split["train"], args.limit_windows)
     x_va, y_va, _ = load_arrays(processed, split["val"], args.limit_windows)
+    tnorm = TargetNorm.load(args.target_norm) if args.target_norm else TargetNorm.identity()
+    if not tnorm.is_identity:  # A8: TARGET ONLY; the PPG inputs are untouched (bit-exact with the raw-scale run)
+        y_tr, y_va = tnorm.forward(y_tr), tnorm.forward(y_va)
+        print(f"target normalisation: y_norm = (y - {tnorm.mu:.6f}) / {tnorm.sigma:.6f}  [{tnorm.source}]", flush=True)
     if args.val_subsample and len(x_va) > args.val_subsample:
         stride = -(-len(x_va) // args.val_subsample)
         x_va, y_va = x_va[::stride], y_va[::stride]
@@ -158,7 +164,7 @@ def main(argv=None):
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
 
-    meta = {"exp_name": args.exp_name, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "selection": {"criterion": args.select, "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "torch": torch.__version__, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "selection": {"criterion": args.select, "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "val_mae_every": args.val_mae_every, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "torch": torch.__version__, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "params", "n_train_windows", "n_val_windows", "T")}))
 
@@ -225,7 +231,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=sel, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "selection": {"criterion": args.select, "value": sel, "min_delta": args.min_delta}, "val_cfm_fixed": val_fixed, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "selection": {"criterion": args.select, "value": sel, "min_delta": args.min_delta}, "val_cfm_fixed": val_fixed, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1

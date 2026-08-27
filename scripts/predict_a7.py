@@ -14,6 +14,7 @@ import numpy as np
 import torch
 
 from ppg2ecg.data.splits import read_manifest
+from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.evaluation.efficiency import benchmark
 from ppg2ecg.flow.imeanflow import MeanFlowS5, sample_meanflow
 from ppg2ecg.flow.samplers import SAMPLERS, nfe_of
@@ -100,6 +101,9 @@ def main():
     device = torch.device("cuda")
     up = assert_upstream_pinned()
     ck = torch.load(Path(args.checkpoint) if args.checkpoint else out / "checkpoint_best.pt", map_location="cpu", weights_only=False)
+    tn = ck.get("target_norm") or {"mu": 0.0, "sigma": 1.0, "source": "identity"}
+    tnorm = TargetNorm(float(tn["mu"]), float(tn["sigma"]), str(tn.get("source", "")))
+    inv = (lambda a: a) if tnorm.is_identity else tnorm.inverse  # predictions are produced in the trained target space
     split = read_manifest(ROOT / args.manifest)[0]
     x, y, ids, seg, starts, sbp, dbp = load_test(ROOT / args.processed, split["test"], args.subsample)
     n, T = x.shape
@@ -108,14 +112,14 @@ def main():
     noise = torch.randn(n, 1, T, generator=g)  # identical paired noise for OT-CFM x0 and iMF e
     perm = derangement(n, args.noise_seed + 1)
     xb = x[: args.batch_size]
-    meta = {"arm": args.arm, "checkpoint_epoch": ck.get("epoch"), "n_windows": int(n), "T": int(T), "noise_seed": args.noise_seed, "upstream": up, "created": datetime.now().isoformat(timespec="seconds"), "arms": {}}
+    meta = {"arm": args.arm, "checkpoint_epoch": ck.get("epoch"), "target_norm": tn, "inverse_transform": "y_mmHg = sigma * y_norm + mu" if not tnorm.is_identity else "identity", "n_windows": int(n), "T": int(T), "noise_seed": args.noise_seed, "upstream": up, "created": datetime.now().isoformat(timespec="seconds"), "arms": {}}
     if args.arm == "otcfm":
         model = build_penguin_backbone(**ck["model_cfg"]).to(device).eval()
         model.load_state_dict(ck["state_dict"])
         for solver, steps in OTCFM_ARMS:
             key, nfe = f"{solver}{steps}", nfe_of(solver, steps)
-            pred = run_otcfm(model, x, noise, solver, steps, args.batch_size, device)
-            pred_sh = run_otcfm(model, x[perm], noise, solver, steps, args.batch_size, device)
+            pred = inv(run_otcfm(model, x, noise, solver, steps, args.batch_size, device))
+            pred_sh = inv(run_otcfm(model, x[perm], noise, solver, steps, args.batch_size, device))
             eff = benchmark(lambda: run_otcfm(model, xb, noise[: len(xb)], solver, steps, args.batch_size, device), n_warmup=2, n_repeats=args.bench_repeats, batch_size=len(xb))
             np.savez_compressed(out / "predictions" / f"{key}.npz", pred=pred, pred_shuffled=pred_sh, perm=perm, solver=solver, steps=steps, nfe=nfe)
             meta["arms"][key] = {"solver": solver, "steps": steps, "nfe": nfe, "latency_ms_batch64": eff["latency_ms_median"], "peak_mem_MiB": eff.get("peak_mem_MiB")}
@@ -126,8 +130,8 @@ def main():
         net.load_state_dict(ck["state_dict"])
         for steps in IMF_ARMS:
             key = f"meanflow{steps}"
-            pred = run_imf(net, x, noise, steps, args.batch_size, device)
-            pred_sh = run_imf(net, x[perm], noise, steps, args.batch_size, device)
+            pred = inv(run_imf(net, x, noise, steps, args.batch_size, device))
+            pred_sh = inv(run_imf(net, x[perm], noise, steps, args.batch_size, device))
             eff = benchmark(lambda: run_imf(net, xb, noise[: len(xb)], steps, args.batch_size, device), n_warmup=2, n_repeats=args.bench_repeats, batch_size=len(xb))
             np.savez_compressed(out / "predictions" / f"{key}.npz", pred=pred, pred_shuffled=pred_sh, perm=perm, solver="meanflow", steps=steps, nfe=steps)
             meta["arms"][key] = {"solver": "meanflow", "steps": steps, "nfe": steps, "latency_ms_batch64": eff["latency_ms_median"], "peak_mem_MiB": eff.get("peak_mem_MiB")}
@@ -136,7 +140,7 @@ def main():
         cls, count = REGRESSOR_MODELS[ck.get("model_key", "state_token" if "state_token" in ck["state_dict"] else "full_backbone")]
         model = cls(**ck["model_cfg"]).to(device).eval()
         model.load_state_dict(ck["state_dict"])
-        pred, pred_sh = run_mse(model, x, args.batch_size, device), run_mse(model, x[perm], args.batch_size, device)
+        pred, pred_sh = inv(run_mse(model, x, args.batch_size, device)), inv(run_mse(model, x[perm], args.batch_size, device))
         eff = benchmark(lambda: run_mse(model, xb, args.batch_size, device), n_warmup=2, n_repeats=args.bench_repeats, batch_size=len(xb))
         np.savez_compressed(out / "predictions" / "regressor.npz", pred=pred, pred_shuffled=pred_sh, perm=perm, solver="regressor", steps=1, nfe=1)
         meta["arms"]["regressor"] = {"solver": "regressor", "steps": 1, "nfe": 1, "latency_ms_batch64": eff["latency_ms_median"], "peak_mem_MiB": eff.get("peak_mem_MiB"), "params": count(model), "model": cls.__name__}

@@ -18,6 +18,7 @@ import torch
 from torch.utils.data import DataLoader, TensorDataset
 
 from ppg2ecg.data.splits import read_manifest
+from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.models.regressor import REGRESSOR_MODELS
 from ppg2ecg.training.train_a0 import batch_rounds, git_sha, load_arrays
 from ppg2ecg.utils.seed import seed_everything
@@ -53,6 +54,7 @@ def parse_args(argv=None):
     ap.add_argument("--t-const", type=float, default=None, help="full_backbone only: fixed auxiliary time constant")
     ap.add_argument("--cond-scale", type=float, default=1.0, help="full_backbone only (hard-test diagnostic): cond = cond_scale * E(t_const)")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
 
@@ -69,6 +71,10 @@ def main(argv=None):
     processed = root / args.processed if not Path(args.processed).is_absolute() else Path(args.processed)
     x_tr, y_tr, _ = load_arrays(processed, split["train"], args.limit_windows)
     x_va, y_va, _ = load_arrays(processed, split["val"], args.limit_windows)
+    tnorm = TargetNorm.load(args.target_norm) if args.target_norm else TargetNorm.identity()
+    if not tnorm.is_identity:  # A8: TARGET ONLY; the PPG inputs are untouched (bit-exact with the raw-scale run)
+        y_tr, y_va = tnorm.forward(y_tr), tnorm.forward(y_va)
+        print(f"target normalisation: y_norm = (y - {tnorm.mu:.6f}) / {tnorm.sigma:.6f}  [{tnorm.source}]", flush=True)
     if args.val_subsample and len(x_va) > args.val_subsample:
         stride = -(-len(x_va) // args.val_subsample)
         x_va, y_va = x_va[::stride], y_va[::stride]
@@ -102,7 +108,7 @@ def main(argv=None):
     else:
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
-    meta = {"exp_name": args.exp_name, "objective": "mse_regression", "model": model_cls.__name__, "model_cfg": model_cfg, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "val_mse (deterministic)", "min_delta": args.min_delta, "patience": args.patience, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps}, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "objective": "mse_regression", "model": model_cls.__name__, "model_cfg": model_cfg, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "val_mse (deterministic)", "min_delta": args.min_delta, "patience": args.patience, "val_subsample": args.val_subsample, "val_every_steps": args.val_every_steps}, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "model", "params", "n_train_windows", "n_val_windows", "T")}), flush=True)
 
@@ -152,7 +158,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=vm, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "objective": "mse_regression", "model": model_cls.__name__, "model_key": args.model, "val_mse": vm, "model_cfg": model_cfg, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "objective": "mse_regression", "model": model_cls.__name__, "model_key": args.model, "val_mse": vm, "model_cfg": model_cfg, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1

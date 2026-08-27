@@ -34,9 +34,11 @@ def main():
     ap.add_argument("--locations", default="sternum,head,wrist,ankle")
     ap.add_argument("--color", default="g")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--ecg-normalization", choices=["window", "none"], default="window", help="A9: 'none' keeps the ECG at the pre-window-normalisation stage (same resample + 0.5 Hz high-pass, NO z-score, NO min-max); PPG is unaffected")
     args = ap.parse_args()
     locs = tuple(args.locations.split(","))
-    out = Path(args.out) if args.out else ROOT / "data" / "processed" / f"wildppg_{args.segment_len}s"
+    ecg_kw = dict(ECG_KW) if args.ecg_normalization == "window" else dict(ECG_KW, zscore=False, normalize=False)
+    out = Path(args.out) if args.out else ROOT / "data" / "processed" / (f"wildppg_{args.segment_len}s" if args.ecg_normalization == "window" else f"wildppg_{args.segment_len}s_prenorm")
     out.mkdir(parents=True, exist_ok=True)
     files, total, dropped_total = {}, 0, 0
     for f in participant_files(args.raw):
@@ -45,7 +47,7 @@ def main():
         std_ok = (w.ppg.std(axis=1) > 0) & (w.ecg.std(axis=1) > 0)
         keep = finite & std_ok
         x = preprocess_windows(w.ppg[keep], args.resample_rate, args.segment_len, **PPG_KW).astype(np.float32)
-        y = preprocess_windows(w.ecg[keep], args.resample_rate, args.segment_len, **ECG_KW).astype(np.float32)
+        y = preprocess_windows(w.ecg[keep], args.resample_rate, args.segment_len, **ecg_kw).astype(np.float32)
         ok2 = np.isfinite(x).all(axis=1) & np.isfinite(y).all(axis=1)
         x, y = x[ok2], y[ok2]
         site, widx = w.site[keep][ok2], w.window_index[keep][ok2]
@@ -56,7 +58,7 @@ def main():
         total += len(x)
         dropped_total += n_drop
         print(w.subject, f.name, x.shape, "dropped", n_drop, "fs", w.fs_ppg, w.fs_ecg, flush=True)
-    manifest = {"built": datetime.now().isoformat(timespec="seconds"), "dataset": "WildPPG", "segment_len_s": args.segment_len, "resample_rate": args.resample_rate, "samples_per_window": args.resample_rate * args.segment_len, "locations": locs, "color": args.color, "ppg_preprocess": PPG_KW, "ecg_preprocess": ECG_KW, "dtype": "float32", "total_windows": total, "total_dropped": dropped_total, "files": files}
+    manifest = {"built": datetime.now().isoformat(timespec="seconds"), "dataset": "WildPPG", "segment_len_s": args.segment_len, "resample_rate": args.resample_rate, "samples_per_window": args.resample_rate * args.segment_len, "locations": locs, "color": args.color, "ppg_preprocess": PPG_KW, "ecg_preprocess": ecg_kw, "ecg_normalization": args.ecg_normalization, "dtype": "float32", "total_windows": total, "total_dropped": dropped_total, "files": files}
     (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=1, default=str))
     print(f"total windows {total} (dropped {dropped_total}) -> {out}/MANIFEST.json")
 

@@ -1,0 +1,108 @@
+{
+ "created": "2026-08-28T01:24:00",
+ "definition": "y_global = (y_ecg - mu_train) / sigma_train; ONE global scalar pair from all pre-window-normalisation ECG samples of the TRAIN subjects only",
+ "source_stage": "WildPPG ECG after FFT resample to 128 Hz + 4th-order Butterworth 0.5 Hz high-pass (zero-phase), BEFORE any per-window z-score/min-max \u2014 i.e. exactly the signal the frozen pipeline normalises per window",
+ "mu_train": 1.5754169346247968,
+ "sigma_train": 10501.669121754265,
+ "n_train_samples": 300309504,
+ "n_train_subjects": 12,
+ "train_subjects": [
+  "e61",
+  "fex",
+  "l38",
+  "n31",
+  "ngh",
+  "p5d",
+  "p9p",
+  "qm9",
+  "trh",
+  "tz8",
+  "u7y",
+  "w4p"
+ ],
+ "split_manifest": "data/manifests/split_a4_wildppg_seed42.json",
+ "split_manifest_sha256": "bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4",
+ "processed_dir": "data/processed/wildppg_8s_prenorm",
+ "processed_manifest_sha256": "86d19e8cc3efbda7d3e01f1d0fcee3006b319d4bfa13e95b023b252ec52a4410",
+ "processed_total_windows": 389355,
+ "ecg_preprocess": {
+  "bandpass": true,
+  "freq_range": [
+   0.5,
+   -1
+  ],
+  "zscore": false,
+  "normalize": false
+ },
+ "git": {
+  "commit": "9ff77b5d19511c61e81c09c52e8c9f47f5f729cc",
+  "dirty_files": 3
+ },
+ "leakage_check": {
+  "n_files_opened": 12,
+  "val_test_files_opened": [],
+  "ok": true
+ },
+ "per_subject": {
+  "e61": {
+   "n": 22761472,
+   "mean": 5.361612947793902,
+   "std": 5835.689562988115
+  },
+  "fex": {
+   "n": 24649728,
+   "mean": 10.210371734820272,
+   "std": 18460.00473699063
+  },
+  "l38": {
+   "n": 24283136,
+   "mean": 1.4991938902116377,
+   "std": 4314.809095240473
+  },
+  "n31": {
+   "n": 24412160,
+   "mean": 2.98026872412484,
+   "std": 6595.784773191198
+  },
+  "ngh": {
+   "n": 27074560,
+   "mean": -1.6306853661875735,
+   "std": 4323.438276569437
+  },
+  "p5d": {
+   "n": 26649600,
+   "mean": -4.214582969149317,
+   "std": 24719.77861758777
+  },
+  "p9p": {
+   "n": 23048192,
+   "mean": -0.6887907486300369,
+   "std": 4470.067245007753
+  },
+  "qm9": {
+   "n": 24105984,
+   "mean": 4.067036767320967,
+   "std": 4479.384528094087
+  },
+  "trh": {
+   "n": 26533888,
+   "mean": 0.865809775578312,
+   "std": 7980.382860872765
+  },
+  "tz8": {
+   "n": 26741760,
+   "mean": 0.46830560843567,
+   "std": 3457.5137442327596
+  },
+  "u7y": {
+   "n": 24428544,
+   "mean": 0.37891352839883274,
+   "std": 2532.6809797832893
+  },
+  "w4p": {
+   "n": 25620480,
+   "mean": 0.7720869710945067,
+   "std": 9935.69495670974
+  }
+ }
+}

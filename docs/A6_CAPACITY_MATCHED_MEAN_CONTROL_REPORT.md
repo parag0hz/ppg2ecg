@@ -1,6 +1,6 @@
 # A6 — Capacity-Matched Conditional-Mean Control
 
-Pre-registration `docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_PREREGISTRATION.md` (commit `2fc7841`, before any A6 result; §2b/§2c fix the
+Pre-registration `docs/A6_CAPACITY_MATCHED_MEAN_CONTROL_PREREGISTRATION.md` (commit `50a77a8`, before any A6 result; §2b/§2c fix the
 state constant and the conditioning scale by a pre-stated hard test). Artefacts `artifacts/a6_capacity_control/` (`summary.json`,
 `cross_model_similarity.csv`, `qrs_region_analysis.csv`, `parameter_parity.csv`, `state_constant_screening.json`, `gradient_flow*.json`,
 `figures/`). Runs `outputs/a6{a,b,c}_fullbackbone_mse_*` (config, provenance, logs, metrics; checkpoints/predictions local only).

@@ -1,6 +1,6 @@
 # A5 — Conditional-Mean Control: does one-step OT-CFM behave like an MSE regressor?
 
-Pre-registration: `docs/A5_CONDITIONAL_MEAN_CONTROL_PREREGISTRATION.md` (commit `cc28ad9`, Amendment 1 in `d961000`, both before the
+Pre-registration: `docs/A5_CONDITIONAL_MEAN_CONTROL_PREREGISTRATION.md` (commit `7860940`, Amendment 1 in `8ca11ad`, both before the
 corresponding results). Analysis artefacts: `artifacts/a5_conditional_mean_control/` (`summary.json`, `cross_model_similarity.csv`,
 `qrs_region_analysis.csv`, `pareto.csv`, `figures/`). Runs: `outputs/a5a_mse_regressor_dalia_testS2_seed42`,
 `outputs/a5b_mse_regressor_dalia_testS1_seed42`, `outputs/a5c_mse_regressor_wildppg_seed42` (config, provenance, logs, metrics; checkpoints
@@ -36,7 +36,7 @@ H1 ✓ (3/3), H2 ✓ (DaLiA 2/2), H3 ✓ (WildPPG), H4 ✓ (WildPPG). Rule terms
   A5a run therefore converged to a constant (−0.348, per-window std 2.5e-7, RMSE 0.290, val-MSE plateau 0.0983 from epoch 9) and A5b was
   stopped at epoch 1; both are archived in `outputs/aborted/*_zero_state_deadstart/` and are **not** results. The token restores gradient
   flow to every active parameter within ≤ 5 steps (`tests/test_regressor.py`). Hypotheses, thresholds, wording and every other protocol
-  item were unchanged; the amendment was committed (`d961000`) before the amended runs started.
+  item were unchanged; the amendment was committed (`8ca11ad`) before the amended runs started.
 - Loss: plain MSE ("MSE conditional-mean proxy"). AdamW 1e-3 / wd 0.01 / batch 64 / fp32 / seed 42; selection = deterministic validation
   MSE (full S11 set for A5a/b; A4's 4,096-window uniform subset and 220-step rounds for A5c), min_delta 1e-4, patience 20, max 300.
 - Runs: A5a 40 epochs (best 20, val MSE 0.0881, 45 min, 18.3 GiB); A5b 31 (best 11, 0.0878, 35 min); A5c 54 rounds (best 34, 0.0854,
@@ -206,6 +206,6 @@ precise than the regressor's (F1 0.385 < 0.436; RR MAE 25.7 > 16.7 ms).
 
 ## 13. Reproducibility
 `bash scripts/run_a5_pipeline.sh` (preflight → `ppg2ecg.training.train_a5` → `scripts/eval_a5.py`, a → b → c; GPU-gated) then
-`PYTHONPATH=src .venv/bin/python scripts/analyze_a5.py`. Provenance per run (`provenance.json`): git `d961000`, upstream PENGUIN `6cd70cd`,
+`PYTHONPATH=src .venv/bin/python scripts/analyze_a5.py`. Provenance per run (`provenance.json`): git `8ca11ad`, upstream PENGUIN `6cd70cd`,
 processed-file hashes, leakage checks, parameter counts, GPU (RTX 5090, torch 2.11.0+cu130). Tests: `tests/test_regressor.py` (param
 identity, dead-start mechanism, gradient flow, determinism). Aborted zero-state runs: `outputs/aborted/*_zero_state_deadstart/`.

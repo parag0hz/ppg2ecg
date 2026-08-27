@@ -4,7 +4,7 @@ Written 2026-08-26 **before any A3/A4 training**. Frozen by the commit that intr
 (channel, split, preprocessing, schedule unit) are frozen by a second commit ("Part II freeze") **after the WildPPG audit and
 before any A4 training**. No test result of A3 or A4 existed when the corresponding freeze was committed.
 
-## 0. Frozen components (unchanged from A0-b / A2, commit `219a0b2`)
+## 0. Frozen components (unchanged from A0-b / A2, commit `80e2229`)
 S5/Flow-SSM backbone (upstream PENGUIN `6cd70cd`, 4,568,707 parameters) · PPG conditioning path · OT-CFM implementation
 (`train_a0`, upstream objective) · Improved MeanFlow implementation (`ppg2ecg.flow.imeanflow`, official `Lyy-iiis/imeanflow` `bf60cd7`
 semantics, **h-only interval conditioning**, boundary v_θ, adaptive weight p = 1 / c = 0.01, (t, r) logit-normal(−0.4, 1), 50 % r = t,

@@ -46,7 +46,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
 - Built `data/processed/v0_8s/` (ours, 16,181 windows, per-file sha256 in `MANIFEST.json`) and `data/processed/upstream_8s/`
   (unmodified upstream `preprocess.py` with `preprocess.segment_len=8`) for parity checking.
 - `external/PENGUIN` registered as a git **submodule** pinned at `6cd70cd` (existing clone reused; nothing deleted).
-- GitHub: `origin = https://github.com/parag0hz/ppg2ecg.git`. The remote was NOT empty (GitHub "Initial commit" `9fd4ce5` with a 9-byte
+- GitHub: `origin = https://github.com/parag0hz/ppg2ecg.git`. The remote was NOT empty (GitHub "Initial commit" `d535ae4` with a 9-byte
   README). Local snapshot committed as `6330fa2` ("session 0: audit PENGUIN and prepare reproducible baseline", 67 files, 0.20 MB,
   gitlink `external/PENGUIN` @ 6cd70cd), then merged with the remote history (`--allow-unrelated-histories`, README conflict → local
   kept) as `6e5a4f1`, pushed to `main` (no force). Author identity set repo-locally (an e-mail later found to be wrong, see the authorship-fix entry below); push used the
@@ -90,11 +90,11 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
 - **Git authorship fix (2026-08-25 18:05):** the author e-mail used for the first commits was registered on GitHub to an unrelated
   third-party account, so GitHub attributed those commits to it. The sole author of this repository is **parag0hz**. History was
   rewritten (author/committer →
-  `parag0hz <131474134+parag0hz@users.noreply.github.com>`, trees byte-identical, root commit `9fd4ce5` untouched) and force-pushed
+  `parag0hz <131474134+parag0hz@users.noreply.github.com>`, trees byte-identical, root commit `d535ae4` untouched) and force-pushed
   with lease; the pre-rewrite history (local-only backup branch) was deleted on 2026-08-27 together with the filter-branch leftovers and
   the reflog, so no object in this repository carries the wrong identity any more. **SHA mapping (old → new):**
-  `6330fa2 → a15b354` (session 0), `6e5a4f1 → f2d814b` (merge; A0 provenance.json records `6e5a4f1`), `55e2f17 → 20cc6cd` (A0 results),
-  `8998371 → 1ae155c` (A0-b freeze; A0-b provenance.json records `8998371`). Provenance files are left as written — resolve old SHAs
+  `6330fa2 → a15b354` (session 0), `6e5a4f1 → 13566ca` (merge; A0 provenance.json records `6e5a4f1`), `55e2f17 → 5e0aa35` (A0 results),
+  `8998371 → f5dc344` (A0-b freeze; A0-b provenance.json records `8998371`). Provenance files are left as written — resolve old SHAs
   via the backup branch or this table.
 - **A0-b done (18:46)**: 85 epochs, best 65, 1.77 h, val_cfm_fixed 0.1645 (A0 ckpt 0.1904 → A0 under-trained: YES). Test S2, 50 NFE:
   HR err **8.08** bpm (A0 10.99), morph 0.650 (0.662), amp 0.95 (0.83), cond gain 5.69 (3.84), RMSE 0.435. 1 NFE Euler: HR 41.96, morph 0.217,
@@ -104,7 +104,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   Fixed by importing `ppg2ecg.utils.mkl_warmup` (a numpy LAPACK call) before torch in every entry point (docs/ENVIRONMENT.md). All A0/A0-b results were produced before the incident and are unaffected (same threaded-MKL numerics).
 - iMeanFlow implemented (`src/ppg2ecg/flow/imeanflow.py`, 10 unit tests incl. analytic identity + JAX port of the official objective,
   all passing); adversarial review workflow launched; A2 training loop written (`ppg2ecg.training.train_a2`).
-- **A2 launched (19:19)** at freeze commit `5276bb9` (preflight OK: same split/data/backbone, iMF bank hash `0f15f0d2…`, seed 42).
+- **A2 launched (19:19)** at freeze commit `bf2a024` (preflight OK: same split/data/backbone, iMF bank hash `0f15f0d2…`, seed 42).
   Implementation review (multi-agent, adversarial) found no substantive deviation from the official objective; applied its
   recommendations before launch: body-level jax skip, validation JVP without autograd graph, bank-length assert, random row
   assignment of the r = t half in validation banks, 1-NFE diagnostics every epoch, non-finite checks on unweighted MSE/JVP,
@@ -115,12 +115,12 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   `E(t)+E(h)` may under-resolve the interval `h` early in training** — kept as pre-registered, parameter-count constraint; logged as
   a candidate failure cause F7 for the taxonomy and as a limitation), 6 refuted (stale premises: driver/eval scripts exist,
   batch-64 infeasibility handled by accumulation, verdict rules made exhaustive), 21 low-severity notes.
-- **A2 restarted (19:40)** at commit `1a2f9da` after a pre-result amendment: the shared-embedder conditioning `E(t)+E(h)` left the
+- **A2 restarted (19:40)** at commit `7112476` after a pre-result amendment: the shared-embedder conditioning `E(t)+E(h)` left the
   MeanFlow interval nearly invisible (cond variance 99.3 % explained by t+h; r decodable R² 0.18), so `h` is now scaled by 1000
   before the same sinusoidal embedder (t, h, r all decodable R² 1.00, **no added parameters**; DiT integer-timestep convention).
   The h_scale=1 run was stopped after epoch 1 (kept in `outputs/aborted/a2_hscale1_aborted_epoch1/`, no test result produced).
   Details in `docs/A2_IMEANFLOW_PREREGISTRATION.md` §9.
-- **A2 restarted again (19:52, commit `62c2b15`)** — amendment 2: the h_scale=1000 run diverged in 2 epochs (train MSE 10.6 → 395,
+- **A2 restarted again (19:52, commit `78e5518`)** — amendment 2: the h_scale=1000 run diverged in 2 epochs (train MSE 10.6 → 395,
   |du/dt| 9.7 → 20.7): the ×1000 scale amplifies the JVP term of the MeanFlow identity. Switched to the **official iMF conditioning:
   h-only (`cond = E(h)`, t inferred from z_t)** — resolves the interval fully with O(1) derivatives and no added parameters.
   Both aborted runs kept under `outputs/aborted/` (no test-set numbers produced). Prereg §9 records the full sequence.
@@ -168,7 +168,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   beats 0.93 / F1 0.385 / RMSE 0.485. Recovery HR 0.61, morph 0.59, amp 0.91, gain **−4.5** (OT-1 already retains 6.64 of 7.16) →
   **PARTIAL** (both rules); inversion YES. Per site iMF-1 improves HR at all four sites. Reports: `docs/A4_WILDPPG_REPLICATION_REPORT.md`,
   `docs/REPLICATION_SUMMARY.md` → integrated verdict **SUBJECT-ROBUST, DATASET-UNCERTAIN** (A2 REPLICATED, A3 REPLICATED, A4 PARTIAL).
-- **2026-08-26 A5 pre-registered (`cc28ad9`)** — Conditional-mean control: `S5ConditionalMeanRegressor` (PENGUIN backbone minus
+- **2026-08-26 A5 pre-registered (`7860940`)** — Conditional-mean control: `S5ConditionalMeanRegressor` (PENGUIN backbone minus
   `pre_conv_target`/`timestep_embedder`, MSE only, AdamW 1e-3/wd 0.01/batch 64/seed 42, selection by deterministic validation MSE, patience
   20/min_delta 1e-4), three runs on the A2/A3/A4 manifests, H1–H4, QRS window ±100 ms, verdict thresholds, forbidden wording. GPU was
   occupied by an unrelated vLLM process (29.7 GB) at launch → pipeline gated on ≥ 22 GiB free; started 19:43 once it exited.
@@ -176,7 +176,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   0.0983; RMSE 0.290 on S2, worse than the constant GT-mean predictor 0.250); A5b showed the same at epoch 1 and was stopped. Cause
   (gradient check): with x_t-embedding = 0 the block outputs are identically 0 and upstream zero-initialises `final_layer.linear.weight`,
   so only `final_layer.linear.bias` ever receives gradient. Archived `outputs/aborted/a5{a,b}_*_zero_state_deadstart/`.
-- **Amendment 1 (`d961000`, before amended results)**: target stream fed a learned constant state token (128 params; total 3,990,787;
+- **Amendment 1 (`8ca11ad`, before amended results)**: target stream fed a learned constant state token (128 params; total 3,990,787;
   819,200 adaLN weights inactive with cond = 0 → effective 2,907,393); mechanism + gradient flow unit-tested; NaN convention declared;
   everything else unchanged. Pipeline re-run 20:33 → 23:03: A5a 40 epochs (best 20, val MSE 0.0881, 45 min), A5b 31 (best 11, 0.0878,
   35 min), A5c 54 rounds (best 34, 0.0854, 64 min); peak 18.3 / 18.3 / 20.6 GiB.
@@ -188,7 +188,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   **STRONG SUPPORT** (attenuation + closest(O1→R) on 3/3, WildPPG timing/conditioning preserved; H1–H4 all ✓). Report
   `docs/A5_CONDITIONAL_MEAN_CONTROL_REPORT.md`; artefacts `artifacts/a5_conditional_mean_control/`. Note: JAX-parity test in
   `tests/test_imeanflow.py` fails/hangs while another process holds the GPU (JAX init) — passes with the GPU free.
-- **2026-08-27 A6 pre-registered (`2fc7841`)** — capacity-matched control `S5FullBackboneRegressor` (unmodified PENGUIN backbone,
+- **2026-08-27 A6 pre-registered (`50a77a8`)** — capacity-matched control `S5FullBackboneRegressor` (unmodified PENGUIN backbone,
   4,568,707 / 4,304,513 effective params, deterministic constant state + fixed t, MSE). Hard test before training: the spec's example
   (`x = ones`, `cond = E(0.5)`) does not train (constant solution, train MSE flat 0.1198 for 12 epochs; identical with x = 0.1); root cause
   isolated by 12-epoch runs: the *unscaled* fixed conditioning vector (coherent adaLN-weight updates ≈ 25× the bias rate) and a large

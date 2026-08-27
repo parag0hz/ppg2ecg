@@ -49,7 +49,7 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
 - GitHub: `origin = https://github.com/parag0hz/ppg2ecg.git`. The remote was NOT empty (GitHub "Initial commit" `9fd4ce5` with a 9-byte
   README). Local snapshot committed as `6330fa2` ("session 0: audit PENGUIN and prepare reproducible baseline", 67 files, 0.20 MB,
   gitlink `external/PENGUIN` @ 6cd70cd), then merged with the remote history (`--allow-unrelated-histories`, README conflict → local
-  kept) as `6e5a4f1`, pushed to `main` (no force). Author identity set repo-locally (an e-mail later found to belong to an unrelated account); push used the
+  kept) as `6e5a4f1`, pushed to `main` (no force). Author identity set repo-locally (an e-mail later found to be wrong, see the authorship-fix entry below); push used the
   existing `gh` login as a one-off credential helper (`git -c credential.helper='!gh auth git-credential'`), no config/credential created.
 - A0 preflight (`scripts/preflight_a0.py`) PASSED at commit `6e5a4f1` (0 dirty): subject/window/normalisation leakage checks OK,
   8 s @ 128 Hz, seed 42, 4,568,707 params, RTX 5090. Training launched via `scripts/run_a0.sh` → `outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/`.
@@ -87,10 +87,12 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   highlight), official repo `Lyy-iiis/imeanflow` verified and cloned read-only to `external/iMeanFlow` @ `bf60cd7`. Core: `V = u + (t−r)·sg(du/dt)`,
   JVP tangent = model's own v, v-loss with adaptive weighting (p=1, c=0.01), (t,r) logit-normal(−0.4,1), 50 % r=t, 1-NFE `z0 = z1 − u(z1,0,1)`.
   Feasibility: forward-mode `torch.func.jvp` works through the unmodified S5 backbone and matches finite differences (CPU, O(ε²)).
-- **Git authorship fix (2026-08-25 18:05):** the author e-mail used for the first commits (an e-mail registered to an unrelated account) is linked on GitHub to
-  a different account (an unrelated third-party account), so GitHub attributed our commits to it. History was rewritten (author/committer →
+- **Git authorship fix (2026-08-25 18:05):** the author e-mail used for the first commits was registered on GitHub to an unrelated
+  third-party account, so GitHub attributed those commits to it. The sole author of this repository is **parag0hz**. History was
+  rewritten (author/committer →
   `parag0hz <131474134+parag0hz@users.noreply.github.com>`, trees byte-identical, root commit `9fd4ce5` untouched) and force-pushed
-  with lease; the pre-rewrite history is kept locally as branch `backup/main-before-author-fix`. **SHA mapping (old → new):**
+  with lease; the pre-rewrite history (local-only backup branch) was deleted on 2026-08-27 together with the filter-branch leftovers and
+  the reflog, so no object in this repository carries the wrong identity any more. **SHA mapping (old → new):**
   `6330fa2 → a15b354` (session 0), `6e5a4f1 → f2d814b` (merge; A0 provenance.json records `6e5a4f1`), `55e2f17 → 20cc6cd` (A0 results),
   `8998371 → 1ae155c` (A0-b freeze; A0-b provenance.json records `8998371`). Provenance files are left as written — resolve old SHAs
   via the backup branch or this table.

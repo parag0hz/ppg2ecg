@@ -1,0 +1,33 @@
+{
+ "paper": "Understanding, Accelerating, and Improving MeanFlow Training",
+ "arxiv": "2511.19065",
+ "versions": {
+  "v1": "2025-11-24",
+  "v2": "2026-05-25"
+ },
+ "venue": "CVPR 2026",
+ "official_code": null,
+ "code_search_date": "2026-08-28",
+ "curriculum_equation": "beta(dt, s) = 1 - s + lambda * s * (1 - dt)",
+ "gap_definition": "dt = t - r (t=1 noise convention, z_t=(1-t)x+t*eps)",
+ "progress": "s = 1 - (i/T)^k, k = 1 (linear; Table 4), i = iteration, T = total planned iterations",
+ "lambda_rule": "lambda = 1/E_dt[1 - dt] (uniform expected weight at initialization)",
+ "application": "beta multiplies the ADAPTIVE-WEIGHTED non-boundary u-loss only (App. B Eq. 8/9); 'strictly after the adaptive normalization'; boundary (t=r) v-loss unweighted by beta",
+ "source_full_method": [
+  "accelerated v-learning via p_acc(t) (DTD) or alpha(t) (MinSNR) on the boundary v-loss",
+  "progressive L_u weighting (beta)"
+ ],
+ "b1v2_includes": [
+  "progressive L_u weighting only"
+ ],
+ "b1v2_excludes": [
+  "alpha(t) boundary weighting",
+  "p_acc(t) timestep sampling",
+  "DiT/ImageNet/CFG stack"
+ ],
+ "b1v2_deviations": [
+  "baseline objective is Improved MeanFlow (V-parameterisation, h-only cond, 50% r=t) instead of original MeanFlow; adaptive-weight form identical (p=1)",
+  "boundary beta fixed to 1 (matches Eq. 9's unweighted boundary; alpha component intentionally excluded)"
+ ],
+ "isolated_component_reference_effect": "paper Table 3: '+ Lu weighting' alone improves DiT-B/4 1-NFE FID 11.58 -> 10.98 (combination with MinSNR/DTD gives the headline 3.43 -> 2.87)"
+}

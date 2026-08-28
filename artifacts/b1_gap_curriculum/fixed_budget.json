@@ -1,0 +1,41 @@
+{
+ "rule": "T_train = optimizer-update count implied by the frozen config's ORIGINAL max budget (300 rounds); T_schedule = T_train (source: s = 1 - i/T with T = total iterations, k = 1)",
+ "budgets": {
+  "dalia_s2": {
+   "protocol": "A2",
+   "n_train_windows": 14025,
+   "steps_per_epoch": 220,
+   "max_rounds": 300,
+   "round_unit": "epoch",
+   "T_train_optimizer_steps": 66000,
+   "T_schedule_optimizer_steps": 66000,
+   "micro_batch": 32,
+   "grad_accumulation": 2,
+   "effective_batch": 64
+  },
+  "dalia_s1": {
+   "protocol": "A3",
+   "n_train_windows": 13899,
+   "steps_per_epoch": 218,
+   "max_rounds": 300,
+   "round_unit": "epoch",
+   "T_train_optimizer_steps": 65400,
+   "T_schedule_optimizer_steps": 65400,
+   "micro_batch": 32,
+   "grad_accumulation": 2,
+   "effective_batch": 64
+  },
+  "wildppg": {
+   "protocol": "A4",
+   "n_train_windows": 293271,
+   "steps_per_epoch": 4583,
+   "max_rounds": 300,
+   "round_unit": "min(epoch, 220 steps)",
+   "T_train_optimizer_steps": 65482,
+   "T_schedule_optimizer_steps": 65482,
+   "micro_batch": 32,
+   "grad_accumulation": 2,
+   "effective_batch": 64
+  }
+ }
+}

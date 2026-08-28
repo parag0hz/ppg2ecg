@@ -31,6 +31,10 @@ artifacts/a8_*/**/*.pt
 !artifacts/a9_*/**
 artifacts/a9_*/**/*.npz
 artifacts/a9_*/**/*.pt
+!artifacts/b1_*/
+!artifacts/b1_*/**
+artifacts/b1_*/**/*.npz
+artifacts/b1_*/**/*.pt
 !outputs/a0_*/
 !outputs/a0b_*/
 !outputs/a2_*/
@@ -40,6 +44,7 @@ artifacts/a9_*/**/*.pt
 !outputs/a6*/
 !outputs/a8_*/
 !outputs/a9_*/
+!outputs/b1v2_*/
 !outputs/a7_*/
 outputs/a0_*/*
 outputs/a0b_*/*
@@ -50,6 +55,7 @@ outputs/a5*/*
 outputs/a6*/*
 outputs/a8_*/*
 outputs/a9_*/*
+outputs/b1v2_*/*
 outputs/a7_*/*
 !outputs/a0_*/provenance.json
 !outputs/a0b_*/provenance.json
@@ -60,6 +66,7 @@ outputs/a7_*/*
 !outputs/a6*/provenance.json
 !outputs/a8_*/provenance.json
 !outputs/a9_*/provenance.json
+!outputs/b1v2_*/provenance.json
 !outputs/a7_*/provenance.json
 !outputs/a0_*/config.yaml
 !outputs/a0b_*/config.yaml
@@ -70,6 +77,7 @@ outputs/a7_*/*
 !outputs/a6*/config.yaml
 !outputs/a8_*/config.yaml
 !outputs/a9_*/config.yaml
+!outputs/b1v2_*/config.yaml
 !outputs/a7_*/config.yaml
 !outputs/a0_*/split_manifest.json
 !outputs/a0b_*/split_manifest.json
@@ -80,6 +88,7 @@ outputs/a7_*/*
 !outputs/a6*/split_manifest.json
 !outputs/a8_*/split_manifest.json
 !outputs/a9_*/split_manifest.json
+!outputs/b1v2_*/split_manifest.json
 !outputs/a7_*/split_manifest.json
 !outputs/a0_*/training_log.csv
 !outputs/a0b_*/training_log.csv
@@ -90,6 +99,7 @@ outputs/a7_*/*
 !outputs/a6*/training_log.csv
 !outputs/a8_*/training_log.csv
 !outputs/a9_*/training_log.csv
+!outputs/b1v2_*/training_log.csv
 !outputs/a7_*/training_log.csv
 !outputs/a0_*/training_summary.json
 !outputs/a0b_*/training_summary.json
@@ -100,6 +110,7 @@ outputs/a7_*/*
 !outputs/a6*/training_summary.json
 !outputs/a8_*/training_summary.json
 !outputs/a9_*/training_summary.json
+!outputs/b1v2_*/training_summary.json
 !outputs/a7_*/training_summary.json
 !outputs/a0_*/train_meta.json
 !outputs/a0b_*/train_meta.json
@@ -110,6 +121,7 @@ outputs/a7_*/*
 !outputs/a6*/train_meta.json
 !outputs/a8_*/train_meta.json
 !outputs/a9_*/train_meta.json
+!outputs/b1v2_*/train_meta.json
 !outputs/a7_*/train_meta.json
 !outputs/a0_*/metrics.json
 !outputs/a0b_*/metrics.json
@@ -120,6 +132,7 @@ outputs/a7_*/*
 !outputs/a6*/metrics.json
 !outputs/a8_*/metrics.json
 !outputs/a9_*/metrics.json
+!outputs/b1v2_*/metrics.json
 !outputs/a7_*/metrics.json
 !outputs/a0_*/nfe_curve.csv
 !outputs/a0b_*/nfe_curve.csv
@@ -130,6 +143,7 @@ outputs/a7_*/*
 !outputs/a6*/nfe_curve.csv
 !outputs/a8_*/nfe_curve.csv
 !outputs/a9_*/nfe_curve.csv
+!outputs/b1v2_*/nfe_curve.csv
 !outputs/a7_*/nfe_curve.csv
 !outputs/a0_*/diagnostics.json
 !outputs/a0b_*/diagnostics.json
@@ -140,6 +154,7 @@ outputs/a7_*/*
 !outputs/a6*/diagnostics.json
 !outputs/a8_*/diagnostics.json
 !outputs/a9_*/diagnostics.json
+!outputs/b1v2_*/diagnostics.json
 !outputs/a7_*/diagnostics.json
 !outputs/a0_*/dalia_sync_diagnostic.json
 !outputs/a0b_*/dalia_sync_diagnostic.json
@@ -150,6 +165,7 @@ outputs/a7_*/*
 !outputs/a6*/dalia_sync_diagnostic.json
 !outputs/a8_*/dalia_sync_diagnostic.json
 !outputs/a9_*/dalia_sync_diagnostic.json
+!outputs/b1v2_*/dalia_sync_diagnostic.json
 !outputs/a7_*/dalia_sync_diagnostic.json
 !outputs/a0_*/analysis.md
 !outputs/a0b_*/analysis.md
@@ -160,6 +176,7 @@ outputs/a7_*/*
 !outputs/a6*/analysis.md
 !outputs/a8_*/analysis.md
 !outputs/a9_*/analysis.md
+!outputs/b1v2_*/analysis.md
 !outputs/a7_*/analysis.md
 !outputs/a0_*/fixed_bank_val.json
 !outputs/a0b_*/comparison.json
@@ -170,6 +187,7 @@ outputs/a7_*/*
 !outputs/a6*/recovery.json
 !outputs/a8_*/recovery.json
 !outputs/a9_*/recovery.json
+!outputs/b1v2_*/recovery.json
 !outputs/a7_*/recovery.json
 !outputs/a0_*/figures/
 !outputs/a0b_*/figures/
@@ -180,6 +198,7 @@ outputs/a7_*/*
 !outputs/a6*/figures/
 !outputs/a8_*/figures/
 !outputs/a9_*/figures/
+!outputs/b1v2_*/figures/
 !outputs/a7_*/figures/
 outputs/a0_*/figures/*
 outputs/a0b_*/figures/*
@@ -190,6 +209,7 @@ outputs/a5*/figures/*
 outputs/a6*/figures/*
 outputs/a8_*/figures/*
 outputs/a9_*/figures/*
+outputs/b1v2_*/figures/*
 outputs/a7_*/figures/*
 !outputs/a0_*/figures/*.png
 !outputs/a0b_*/figures/*.png
@@ -200,6 +220,7 @@ outputs/a7_*/figures/*
 !outputs/a6*/figures/*.png
 !outputs/a8_*/figures/*.png
 !outputs/a9_*/figures/*.png
+!outputs/b1v2_*/figures/*.png
 !outputs/a7_*/figures/*.png
 logs/
 wandb/

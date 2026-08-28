@@ -1,0 +1,28 @@
+{
+ "calibration_seed": 12345,
+ "n_nonboundary_samples": 1000000,
+ "n_drawn_total": 2000000,
+ "sampler": "sample_tr(p_mean=-0.4, p_std=1.0, data_proportion=0.5); non-boundary rows only (r<t)",
+ "E_h": 0.23350426422569714,
+ "E_1_minus_h": 0.7664957357743029,
+ "lambda": 1.30463869963975,
+ "h_quantiles": {
+  "1": 0.003681487813591957,
+  "10": 0.037211671471595764,
+  "25": 0.09455893933773041,
+  "50": 0.20143195986747742,
+  "75": 0.3426884561777115,
+  "90": 0.47959869801998134,
+  "99": 0.6892516607046129
+ },
+ "beta_at_s1_mean": 1.0,
+ "beta_at_s1_quantiles": {
+  "1": 0.4054143092935459,
+  "10": 0.6789356779060445,
+  "50": 1.041842769452358,
+  "90": 1.2560909129596258,
+  "99": 1.299835688165886
+ },
+ "beta_formula": "beta(h, s) = 1 - s + lambda * s * (1 - h); s = 1 - i/T_train (linear, k = 1); boundary (r = t): beta = 1",
+ "sampler_file_sha256": "7291d5edb2f47b041a092d9ee9b7c8e414f83b13cb01d34da46cb0dd302aefba"
+}

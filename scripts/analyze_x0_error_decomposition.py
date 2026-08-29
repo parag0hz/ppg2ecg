@@ -237,7 +237,7 @@ def main():
                                    "timing": {m: {k: v for k, v in L3[m].items() if not isinstance(v, np.ndarray)} for m in models},
                                    "beat": {m: {"raw_corr": QA[m], "oracle_corr": QB[m], "oracle_p2p_median": float(np.nanmedian(L4[m]["oracle_p2p_ratio"])), "oracle_qrs_energy_median": float(np.nanmedian(L4[m]["oracle_qrs_energy_ratio"])), "oracle_slope_median": float(np.nanmedian(L4[m]["oracle_slope_ratio"])), "oracle_hf": float(np.nanmean(L4[m]["oracle_hf_ratio_pred"])), "shift_abs_median_ms": float(np.median(np.abs(L4[m]["shift_samples"])) / FS * 1000), "shift_sd_ms": float(L4[m]["shift_samples"].std() / FS * 1000), "absent_rate": float(L4[m]["absent"].mean()), "n_beats": int(len(L4[m]["oracle_corr"]))} for m in models},
                                    "raw": {m: {k: v for k, v in L1[m].items() if not isinstance(v, np.ndarray)} for m in models}}
-        print(f"[{ds}] categories {cats} | verdict {verdict} | rgf {{m: (round(v['recoverable_gap_fraction'],3) if v['recoverable_gap_fraction'] is not None else None) for m, v in rgf.items()}}", flush=True)
+        print(f"[{ds}] categories {cats} | verdict {verdict} | rgf { {m: (round(v['recoverable_gap_fraction'], 3) if v['recoverable_gap_fraction'] is not None else None) for m, v in rgf.items()} }", flush=True)
         # ---- figures: frozen qualitative windows (raw + globally aligned), beat panels, distributions
         wins = PROTO["qualitative_ids"][ds]
         t = np.arange(y.shape[1]) / FS

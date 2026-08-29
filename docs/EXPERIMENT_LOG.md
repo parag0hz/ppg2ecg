@@ -260,3 +260,15 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   partial results; S1 vanilla stopped at 173/300 rounds (state preserved); S1 curriculum and the WildPPG pair not started. Terminated
   (orchestrator SIGTERM, trainer SIGTERM after SIGINT proved ignored) for research-priority reallocation to X0, decided after seeing
   the S2 pair — therefore outcome-aware and no verdict is assigned.
+
+## 2026-08-29 — X0: one-step ECG error decomposition (analysis only; frozen predictions)
+- Pre-registered (`f7e0c9d`, pushed before any metric): oracle global lag ±250 ms, oracle local beat translation ±150 ms (GT-anchored,
+  detector-independent), frozen neurokit detector + 50 ms matching, oracle-absent = corr < 0.5 ∨ p2p < 0.2, categories/labels, cluster bootstrap.
+- WildPPG (3,907 windows, 40,523 GT beats): **EVENT-DOMINANT** for MSE / OT-CFM-1 / iMF-1 by the frozen rule (oracle-absent 0.88 / 0.76 / 0.52 vs
+  OT-CFM-50 0.38). Realised as uniform attenuation, not beat dropping: after the best ±150 ms translation OT1 keeps median p2p 0.16 / QRS energy
+  0.03 / slope 0.11 (MSE 0.09 / 0.01 / 0.03; OT50 0.88 / 0.81 / 0.86); 5.8 % of OT1 beats reach p2p ≥ 0.5 (OT50 84 %). Timing LOW and
+  model-independent (matched-peak MAE 19–22 ms, bias ≈ 0, global lag median 0 ms; Δ_global morph +0.012…+0.019). Aligned gap to OT50 widens
+  (OT1 −0.175 [−0.203, −0.147]; MSE −0.225; iMF1 −0.091). Recoverable-gap fraction UNSTABLE (same-coordinate beat corr ≈ 0 for all models).
+  OT1 ≈ MSE before/after alignment (RMSE 0.078 / 0.080). DaLiA S2/S1 secondary: same pattern, stronger (MSE/OT1 absent ≈ 1.0).
+- Central answer: the ECG-like structure is destroyed (flattened), not displaced. X1 (temporal-ambiguity synthetic) NOT justified. STOP.
+- Report `docs/X0_ONE_STEP_FAILURE_DECOMPOSITION_REPORT.md`; artefacts `artifacts/x0_error_decomposition/`.

@@ -288,3 +288,23 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   cancellation (σ ≪ δ) forces Q_MSE → 1 — so Q_MSE is demoted to descriptive with an advance prediction, and H-X2-MEAN is tested by
   comparative closeness (F̄ closest to M_A6 among {OT50 sample, iMF1, GT} in ≥2/3; WildPPG PCC ≥ 0.60).
 - E_cancel dropped as algebraically redundant with D_pair ((v_a − v_b) + (x0_a − x0_b) ≡ F_a − F_b).
+- **X2 result (2026-08-30) — PARTIAL SUPPORT.** Analysis-only, frozen checkpoints, new inference; seed-0 re-inference reproduced the
+  frozen `euler1.npz` / `meanflow1.npz` / `regressor.npz` **bit-exactly** (max|Δ| = 0 on all three conditions; NFE 1 and 50 as expected).
+  **H-X2-CANCEL PASS 3/3**: OT-CFM-1 source-variance retention 0.00168 / 0.00170 / 0.00102 (WildPPG / S2 / S1) — amplitude retention
+  4.1 / 4.1 / 3.2 % — slope β −0.0006 / +0.0043 / −0.0044, local Jacobian ρ_J 0.041 / 0.042 / 0.035 with cos(J_x v·d, −d) = +0.999,
+  i.e. J_x v ≈ −I. R_source ≈ ρ_J² throughout, so the map is near-linear over the noise scale.
+  **H-X2-MEAN: M1 PASS 3/3** (F̄ closest to the A6 MSE proxy: 0.0675 / 0.0727 / 0.1154 vs 0.25–0.35 for OT-50 / iMF-1 / GT) but
+  **M2 FAILS** (WildPPG PCC(F̄, M_A6) = 0.545 < the frozen 0.60; A6's prior single-sample value was 0.51). Threshold NOT adjusted.
+  Q_MSE 0.925 / 0.933 / 0.979 — exactly the ≈ 1 predicted by pre-inference amendment 1, confirming the original Q_MSE < 0.80 rule
+  would have been self-defeating. **Same-model multistep barycenter proxy B50** (K50 = 8, MC-debiased): F̄ is 5.5× / 10.6× / 14.3×
+  closer than the A6 proxy in debiased squared distance (+0.00066 / +0.00071 / +0.00079 vs +0.00364 / +0.00755 / +0.01126).
+  **iMF-1** on the identical bank retains ~10× more source dependence (amplitude 39 / 32 / 28 %, β ≈ +0.10, ρ_J 0.42–0.58).
+  **Exploratory ORACLE t-profile**: source sensitivity rises smoothly and monotonically (R_source ×9, ρ_J ×2.4 from t = 0 to 0.10) —
+  the endpoint behaviour is the limit of a continuous trend, not a boundary artefact.
+  Reading (allowed wording): the frozen OT-CFM models empirically realise the KNOWN endpoint-barycenter degeneracy of independently
+  coupled flow matching, giving a mechanistic account of the conditional-mean-like attenuation at 1 NFE. NOT claimed: novelty of the
+  identity (prior art: Frans 2024 §2; Albergo-Boffi-VE 2023 Eq. 4.12; Albergo-VE 2022 Eq. B.19; Liu 2022 Fig. 5; Lee 2024 §4.1),
+  that the finite net equals the population optimum, that F̄ = E[x1|c], multimodality, or that changing the coupling would fix ECG.
+  A7/A8 context retained: conditional-center prediction is not intrinsically pathological (it was the BEST model on ABP).
+  Report `docs/X2_ENDPOINT_IDENTITY_REPORT.md`; artefacts `artifacts/x2_endpoint_identity/`. Next (recommended, NOT started):
+  a separately pre-registered coupling-only causal comparison. STOP after X2.

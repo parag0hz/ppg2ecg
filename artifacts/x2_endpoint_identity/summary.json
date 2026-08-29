@@ -1,0 +1,401 @@
+{
+ "created": "2026-08-30T01:52:14",
+ "repo_sha": "d2b0cfffd4895c66a1db43449661ce7c593a01e7",
+ "preregistration_sha": "d2b0cfffd4895c66a1db43449661ce7c593a01e7",
+ "upstream": {
+  "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+  "branch": "main",
+  "dirty_files": []
+ },
+ "protocol": {
+  "K_source": 32,
+  "source_seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30,
+   31
+  ],
+  "K50": 8,
+  "ot50_solver": "heun:25",
+  "ot50_nfe": 50,
+  "n_subset": 64,
+  "n_directions": 4,
+  "direction_seed": 20260301,
+  "t_profile": [
+   0.0,
+   0.01,
+   0.05,
+   0.1
+  ],
+  "n_boot": 2000,
+  "boot_seed": 0,
+  "qualitative_windows": {
+   "wildppg": [
+    2439,
+    297,
+    415
+   ],
+   "dalia_s2": [
+    880,
+    482,
+    824
+   ],
+   "dalia_s1": [
+    1067,
+    726,
+    221
+   ]
+  },
+  "batch_size": 64,
+  "jvp_batch": 16,
+  "dtype": "float32",
+  "device": "NVIDIA GeForce RTX 5090",
+  "torch": "2.11.0+cu130",
+  "cuda": "13.0"
+ },
+ "datasets": {
+  "wildppg": {
+   "N": 3907,
+   "n_clusters": 8,
+   "n_subset": 64,
+   "K_source": 32,
+   "parity": {
+    "ot1_seed0_vs_frozen_euler1_max_abs": 0.0,
+    "imf1_seed0_vs_frozen_meanflow1_max_abs": 0.0,
+    "mse_reinference_vs_frozen_max_abs": 0.0,
+    "nfe_observed": [
+     1,
+     50
+    ]
+   },
+   "source_sensitivity": {
+    "OT1": {
+     "r_source_median": 0.0016811461812554537,
+     "std_retention_median": 0.04100178265948267,
+     "beta_median": -0.0005667318133565562,
+     "d_pair_median": 0.036676345156856936
+    },
+    "iMF1": {
+     "r_source_median": 0.15004957038996825,
+     "std_retention_median": 0.3873623244327825,
+     "beta_median": 0.10941811220967612,
+     "d_pair_median": 0.3519016792057251
+    }
+   },
+   "mse_proxy_source_sensitivity": "N/A - deterministic model has no source latent",
+   "jacobian": {
+    "OT1": {
+     "rho_J_median": 0.04128246754407883,
+     "cos_median": 0.9991589486598969
+    },
+    "iMF1": {
+     "rho_J_median": 0.4809549003839493,
+     "cos_median": 0.8855913877487183
+    }
+   },
+   "conditional_center": {
+    "rmse_Fbar": {
+     "M_A6": 0.06749807608788412,
+     "OT50_seed0": 0.2514946352997879,
+     "iMF1_seed0": 0.3498257855077332,
+     "GT": 0.35272284935591247
+    },
+    "M1_closest_to_M_A6": true,
+    "pcc_Fbar_M_A6_mean": 0.5450529277757592,
+    "Q_MSE_median": 0.9249281200998811
+   },
+   "same_model_barycenter": {
+    "dataset": "wildppg",
+    "n_subset": 64,
+    "K50": 8,
+    "ot50_nfe": 50,
+    "V50_within_window_variance": 0.07297602033454768,
+    "rmse_Fbar_B50": 0.09638972645425609,
+    "rmse_M_A6_B50": 0.11026428643870859,
+    "rmse_F0_B50": 0.09937072020831808,
+    "rmse_GT_B50": 0.37299541522977175,
+    "debiased_sqdist_Fbar_B50": 0.0006624532306621165,
+    "debiased_sqdist_M_A6_B50": 0.0036356679596818084,
+    "debiased_sqdist_F0_B50": 0.001381501573890569,
+    "debiased_sqdist_GT_B50": 0.14843624589586737,
+    "pcc_Fbar_B50_mean": 0.40680545302967897,
+    "pcc_M_A6_B50_mean": 0.283425170241987,
+    "rmse_Fbar_M_A6_on_subset": 0.06794644813131494
+   },
+   "t_profile_oracle": {
+    "0.0": {
+     "r_source_median": 0.0016091539940652246,
+     "beta_median": -0.00037685788610533947,
+     "rho_J_median": 0.04128246754407883
+    },
+    "0.01": {
+     "r_source_median": 0.001986257111307577,
+     "beta_median": 0.0005377621052807648,
+     "rho_J_median": 0.044193632900714874
+    },
+    "0.05": {
+     "r_source_median": 0.006388172789935733,
+     "beta_median": 0.004476722209861566,
+     "rho_J_median": 0.06596418842673302
+    },
+    "0.1": {
+     "r_source_median": 0.014302153243583467,
+     "beta_median": 0.009447853478097016,
+     "rho_J_median": 0.10063547641038895
+    }
+   },
+   "H_X2_CANCEL": {
+    "C1_r_source_lt_0.05": true,
+    "C2_beta_lt_0.25": true,
+    "C3_rho_J_lt_0.25": true,
+    "pass": true
+   },
+   "H_X2_MEAN_terms": {
+    "M1": true,
+    "M2_wildppg_pcc_ge_0.60": false
+   }
+  },
+  "dalia_s2": {
+   "N": 1025,
+   "n_clusters": 1,
+   "n_subset": 64,
+   "K_source": 32,
+   "parity": {
+    "ot1_seed0_vs_frozen_euler1_max_abs": 0.0,
+    "imf1_seed0_vs_frozen_meanflow1_max_abs": 0.0,
+    "mse_reinference_vs_frozen_max_abs": 0.0,
+    "nfe_observed": [
+     1,
+     50
+    ]
+   },
+   "source_sensitivity": {
+    "OT1": {
+     "r_source_median": 0.0016958864338640401,
+     "std_retention_median": 0.041181141726086716,
+     "beta_median": 0.004250097387607048,
+     "d_pair_median": 0.0376172046325949
+    },
+    "iMF1": {
+     "r_source_median": 0.10246137052687615,
+     "std_retention_median": 0.32009587708509485,
+     "beta_median": 0.0911131634378806,
+     "d_pair_median": 0.30450540761621464
+    }
+   },
+   "mse_proxy_source_sensitivity": "N/A - deterministic model has no source latent",
+   "jacobian": {
+    "OT1": {
+     "rho_J_median": 0.042306821793317795,
+     "cos_median": 0.9991136491298676
+    },
+    "iMF1": {
+     "rho_J_median": 0.583817183971405,
+     "cos_median": 0.8451622426509857
+    }
+   },
+   "conditional_center": {
+    "rmse_Fbar": {
+     "M_A6": 0.07267057851910118,
+     "OT50_seed0": 0.2976207045071736,
+     "iMF1_seed0": 0.31871082632760833,
+     "GT": 0.30101340857571535
+    },
+    "M1_closest_to_M_A6": true,
+    "pcc_Fbar_M_A6_mean": 0.17581836092444117,
+    "Q_MSE_median": 0.9331168808871544
+   },
+   "same_model_barycenter": {
+    "dataset": "dalia_s2",
+    "n_subset": 64,
+    "K50": 8,
+    "ot50_nfe": 50,
+    "V50_within_window_variance": 0.09757720893672267,
+    "rmse_Fbar_B50": 0.10973950984323017,
+    "rmse_M_A6_B50": 0.13194689410670965,
+    "rmse_F0_B50": 0.10775180648068541,
+    "rmse_GT_B50": 0.33586457903733435,
+    "debiased_sqdist_Fbar_B50": 0.0007149931698356635,
+    "debiased_sqdist_M_A6_B50": 0.007549720371229404,
+    "debiased_sqdist_F0_B50": 0.00017442458320866827,
+    "debiased_sqdist_GT_B50": 0.10575682021348576,
+    "pcc_Fbar_B50_mean": 0.09489359439541484,
+    "pcc_M_A6_B50_mean": 0.040448490009367344,
+    "rmse_Fbar_M_A6_on_subset": 0.07799143895820129
+   },
+   "t_profile_oracle": {
+    "0.0": {
+     "r_source_median": 0.0016892619220950028,
+     "beta_median": 0.003823283102229823,
+     "rho_J_median": 0.042306821793317795
+    },
+    "0.01": {
+     "r_source_median": 0.001985266067226708,
+     "beta_median": 0.005239010052783068,
+     "rho_J_median": 0.04441860876977444
+    },
+    "0.05": {
+     "r_source_median": 0.004682511185245195,
+     "beta_median": 0.011410733938674356,
+     "rho_J_median": 0.059923525899648666
+    },
+    "0.1": {
+     "r_source_median": 0.013113107504270794,
+     "beta_median": 0.019080744827563993,
+     "rho_J_median": 0.08645705878734589
+    }
+   },
+   "H_X2_CANCEL": {
+    "C1_r_source_lt_0.05": true,
+    "C2_beta_lt_0.25": true,
+    "C3_rho_J_lt_0.25": true,
+    "pass": true
+   },
+   "H_X2_MEAN_terms": {
+    "M1": true,
+    "M2_wildppg_pcc_ge_0.60": null
+   }
+  },
+  "dalia_s1": {
+   "N": 1151,
+   "n_clusters": 1,
+   "n_subset": 64,
+   "K_source": 32,
+   "parity": {
+    "ot1_seed0_vs_frozen_euler1_max_abs": 0.0,
+    "imf1_seed0_vs_frozen_meanflow1_max_abs": 0.0,
+    "mse_reinference_vs_frozen_max_abs": 0.0,
+    "nfe_observed": [
+     1,
+     50
+    ]
+   },
+   "source_sensitivity": {
+    "OT1": {
+     "r_source_median": 0.001017611350226291,
+     "std_retention_median": 0.03190002116341447,
+     "beta_median": -0.004357211619820541,
+     "d_pair_median": 0.029656458442185202
+    },
+    "iMF1": {
+     "r_source_median": 0.07732861810866588,
+     "std_retention_median": 0.27808023681783983,
+     "beta_median": 0.1133879825603509,
+     "d_pair_median": 0.2628687076525168
+    }
+   },
+   "mse_proxy_source_sensitivity": "N/A - deterministic model has no source latent",
+   "jacobian": {
+    "OT1": {
+     "rho_J_median": 0.03464542515575886,
+     "cos_median": 0.999416708946228
+    },
+    "iMF1": {
+     "rho_J_median": 0.4183844327926636,
+     "cos_median": 0.9107842147350311
+    }
+   },
+   "conditional_center": {
+    "rmse_Fbar": {
+     "M_A6": 0.11541243495744363,
+     "OT50_seed0": 0.2807932703427452,
+     "iMF1_seed0": 0.30086662678890974,
+     "GT": 0.34578401226761146
+    },
+    "M1_closest_to_M_A6": true,
+    "pcc_Fbar_M_A6_mean": 0.13647475124210753,
+    "Q_MSE_median": 0.9785278666111097
+   },
+   "same_model_barycenter": {
+    "dataset": "dalia_s1",
+    "n_subset": 64,
+    "K50": 8,
+    "ot50_nfe": 50,
+    "V50_within_window_variance": 0.08702522879639604,
+    "rmse_Fbar_B50": 0.10528482781249976,
+    "rmse_M_A6_B50": 0.14089069284222416,
+    "rmse_F0_B50": 0.1088224806543727,
+    "rmse_GT_B50": 0.34644031933045805,
+    "debiased_sqdist_Fbar_B50": 0.0007892291534097821,
+    "debiased_sqdist_M_A6_B50": 0.011257371592440887,
+    "debiased_sqdist_F0_B50": 0.0015741761991919234,
+    "debiased_sqdist_GT_B50": 0.11341147828837382,
+    "pcc_Fbar_B50_mean": 0.20707669989805455,
+    "pcc_M_A6_B50_mean": 0.06440341617127834,
+    "rmse_Fbar_M_A6_on_subset": 0.10948738068727851
+   },
+   "t_profile_oracle": {
+    "0.0": {
+     "r_source_median": 0.0010432011032557344,
+     "beta_median": -0.004148909561148202,
+     "rho_J_median": 0.03464542515575886
+    },
+    "0.01": {
+     "r_source_median": 0.0013164233309647766,
+     "beta_median": -0.0030723004885838904,
+     "rho_J_median": 0.03604472428560257
+    },
+    "0.05": {
+     "r_source_median": 0.0035742328181883063,
+     "beta_median": 0.0013179283703006633,
+     "rho_J_median": 0.048455821350216866
+    },
+    "0.1": {
+     "r_source_median": 0.009786413199481998,
+     "beta_median": 0.006834327147239768,
+     "rho_J_median": 0.07345374301075935
+    }
+   },
+   "H_X2_CANCEL": {
+    "C1_r_source_lt_0.05": true,
+    "C2_beta_lt_0.25": true,
+    "C3_rho_J_lt_0.25": true,
+    "pass": true
+   },
+   "H_X2_MEAN_terms": {
+    "M1": true,
+    "M2_wildppg_pcc_ge_0.60": null
+   }
+  }
+ },
+ "verdict": {
+  "H_X2_CANCEL_per_condition": {
+   "wildppg": true,
+   "dalia_s2": true,
+   "dalia_s1": true
+  },
+  "H_X2_CANCEL_n_pass": 3,
+  "H_X2_MEAN_M1_n_pass": 3,
+  "H_X2_MEAN_M2_wildppg": false,
+  "H_X2_MEAN_pass": false,
+  "overall": "PARTIAL SUPPORT"
+ }
+}

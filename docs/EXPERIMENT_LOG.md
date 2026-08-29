@@ -251,3 +251,12 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   verdict **REPRESENTATION-ROBUST**. Anomaly recorded: OT-CFM at 2 NFE is the worst arm in both representations; the global-z iMF run
   early-stopped at round 28 (best 8) and may be under-trained. Report `docs/A9_ECG_TARGET_REPRESENTATION_REPORT.md`.
   **STOP after A9 as pre-registered** (no DaLiA control, no respiration, no multi-seed run without a new pre-registration).
+- **2026-08-28 B1-v2 pre-registered (`bdd6419`)** — fixed-compute paired progressive temporal-gap iMeanFlow (source audit of
+  arXiv:2511.19065 v2: β = 1 − s + λs(1 − h), λ = 1/E[1 − h] = 1.304639, s = 1 − i/T, applied after the frozen adaptive weighting to
+  non-boundary samples only; 6 runs at the frozen 300-round budgets, early stopping diagnostic-only, primary = FINAL checkpoints).
+  Driver reproduced the historical A2 run at round 1 to printed precision; paired probe hashes identical across arms.
+- **B1-v2 ABORTED 2026-08-29 22:30 — NO CONFIRMATORY VERDICT** (`docs/B1_FIXED_COMPUTE_ABORT_NOTE.md`). Completed: S2 vanilla
+  (final HR 8.15 / morph 0.576 / amp 0.77 / gain 6.42) and S2 curriculum (10.29 / 0.542 / 0.73 / 4.34; ΔMorph −0.034) — non-confirmatory
+  partial results; S1 vanilla stopped at 173/300 rounds (state preserved); S1 curriculum and the WildPPG pair not started. Terminated
+  (orchestrator SIGTERM, trainer SIGTERM after SIGINT proved ignored) for research-priority reallocation to X0, decided after seeing
+  the S2 pair — therefore outcome-aware and no verdict is assigned.

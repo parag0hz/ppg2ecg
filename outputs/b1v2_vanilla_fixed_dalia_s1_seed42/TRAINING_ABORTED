@@ -1,0 +1,18 @@
+{
+ "status": "ABORTED / INCOMPLETE \u2014 NO CONFIRMATORY VERDICT",
+ "reason": "research-priority reallocation to X0 (decision taken after observing the completed S2 pair; outcome-aware)",
+ "terminated_at": "2026-08-29T22:30:39",
+ "pid": 2002558,
+ "signal": "SIGTERM (SIGINT was ignored: SIG_IGN inherited from the non-interactive nohup launch)",
+ "rounds_completed": 173,
+ "global_step": 37714,
+ "t_schedule": 65400,
+ "schedule_s_at_stop": 0.423333,
+ "best_round": 16,
+ "best_val_fixed": 0.17127123884165002,
+ "checkpoints_preserved": [
+  "checkpoint_last.pt",
+  "checkpoint_best.pt",
+  "checkpoint_frac000/010/025/050.pt"
+ ]
+}

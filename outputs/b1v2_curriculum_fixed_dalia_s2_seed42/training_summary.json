@@ -1,0 +1,19 @@
+{
+ "exp_name": "b1v2_curriculum_fixed_dalia_s2_seed42",
+ "arm": "curriculum",
+ "objective": "improved_meanflow",
+ "epochs_run": 300,
+ "best_epoch": 24,
+ "selection_criterion": "fixed_imf_mse (diagnostic)",
+ "best_selection_metric": 0.1726651715640074,
+ "historical_early_stop_round": 45,
+ "total_optimizer_steps": 66000,
+ "t_schedule": 66000,
+ "schedule_s_final": 0.0,
+ "probe_sha256": "5c44decffd94c12d3758a1c327e6288be12c2aed7b45bf579b54ccbe50f026e0",
+ "total_train_time_s": 43213.33234498603,
+ "peak_mem_MiB": 16904.0166015625,
+ "finished": "2026-08-29T15:30:54",
+ "checkpoint_best": "outputs/b1v2_curriculum_fixed_dalia_s2_seed42/checkpoint_best.pt",
+ "checkpoint_final": "outputs/b1v2_curriculum_fixed_dalia_s2_seed42/checkpoint_final.pt"
+}

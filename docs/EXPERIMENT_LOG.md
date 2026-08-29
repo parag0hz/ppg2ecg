@@ -272,3 +272,19 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   OT1 ≈ MSE before/after alignment (RMSE 0.078 / 0.080). DaLiA S2/S1 secondary: same pattern, stronger (MSE/OT1 absent ≈ 1.0).
 - Central answer: the ECG-like structure is destroyed (flattened), not displaced. X1 (temporal-ambiguity synthetic) NOT justified. STOP.
 - Report `docs/X0_ONE_STEP_FAILURE_DECOMPOSITION_REPORT.md`; artefacts `artifacts/x0_error_decomposition/`.
+
+## 2026-08-30 — X2: endpoint barycenter identity / source-noise cancellation (pre-registration)
+- Pre-registered `docs/X2_ENDPOINT_IDENTITY_PREREGISTRATION.md` BEFORE any X2 real-data metric. Analysis-only audit on frozen
+  checkpoints (new inference, no training, nothing overwritten): does the finite trained OT-CFM field realise the known
+  endpoint-barycenter degeneracy of independently coupled flow matching, F(x0,c) = x0 + v_θ(x0,c,0) ≈ E[x1|c], independent of x0?
+- Prior art established first: the identity is a direct conditional corollary of Frans et al. 2024 (arXiv:2410.12557 §2),
+  Albergo–Boffi–Vanden-Eijnden 2023 (arXiv:2303.08797 Rmk 42 / Eq. 4.12), Albergo–Vanden-Eijnden 2022 (Eq. B.19),
+  Liu et al. 2022 (arXiv:2209.03003 Eq. 2 / Fig. 5) and Lee et al. 2024 (arXiv:2405.20320 §4.1). NOT claimed as novel.
+- Frozen: 3 conditions (WildPPG 3,907 / DaLiA S2 1,025 / S1 1,151, existing splits and window order), K = 32 source seeds 0–31
+  (seed 0 ≡ the historical evaluation bank), metrics R_source + sqrt(R_source), D_pair, slope β, JVP ρ_J (64 cluster-stratified
+  windows × 4 directions, seed 20260301), comparators M_A6 (deterministic proxy) and B50 (same-model multistep barycenter proxy,
+  K50 = 8, debiased), exploratory oracle t-profile t ∈ {0, .01, .05, .10}, 8-cluster bootstrap (2000, seed 0), frozen qualitative IDs.
+- Pre-inference amendment 1 (stated before any result): the proposed "Q_MSE < 0.80" pass/fail is logically self-defeating —
+  cancellation (σ ≪ δ) forces Q_MSE → 1 — so Q_MSE is demoted to descriptive with an advance prediction, and H-X2-MEAN is tested by
+  comparative closeness (F̄ closest to M_A6 among {OT50 sample, iMF1, GT} in ≥2/3; WildPPG PCC ≥ 0.60).
+- E_cancel dropped as algebraically redundant with D_pair ((v_a − v_b) + (x0_a − x0_b) ≡ F_a − F_b).

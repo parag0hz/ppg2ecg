@@ -39,6 +39,11 @@ artifacts/b1_*/**/*.pt
 !artifacts/x0_*/**
 artifacts/x0_*/**/*.npz
 artifacts/x0_*/**/*.pt
+!artifacts/x2_*/
+!artifacts/x2_*/**
+artifacts/x2_*/**/*.npz
+artifacts/x2_*/**/*.pt
+# outputs/x2_* (X2 source banks / per-seed endpoint tensors) stay fully ignored: no !outputs/x2_*/ re-include exists.
 !outputs/a0_*/
 !outputs/a0b_*/
 !outputs/a2_*/

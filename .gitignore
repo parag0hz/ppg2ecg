@@ -35,6 +35,10 @@ artifacts/a9_*/**/*.pt
 !artifacts/b1_*/**
 artifacts/b1_*/**/*.npz
 artifacts/b1_*/**/*.pt
+!artifacts/x0_*/
+!artifacts/x0_*/**
+artifacts/x0_*/**/*.npz
+artifacts/x0_*/**/*.pt
 !outputs/a0_*/
 !outputs/a0b_*/
 !outputs/a2_*/

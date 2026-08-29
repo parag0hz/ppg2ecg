@@ -1,0 +1,88 @@
+{
+ "created": "2026-08-29",
+ "primary_dataset": "wildppg",
+ "secondary": [
+  "dalia_s2",
+  "dalia_s1"
+ ],
+ "models": [
+  "MSE",
+  "OT1",
+  "iMF1",
+  "OT50"
+ ],
+ "context_models": [
+  "iMF2",
+  "iMF4"
+ ],
+ "fs": 128,
+ "global_lag_ms": 250,
+ "global_lag_samples": 32,
+ "global_lag_method": "argmax normalised cross-correlation on overlap, explicit crop, ties->smallest |lag|",
+ "local_shift_ms": 150,
+ "local_shift_samples": 19,
+ "local_criterion": "Pearson correlation, translation only",
+ "beat_window_s": [
+  -0.25,
+  0.4
+ ],
+ "edge_margin_samples": 19,
+ "detector": "neurokit (frozen rpeaks.detect_rpeaks)",
+ "match_tolerance_ms": 50,
+ "qrs_half_ms": 100,
+ "hf_cut_hz": 15,
+ "missing_rate": "FN/GT beats",
+ "spurious_rate": "FP/GT beats",
+ "oracle_absent": "oracle corr < 0.5 or p2p ratio < 0.2",
+ "recoverable_gap_fraction": "(raw_gap - aligned_gap)/raw_gap on mean beat corr vs OT50; unstable if raw_gap < 0.05",
+ "rules": {
+  "EVENT_DOMINANT": "oracle_absent_rate >= 0.5",
+  "TIMING_MAJOR": "rgf >= 0.5 and p2p/qrs_energy/slope each >= 0.5*OT50 aligned",
+  "SHAPE_DOMINANT": "rgf < 0.2 and all three retention ratios < 0.5*OT50",
+  "MIXED": "otherwise",
+  "overall": "OT1 category; MODEL-DEPENDENT if MSE differs; INCONCLUSIVE if rgf unstable for both"
+ },
+ "labels": {
+  "timing_ms": [
+   20,
+   40
+  ],
+  "event_absent_rate": [
+   0.1,
+   0.3
+  ],
+  "shape_corr": [
+   0.8,
+   0.6
+  ],
+  "amp_p2p": [
+   0.8,
+   0.5
+  ],
+  "sharp_slope": [
+   0.8,
+   0.5
+  ]
+ },
+ "bootstrap": {
+  "wildppg": "cluster over 8 (subject,site), 2000 resamples, seed 0",
+  "dalia": "window bootstrap, exploratory"
+ },
+ "qualitative_ids": {
+  "wildppg": [
+   2439,
+   297,
+   415
+  ],
+  "dalia_s2": [
+   880,
+   482,
+   824
+  ],
+  "dalia_s1": [
+   1067,
+   726,
+   221
+  ]
+ }
+}

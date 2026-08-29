@@ -1,0 +1,197 @@
+{
+ "created": "2026-08-29",
+ "rule": "existing frozen prediction arrays reused; NOTHING regenerated; noise seed 0 (paired x0/e across arms), derangement seed 1; test windows = the frozen A2/A3/A4 subsets",
+ "datasets": {
+  "wildppg": {
+   "split_manifest": "data/manifests/split_a4_wildppg_seed42.json",
+   "split_sha256": "bc168144f721a73005ac14663af3fb0ae60f438c9c0fd6fc615e2119e88147c4",
+   "test_inputs": "outputs/a4_otcfm_wildppg_seed42/predictions/test_inputs.npz",
+   "test_inputs_sha256": "040bfd10bc79244450053cc855d658f7b020317fb2b38bbb45e83903f0effe5d",
+   "n_windows": 3907,
+   "test_subjects": [
+    "kjd",
+    "ssx"
+   ],
+   "models": {
+    "MSE": {
+     "experiment": "outputs/a6c_fullbackbone_mse_wildppg_seed42",
+     "description": "A6c full-backbone MSE proxy (x_const 0.1, t 0.5, cond 0.05E(t)); 1 fwd",
+     "prediction_file": "outputs/a6c_fullbackbone_mse_wildppg_seed42/predictions/regressor.npz",
+     "prediction_sha256": "0b095237ecd229fc80785a7491976bec56e5e944bb9e8473afea1a6a8b70a310",
+     "checkpoint": "outputs/a6c_fullbackbone_mse_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "b32820a232f20f15c201029e23e041d8c6e8dbfb03018fde6d1d51aee341403a",
+     "checkpoint_epoch": 33,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT1": {
+     "experiment": "outputs/a4_otcfm_wildppg_seed42",
+     "description": "A4 OT-CFM Euler 1 step = 1 NFE",
+     "prediction_file": "outputs/a4_otcfm_wildppg_seed42/predictions/euler1.npz",
+     "prediction_sha256": "930b55a1fe92d90d558f64e4eb2c02d07b247515c88173e80c3adcc290695da1",
+     "checkpoint": "outputs/a4_otcfm_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "68ef8d58377a66508aead4d728672b173aed844649b65ea58e3a818cbcb23716",
+     "checkpoint_epoch": 189,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "iMF1": {
+     "experiment": "outputs/a4_imeanflow_wildppg_seed42",
+     "description": "A4 iMeanFlow 1 NFE",
+     "prediction_file": "outputs/a4_imeanflow_wildppg_seed42/predictions/meanflow1.npz",
+     "prediction_sha256": "3d9bc1863987e8bc78c724ed78d1995136439209e07d86a46bc634856864d0a3",
+     "checkpoint": "outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "90544fd6fc55d61434e0d1879e59455ef675efbcbeae0938cbd3da9ce05799d2",
+     "checkpoint_epoch": 45,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT50": {
+     "experiment": "outputs/a4_otcfm_wildppg_seed42",
+     "description": "A4 OT-CFM Heun 25 steps = 50 NFE",
+     "prediction_file": "outputs/a4_otcfm_wildppg_seed42/predictions/heun25.npz",
+     "prediction_sha256": "dce8a74fdaa1584d6de2ab5f672774440cb175c963eb1e52cb89e283b85a32f1",
+     "checkpoint": "outputs/a4_otcfm_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "68ef8d58377a66508aead4d728672b173aed844649b65ea58e3a818cbcb23716",
+     "checkpoint_epoch": 189,
+     "noise_seed": 0,
+     "nfe": 50
+    },
+    "iMF2": {
+     "experiment": "outputs/a4_imeanflow_wildppg_seed42",
+     "description": "context",
+     "prediction_file": "outputs/a4_imeanflow_wildppg_seed42/predictions/meanflow2.npz",
+     "prediction_sha256": "b56718afdd3857d59e68ef25aaa6bf1512c30039c7dec7977b81a47552b69ea7",
+     "checkpoint": "outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "90544fd6fc55d61434e0d1879e59455ef675efbcbeae0938cbd3da9ce05799d2",
+     "checkpoint_epoch": 45,
+     "noise_seed": 0,
+     "nfe": 2
+    },
+    "iMF4": {
+     "experiment": "outputs/a4_imeanflow_wildppg_seed42",
+     "description": "context",
+     "prediction_file": "outputs/a4_imeanflow_wildppg_seed42/predictions/meanflow4.npz",
+     "prediction_sha256": "1928c475770f866618257a661b4eaa27ba319e4994c02d273bb88a5561dbb402",
+     "checkpoint": "outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "90544fd6fc55d61434e0d1879e59455ef675efbcbeae0938cbd3da9ce05799d2",
+     "checkpoint_epoch": 45,
+     "noise_seed": 0,
+     "nfe": 4
+    }
+   }
+  },
+  "dalia_s2": {
+   "split_manifest": "data/manifests/split_p0_holdout_seed42.json",
+   "split_sha256": "11c154e471b65e15d245d221a14c74dcb6207d6a197b8f59901cdd67842284a4",
+   "test_inputs": "outputs/a6a_fullbackbone_mse_dalia_testS2_seed42/predictions/test_inputs.npz",
+   "test_inputs_sha256": "4e6ad19ad31f6d9a7d4c89a49d758af592581ba7820459222b6852634bc507e7",
+   "n_windows": 1025,
+   "test_subjects": [
+    "S2"
+   ],
+   "models": {
+    "MSE": {
+     "experiment": "outputs/a6a_fullbackbone_mse_dalia_testS2_seed42",
+     "description": "A6a full-backbone MSE proxy",
+     "prediction_file": "outputs/a6a_fullbackbone_mse_dalia_testS2_seed42/predictions/regressor.npz",
+     "prediction_sha256": "cb2f5246d9b516c821954ec54e4ba544dc076b6adede0186864f3d622e6f12f0",
+     "checkpoint": "outputs/a6a_fullbackbone_mse_dalia_testS2_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "2b78bdb93e23a8bbec5d8a91851777cfeda0f08e02d6a99a7c49337d384e62cc",
+     "checkpoint_epoch": 23,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT1": {
+     "experiment": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42",
+     "description": "A0-b OT-CFM 1 NFE",
+     "prediction_file": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/predictions/euler1.npz",
+     "prediction_sha256": "c0ad5d00952b5d305785656a984c45266b3abdf01601f57840bda545bd311a0b",
+     "checkpoint": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "bbc5055fcd3d70dbbdede3be0b4e6951b3250310efa6a1d4f040d69b7ddd89d8",
+     "checkpoint_epoch": 64,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "iMF1": {
+     "experiment": "outputs/a2_imeanflow_s5_ppgdalia_8s_seed42",
+     "description": "A2 iMeanFlow 1 NFE",
+     "prediction_file": "outputs/a2_imeanflow_s5_ppgdalia_8s_seed42/predictions/meanflow1.npz",
+     "prediction_sha256": "4406a4c7c12bc9a6be4f4a26e83f66ac8e04aabd192b044f86b0384e37f501fe",
+     "checkpoint": "outputs/a2_imeanflow_s5_ppgdalia_8s_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "d493f67084ebc0fce9eece84b25418369999633f340364ef3b7eeb46b3197d08",
+     "checkpoint_epoch": 60,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT50": {
+     "experiment": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42",
+     "description": "A0-b OT-CFM 50 NFE",
+     "prediction_file": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/predictions/heun25.npz",
+     "prediction_sha256": "2c2694f76a6627212feeb9aae56eba235f715e01f29977e608fc626b2f5d6863",
+     "checkpoint": "outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "bbc5055fcd3d70dbbdede3be0b4e6951b3250310efa6a1d4f040d69b7ddd89d8",
+     "checkpoint_epoch": 64,
+     "noise_seed": 0,
+     "nfe": 50
+    }
+   }
+  },
+  "dalia_s1": {
+   "split_manifest": "data/manifests/split_a3_testS1_valS11.json",
+   "split_sha256": "6d2999bdab628f0dfa45a4b194228adc54e3b01ff0d0e7f3e3f6bb16a0d0bf30",
+   "test_inputs": "outputs/a6b_fullbackbone_mse_dalia_testS1_seed42/predictions/test_inputs.npz",
+   "test_inputs_sha256": "62a2067bfab17343bfaa5b9bc4d24924c78baaafd89828032d3668a5c3dd6a6e",
+   "n_windows": 1151,
+   "test_subjects": [
+    "S1"
+   ],
+   "models": {
+    "MSE": {
+     "experiment": "outputs/a6b_fullbackbone_mse_dalia_testS1_seed42",
+     "description": "A6b full-backbone MSE proxy",
+     "prediction_file": "outputs/a6b_fullbackbone_mse_dalia_testS1_seed42/predictions/regressor.npz",
+     "prediction_sha256": "c45403f75adc2334f3175e1dc21820efa378c975967245c8f486a50e7ea9eef5",
+     "checkpoint": "outputs/a6b_fullbackbone_mse_dalia_testS1_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "a092693190b495455923a36ec837ea1c0bcad8f92dc4dad333b749a00eb272a3",
+     "checkpoint_epoch": 5,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT1": {
+     "experiment": "outputs/a3_otcfm_ppgdalia_testS1_seed42",
+     "description": "A3 OT-CFM 1 NFE",
+     "prediction_file": "outputs/a3_otcfm_ppgdalia_testS1_seed42/predictions/euler1.npz",
+     "prediction_sha256": "1dd5eee73e9b8867b6481da6489ae4b83d20774722a9c435128eeb53eeed1463",
+     "checkpoint": "outputs/a3_otcfm_ppgdalia_testS1_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "0a90940b2b94d5e6e39310b0329323cffbd66c5fc64625138fb21b4239993615",
+     "checkpoint_epoch": 93,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "iMF1": {
+     "experiment": "outputs/a3_imeanflow_ppgdalia_testS1_seed42",
+     "description": "A3 iMeanFlow 1 NFE",
+     "prediction_file": "outputs/a3_imeanflow_ppgdalia_testS1_seed42/predictions/meanflow1.npz",
+     "prediction_sha256": "9f7d0b51f7f7a4363b334ca77353335ff9dca5936577cfecde7a280fdba90da2",
+     "checkpoint": "outputs/a3_imeanflow_ppgdalia_testS1_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "86db1e305cac3e95d1711b6d510cf1a8dffb7bc541231f6e7bbe7aca38393b16",
+     "checkpoint_epoch": 15,
+     "noise_seed": 0,
+     "nfe": 1
+    },
+    "OT50": {
+     "experiment": "outputs/a3_otcfm_ppgdalia_testS1_seed42",
+     "description": "A3 OT-CFM 50 NFE",
+     "prediction_file": "outputs/a3_otcfm_ppgdalia_testS1_seed42/predictions/heun25.npz",
+     "prediction_sha256": "9d72d5c7bf36f08afd8fd27004bc5cf320ffb092449612950f46c117a5d7e6dc",
+     "checkpoint": "outputs/a3_otcfm_ppgdalia_testS1_seed42/checkpoint_best.pt",
+     "checkpoint_sha256": "0a90940b2b94d5e6e39310b0329323cffbd66c5fc64625138fb21b4239993615",
+     "checkpoint_epoch": 93,
+     "noise_seed": 0,
+     "nfe": 50
+    }
+   }
+  }
+ }
+}

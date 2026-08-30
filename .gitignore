@@ -43,6 +43,11 @@ artifacts/x0_*/**/*.pt
 !artifacts/x2_*/**
 artifacts/x2_*/**/*.npz
 artifacts/x2_*/**/*.pt
+!artifacts/x3_*/
+!artifacts/x3_*/**
+artifacts/x3_*/**/*.npz
+artifacts/x3_*/**/*.pt
+# outputs/x3_* (X3-G0 cached residuals / R-peaks / assignment arrays) stay fully ignored: no !outputs/x3_*/ re-include exists.
 # outputs/x2_* (X2 source banks / per-seed endpoint tensors) stay fully ignored: no !outputs/x2_*/ re-include exists.
 !outputs/a0_*/
 !outputs/a0b_*/

@@ -1,0 +1,22 @@
+{
+ "B_values": [
+  1,
+  8,
+  32,
+  64,
+  128,
+  256,
+  512
+ ],
+ "pair_budget": 32768,
+ "assignment_seed": 20260830,
+ "n_random_regret": 16,
+ "n_perm": 100,
+ "ridge_lambda": 0.001,
+ "pca_var": 0.95,
+ "pca_cap": 128,
+ "K_proxy": 32,
+ "proxy_per_fold": 64,
+ "pool_cap": 4096,
+ "solver": "scipy exact linear_sum_assignment"
+}

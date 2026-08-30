@@ -153,8 +153,8 @@ def participation_ratio(mat: np.ndarray) -> dict:
     x = np.asarray(mat, dtype=np.float64)
     x = x - x.mean(0, keepdims=True)
     n = len(x)
-    s = np.linalg.svd(x, compute_uv=False)
-    lam = s**2 / max(n - 1, 1)
+    lam = np.linalg.eigvalsh(x.T @ x / max(n - 1, 1))[::-1]
+    lam = np.clip(lam, 0.0, None)
     tot = lam.sum()
     if tot <= 0:
         return {"d_PR": float("nan"), "d90": 0, "d95": 0, "n_samples": int(n), "total_var": 0.0}
@@ -172,11 +172,14 @@ class PCABasis:
     def __init__(self, y_fit: np.ndarray, var_target: float = 0.95, max_components: int = 128):
         y = np.asarray(y_fit, dtype=np.float64)
         self.mean_ = y.mean(0)
-        _, s, vt = np.linalg.svd(y - self.mean_, full_matrices=False)
-        lam = s**2
+        yc = y - self.mean_
+        lam, vecs = np.linalg.eigh(yc.T @ yc / max(len(yc) - 1, 1))
+        order = np.argsort(lam)[::-1]
+        lam, vecs = np.clip(lam[order], 0.0, None), vecs[:, order]
         k = int(np.searchsorted(np.cumsum(lam) / lam.sum(), var_target) + 1) if lam.sum() > 0 else 1
-        self.k_ = int(min(max(k, 1), max_components, vt.shape[0]))
-        self.components_ = vt[: self.k_]
+        self.k_ = int(min(max(k, 1), max_components, vecs.shape[1]))
+        self.explained_ = float(lam[: self.k_].sum() / max(lam.sum(), 1e-30))
+        self.components_ = vecs[:, : self.k_].T
 
     def transform(self, y):
         return (np.asarray(y, dtype=np.float64) - self.mean_) @ self.components_.T

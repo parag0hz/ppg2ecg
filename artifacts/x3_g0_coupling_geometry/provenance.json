@@ -1,0 +1,614 @@
+{
+ "repo_sha": "a9707e7bb5a54821a3185d728f28f892ab45d4fa",
+ "preregistration_sha": "a9707e7bb5a54821a3185d728f28f892ab45d4fa",
+ "created": "2026-08-30T18:29:11",
+ "script": "scripts/analyze_x3_g0_coupling_geometry.py",
+ "subjects_loaded": [
+  "an0",
+  "e61",
+  "fex",
+  "k2s",
+  "l38",
+  "n31",
+  "ngh",
+  "p5d",
+  "p9p",
+  "qm9",
+  "trh",
+  "tz8",
+  "u7y",
+  "w4p"
+ ],
+ "test_subjects_loaded": [],
+ "wildppg_test_firewall": "enforced (assert_no_test_subjects)",
+ "folds": {
+  "0": [
+   "e61",
+   "fex",
+   "l38"
+  ],
+  "1": [
+   "n31",
+   "ngh",
+   "p5d"
+  ],
+  "2": [
+   "p9p",
+   "qm9",
+   "trh"
+  ],
+  "3": [
+   "tz8",
+   "u7y",
+   "w4p"
+  ]
+ },
+ "per_fold": {
+  "0": {
+   "n_fit": 34130,
+   "n_ho": 11670,
+   "pca_k": {
+    "FULL": 128,
+    "QRS": 128,
+    "HF": 128
+   }
+  },
+  "1": {
+   "n_fit": 34330,
+   "n_ho": 11470,
+   "pca_k": {
+    "FULL": 128,
+    "QRS": 128,
+    "HF": 128
+   }
+  },
+  "2": {
+   "n_fit": 34422,
+   "n_ho": 11378,
+   "pca_k": {
+    "FULL": 128,
+    "QRS": 128,
+    "HF": 128
+   }
+  },
+  "3": {
+   "n_fit": 34518,
+   "n_ho": 11282,
+   "pca_k": {
+    "FULL": 128,
+    "QRS": 128,
+    "HF": 128
+   }
+  }
+ },
+ "cache_meta": {
+  "subjects": {
+   "e61": {
+    "n_pool": 3705,
+    "n_source": 22228,
+    "stride": 6,
+    "n_beats_total": 39875,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "fex": {
+    "n_pool": 4012,
+    "n_source": 24072,
+    "stride": 6,
+    "n_beats_total": 24496,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "l38": {
+    "n_pool": 3953,
+    "n_source": 23714,
+    "stride": 6,
+    "n_beats_total": 38249,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "n31": {
+    "n_pool": 3974,
+    "n_source": 23840,
+    "stride": 6,
+    "n_beats_total": 40183,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "ngh": {
+    "n_pool": 3778,
+    "n_source": 26440,
+    "stride": 7,
+    "n_beats_total": 33915,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "p5d": {
+    "n_pool": 3718,
+    "n_source": 26025,
+    "stride": 7,
+    "n_beats_total": 35854,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "p9p": {
+    "n_pool": 3752,
+    "n_source": 22508,
+    "stride": 6,
+    "n_beats_total": 46294,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "qm9": {
+    "n_pool": 3924,
+    "n_source": 23541,
+    "stride": 6,
+    "n_beats_total": 45613,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "trh": {
+    "n_pool": 3702,
+    "n_source": 25912,
+    "stride": 7,
+    "n_beats_total": 38244,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "tz8": {
+    "n_pool": 3731,
+    "n_source": 26115,
+    "stride": 7,
+    "n_beats_total": 35548,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "u7y": {
+    "n_pool": 3976,
+    "n_source": 23856,
+    "stride": 6,
+    "n_beats_total": 35144,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "w4p": {
+    "n_pool": 3575,
+    "n_source": 25020,
+    "stride": 7,
+    "n_beats_total": 30071,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "an0": {
+    "n_pool": 3698,
+    "n_source": 22183,
+    "stride": 6,
+    "n_beats_total": 36149,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   },
+   "k2s": {
+    "n_pool": 3860,
+    "n_source": 27017,
+    "stride": 7,
+    "n_beats_total": 36835,
+    "sites": [
+     "ankle",
+     "head",
+     "sternum",
+     "wrist"
+    ]
+   }
+  },
+  "created": "2026-08-30T17:14:21",
+  "upstream": {
+   "commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+   "branch": "main",
+   "dirty_files": []
+  },
+  "a6_checkpoint": "outputs/a6c_fullbackbone_mse_wildppg_seed42/checkpoint_best.pt",
+  "a6_epoch": 33,
+  "pool_cap": 4096,
+  "fs": 128,
+  "proxy": {
+   "0": {
+    "held_out": [
+     "e61",
+     "fex",
+     "l38"
+    ],
+    "n_held_out": 11670,
+    "sel": [
+     0,
+     185,
+     370,
+     556,
+     741,
+     926,
+     1111,
+     1297,
+     1482,
+     1667,
+     1852,
+     2037,
+     2223,
+     2408,
+     2593,
+     2778,
+     2964,
+     3149,
+     3334,
+     3519,
+     3704,
+     3890,
+     4075,
+     4260,
+     4445,
+     4631,
+     4816,
+     5001,
+     5186,
+     5371,
+     5557,
+     5742,
+     5927,
+     6112,
+     6298,
+     6483,
+     6668,
+     6853,
+     7038,
+     7224,
+     7409,
+     7594,
+     7779,
+     7965,
+     8150,
+     8335,
+     8520,
+     8705,
+     8891,
+     9076,
+     9261,
+     9446,
+     9632,
+     9817,
+     10002,
+     10187,
+     10372,
+     10558,
+     10743,
+     10928,
+     11113,
+     11299,
+     11484,
+     11669
+    ]
+   },
+   "1": {
+    "held_out": [
+     "n31",
+     "ngh",
+     "p5d"
+    ],
+    "n_held_out": 11470,
+    "sel": [
+     0,
+     182,
+     364,
+     546,
+     728,
+     910,
+     1092,
+     1274,
+     1456,
+     1638,
+     1820,
+     2003,
+     2185,
+     2367,
+     2549,
+     2731,
+     2913,
+     3095,
+     3277,
+     3459,
+     3641,
+     3823,
+     4005,
+     4187,
+     4369,
+     4551,
+     4733,
+     4915,
+     5097,
+     5279,
+     5461,
+     5643,
+     5826,
+     6008,
+     6190,
+     6372,
+     6554,
+     6736,
+     6918,
+     7100,
+     7282,
+     7464,
+     7646,
+     7828,
+     8010,
+     8192,
+     8374,
+     8556,
+     8738,
+     8920,
+     9102,
+     9284,
+     9466,
+     9649,
+     9831,
+     10013,
+     10195,
+     10377,
+     10559,
+     10741,
+     10923,
+     11105,
+     11287,
+     11469
+    ]
+   },
+   "2": {
+    "held_out": [
+     "p9p",
+     "qm9",
+     "trh"
+    ],
+    "n_held_out": 11378,
+    "sel": [
+     0,
+     181,
+     361,
+     542,
+     722,
+     903,
+     1084,
+     1264,
+     1445,
+     1625,
+     1806,
+     1986,
+     2167,
+     2348,
+     2528,
+     2709,
+     2889,
+     3070,
+     3251,
+     3431,
+     3612,
+     3792,
+     3973,
+     4154,
+     4334,
+     4515,
+     4695,
+     4876,
+     5056,
+     5237,
+     5418,
+     5598,
+     5779,
+     5959,
+     6140,
+     6321,
+     6501,
+     6682,
+     6862,
+     7043,
+     7223,
+     7404,
+     7585,
+     7765,
+     7946,
+     8126,
+     8307,
+     8488,
+     8668,
+     8849,
+     9029,
+     9210,
+     9391,
+     9571,
+     9752,
+     9932,
+     10113,
+     10293,
+     10474,
+     10655,
+     10835,
+     11016,
+     11196,
+     11377
+    ]
+   },
+   "3": {
+    "held_out": [
+     "tz8",
+     "u7y",
+     "w4p"
+    ],
+    "n_held_out": 11282,
+    "sel": [
+     0,
+     179,
+     358,
+     537,
+     716,
+     895,
+     1074,
+     1253,
+     1433,
+     1612,
+     1791,
+     1970,
+     2149,
+     2328,
+     2507,
+     2686,
+     2865,
+     3044,
+     3223,
+     3402,
+     3581,
+     3760,
+     3939,
+     4118,
+     4298,
+     4477,
+     4656,
+     4835,
+     5014,
+     5193,
+     5372,
+     5551,
+     5730,
+     5909,
+     6088,
+     6267,
+     6446,
+     6625,
+     6804,
+     6983,
+     7163,
+     7342,
+     7521,
+     7700,
+     7879,
+     8058,
+     8237,
+     8416,
+     8595,
+     8774,
+     8953,
+     9132,
+     9311,
+     9490,
+     9669,
+     9848,
+     10028,
+     10207,
+     10386,
+     10565,
+     10744,
+     10923,
+     11102,
+     11281
+    ]
+   }
+  },
+  "folds": {
+   "0": [
+    "e61",
+    "fex",
+    "l38"
+   ],
+   "1": [
+    "n31",
+    "ngh",
+    "p5d"
+   ],
+   "2": [
+    "p9p",
+    "qm9",
+    "trh"
+   ],
+   "3": [
+    "tz8",
+    "u7y",
+    "w4p"
+   ]
+  },
+  "ref_checkpoints": {
+   "iMF1": "outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt",
+   "OT50": "outputs/a4_otcfm_wildppg_seed42/checkpoint_best.pt",
+   "ot50_nfe": 50,
+   "ref_noise_seed": 0
+  }
+ },
+ "protocol": {
+  "B_values": [
+   1,
+   8,
+   32,
+   64,
+   128,
+   256,
+   512
+  ],
+  "pair_budget": 32768,
+  "assignment_seed": 20260830,
+  "n_random_regret": 16,
+  "n_perm": 100,
+  "ridge_lambda": 0.001,
+  "pca_var": 0.95,
+  "pca_cap": 128,
+  "K_proxy": 32,
+  "proxy_per_fold": 64,
+  "pool_cap": 4096,
+  "solver": "scipy exact linear_sum_assignment"
+ }
+}

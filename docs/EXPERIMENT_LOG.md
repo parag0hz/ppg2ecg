@@ -308,3 +308,33 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   A7/A8 context retained: conditional-center prediction is not intrinsically pathological (it was the BEST model on ABP).
   Report `docs/X2_ENDPOINT_IDENTITY_REPORT.md`; artefacts `artifacts/x2_endpoint_identity/`. Next (recommended, NOT started):
   a separately pre-registered coupling-only causal comparison. STOP after X2.
+
+## 2026-08-30 — X3-G0: coupling cost-geometry / feasibility gate (zero deep training)
+- Pre-registered `a9707e7` BEFORE any metric, with a full disclosure of a pre-preregistration design audit
+  (`docs/X3_G0_PREPREREG_DESIGN_AUDIT.md`) that read already-published frozen WildPPG TEST arrays and selected the spectral arms from
+  validation ground truth. Consequences applied: primary inference = subject-grouped cross-fitting over the 12 TRAIN subjects,
+  validation demoted to secondary design-informed confirmation, residual cost demoted to secondary, hard test firewall in code.
+  X3 TRAINING WAS NOT STARTED.
+- Data: 53,358 pooled windows / 516,470 GT beats (14 train+val subjects, stride-subsampled to <=4,096 each); 4 folds x 3 held-out.
+  Test `kjd`/`ssx` never loaded (provenance `test_subjects_loaded: []`).
+- **Verdict: INCONCLUSIVE** by the frozen rule. RAW passes the manipulation bar (dR2_QRS 0.062 >= 0.05 at B >= 256) so neither
+  COST-GEOMETRY LIMITED nor WEAK LEVER can fire; the structural leg fails because the rule makes morphology mandatory and morphology
+  recovery is −0.33 for a documented measurement confound (A6's matched-beat morphology is computed on 46/256 windows vs the proxy's
+  ~1,430/8,192 — X0 measured A6 morphology 0.316 over 3,907 test windows). The rule was NOT changed after the fact.
+- **Central answer, and it is neither anticipated branch.** ΔR² max over B<=512 — RAW: FULL 0.339 / QRS 0.062 / HF 0.010;
+  WHITE: 0.010 / 0.006 / 0.010; HF: 0.001 / 0.0005 / 0.050. Cost geometry demonstrably controls WHERE dependence goes (HF cost gives
+  5x RAW's HF dependence; cross-objective regret RAW<->HF 0.64, RAW<->WHITE 0.38-0.41, index overlap 0.04-0.19 — genuinely different
+  geometries, not near-tie churn), but QRS-relevant dependence is ALREADY maximised by the plain raw L2 cost; spectral reweighting
+  moves the budget away from the QRS-carrying modes. Mechanism: d_PR FULL 4.2 vs QRS 143.9 vs HF 176.9 — the residual is dominated by
+  ~4 modes and the QRS lives in them (descriptive only, no threshold).
+- Manipulation/null checks: B=1 gives dR2 ~ -0.0004/-0.0001/0.0000 (null correct); RESID vs RAW regret 0.050 with 0.53 overlap =
+  near-tie churn, confirming the pre-prereg demotion of the residual arm; assignment cost reduction only 4.0 % (RAW) / 1.8 % (HF) /
+  0.1 % (WHITE) at B=512.
+- Structural translation (cross-fitted linear endpoint proxy, NOT an upper bound): RAW at B=512 recovers 21 % of the A6->iMF-1
+  QRS-energy gap, 11 % of amplitude, but only 1.3 % of max-slope and 0.5 % of HF — i.e. it buys back some QRS energy and almost no
+  sharpness, which is the component X0 identified as the actual failure. Spectral arms translate worse (QRS energy 2-3 %).
+- Secondary design-informed validation (an0/k2s): same ordering, ~half the magnitude (RAW dR2_QRS 0.032 vs 0.062).
+- Recommendation: **do NOT run coupling training.** No better cost exists to train (both spectral arms are an order of magnitude worse
+  for QRS), dependence saturates by B~256, and transfer halves on held-out subjects. Suggested (NOT started, needs its own prereg):
+  test the objective-level lever X2 isolated — a single run with timestep mass at t~0 / an explicit endpoint loss, everything else fixed.
+- Report `docs/X3_G0_COUPLING_GEOMETRY_REPORT.md`; artefacts `artifacts/x3_g0_coupling_geometry/`.

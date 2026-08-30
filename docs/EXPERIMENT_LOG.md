@@ -338,3 +338,40 @@ preprocessing executed (39 s) so that leakage/parity checks run on real data —
   for QRS), dependence saturates by B~256, and transfer halves on held-out subjects. Suggested (NOT started, needs its own prereg):
   test the objective-level lever X2 isolated — a single run with timestep mass at t~0 / an explicit endpoint loss, everything else fixed.
 - Report `docs/X3_G0_COUPLING_GEOMETRY_REPORT.md`; artefacts `artifacts/x3_g0_coupling_geometry/`.
+
+## 2026-08-31 — X4-0: iMeanFlow event reliability / source-condition / interval diagnostic (NO TRAINING)
+- Pre-registered `14a248e` BEFORE any real-data metric, with a full pre-preregistration visual-audit disclosure
+  (`docs/X4_0_PREPREREG_VISUAL_AUDIT.md`): four validation windows had already been viewed — (an0, 9066), (an0, 18138), (k2s, 5852),
+  (k2s, 16436) — and are excluded by construction from every subset. an0/k2s = DEVELOPMENT validation. WildPPG test kjd/ssx never
+  loaded (`provenance.json: test_subjects_loaded: []`). Frozen checkpoints only; nothing trained or overwritten.
+- **Verdict: MIXED = FEW-STEP SATURATION (CASE A) + PERSISTENT SOURCE-SENSITIVE EVENT ORGANIZATION (CASE C).**
+- **Training interval exposure** (2 M draws): 50.0 % of samples have h = 0 exactly; max observed h = 0.9297; P(h ≥ 0.9) = 8e-6,
+  P(h ≥ 0.95) = 0. Exact h = 1 (1-NFE) has ZERO training probability — an extreme boundary query, NOT "outside the support",
+  and NOT an impossibility result. P(h ≥ 1/NFE) = 0 / .042 / .201 / .337 / .417 for NFE 1/2/4/8/16.
+- **NFE frontier** (2048 windows x 4 seeds): iMF morph 0.665 → 0.726 → 0.770 → **0.777(8)** → 0.774 → 0.773 → 0.771(50);
+  F1 0.410 → 0.420 → **0.431(4)** → 0.427 → 0.424 → 0.422 → 0.420(50); oracle-absent best at NFE 4 (0.335); spurious 0.569 → 0.472
+  (only monotone event metric). OT-CFM-50 reference: morph 0.818, F1 0.480, absent 0.250, oracorr 0.716.
+  **FEW-STEP SATURATION fires at NFE 8 AND 16** (all five frozen conditions vs the internal iMF-50 reference), consistent on both
+  subjects. Morphology closes 61 % of the gap to OT-50 from NFE 1→8 while F1 closes 24 % and then LOSES ground — the two axes do not
+  saturate at the same rate, and event reliability saturates at a deficient level.
+- **Source-sensitive event organization: MATERIAL, all four criteria at NFE 1** (seed-pair event F1 0.300 < 0.80; beat-count SD
+  1.226 >= 0.75; conditional timing SD 57.1 ms >= 15 ms; F1 SD 0.157 >= 0.05). **NFE response: PERSISTENT** — best improvement is
+  timing SD 57.1 → 49.7 ms (13 %, below the 30 % bar), seed-pair F1 does not improve (0.300 → 0.286) and beat-count SD gets WORSE
+  (1.23 → 1.78). Under the ORIGINAL single-flag rule this pattern would have been scored a flag FAILURE; the §20 split into
+  materiality vs NFE-response (agreed before running) is what makes it reportable.
+- **Source vs strong PPG-shuffle anchor** (descriptive only, not a common causal scale): event disagreement 0.633 (source) vs 0.693
+  (PPG shuffle) at NFE 1; the source change alters the waveform far more (0.919 vs 0.431) and matched-beat timing far more
+  (23.5 vs 6.7 ms). NOT read as "PPG is ignored".
+- **Interval stress: does NOT fire.** LN4/LD4 (max h 0.70) give ΔF1 −0.020/−0.019, Δoracle-absent +0.047/+0.023, Δmorph −0.019/−0.062;
+  NFE-8 deltas are smaller. Consistent asymmetry: noise-end large steps lose beats (absent up, spurious down), data-end large steps
+  add spurious (+0.045/+0.057) and cost the most morphology. **REQUIRED LIMITATION: max tested h = 0.70/0.50 does not reproduce the
+  h = 1 one-step query, so this null is WEAK evidence against H3 and does not show h = 1 is harmless.**
+- **Event-matching calibration** (timing-only, count preserved, NOT an upper bound): jitter SD 20/30/40/50 ms → F1 0.989/0.909/0.790/
+  0.686; fixed shifts ≤ 50 ms → 1.000. Observed iMF F1 is 0.41–0.43 at every NFE, so **the F1 deficit cannot be explained by timing
+  error alone — missing/spurious events contribute materially** (spurious 0.47–0.57, beat-count SD 1.2–1.8 across sources).
+- **Latency** (batch 64): iMF 79.7 / 310 / 629 / 1253 / 1962 / 3923 ms at NFE 1/4/8/16/25/50; OT-CFM-50 3923 ms. NFE 8 = 629 ms,
+  102 samples/s, one sixth of the 50-NFE budget.
+- **Recommended single next experiment (NOT started): event/rhythm-conditioned iMeanFlow** (PPG → event/rhythm encoder → soft event
+  map → iMF conditioning; GT R-peaks supervise TRAINING only, inference uses PPG alone). Complex-STFT is NOT indicated (its favourable
+  condition requires source-event sensitivity not to be the dominant lever, and here it is); horizon/large-h is not indicated but not
+  excluded. Report `docs/X4_0_EVENT_RELIABILITY_REPORT.md`; artefacts `artifacts/x4_0_event_reliability/`.

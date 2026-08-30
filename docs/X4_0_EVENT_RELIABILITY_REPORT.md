@@ -118,6 +118,19 @@ GT beats they do find with ~50 ms of scatter. This is measured on *event identit
 new information: the previously known A4 seed-to-seed waveform correlation of 0.025–0.040 established only that the *waveform* is
 source-sensitive.
 
+### Figure 5 — the raster, and a window-dependence caveat
+
+`figures/fig5_source_peak_raster.png` (produced by `scripts/figure_x4_0_peak_raster.py`; windows chosen by the **same hash rank** as
+the source subset, smallest hashes first, never by appearance: (`an0`, 6432), (`an0`, 13972), (`k2s`, 1067), (`k2s`, 7627)) plots one
+tick per predicted R-peak for each of the 32 sources against the GT beats.
+
+It makes the aggregate numbers concrete and adds a caveat the medians hide: **source sensitivity is strongly window-dependent.** On a
+clean window (`k2s` 1067) the 32 sources form tight vertical columns on the GT beats (seed-pair F1 0.59 at NFE 1, 0.67 at NFE 8); on
+noisy windows (`an0` 6432 / 13972) the column structure is absent (0.19 / 0.14) and the ticks scatter across the whole window. The
+raster also shows that the predicted beat count sits systematically **below** the GT count and that its spread across sources
+**grows** with NFE (e.g. 10.0 ± 1.95 → 9.0 ± 2.78 on `an0` 6432), which is the per-window view of the pooled beat-count SD rising
+1.23 → 1.78 from NFE 1 to 16.
+
 ## Source perturbation vs a strong PPG-shuffle anchor (X4-0C2)
 
 Reusing the project's `eval_a2.py` derangement; frozen source-pair mapping 0 → 1 and 2 → 3.

@@ -33,7 +33,7 @@ from ppg2ecg.evaluation.metrics import hf_energy_ratio, rhythm_morphology_metric
 from ppg2ecg.flow.imeanflow import MeanFlowS5  # noqa: E402
 from ppg2ecg.flow.samplers import heun_sample, nfe_of  # noqa: E402
 from ppg2ecg.models import build_penguin_backbone  # noqa: E402
-from ppg2ecg.models.regressor import S5FullBackboneRegressor  # noqa: E402
+from ppg2ecg.models.regressor import REGRESSOR_MODELS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "artifacts/s1_metric_validity"
@@ -109,9 +109,11 @@ def load_ot(dev):
 
 
 def load_mse(dev):
+    """Loaded exactly as the frozen X3-G0 precedent does (analyze_x3_g0_coupling_geometry.py:98-100)."""
     ck = torch.load(ROOT / MSE_CKPT, map_location="cpu", weights_only=False)
-    m = S5FullBackboneRegressor(**ck["model_cfg"]).to(dev).eval()
-    m.load_state_dict(ck["model"])
+    cls, _ = REGRESSOR_MODELS[ck.get("model_key", "state_token")]
+    m = cls(**ck["model_cfg"]).to(dev).eval()
+    m.load_state_dict(ck["state_dict"])
     m.requires_grad_(False)
     return m, ck
 

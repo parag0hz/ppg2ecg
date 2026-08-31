@@ -92,7 +92,7 @@ RR 22.6 ≤ 22.3 + 3), and NFE 16 likewise. The direction is consistent on both 
 `k2s` 0.704 → 0.822 → 0.817 at NFE 1 → 8 → 50).
 
 **Morphology and event reliability do not improve at the same rate.** From NFE 1 → 8 morphology gains **+0.112** (0.665 → 0.777,
-a 61 % closure of the gap to OT-CFM-50) while F1 gains **+0.017** (0.410 → 0.427, an 24 % closure) and then *loses* ground by NFE 50.
+a 73.3 % closure of the gap to OT-CFM-50) while F1 gains **+0.017** (0.410 → 0.427, an 24.5 % closure) and then *loses* ground by NFE 50.
 Oracle-absent and oracle beat correlation are best at NFE 4 and drift worse afterwards. Spurious rate is the only event metric that
 improves monotonically (0.569 → 0.472) and it remains high at every NFE.
 
@@ -227,7 +227,7 @@ recorded; no single dominant story is forced.
 ## What is supported
 
 - iMF-1 already produces sharp ECG-like waveforms; structural sharpness is not the deficit.
-- Waveform morphology approaches the frozen iMF's own high-NFE behaviour by NFE 4–8 (61 % of the gap to OT-CFM-50 closed by NFE 8).
+- Waveform morphology approaches the frozen iMF's own high-NFE behaviour by NFE 4–8 (73.3 % of the gap to OT-CFM-50 closed by NFE 8).
 - **Event reliability does not saturate together with morphology**: F1 gains 0.017 over the whole NFE grid and is non-monotone.
 - **Event identity is materially and persistently source-sensitive at low NFE**, and additional evaluations do not relieve it.
 - Under the frozen 50 ms matcher, timing error alone cannot explain the observed F1; missing/spurious events contribute materially.

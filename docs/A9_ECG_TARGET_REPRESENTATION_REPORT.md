@@ -1,5 +1,12 @@
 # A9 — ECG Target-Representation Mirror Control (WildPPG)
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration `docs/A9_ECG_TARGET_REPRESENTATION_PREREGISTRATION.md` (commit `fc3519d`, pushed before any A9 training). Artefacts
 `artifacts/a9_ecg_representation_control/` (`normalization.json`, `representation_geometry.json`, `controlled_results.csv`,
 `representation_comparison.csv`, `prediction_similarity.csv`, `qrs_region_analysis.csv`, `timing_analysis.csv`,

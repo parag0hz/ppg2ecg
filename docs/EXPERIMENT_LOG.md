@@ -1,5 +1,12 @@
 # Experiment Log
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Append-only. Every entry: date, what was run (command + commit), where outputs are, what was concluded.
 
 ## 2026-08-25 — Session 0: workspace, audit, baseline-readiness (no training)

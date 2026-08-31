@@ -1,5 +1,12 @@
 # A8 — ABP Target-Scale Sensitivity Control
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration `docs/A8_ABP_SCALE_SENSITIVITY_PREREGISTRATION.md` (commit `d6ca9dd`, written and pushed before any A8 training).
 Artefacts `artifacts/a8_abp_scale_control/` (`normalization.json`, `transport_geometry.json`, `imeanflow_diagnostics.csv`,
 `controlled_results.csv`, `prediction_similarity.csv`, `peak_region_analysis.csv`, `summary.json`, `figures/`). Runs

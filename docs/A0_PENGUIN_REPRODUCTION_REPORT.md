@@ -1,5 +1,12 @@
 # A0 PENGUIN Reproduction Report
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Experiment `a0_penguin_otcfm_ppgdalia_8s_seed42` — generated 2026-08-25T16:09:55 from `outputs/a0_penguin_otcfm_ppgdalia_8s_seed42/`. Single seed (42). No new method; baseline gate only.
 
 ## Frozen protocol

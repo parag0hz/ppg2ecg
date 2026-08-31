@@ -1,5 +1,12 @@
 # Replication Summary — does the frozen one-step iMeanFlow effect replicate?
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration: `docs/A3_A4_REPLICATION_PREREGISTRATION.md`. All runs: seed 42, identical backbone/objectives/recipes; only the split (A3) or the dataset (A4) changed.
 
 ## Cross-experiment comparison (test set, paired noise seed 0)

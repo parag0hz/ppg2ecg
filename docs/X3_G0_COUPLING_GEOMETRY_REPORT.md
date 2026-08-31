@@ -1,5 +1,12 @@
 # X3-G0 — Is Minibatch Coupling Strong Enough to Test?
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration: `docs/X3_G0_COUPLING_GEOMETRY_PREREGISTRATION.md` (commit `a9707e7`, **pushed before any G0 metric was computed**).
 Pre-preregistration disclosure: `docs/X3_G0_PREPREREG_DESIGN_AUDIT.md`. Artefacts: `artifacts/x3_g0_coupling_geometry/`;
 cached residuals/masks in `outputs/x3_g0_coupling_geometry/` (559 MB, git-ignored).

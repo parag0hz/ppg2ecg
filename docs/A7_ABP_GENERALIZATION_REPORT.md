@@ -1,5 +1,12 @@
 # A7 — Cross-Target Generalisation to PPG→ABP (MIMIC-BP)
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration `docs/A7_ABP_PREREGISTRATION.md` and dataset audit `docs/A7_ABP_DATASET_AUDIT.md` (commit `84223f0`, both before any
 A7 training). Artefacts `artifacts/a7_abp_generalization/` (`abp_metrics.csv`, `cross_model_similarity.csv`, `peak_region_analysis.csv`,
 `pareto.csv`, `summary.json`, `figures/`). Runs `outputs/a7_{otcfm,imeanflow,mse_fullbackbone}_mimicbp_seed42`.

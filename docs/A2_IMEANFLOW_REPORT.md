@@ -1,5 +1,12 @@
 # A2 Improved MeanFlow Report
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Generated from `outputs/a2_imeanflow_s5_ppgdalia_8s_seed42/` vs `outputs/a0b_penguin_otcfm_ppgdalia_8s_seed42/`. Pre-registration: `docs/A2_IMEANFLOW_PREREGISTRATION.md`; audit: `docs/IMEANFLOW_AUDIT.md`.
 
 ## Research question

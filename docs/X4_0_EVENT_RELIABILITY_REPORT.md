@@ -1,5 +1,12 @@
 # X4-0 — iMeanFlow Event Reliability Diagnostic
 
+> **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
+> **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
+> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
+> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+
+
 Pre-registration: `docs/X4_0_EVENT_RELIABILITY_PREREGISTRATION.md` (commit `14a248e`, **pushed before any X4-0 real-data metric**).
 Pre-preregistration disclosure: `docs/X4_0_PREPREREG_VISUAL_AUDIT.md`. Artefacts: `artifacts/x4_0_event_reliability/`.
 **NO TRAINING.** Frozen-checkpoint inference and analysis only; no checkpoint created or modified, no historical artefact

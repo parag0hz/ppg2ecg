@@ -35,8 +35,11 @@ Four properties follow directly from that loop, and all four matter when reading
 3. **It returns `NaN` for a window with zero matched beats**, and such windows are dropped from the
    mean rather than scored. The hardest windows — the ones where the model produced no usable beat at
    all — are therefore absent from the average.
-4. **It cannot fall when a beat is missed.** Missing a beat removes a term from the average; it never
-   adds a penalty. Under some conditions missing the hardest beats *raises* it.
+4. **A missed beat incurs no explicit morphology penalty**, because it is excluded from the matched-beat
+   denominator rather than scored. Therefore **matched-beat morphology is not monotonic in event
+   coverage**: dropping a beat removes a term from the average, and the remaining mean may rise or fall
+   depending on whether that term was above or below it. The metric moves with the *composition* of the
+   matched set, not only with reconstruction quality.
 
 **Therefore `morph = 0.78` means "the beats we found and paired within 50 ms have the right shape",
 not "the reconstruction has the right shape".**
@@ -59,6 +62,10 @@ recall**.
 
 An RR interval enters the average only when **both** of its bounding reference beats were matched
 within 50 ms. Windows contributing no such consecutive pair return `NaN` and are dropped.
+
+**An unmatched beat pair incurs no explicit RR penalty** unless the two relevant consecutive GT beats are
+both matched. The metric is conditional on matched consecutive beats and, like `morph`, **is not monotonic
+in event coverage**.
 
 Measured on the same 2048-window development population, seed 0: iMF NFE 8 contributes
 **1,276 of 2048 windows (62 %)**, OT-CFM Heun-25 **1,383 of 2048 (68 %)**. A denominator-free

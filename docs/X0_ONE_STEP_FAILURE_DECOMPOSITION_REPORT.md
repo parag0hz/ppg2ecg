@@ -2,9 +2,11 @@
 
 > **Metric semantics note (added 2026-08-31).** In this document `morph` / `morphology_corr` is
 > **matched-beat morphology correlation** and `rr_mae_ms` is **matched-consecutive-beat RR MAE**. Both are
-> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats, so
-> neither can fall when a beat is missed. Values and specifications here are unchanged; only the labels and
-> their scope are made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
+> conditional on successful ≤50 ms one-to-one R-peak matching and are averaged only over matched beats.
+> A missed beat therefore incurs no explicit penalty in either metric — it is excluded from the denominator
+> rather than scored — so neither metric is monotonic in event coverage: both may rise or fall when the
+> matched set changes. Values and specifications here are unchanged; only the labels and their scope are
+> made explicit. See [METRIC_SEMANTICS.md](METRIC_SEMANTICS.md).
 
 
 Pre-registration: `docs/X0_ERROR_DECOMPOSITION_PREREGISTRATION.md` (commit `f7e0c9d`, pushed before any X0 metric was computed).

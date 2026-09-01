@@ -205,6 +205,78 @@ def main() -> int:
               "nfe_grid": list(NFES), "population": {s: int(pop[s].size) for s in VAL},
               "test_subjects_loaded": [], "training": False, "oracle_metrics_used": False}
 
+    def col(key, m):
+        return np.asarray([r[m] for r in per[key]], float)
+
+    def macro_diff(a_arr, b_arr):
+        """equal-subject-weight mean of (a - b); positive = a larger"""
+        return float(np.mean([np.nanmean(a_arr[SUB == s] - b_arr[SUB == s]) for s in VAL]))
+
+    if a.tag == "stage2" and all((k, n) in per for k in ("B", "H25", "H50") for n in NFES):
+        # ---- gap closure (prereg s10). All of M1-M4 are lower-better, so Q = -dev and
+        #      G = Q(B,4) - Q(B,2) = dev(B,2) - dev(B,4);  I = dev(B,2) - dev(X,2).  Unclipped. ----
+        closure = []
+        for m in GAP_METRICS:
+            g = macro_diff(col(("B", 2), m), col(("B", 4), m))
+            row = {"metric": m, "G_replay": g}
+            for arm in ("H25", "H50"):
+                i_m = macro_diff(col(("B", 2), m), col((arm, 2), m))
+                row[f"I_{arm}"] = i_m
+                row[f"C_{arm}"] = (i_m / g) if g > 0 else float("nan")
+            closure.append(row)
+            print(f"[G] {m:16s} G={row['G_replay']:+.5f} | H25 I={row['I_H25']:+.5f} C={row['C_H25']:+.3f}"
+                  f" | H50 I={row['I_H50']:+.5f} C={row['C_H50']:+.3f}", flush=True)
+        write_csv(OUT / "gap_closure.csv", closure)
+
+        # ---- specificity (s12): paired difference-of-improvement H50 - H25 at NFE 2 ----
+        spec = []
+        for m in GAP_METRICS:
+            b2 = col(("B", 2), m)
+            imp25 = b2 - col(("H25", 2), m)
+            imp50 = b2 - col(("H50", 2), m)
+            r = paired_subject_bootstrap(imp25, imp50, SUB, "higher_better")
+            spec.append({"metric": m, **r})
+            print(f"[S] {m:16s} H50-H25 {r['point']:+.5f} [{r['lo']:+.5f}, {r['hi']:+.5f}] {r['verdict']}", flush=True)
+        write_csv(OUT / "specificity.csv", spec)
+
+        def V(cmp_, m):
+            return next(x["verdict"] for x in boot if x["comparison"] == cmp_ and x["metric"] == m)
+
+        allm = [q[0] for q in PRIMARY]
+
+        def gate(arm):
+            imp = [m for m in GAP_METRICS if V(f"{arm}-vs-B@NFE2", m) == "improves"]
+            wor = [m for m in allm if V(f"{arm}-vs-B@NFE2", m) == "worsens"]
+            cl = [x["metric"] for x in closure if x[f"C_{arm}"] >= 0.50]
+            f1w = V(f"{arm}-vs-B@NFE2", "f1_excess") == "worsens"
+            bw = V(f"{arm}-vs-B@NFE2", "beats_ratio_dev") == "worsens"
+            return {"arm": arm, "improved": imp, "worsened": wor, "closure_ge_0.5": cl,
+                    "f1_excess_worsens": f1w, "beats_ratio_dev_worsens": bw,
+                    "pass": bool(len(imp) >= 3 and not wor and len(cl) >= 2 and not f1w and not bw)}
+
+        g50, g25 = gate("H50"), gate("H25")
+        spec_ok = [x["metric"] for x in spec if x["verdict"] == "improves"]
+        nfe4 = {arm: [m for m in allm if V(f"{arm}-vs-B@NFE4", m) == "worsens"] for arm in ("H25", "H50")}
+        degr = {arm: bool(len(v) >= 2) for arm, v in nfe4.items()}
+
+        if not g50["pass"]:
+            verdict = "INTERVAL-EXPOSURE HYPOTHESIS NOT SUPPORTED"
+        elif len(spec_ok) >= 2 and not g25["pass"]:
+            verdict = "TARGET h=0.5 EXPOSURE SUPPORTED"
+        else:
+            verdict = "GENERIC POSITIVE-h REWEIGHTING EFFECT"
+        result |= {"verdict": verdict, "h50_gate": g50, "h25_gate": g25,
+                   "specificity_metrics_h50_better": spec_ok, "nfe4_clearly_worsened": nfe4,
+                   "nfe4_degradation_flag": degr, "gap_closure": closure}
+        for gg in (g50, g25):
+            print(f"[GATE] {gg['arm']}: improved {len(gg['improved'])}{gg['improved']} "
+                  f"worsened {len(gg['worsened'])}{gg['worsened']} "
+                  f"closure>=0.5 {len(gg['closure_ge_0.5'])} -> {'PASS' if gg['pass'] else 'FAIL'}", flush=True)
+        print(f"[SPEC] H50 > H25 on {len(spec_ok)} of 4: {spec_ok}", flush=True)
+        print(f"[NFE4] H25 worsened {nfe4['H25']} flag={degr['H25']} | "
+              f"H50 worsened {nfe4['H50']} flag={degr['H50']}", flush=True)
+        print(f"\n[VERDICT] {verdict}", flush=True)
+
     if a.tag == "stage1":
         v = {r["metric"]: r["verdict"] for r in boot if r["comparison"] == "B:2->4"}
         imp = [m for m in GAP_METRICS if v.get(m) == "improves"]

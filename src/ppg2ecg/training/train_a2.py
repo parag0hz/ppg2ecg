@@ -32,7 +32,7 @@ from ppg2ecg.utils.seed import seed_everything
 from ppg2ecg.utils.upstream import UPSTREAM_COMMIT, assert_upstream_pinned
 
 WSTAT_KEYS = ("w_mean", "w_median", "w_p01", "w_p10", "w_p25", "w_p75", "w_p90", "w_p99", "w_min", "w_max", "w_std", "w_saturation_frac", "w_near_lower_frac", "delta2_mean")
-LOG_FIELDS = ["epoch", "train_loss_weighted", "train_mse", "train_u_abs", "train_dudt_abs", "w_mean", "w_median", "w_p01", "w_p10", "w_p25", "w_p75", "w_p90", "w_p99", "w_min", "w_max", "w_std", "w_saturation_frac", "w_near_lower_frac", "delta2_mean", "val_imf_mse_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "diag_beats_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "event"]
+LOG_FIELDS = ["epoch", "train_loss_weighted", "train_mse", "train_u_abs", "train_dudt_abs", "w_mean", "w_median", "w_p01", "w_p10", "w_p25", "w_p75", "w_p90", "w_p99", "w_min", "w_max", "w_std", "w_saturation_frac", "w_near_lower_frac", "delta2_mean", "val_imf_mse_fixed", "selection_metric", "diag_hr_abs_err", "diag_morph_corr", "diag_amp_ratio", "diag_beats_ratio", "lr", "epoch_time_s", "elapsed_s", "peak_mem_MiB", "is_best", "best_epoch", "no_improve", "opt_steps", "event"]
 
 
 def batch_rounds(loader, steps_per_round):
@@ -135,7 +135,8 @@ def main(argv=None):
     tr_gen.manual_seed(args.seed + 1)  # (t, r) sampling stream (CPU), independent of the shuffle stream
     train_loader = DataLoader(TensorDataset(x_tr_t, y_tr_t), batch_size=args.batch_size, shuffle=True, generator=gen)
 
-    state = {"epoch": 0, "best": float("inf"), "best_epoch": -1, "no_improve": 0, "elapsed": 0.0, "peak_mem": 0.0}
+    state = {"epoch": 0, "best": float("inf"), "best_epoch": -1, "no_improve": 0, "elapsed": 0.0, "peak_mem": 0.0,
+             "opt_steps": 0}  # C2: realised optimiser-step count, for the compute-matching assertion
     last_ckpt, best_ckpt, log_path = out / "checkpoint_last.pt", out / "checkpoint_best.pt", out / "training_log.csv"
     if args.resume and last_ckpt.exists():
         ck = torch.load(last_ckpt, map_location="cpu", weights_only=False)
@@ -203,6 +204,7 @@ def main(argv=None):
                     for _k in WSTAT_KEYS:  # A8 §11 diagnostics (no effect on the objective)
                         acc[_k] = acc.get(_k, 0.0) + float(info[_k]) * Bc / B
                 opt.step()
+                state["opt_steps"] += 1
                 lw.append(acc["loss"])
                 lm.append(acc["mse"])
                 ua.append(acc["u"])
@@ -231,13 +233,13 @@ def main(argv=None):
             if stop:
                 event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
             wrow = {k: float(np.mean([w[k] for w in ws])) for k in WSTAT_KEYS} if ws else {k: float("nan") for k in WSTAT_KEYS}
-            row = dict(epoch=epoch, train_loss_weighted=np.mean(lw), train_mse=np.mean(lm), train_u_abs=np.mean(ua), train_dudt_abs=np.mean(da), **wrow, val_imf_mse_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, diag_beats_ratio=d_beats, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
+            row = dict(epoch=epoch, train_loss_weighted=np.mean(lw), train_mse=np.mean(lm), train_u_abs=np.mean(ua), train_dudt_abs=np.mean(da), **wrow, val_imf_mse_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, diag_beats_ratio=d_beats, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], opt_steps=state["opt_steps"], event=event)
             with open(log_path, "a", newline="") as f:
                 csv.DictWriter(f, fieldnames=LOG_FIELDS).writerow(row)
             print(f"epoch {epoch+1:3d}/{args.epochs} lossW {row['train_loss_weighted']:.4f} mse {row['train_mse']:.4f} |u| {row['train_u_abs']:.3f} |dudt| {row['train_dudt_abs']:.3f} valMSEfixed {val_fixed:.5f} w(med {row['w_median']:.2e} p10 {row['w_p10']:.2e} p90 {row['w_p90']:.2e} sat {row['w_saturation_frac']:.3f}) diag1NFE(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f} beats {d_beats:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
             if stop:
                 break
-        summary = {"exp_name": args.exp_name, "objective": "improved_meanflow", "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": "fixed_imf_mse", "best_selection_metric": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
+        summary = {"exp_name": args.exp_name, "objective": "improved_meanflow", "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": "fixed_imf_mse", "best_selection_metric": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "opt_steps": state["opt_steps"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
         (out / "training_summary.json").write_text(json.dumps(summary, indent=1))
         (out / "TRAINING_DONE").write_text(json.dumps(summary))
         print("TRAINING_DONE", json.dumps(summary), flush=True)

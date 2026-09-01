@@ -25,6 +25,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.imeanflow import MeanFlowS5, fixed_imf_mse, imeanflow_loss, imf_bank_hash, make_imf_banks, sample_meanflow, sample_tr
+from ppg2ecg.flow.interval_exposure import ARMS as C1_ARMS, sample_tr_c1
 from ppg2ecg.models import build_penguin_backbone, count_params
 from ppg2ecg.training.train_a0 import git_sha, load_arrays
 from ppg2ecg.utils.seed import seed_everything
@@ -64,6 +65,8 @@ def parse_args(argv=None):
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=300)
     ap.add_argument("--patience", type=int, default=20)
+    ap.add_argument("--c1-arm", choices=list(C1_ARMS), default="B",
+                    help="C1 target-interval exposure arm (docs/C1_INTERVAL_EXPOSURE_CONTROL_PREREGISTRATION.md). 'B' is a bit-identical no-op replay of the historical sampler; it is the ONLY thing that may differ between C1 arms.")
     ap.add_argument("--min-delta", type=float, default=1e-4)
     ap.add_argument("--batch-size", type=int, default=64)
     ap.add_argument("--lr", type=float, default=1e-3)
@@ -149,7 +152,7 @@ def main(argv=None):
         with open(log_path, "w", newline="") as f:
             csv.DictWriter(f, fieldnames=LOG_FIELDS).writeheader()
 
-    meta = {"exp_name": args.exp_name, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "cond_mode": args.cond_mode, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
+    meta = {"exp_name": args.exp_name, "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "objective": "improved_meanflow", "args": vars(args), "params": params, "n_train_windows": int(len(x_tr)), "n_val_windows": int(len(x_va)), "T": int(T), "split": split, "upstream": up, "git": git_sha(root), "device": str(device), "torch": torch.__version__, "selection": {"criterion": "fixed_imf_mse", "c1_arm": args.c1_arm, "min_delta": args.min_delta, "patience": args.patience, "n_val_banks": args.n_val_banks, "bank_seed": args.bank_seed, "bank_hash": banks_hash, "cond_mode": args.cond_mode, "h_scale": args.h_scale, "micro_batch": args.micro_batch, "effective_batch": args.batch_size, "val_batch": args.val_batch, "gen_diag_every": args.gen_diag_every, "gen_diag_windows": args.gen_diag_windows}, "started": datetime.now().isoformat(timespec="seconds")}
     (out / "train_meta.json").write_text(json.dumps(meta, indent=1, default=str))
     print(json.dumps({k: meta[k] for k in ("exp_name", "objective", "params", "n_train_windows", "n_val_windows", "T")}))
 
@@ -186,7 +189,7 @@ def main(argv=None):
                 for i0 in range(0, B, args.micro_batch):  # gradient accumulation: identical objective/optimiser step, lower peak memory
                     ppg_c, ecg_c = ppg[i0 : i0 + args.micro_batch], ecg[i0 : i0 + args.micro_batch]
                     Bc = len(ppg_c)
-                    t, r, _ = sample_tr(Bc, tr_gen, **tr_kw)
+                    t, r, _ = sample_tr_c1(Bc, tr_gen, arm=args.c1_arm, **tr_kw)
                     t, r = t.to(device), r.to(device)
                     e = torch.randn(Bc, 1, ecg_c.shape[1], device=device)
                     loss, info = imeanflow_loss(net, ecg_c.unsqueeze(1), ppg_c.unsqueeze(1), e, t, r, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode)

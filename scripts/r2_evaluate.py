@@ -249,7 +249,7 @@ def main() -> int:
             "cudnn_benchmark": bool(torch.backends.cudnn.benchmark), "deterministic_algorithms": bool(torch.are_deterministic_algorithms_enabled()),
             "scaffold_batch": RT.MICRO_BATCH}
     pt = subprocess.run(["python", "-m", "pytest", "tests/test_r2_rhythm_transfer.py", "-q", "-rs", "-p", "no:cacheprovider"], cwd=ROOT, capture_output=True, text=True)
-    prov["tests_ran"] = {"exit": pt.returncode, "summary": pt.stdout.strip().splitlines()[-1] if pt.stdout.strip() else "",
+    prov["tests_ran"] = {"exit": pt.returncode, "summary": next((ln for ln in reversed(pt.stdout.splitlines()) if "passed" in ln or "failed" in ln), ""),
                          "skipped": [ln for ln in pt.stdout.splitlines() if ln.startswith("SKIPPED")]}
     if pt.returncode != 0:
         raise RuntimeError("R2 tests fail; not evaluating")

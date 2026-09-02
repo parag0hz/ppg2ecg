@@ -267,6 +267,7 @@ def main() -> int:
 
     # ---------------- generation + scoring grid ----------------
     grid = [(arm, n) for arm in RF.ARMS for n in NFES] + [("PHASE-TF", 4), ("PHASE-GTF", 4), ("NODIRECT-TF", 4), ("NODIRECT-GTF", 4)]
+    VARIANT_SRC = {"PHASE-TF": "TF-TRUE", "PHASE-GTF": "GTF-TRUE", "NODIRECT-TF": "TF-TRUE", "NODIRECT-GTF": "GTF-TRUE"}
     per, pks, errs, grid_t, win_rows = {}, {}, {}, {}, []
     for arm, n in grid:
         t_g = time.perf_counter()
@@ -277,10 +278,10 @@ def main() -> int:
         elif arm == "ADD-ORACLE":
             pred = R2E.gen_preds(net_add, X, e0, s_oracle, ora_sd["state_dict"], n, dev)
         elif arm.startswith("PHASE-"):
-            src = "TF-TRUE" if arm.endswith("TF") else "GTF-TRUE"
+            src = VARIANT_SRC[arm]
             pred = gen_r3(nets[NET[src]], modules[src], X, e0, s_phase, 4, dev)
         elif arm.startswith("NODIRECT-"):
-            src = "TF-TRUE" if arm.endswith("TF") else "GTF-TRUE"
+            src = VARIANT_SRC[arm]
             pred = gen_r3(nets[NET[src]], modules[src], X, e0, s_true, 4, dev, cancel_direct=True)
         else:
             pred = gen_r3(nets[NET[arm]], modules[arm], X, e0, SCAF[arm], n, dev)
@@ -525,7 +526,8 @@ def main() -> int:
                 for first, second in (("GTF-TRUE", "B"), ("GTF-TRUE", "TF-TRUE"), ("TF-TRUE", "B"), ("ADD", "B"), ("GTF-CONST", "B")):
                     for r in subset_paired(per8[second], per8[first], SUB8, m, SM7, second, first, site):
                         site_rows.append({"site": site, "arm": f"{first}_vs_{second}", "n_windows": r["n"], "metric": r["metric"], "point": r["point"], "lo": r["lo"], "hi": r["hi"], "verdict": r["verdict"]})
-                rD = subject_boot(lambda idx, m=m: float(G8[idx].mean()), SUB8[m]) if m.any() else {}
+                G8m = G8[m]  # idx from subject_boot indexes the site-masked arrays, never the full cohort
+                rD = subject_boot(lambda idx, G8m=G8m: float(G8m[idx].mean()), SUB8[m]) if m.any() else {}
                 gd_site.append({"stat": f"D_gate_by_site_{site}", "mean": float(G8[m].mean()), "p10": float(np.percentile(G8[m], 10)), "p90": float(np.percentile(G8[m], 90)), **{f"subject_boot_{k}": v for k, v in rD.items()}})
             R2E.wcsv(ART / "site_metrics.csv", site_rows)
             for r in site_rows:

@@ -319,3 +319,14 @@ def test_real_checkpoint_step0_parity_cpu():
         zb, _ = ER.sample_meanflow_schedule(base, pp, e0, ER.UNIFORM[2]); s = RT.scaffold_from_ppg(tcn, pp)
         for sc in (torch.zeros_like(s), s, s.flip(0)):
             z, _ = ER.sample_meanflow_schedule(net, RT.make_ppg2(pp, sc), e0, ER.UNIFORM[2]); assert torch.equal(zb, z)
+
+
+def test_evaluator_variant_arms_map_to_their_own_source_modules():
+    src = _code(ROOT / "scripts/r3_evaluate.py")
+    assert "VARIANT_SRC = {'PHASE-TF': 'TF-TRUE', 'PHASE-GTF': 'GTF-TRUE', 'NODIRECT-TF': 'TF-TRUE', 'NODIRECT-GTF': 'GTF-TRUE'}" in src
+    assert src.count("VARIANT_SRC[arm]") == 2 and "endswith('TF')" not in src
+
+
+def test_evaluator_site_gate_bootstrap_indexes_the_site_masked_gate_array():
+    src = _code(ROOT / "scripts/r3_evaluate.py")
+    assert "G8m = G8[m]" in src and "float(G8m[idx].mean())" in src and "float(G8[idx].mean())" not in src

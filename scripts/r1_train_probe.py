@@ -42,13 +42,14 @@ def build_arrays(subjects, tag):
     X, Y, S = [], [], []
     for sub in subjects:
         d = np.load(ROOT / f"data/processed/wildppg_8s/{sub}.npz")
+        Xs, Ys, WIs = d["x"], d["y"], d["window_index"]   # decompress ONCE: every d[key] access re-reads the npz
         pos = C.cohort_positions(sub, d["site"], d["window_index"], C.n_per_for(sub))
         for si, site in enumerate(C.SITES):
             idx = pos[site]
-            ecg = [d["y"][int(i)] for i in idx]
+            ecg = [Ys[int(i)] for i in idx]
             with ProcessPoolExecutor(max_workers=12) as ex:
                 pk = list(ex.map(_peaks, ecg, chunksize=32))
-            X.append(d["x"][idx].astype(np.float32))
+            X.append(Xs[idx].astype(np.float32))
             Y.append(np.stack([soft_event_field(p, T_LEN) for p in pk]))
             S.append(np.full(len(idx), si, dtype=np.int64))
         print(f"[L] {tag}: {sub} labelled", flush=True)

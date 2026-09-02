@@ -84,9 +84,9 @@ def test_model_shape_and_module_inventory():
 def test_evaluation_feeds_ppg_only_and_uses_ecg_for_labels_only():
     src = _code_without_docstrings(ROOT / "scripts/r1_evaluate.py")
     # every model call goes through probs(net, X, S, dev) whose X is built from d["x"] (PPG)
-    assert "d['x'][idx]" in src and "d['y'][int(i)]" in src              # ast.unparse -> single quotes
-    assert re.search(r"net\(\s*[^)]*d\['y'\]", src) is None
-    assert "detect_rpeaks(d['y']" in src
+    assert "Xs, Ys, WIs = (d['x'], d['y'], d['window_index'])" in src   # ast.unparse -> single quotes, tuple parens
+    assert "Xs[idx]" in src and "detect_rpeaks(Ys[int(i)]" in src
+    assert re.search(r"net\(\s*[^)]*Ys\[", src) is None and re.search(r"probs\([^)]*Ys", src) is None
 
 
 # ---------------------------------------------------------------- cohorts

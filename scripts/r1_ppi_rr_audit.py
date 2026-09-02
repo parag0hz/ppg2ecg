@@ -76,14 +76,15 @@ def main() -> int:
     for sub in subs:
         role = "validation" if sub in C.VAL else ("internal_dev" if sub in split["internal_dev"] else "probe_train")
         d = np.load(ROOT / f"data/processed/wildppg_8s/{sub}.npz")
+        Xs, Ys, WIs = d["x"], d["y"], d["window_index"]   # decompress ONCE: every d[key] access re-reads the npz
         pos = C.cohort_positions(sub, d["site"], d["window_index"], C.n_per_for(sub))
         for site in C.SITES:
             idx = pos[site]
             for k in idx:
                 coh.append({"subject": sub, "role": role, "site": site, "array_pos": int(k),
-                            "window_index": int(d["window_index"][k])})
-            ecg = [d["y"][int(i)].astype(np.float64) for i in idx]
-            ppg = [d["x"][int(i)].astype(np.float64) for i in idx]
+                            "window_index": int(WIs[k])})
+            ecg = [Ys[int(i)].astype(np.float64) for i in idx]
+            ppg = [Xs[int(i)].astype(np.float64) for i in idx]
             with ProcessPoolExecutor(max_workers=12) as ex:
                 res = list(ex.map(_one, list(zip(ecg, ppg)), chunksize=16))
             rr, pk, ft, nb = [], [], [], 0
@@ -91,7 +92,7 @@ def main() -> int:
                 nb += n_r
                 for r_ in rows:
                     pairs_rows.append({"subject": sub, "role": role, "site": site,
-                                       "window_index": int(d["window_index"][int(k)]), **r_})
+                                       "window_index": int(WIs[int(k)]), **r_})
                     rr.append(r_["rr_ms"]); pk.append(r_["ppi_peak_ms"]); ft.append(r_["ppi_foot_ms"])
             sp = summarize(pk, rr); sf = summarize(ft, rr)
             summ.append({"subject": sub, "role": role, "site": site, "n_windows": int(idx.size), "n_gt_beats": nb,

@@ -135,9 +135,10 @@ def main() -> int:
     gt_dv = []
     for sub in split["internal_dev"]:
         d = np.load(ROOT / f"data/processed/wildppg_8s/{sub}.npz")
+        Xs, Ys, WIs = d["x"], d["y"], d["window_index"]   # decompress ONCE: every d[key] access re-reads the npz
         pos = C.cohort_positions(sub, d["site"], d["window_index"], C.n_per_for(sub))
         for site in C.SITES:
-            gt_dv += [R.detect_rpeaks(d["y"][int(i)].astype(np.float64), FS) for i in pos[site]]
+            gt_dv += [R.detect_rpeaks(Ys[int(i)].astype(np.float64), FS) for i in pos[site]]
     assert len(gt_dv) == len(Xdv)
     variants = [v for v in ("global", "local", "global_site") if (ROOT / CK[v]).exists()]
     nets = {v: load(v, dev) for v in variants}
@@ -159,12 +160,13 @@ def main() -> int:
     Xv, Sv, SUB, WI, gt_v = [], [], [], [], []
     for sub in C.VAL:
         d = np.load(ROOT / f"data/processed/wildppg_8s/{sub}.npz")
+        Xs, Ys, WIs = d["x"], d["y"], d["window_index"]   # decompress ONCE: every d[key] access re-reads the npz
         pos = C.cohort_positions(sub, d["site"], d["window_index"], C.n_per_for(sub))
         for si, site in enumerate(C.SITES):
             idx = pos[site]
-            Xv.append(d["x"][idx].astype(np.float32)); Sv.append(np.full(len(idx), si))
-            SUB += [sub] * len(idx); WI += [(sub, site, int(d["window_index"][i])) for i in idx]
-            gt_v += [R.detect_rpeaks(d["y"][int(i)].astype(np.float64), FS) for i in idx]
+            Xv.append(Xs[idx].astype(np.float32)); Sv.append(np.full(len(idx), si))
+            SUB += [sub] * len(idx); WI += [(sub, site, int(WIs[i])) for i in idx]
+            gt_v += [R.detect_rpeaks(Ys[int(i)].astype(np.float64), FS) for i in idx]
     Xv, Sv, SUB = np.concatenate(Xv), np.concatenate(Sv), np.array(SUB)
     SITE = np.array([w[1] for w in WI])
     print(f"[V] validation {len(Xv)} windows, {sum(len(g) for g in gt_v)} GT beats", flush=True)
@@ -316,11 +318,12 @@ def main() -> int:
         pr_g, ev_g = events["global"]; pr_l, ev_l = events["local"] if "local" in events else (None, None)
         for sub in C.VAL:
             d = np.load(ROOT / f"data/processed/wildppg_8s/{sub}.npz")
+            Xs, Ys, WIs = d["x"], d["y"], d["window_index"]   # decompress ONCE: every d[key] access re-reads the npz
             vis = C.cohort_positions(sub, d["site"], d["window_index"], C.N_VISUAL_PER, salt=C.VISUAL_SALT)
             for site in C.SITES:
                 fig, axes = plt.subplots(8, 1, figsize=(13, 15), sharex=True)
                 for row, pos in enumerate(vis[site]):
-                    wi = int(d["window_index"][pos])
+                    wi = int(WIs[pos])
                     k = next((kk for kk, w in enumerate(WI) if w == (sub, site, wi)), None)
                     a_ = axes[row]
                     if k is None:

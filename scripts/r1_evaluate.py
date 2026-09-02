@@ -342,7 +342,7 @@ def main() -> int:
                 fig.suptitle(f"R1 atlas — {sub} [val] / {site}: PPG, GT R (red dashed), Global/Local soft field, Global events (▼)")
                 fig.tight_layout(); fig.savefig(ATLAS / f"{sub}_{site}.png", dpi=100); plt.close(fig)
 
-    (ART / "model_manifest.json").write_text(json.dumps({v: {"path": CK[v], "params": n_trainable(nets[v][0]),
+    (ART / "model_manifest.json").write_text(json.dumps({v: {"path": CK[v], "params": int(nets[v][1]["params"]),   # recorded at training; n_trainable is 0 after requires_grad_(False)
         "rf_samples": nets[v][0].rf, "rf_ms": nets[v][0].rf / FS * 1000, "best_epoch": nets[v][1]["epoch"],
         "internal_dev_bce": nets[v][1]["internal_dev_bce"]} for v in variants}, indent=2))
     (ART / "provenance.json").write_text(json.dumps({

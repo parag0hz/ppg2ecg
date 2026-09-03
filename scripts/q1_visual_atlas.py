@@ -30,10 +30,16 @@ from ppg2ecg.probes.rhythm_tcn import extract_events  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "artifacts/q1_conditional_support"
 OUT = ART / "visual_atlas"
-_spec = importlib.util.spec_from_file_location("r2_evaluate", ROOT / "scripts/r2_evaluate.py")
-R2E = importlib.util.module_from_spec(_spec); sys.modules[_spec.name] = R2E; _spec.loader.exec_module(R2E)
-_q1 = importlib.util.spec_from_file_location("q1_evaluate", ROOT / "scripts/q1_evaluate.py")
-Q1 = importlib.util.module_from_spec(_q1); sys.modules[_q1.name] = Q1; _q1.loader.exec_module(Q1)
+if "r2_evaluate" in sys.modules:                                    # never exec twice: pool workers pickle by module name
+    R2E = sys.modules["r2_evaluate"]
+else:
+    _spec = importlib.util.spec_from_file_location("r2_evaluate", ROOT / "scripts/r2_evaluate.py")
+    R2E = importlib.util.module_from_spec(_spec); sys.modules[_spec.name] = R2E; _spec.loader.exec_module(R2E)
+if "q1_evaluate" in sys.modules:
+    Q1 = sys.modules["q1_evaluate"]
+else:
+    _q1 = importlib.util.spec_from_file_location("q1_evaluate", ROOT / "scripts/q1_evaluate.py")
+    Q1 = importlib.util.module_from_spec(_q1); sys.modules[_q1.name] = Q1; _q1.loader.exec_module(Q1)
 FS, T_LEN, NFE = 128, 1024, Q.NFE_PRIMARY
 V1_MANIFEST = ROOT / "artifacts/v1_stepwise_visualization/cohort_manifest.csv"
 SEVERE = ("LP_1.25Hz", "SNR_0dB", "DROP_2.0s")

@@ -40,8 +40,11 @@ from ppg2ecg.training.train_a0 import git_sha
 
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "artifacts/q1_conditional_support"
-_spec = importlib.util.spec_from_file_location("r2_evaluate", ROOT / "scripts/r2_evaluate.py")
-R2E = importlib.util.module_from_spec(_spec); sys.modules[_spec.name] = R2E; _spec.loader.exec_module(R2E)
+if "r2_evaluate" in sys.modules:                                    # never exec twice: pool workers pickle by module name
+    R2E = sys.modules["r2_evaluate"]
+else:
+    _spec = importlib.util.spec_from_file_location("r2_evaluate", ROOT / "scripts/r2_evaluate.py")
+    R2E = importlib.util.module_from_spec(_spec); sys.modules[_spec.name] = R2E; _spec.loader.exec_module(R2E)
 FS, T_LEN, BATCH = 128, 1024, 64
 VAL, SALT, TAKE = ("an0", "k2s"), "x4-event-nfe-v2", 1024
 NFE, SRC_SEED = Q.NFE_PRIMARY, Q.SRC_SEED
@@ -201,6 +204,36 @@ def paired_rows(rows_c, rows_x, sub, metrics, orient_map, condition, axis, famil
                     "orientation": orient_map[m], "positive_means": desc,
                     "clean_macro": macro(b, sub), "corrupted_macro": macro(a, sub),
                     "n_finite_pairs": n_fin, **res})
+    return out
+
+
+COUPLING_PAIRS = (("r1_f1@150", "f1_excess"), ("r1_rr_mae_ms", "beats_ratio_dev"), ("r1_f1@150", "raw_qrs_rmse"))
+
+
+def coupling_rows(sup, fid, SUB, n_boot: int = Q.BOOT_N, seed: int = Q.BOOT_SEED):
+    """Preregistration section 10: Spearman coupling per family (pooled over its levels) AND per level."""
+    groups = [(fam, "pooled", conds) for fam, conds in Q.FAMILIES.items()]
+    groups += [("ALL", "pooled", [c for c in Q.NATURAL_CONDITIONS if c != Q.CLEAN])]
+    groups += [(Q.FAMILY_OF[c], c, [c]) for fam, conds in Q.FAMILIES.items() for c in conds]
+    groups += [("CLEAN", Q.CLEAN, [Q.CLEAN])] + [("CONTROL", c, [c]) for c in (Q.SHUFFLED, Q.NULL)]
+    out = []
+    for fam, level, conds in groups:
+        for xk, yk in COUPLING_PAIRS:
+            xs = np.concatenate([[r[xk] for r in sup[c]] for c in conds])
+            ys = np.concatenate([[r[yk] for r in fid[c]] for c in conds])
+            ss = np.concatenate([np.asarray(SUB) for _ in conds])
+            ok = np.isfinite(xs) & np.isfinite(ys)
+            xs, ys, ss = xs[ok], ys[ok], ss[ok]
+            rho = float(spearmanr(xs, ys).statistic)
+            uniq = sorted(set(ss.tolist())); idx = {u: np.flatnonzero(ss == u) for u in uniq}
+            rng = np.random.default_rng(seed)
+            draws = np.empty(int(n_boot))
+            for b in range(int(n_boot)):
+                draws[b] = float(np.mean([spearmanr(xs[j], ys[j]).statistic
+                                          for j in (rng.choice(idx[u], idx[u].size, replace=True) for u in uniq)]))
+            out.append({"family": fam, "level": level, "x": xk, "y": yk, "spearman_rho": rho, "n": int(xs.size),
+                        "lo": float(np.nanpercentile(draws, 2.5)), "hi": float(np.nanpercentile(draws, 97.5)),
+                        "n_boot": int(n_boot), "seed": int(seed), "note": "association only; not causal"})
     return out
 
 
@@ -398,23 +431,7 @@ def main() -> int:
     B = {(r["condition"], r["axis"], r["metric"]): r for r in boot}
 
     # ---------------- support-fidelity coupling ----------------
-    cor = []
-    pairs = (("r1_f1@150", "f1_excess"), ("r1_rr_mae_ms", "beats_ratio_dev"), ("r1_f1@150", "raw_qrs_rmse"))
-    for fam, conds in list(Q.FAMILIES.items()) + [("ALL", [c for c in Q.NATURAL_CONDITIONS if c != Q.CLEAN])]:
-        for xk, yk in pairs:
-            xs = np.concatenate([[r[xk] for r in sup[c]] for c in conds])
-            ys = np.concatenate([[r[yk] for r in fid[c]] for c in conds])
-            ss = np.concatenate([SUB for _ in conds])
-            ok = np.isfinite(xs) & np.isfinite(ys)
-            xs, ys, ss = xs[ok], ys[ok], ss[ok]
-            rho = float(spearmanr(xs, ys).statistic)
-            uniq = sorted(set(ss.tolist())); idx = {u: np.flatnonzero(ss == u) for u in uniq}
-            rng = np.random.default_rng(Q.BOOT_SEED)
-            draws = np.array([float(np.mean([spearmanr(xs[j], ys[j]).statistic for j in
-                                             (rng.choice(idx[u], idx[u].size, replace=True) for u in uniq)])) for _ in range(200)])
-            cor.append({"family": fam, "x": xk, "y": yk, "spearman_rho": rho, "n": int(xs.size),
-                        "lo": float(np.nanpercentile(draws, 2.5)), "hi": float(np.nanpercentile(draws, 97.5)),
-                        "n_boot": 200, "seed": Q.BOOT_SEED, "note": "association only; not causal"})
+    cor = coupling_rows(sup, fid, SUB)
     wcsv(ART / "support_fidelity_correlations.csv", cor)
 
     # ---------------- preregistered verdict ----------------

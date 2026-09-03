@@ -26,10 +26,12 @@ from ppg2ecg.training.train_a0 import git_sha
 
 ROOT = Path(__file__).resolve().parents[1]
 ART = ROOT / "artifacts/q1_conditional_support"
-_spec = importlib.util.spec_from_file_location("r2_evaluate", ROOT / "scripts/r2_evaluate.py")
-R2E = importlib.util.module_from_spec(_spec); sys.modules[_spec.name] = R2E; _spec.loader.exec_module(R2E)
-_q1 = importlib.util.spec_from_file_location("q1_evaluate", ROOT / "scripts/q1_evaluate.py")
-Q1 = importlib.util.module_from_spec(_q1); sys.modules[_q1.name] = Q1; _q1.loader.exec_module(Q1)
+if "q1_evaluate" in sys.modules:
+    Q1 = sys.modules["q1_evaluate"]
+else:
+    _q1 = importlib.util.spec_from_file_location("q1_evaluate", ROOT / "scripts/q1_evaluate.py")
+    Q1 = importlib.util.module_from_spec(_q1); sys.modules[_q1.name] = Q1; _q1.loader.exec_module(Q1)
+R2E = Q1.R2E
 T_LEN, NFE = 1024, Q.NFE_PRIMARY
 
 

@@ -49,6 +49,13 @@ def wcsv(p, rows):
             w = csv.DictWriter(fh, fieldnames=fields, restval=""); w.writeheader(); w.writerows(rows)
 
 
+def _quality(x):
+    """Q1's frozen PPG-only quality scores for one window (module level: the pool must be able to pickle it)."""
+    v = np.asarray(x, dtype=np.float64)
+    pk = S1.dsp_ppg_peaks(v, OT.FS)
+    return [Q.periodicity_score(v), Q.pulse_template_consistency(v, pk)]
+
+
 def _ppg_rhythm(x):
     """B2 features: rhythm/site only. No amplitude, no morphology, no waveform sample."""
     pk = S1.dsp_ppg_peaks(np.asarray(x, dtype=np.float64), OT.FS)
@@ -341,12 +348,8 @@ def main() -> int:
     wcsv(ART / "site_extractability.csv", site_rows)
 
     # ---------------- secondary: natural quality ----------------
-    def _q(x):
-        v = np.asarray(x, dtype=np.float64)
-        pk = S1.dsp_ppg_peaks(v, OT.FS)
-        return [Q.periodicity_score(v), Q.pulse_template_consistency(v, pk)]
     with ProcessPoolExecutor(max_workers=WORKERS) as ex:
-        QS = np.asarray(list(ex.map(_q, list(Xv.astype(np.float64)), chunksize=64)), dtype=np.float64)
+        QS = np.asarray(list(ex.map(_quality, list(Xv.astype(np.float64)), chunksize=64)), dtype=np.float64)
     nq_rows = []
     for qi, qname in enumerate(("periodicity_score", "pulse_template_consistency")):
         qof = np.full(len(Xv), -1, dtype=int)

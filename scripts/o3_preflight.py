@@ -60,7 +60,7 @@ def main() -> int:
         al_c = C.aligned_rows(p_c, gt_tg, iqr)
         gen_pk = C.R2E.pmap(C.S0._peaks, list(p_c.astype(np.float64)))
         [O3.adherence(S[j], gen_pk[j]) for j in range(len(S))]
-        C.shape_only(p_c, Yd, S, gt_pk, RP, iqr)
+        C.shape_only(p_c, Yd, S, gt_pk, RP, iqr, SUB)
     t_sweep = time.perf_counter() - t1
 
     # one real clustered-bootstrap call on the full cohort (zero difference vector: no result is produced)

@@ -250,10 +250,16 @@ def decide_o1(classes: dict, positive_control_ok: bool, primary: tuple, morpholo
     morph_high = [t for t in morph if classes.get(t) in (CLASS_A, CLASS_B)]
     morph_low = [t for t in morph if classes.get(t) in (CLASS_C, CLASS_D)]
     rhythm_high = [t for t in primary if t in RHYTHM_TARGETS and classes.get(t) in (CLASS_A, CLASS_B)]
+    # Amendment 1 (docs/O1_PREREGISTRATION_AMENDMENT_1.md, frozen before any probe was trained): when the
+    # STRONG/PARTIAL set contains NO morphology target, the pattern is the one verdict B exists to name, so B
+    # is evaluated before A. In every other case the frozen order A -> B -> C -> D is unchanged.
+    rhythm_only_high = bool(high) and not morph_high
     if not positive_control_ok:
         v = VERDICT_D
     elif len(morph_high) >= max(1, len(morph) - 1) and len(morph_high) > len(morph_low):
         v = VERDICT_C
+    elif rhythm_only_high and rhythm_high and len(morph_low) > len(morph_high):
+        v = VERDICT_B
     elif len(high) >= 2 and len(low) >= 2 and all(morphology_ok.get(t, True) for t in high):
         v = VERDICT_A
     elif len(rhythm_high) >= 1 and len(morph_low) > len(morph_high):
@@ -261,5 +267,5 @@ def decide_o1(classes: dict, positive_control_ok: bool, primary: tuple, morpholo
     else:
         v = VERDICT_D
     return {"verdict": v, "high": high, "low": low, "morphology_high": morph_high,
-            "morphology_low": morph_low, "rhythm_high": rhythm_high,
-            "positive_control_ok": bool(positive_control_ok)}
+            "morphology_low": morph_low, "rhythm_high": rhythm_high, "rhythm_only_high": rhythm_only_high,
+            "positive_control_ok": bool(positive_control_ok), "amendment_1_applied": bool(rhythm_only_high)}

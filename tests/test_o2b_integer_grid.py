@@ -30,6 +30,12 @@ RNG = np.random.default_rng(5)
 
 # --------------------------------------------------------------------------------- repository
 def test_firewall_pins_and_c2_untouched():
+    import subprocess
+    for sub, pin in (("external/PENGUIN", "6cd70cdefb91f10efeb8dce34019b5067cb25344"),
+                     ("external/iMeanFlow", "bf60cd7cb653f6628e59d48034b333c5eba445e2")):
+        head = subprocess.run(["git", "-C", str(ROOT / sub), "rev-parse", "HEAD"],
+                              capture_output=True, text=True, check=True).stdout.strip()
+        assert head == pin, f"{sub} moved: {head}"
     with pytest.raises(ER.WildPPGTestFirewallError):
         ER.assert_no_test_subjects(("an0", "kjd"))
     for src in (MOD_SRC, S0_SRC):

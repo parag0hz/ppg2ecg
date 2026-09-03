@@ -92,7 +92,7 @@ Frozen R1 Global-TCN on the corrupted PPG, frozen threshold 0.35 / refractory 32
 | SHUFFLED | 0.1355 | 0.3946 | 0.5066 | 100.21 | 98.51 | 0.5782 | 0.7047 | 0.2178 |
 | NULL | 0.1547 | 0.4500 | 0.5316 | 92.05 | 89.78 | 0.4248 | 1.0011 | 0.5765 |
 
-R1 F1@50, F1@150 and RR MAE degrade monotonically with severity in **all three families** (the `spurious` column of BANDLIMIT and the `missing` column of DROPOUT are not monotone), and at every severe level the decrease is confirmed by the paired bootstrap (§9). The SHUFFLED row is the empirical "no window-specific information" floor for this probe (F1@150 ≈ 0.39).
+R1 F1@50, F1@150, RR MAE and RR median AE degrade monotonically with severity in **all three families**; NOISE is monotone in every column of the table, while BANDLIMIT is non-monotone in `F1@200`, `spurious` and `beats dev`, and DROPOUT in `missing`. At every severe level the decrease is confirmed by the paired bootstrap (§9). The SHUFFLED row is the empirical "no window-specific information" floor for this probe (F1@150 ≈ 0.39).
 
 ## 6. Generator conditional fidelity (frozen arm B, NFE 4, source seed 0)
 
@@ -115,7 +115,7 @@ R1 F1@50, F1@150 and RR MAE degrade monotonically with severity in **all three f
 Two facts dominate this table:
 
 1. **Event correspondence collapses.** Of the clean conditional advantage over the shuffled floor (0.3176 − 0.0082 = 0.3094), only **29 % survives** LP_1.25Hz, **13 %** SNR_0dB and **22 %** DROP_2.0s.
-2. **The three QRS-shape metrics that the verdict rule uses do not follow.** `raw_qrs_rmse` moves by at most +0.0132 / −0.0038 across the naturalistic conditions (−0.0157 at NULL), and `qrs_deriv_rmse` / `qrs_curvature_err` become *slightly lower* (nominally "better") as the condition degrades — including at the SHUFFLED and NULL extremes, which reach the nominally best values of the whole table. Those three metrics are the ones the preregistered F-B conjunct is built on.
+2. **The three QRS-shape metrics that the verdict rule uses do not follow.** `raw_qrs_rmse` moves by at most +0.0132 (LP_2.0Hz) / −0.0040 (SNR_0dB) across the naturalistic conditions (−0.0089 at SHUFFLED, −0.0157 at NULL), and `qrs_deriv_rmse` / `qrs_curvature_err` become *slightly lower* (nominally "better") as the condition degrades — including at the SHUFFLED and NULL extremes, which reach the nominally best values of the whole table. Those three metrics are the ones the preregistered F-B conjunct is built on.
 
 The other preregistered structure metrics **do** track the condition, and must be reported alongside:
 
@@ -281,7 +281,7 @@ Per level, for R1 F1@150 → generator F1 excess:
 | DROP_1.0s | +0.479 [+0.444, +0.511] | | NULL | **−0.003 [−0.046, +0.041]** |
 | DROP_2.0s | +0.281 [+0.235, +0.318] | | | |
 
-Window-level probe support and generator event fidelity move together (pooled ρ ≈ 0.41–0.52); the coupling to structure error is weak (ρ ≈ 0.08–0.17). The per-level rows add two checks: the coupling *weakens* as the condition degrades (+0.587 clean → +0.294 at SNR_0dB, +0.281 at DROP_2.0s), and it vanishes exactly where there is no conditioning signal at all (NULL, ρ = −0.003 with the CI covering zero). SHUFFLED retains ρ = +0.346 because probe and generator see the *same* partner PPG, so their outputs remain correlated with each other even though neither corresponds to the paired target.
+Note on the interval: the point estimate is the Spearman ρ pooled over all windows, while each bootstrap replicate averages the *within-subject* ρ, so the CI is not centred on the point estimate; read it as a stability interval, not as a symmetric confidence interval around the pooled ρ. Window-level probe support and generator event fidelity move together (pooled ρ ≈ 0.41–0.52); the coupling to structure error is weak (ρ ≈ 0.08–0.17). The per-level rows add two checks: the coupling *weakens* as the condition degrades (+0.587 clean → +0.294 at SNR_0dB, +0.281 at DROP_2.0s), and it vanishes exactly where there is no conditioning signal at all (NULL, ρ = −0.003 with the CI covering zero). SHUFFLED retains ρ = +0.346 because probe and generator see the *same* partner PPG, so their outputs remain correlated with each other even though neither corresponds to the paired target.
 
 ## 13. Rhythm vs morphology (§17 of the task — exploratory hypothesis)
 
@@ -330,11 +330,19 @@ Naturally low-quality PPG reproduces the synthetic pattern: conditional event fi
 
 (R1 support is a property of the corrupted PPG and is therefore identical to §5 for this arm.)
 
-Paired clean → severe effects for this arm are the same shape as arm B's (F1 excess +0.234/+0.303/+0.244, all CIs far from zero; deriv and curvature "worsen" for clean, i.e. do not degrade; marginal support drops ≤ 0.0026). **Answer to the secondary question:** no robustness advantage worth acting on. **No arm × condition interaction test was run** — `secondary_gtf_paired.csv` contains only within-arm clean-vs-corrupted contrasts — so this is a descriptive comparison: the absolute advantage over arm B shrinks from +0.0406 (CLEAN) to +0.006 (SNR_0dB), while the share of each arm's own clean advantage (above its own SHUFFLED floor) that survives is 33 % / 14 % / 30 % for GTF-TRUE against 29 % / 13 % / 22 % for arm B at LP_1.25Hz / SNR_0dB / DROP_2.0s. Its extra event accuracy is essentially a clean-PPG property, and the arm is labelled throughout as carrying stronger target-derived event supervision (its scaffold comes from a probe trained on GT-R labels).
+Paired clean → severe effects for this arm are the same shape as arm B's (F1 excess +0.234/+0.303/+0.244, all CIs far from zero; deriv and curvature "worsen" for clean, i.e. do not degrade; marginal support drops ≤ 0.0026). **Answer to the secondary question:** no robustness advantage — if anything the opposite. A post-hoc arm × condition test was added after an internal review (§18 item 14): the per-window advantage of GTF-TRUE over arm B, paired-bootstrapped clean vs severe (2,000, seed 20260903, positive = advantage shrinks under corruption), gives
+
+| family / severe | advantage at CLEAN | at severe | difference-in-differences [95 % CI] | reading |
+|---|---|---|---|---|
+| BANDLIMIT / LP_1.25Hz | +0.0406 | +0.0260 | **+0.0147** [+0.0080, +0.0213] | advantage shrinks |
+| NOISE / SNR_0dB | +0.0406 | +0.0058 | **+0.0348** [+0.0285, +0.0413] | advantage shrinks |
+| DROPOUT / DROP_2.0s | +0.0406 | +0.0374 | +0.0033 [−0.0034, +0.0104] | unresolved |
+
+The share of each arm's own clean advantage (above its own SHUFFLED floor) that survives is 33 % / 14 % / 30 % for GTF-TRUE against 29 % / 13 % / 22 % for arm B at LP_1.25Hz / SNR_0dB / DROP_2.0s — i.e. relative retention is comparable, while the absolute advantage is significantly eroded in two of the three families. Its extra event accuracy is essentially a clean-PPG property, and the arm is labelled throughout as carrying stronger target-derived event supervision (its scaffold comes from a probe trained on GT-R labels).
 
 ## 16. Visual atlas
 
-64 figures (the frozen V1 validation viz windows) in `artifacts/q1_conditional_support/visual_atlas/` with `atlas_index.csv`. Each figure shows GT ECG, clean PPG, the three severe corrupted PPGs, the clean generated ECG, the three severe generated ECGs, the SHUFFLED and NULL generated ECGs, and the 8-source mean ± 1 SD envelope for CLEAN and SNR_0dB. No prediction is shifted; annotations (R1 F1@150, B F1 excess, marginal support, sample SD) are deterministic. The figures are consistent with §6–§8; no perceptual or clinical rating of them was made or is implied, and no conclusion in this report rests on them.
+64 figures (the frozen V1 validation viz windows) in `artifacts/q1_conditional_support/visual_atlas/` with `atlas_index.csv`. Each figure shows GT ECG, clean PPG, the three severe corrupted PPGs, the clean generated ECG, the three severe generated ECGs, the SHUFFLED and NULL generated ECGs, and the 8-source mean ± 1 SD envelope for CLEAN and SNR_0dB. No prediction is shifted; annotations (R1 F1@150, B F1 excess, marginal support, sample SD) are deterministic. The figures are consistent with §6–§8, and `atlas_index.csv` makes that checkable per window rather than perceptually: across the 64 atlas windows the mean generator F1 excess falls +0.3585 (clean) → +0.0711 (SNR_0dB) → −0.0023 (SHUFFLED), while the marginal-support proxy stays at 0.9938 / 0.9969 / 1.0000 (64/64 windows exactly 1.0 under SHUFFLED). **No perceptual or clinical rating of the figures was made or is implied**, and no conclusion in this report rests on them.
 
 ## 17. Runtime
 
@@ -361,6 +369,7 @@ Paired clean → severe effects for this arm are the same shape as arm B's (F1 e
 11. **Coupling table recomputed after an internal review.** The first pass computed the §12 Spearman CIs with 200 bootstrap replicates and only the per-family pools, whereas preregistration §10 specifies 2,000 replicates and both pooled *and per-level* correlations. `scripts/q1_recompute_coupling.py` (pure post-processing of the frozen per-window CSVs — no model is loaded and no window is regenerated) rebuilt the table at the preregistered 2,000 replicates with all 51 rows, and `scripts/q1_evaluate.py` now contains the corrected `coupling_rows()`. Point estimates are identical; only CI resolution changed (e.g. `ALL` F1@150 → F1 excess CI [+0.460, +0.484] → [+0.462, +0.484]). No verdict gate depends on this table.
 12. *(merged into item 11)* — the preregistered per-level coupling rows are now present in `support_fidelity_correlations.csv` (column `level`).
 13. **Atlas uncertainty envelope.** The preregistration restricted the mean ± 1 SD envelope to uncertainty-cohort members; none of the 64 atlas windows is in the 512-window uncertainty cohort, so the atlas draws its own 64-row seed-0…7 banks and shows the envelope for every atlas window. The atlas `sample_sd_*` annotations are therefore not comparable with the §8 U1 values.
+14. **Post-hoc arm × condition test (§15).** The preregistration asked only for the GTF-TRUE corruption curves; the difference-in-differences test of §15 was added after an internal review of this report, is post-hoc and secondary, and enters no verdict. It reuses the frozen per-window artifacts only (`secondary_gtf_metrics.csv`, `generator_fidelity_metrics.csv`) with the preregistered bootstrap (2,000, seed 20260903).
 
 ## 19. What this does NOT prove
 

@@ -169,7 +169,9 @@ under LP_1.25Hz, T4 0.384 → 0.348 under SNR_0dB): the error is dominated by th
 destroying the window-specific signal costs little error but removes almost all ranking information. Under SHUFFLED — which replaces the window with **another window of the same subject and site**, so it is the
 window-specific-information floor rather than a zero-information condition — ρ falls to |ρ| ≤ 0.05 for eight of
 the nine targets; **T8 is the exception at +0.13**, two thirds of its clean ρ (0.199) and essentially its
-SS-SHUFFLE level, i.e. most of T8's already weak ranking skill does not require this window's PPG. NULL produces
+SS-SHUFFLE level (ρ 0.122 / 0.125 / 0.136 across seeds 40/42/44), i.e. most of T8's already weak ranking skill
+does not require this window's PPG — consistent with T8 having the smallest window-specific effect in §4
+(TRUE−SS +0.0159, Skill_W +0.043). NULL produces
 a constant prediction (ρ undefined).
 
 ## 10. Natural PPG quality (secondary, exploratory, frozen Q1 scores)
@@ -196,9 +198,10 @@ the probe's error driven by window-specific PPG information.
 
 ## 11. Generator-utilization crosswalk (frozen Q1 arm-B artifacts; no generator was run)
 
-`UtilizationEffect = Error_SHUFFLED − Error_CLEAN` for the eight lower-is-better metrics and
-`F1_CLEAN − F1_SHUFFLED` for the one higher-is-better metric (`f1_excess`), exactly as preregistered — positive
-always means the correct PPG improves that generated component. Paired **ECG-window-clustered**,
+`UtilizationEffect = Metric_SHUFFLED − Metric_CLEAN` for the lower-is-better generator metrics (seven rows, six
+distinct metrics — T1 and T2 share `beats_ratio_dev`) and `F1_CLEAN − F1_SHUFFLED` for the one higher-is-better
+metric, `f1_excess`, exactly as preregistered. The sign is orientation-adjusted throughout, so positive always
+means the correct PPG improves that generated component. Paired **ECG-window-clustered**,
 subject-stratified bootstrap (2,000, seed 20260903, 1,922 clusters) on Q1's frozen 2,048-window cohort.
 
 | component | generator metric | CLEAN | SHUFFLED | utilization effect [95 % CI] | verdict |
@@ -272,7 +275,8 @@ preregistration, with the amplitude tier much weaker than P1 anticipated, and Pa
    All six morphology targets are worse than the global median in absolute normalised MAE.
 3. **Window-specific information.** Independently of absolute accuracy, T1–T8 all carry information that
    requires *this* window's PPG: the SS-SHUFFLE effect is positive with CIs clear of zero for all eight, and it
-   is an order of magnitude larger for T1/T2 (+0.24 / +0.31) than for T3 (+0.089) or morphology (+0.016 … +0.039).
+   is 3–4× larger for T1/T2 (+0.24 / +0.31) than for T3 (+0.089) and an order of magnitude larger than for
+   morphology (+0.016 … +0.039).
 4. **Static / rhythm information.** A large part of every morphology probe's behaviour is static: XS − SS is
    positive for T1–T8, the B2 rhythm baseline already explains much of T5/T7/T9, and morphology nMAE hardly
    moves under corruption while its ρ collapses.
@@ -304,7 +308,9 @@ preregistration, with the amplitude tier much weaker than P1 anticipated, and Pa
    cannot pickle a function defined inside `main`); the classification, verdict and corruption transfer had
    already been written. The function was moved to module level and the whole script was re-run: the verdict and
    `component_classification.csv` came back **byte-identical** (sha256 `8a19c371…`), which is also the
-   determinism check for the whole clean map.
+   determinism check for the whole clean map. The fix was uncommitted while the evaluation ran
+   (`provenance.json`: `dirty_files: 1`; `git diff --stat scripts/o1_evaluate.py` = 8 insertions, 5 deletions)
+   and is committed together with this report.
 3. **T7 definition**: `mean(d2²)` (curvature *energy*, matching the target name) while the generator crosswalk
    metric is `mean|d2_pred − d2_gt|`; both use the same frozen `M1.d2`, but they are not the same functional —
    recorded in the target audit before any result.

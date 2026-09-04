@@ -275,7 +275,16 @@ def test_fixture_reproduces_the_restatement_identity(tmp_path, monkeypatch):
 
 
 def test_fixture_writes_nothing_outside_its_root(tmp_path, monkeypatch):
+    """The report must not touch the repo's own outputs/ tree.
+
+    Asserted as a BEFORE/AFTER snapshot rather than as the absence of a specific directory: once a real
+    benchmark has run, outputs/d1_<corpus>_seed42 legitimately exists, and an absence check cannot tell
+    "the report created it" from "the real run created it" — it would fail for the wrong reason.
+    """
+    real_outputs = ROOT / "outputs"
+    before = {p.name for p in real_outputs.iterdir()} if real_outputs.exists() else set()
     info = build(tmp_path, monkeypatch)
     run_report(info, monkeypatch, tmp_path, "--all")
-    assert not (ROOT / "outputs" / "d1_dalia_seed42").exists()
+    after = {p.name for p in real_outputs.iterdir()} if real_outputs.exists() else set()
+    assert after == before, f"report wrote into the repo outputs/: {sorted(after - before)}"
     assert set(p.name for p in (tmp_path / "tree").iterdir()) == {"data", "outputs"}

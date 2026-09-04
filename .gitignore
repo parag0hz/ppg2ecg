@@ -294,3 +294,14 @@ artifacts/e2_evaluation_contract/*
 !artifacts/e2_evaluation_contract/matching_contract.json
 !artifacts/e2_evaluation_contract/aggregation_contract.json
 !artifacts/e2_evaluation_contract/coverage_contract.json
+
+# --- E3 beat-set-first: hash-bearing manifests are tracked so the pre-validation freeze is verifiable ---
+# Results, the coefficient array and every CSV stay ignored; only these small JSON records are committed,
+# and they must exist in git BEFORE the validation stage runs (preregistration section 12).
+!artifacts/e3_beat_set_first/
+artifacts/e3_beat_set_first/*
+!artifacts/e3_beat_set_first/e2_contract_identity.json
+!artifacts/e3_beat_set_first/candidate_extraction_audit.json
+!artifacts/e3_beat_set_first/train_only_threshold_control.json
+!artifacts/e3_beat_set_first/train_feature_manifest.json
+!artifacts/e3_beat_set_first/count_readout_manifest.json

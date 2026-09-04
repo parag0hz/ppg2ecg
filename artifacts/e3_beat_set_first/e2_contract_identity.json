@@ -1,0 +1,112 @@
+{
+  "contract_v1_sha256": "06e869412114e1efb9ab6624540aebc141495e2690150f4e512df7676c5a9115",
+  "contract_version": "e2-event-geometry-contract-v1",
+  "source_e1_sha": "a5af4afcaf1a4a029c08a7002db9f9935c55f522",
+  "modified": false,
+  "matching": {
+    "S_to_G": {
+      "tolerance_ms": 150.0,
+      "synthetic_arms": "exact construction identity from O3/E1",
+      "predicted_schedules": "monotonic one-to-one dynamic-programming assignment",
+      "objective_hierarchy": [
+        "maximise matched cardinality",
+        "minimise total absolute timing error",
+        "deterministic tie break: transition preference match -> skip-ref -> skip-pred, indices ascending"
+      ],
+      "label": "TARGET-DERIVED DIAGNOSTIC MATCHING",
+      "prohibited": [
+        "shift S",
+        "repair S",
+        "insert events",
+        "delete events",
+        "modify inference"
+      ]
+    },
+    "P_to_S": {
+      "tolerance_ms": 50.0,
+      "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+    },
+    "P_to_G": {
+      "tolerances_ms": [
+        50.0,
+        100.0,
+        150.0,
+        200.0
+      ],
+      "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+    }
+  },
+  "aggregation": {
+    "order": [
+      "per-beat",
+      "median within window",
+      "mean within subject",
+      "equal-subject macro"
+    ],
+    "subjects": [
+      "an0",
+      "k2s"
+    ],
+    "note": "unless a metric definition itself specifies otherwise"
+  },
+  "bootstrap": {
+    "unit": "underlying ECG-window cluster (all four site rows of one target ECG move together)",
+    "stratification": "subject, equal weight",
+    "n_replicates": 2000,
+    "rng": "default_rng(20260904)",
+    "prohibited": [
+      "bootstrapping beats independently"
+    ]
+  },
+  "coverage_requirements_keys": [
+    "C1_schedule_to_gt_identity",
+    "C2_generated_to_supplied_adherence",
+    "C3_full_chain_P_S_G",
+    "C4_gt_beats_excluded",
+    "C5_generated_beats_excluded",
+    "own_centre_does_not_penalise",
+    "rule",
+    "those_penalties_live_in"
+  ],
+  "metric_ids": [
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "A6",
+    "AD_F1_100",
+    "AD_F1_50",
+    "AD_MAE",
+    "AD_MISS",
+    "AD_SPUR",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "C6",
+    "C7",
+    "C8",
+    "D1",
+    "D2",
+    "D3",
+    "F1_100",
+    "F1_150",
+    "F1_200",
+    "F1_50",
+    "J1",
+    "J2",
+    "J3",
+    "J4",
+    "PREC",
+    "REC"
+  ],
+  "imported_module": "ppg2ecg.evaluation.event_geometry_contract"
+}

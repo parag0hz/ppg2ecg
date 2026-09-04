@@ -130,6 +130,19 @@ def main() -> int:
               f"{gen_mac['ORACLE-COUNT-R1']['PG_F1_50']:.4f} | T6 {gen_mac['R1-0.35']['C2_own_T6']:.4f} -> "
               f"{gen_mac['ORACLE-COUNT-R1']['C2_own_T6']:.4f} | OG {og}", flush=True)
 
+    # site secondary (schedule side; no site causality claim)
+    from ppg2ecg.probes import r1_cohort as RC
+    srows = []
+    for st in RC.SITES:
+        idx = [i for i in range(len(X)) if SITE[i] == st]
+        for arm, rws in (("R1-0.35", rows_r1), ("ORACLE-COUNT-R1", rows_oc)):
+            srows.append({"arm": arm, "site": st, "n": len(idx),
+                          **{k: C.macro([rws[i][k] for i in idx], SUB[idx]) for k in
+                             ("A5_exact_set", "T3_frac", "T2_frac", "A3_missing_fraction",
+                              "A4_spurious_fraction", "SG_F1_50")},
+                          "B5_exact_set_mae_ms": float(np.nanmean([rws[i]["B5_exact_set_mae_ms"] for i in idx])),
+                          "note": "secondary; no site causality claim"})
+    C.wcsv(ART / "site_metrics.csv", srows)
     C.wcsv(ART / "oracle_count_bootstrap.csv", list(eff.values()) + list(eff_g.values()))
     C.wcsv(ART / "gates.csv", [{"stage": "stage0", "family": "OC", "gate": k, "result": bool(v)}
                                for k, v in oc.items()] +

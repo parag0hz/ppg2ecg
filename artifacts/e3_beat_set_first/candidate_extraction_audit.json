@@ -1,0 +1,11 @@
+{
+  "score": "sigmoid(RhythmTCN(ppg)) -- the exact frozen R1 quantity",
+  "threshold_free_rule": "rhythm_tcn.extract_events with ONLY the amplitude filter removed",
+  "refractory": 32,
+  "n_windows": 2048,
+  "n_windows_reproducing_frozen_r1": 2048,
+  "bit_exact_reproduction": true,
+  "recalibration": "none",
+  "smoothing": "none",
+  "per_window_normalisation": "none"
+}

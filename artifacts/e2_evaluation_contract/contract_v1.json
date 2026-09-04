@@ -1,0 +1,673 @@
+{
+  "contract_version": "e2-event-geometry-contract-v1",
+  "status": "MEASUREMENT CONTRACT. Not a scientific result, not confirmation, not a model, not deployable. The E1 formal verdict MIXED TOPOLOGY AND PLACEMENT LIMITATION is unchanged by this contract.",
+  "source": {
+    "e1_result_sha": "a5af4afcaf1a4a029c08a7002db9f9935c55f522",
+    "e1_prereg_sha": "2d5bb54",
+    "e1_impl_sha": "f815478",
+    "o3_result_sha": "d003bd7afe53d49ab37d0d24b1deac7352c9894a",
+    "e2_prereg": "docs/E2_EVENT_SET_PLACEMENT_MORPHOLOGY_CONTRACT_PREREGISTRATION.md"
+  },
+  "event_sets": {
+    "G": "GT ECG R events",
+    "S": "supplied event schedule",
+    "P": "events detected in the generated ECG",
+    "never_collapse": [
+      "S->G",
+      "P->S",
+      "P->G"
+    ],
+    "interpretation": {
+      "S->G": "schedule quality",
+      "P->S": "generator adherence to supplied geometry",
+      "P->G": "final generated event fidelity"
+    }
+  },
+  "families": {
+    "AXIS_A": {
+      "label": "EVENT SET / TOPOLOGY",
+      "question": "did the schedule supply the correct number/set of events?"
+    },
+    "AXIS_B": {
+      "label": "EVENT PLACEMENT",
+      "question": "for events that correspond, how accurately are they placed?"
+    },
+    "AXIS_C": {
+      "label": "OWN-CENTRE BEAT MORPHOLOGY",
+      "question": "ignoring global placement, is the corresponding beat's shape right?"
+    },
+    "JOINT": {
+      "label": "GT-ANCHORED JOINT STRUCTURE",
+      "question": "is the right structure at the right GT event?"
+    },
+    "JOINT_EVENT": {
+      "label": "JOINT EVENT FIDELITY",
+      "question": "existence, count and placement together (F1 family)"
+    },
+    "ADHERENCE": {
+      "label": "GENERATOR ADHERENCE",
+      "question": "did the generator follow the geometry it was given?"
+    }
+  },
+  "metrics": {
+    "A1": {
+      "id": "A1",
+      "name": "absolute beat-count error",
+      "family": "AXIS_A",
+      "formula": "abs(M - K)",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "beats",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "A2": {
+      "id": "A2",
+      "name": "beat-count deviation",
+      "family": "AXIS_A",
+      "formula": "abs(M / K - 1)",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "A3": {
+      "id": "A3",
+      "name": "missing fraction",
+      "family": "AXIS_A",
+      "formula": "n_unmatched_GT / K at +-150 ms",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "A4": {
+      "id": "A4",
+      "name": "spurious fraction",
+      "family": "AXIS_A",
+      "formula": "n_unmatched_S / K at +-150 ms",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "A5": {
+      "id": "A5",
+      "name": "exact-event-set window fraction",
+      "family": "AXIS_A",
+      "formula": "share of windows classified T0",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "A6": {
+      "id": "A6",
+      "name": "window topology category",
+      "family": "AXIS_A",
+      "formula": "T0 | T1 | T2 | T3 (see topology_definitions)",
+      "direction": "categorical",
+      "tier": "primary",
+      "unit": "category",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "B1": {
+      "id": "B1",
+      "name": "matched timing median AE",
+      "family": "AXIS_B",
+      "formula": "median over identity-matched pairs of abs(s_j - g_i) / fs * 1000",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "B2": {
+      "id": "B2",
+      "name": "matched timing MAE",
+      "family": "AXIS_B",
+      "formula": "mean over identity-matched pairs of abs(s_j - g_i) / fs * 1000",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "B3": {
+      "id": "B3",
+      "name": "matched timing p90 AE",
+      "family": "AXIS_B",
+      "formula": "90th percentile of the same absolute errors",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "B4": {
+      "id": "B4",
+      "name": "matched timing p95 AE",
+      "family": "AXIS_B",
+      "formula": "95th percentile of the same absolute errors",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "B5": {
+      "id": "B5",
+      "name": "exact-set placement MAE",
+      "family": "AXIS_B",
+      "formula": "B2 restricted to T0 windows; T0 sample size always reported",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G",
+      "notes": "isolates timing from count error; never reported without its n"
+    },
+    "B6": {
+      "id": "B6",
+      "name": "exact-set placement p90 AE",
+      "family": "AXIS_B",
+      "formula": "B3 restricted to T0 windows",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "S->G"
+    },
+    "C1": {
+      "id": "C1",
+      "name": "own-centre T4 p2p nAE",
+      "family": "AXIS_C",
+      "formula": "abs(p2p_gen(at P) - p2p_gt(at G)) / IQR_T4",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "normalised",
+      "coverage_required": true,
+      "normaliser": "T4_train_IQR"
+    },
+    "C2": {
+      "id": "C2",
+      "name": "own-centre T6 max-derivative nAE",
+      "family": "AXIS_C",
+      "formula": "abs(maxabs_d1_gen(at P) - maxabs_d1_gt(at G)) / IQR_T6",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "normalised",
+      "coverage_required": true,
+      "normaliser": "T6_train_IQR"
+    },
+    "C3": {
+      "id": "C3",
+      "name": "own-centre T7 curvature-energy nAE",
+      "family": "AXIS_C",
+      "formula": "abs(mean(d2^2)_gen(at P) - mean(d2^2)_gt(at G)) / IQR_T7",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "normalised",
+      "coverage_required": true,
+      "normaliser": "T7_train_IQR"
+    },
+    "C4": {
+      "id": "C4",
+      "name": "own-centre T8 QRS-width nAE",
+      "family": "AXIS_C",
+      "formula": "abs(width_gen(at P) - width_gt(at G)) / IQR_T8",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "normalised",
+      "coverage_required": true,
+      "normaliser": "T8_train_IQR"
+    },
+    "C5": {
+      "id": "C5",
+      "name": "own-centre local raw RMSE",
+      "family": "AXIS_C",
+      "formula": "rmse(gen[P-10:P+16], gt[G-10:G+16])",
+      "direction": "lower_better",
+      "tier": "secondary",
+      "unit": "amplitude",
+      "coverage_required": true
+    },
+    "C6": {
+      "id": "C6",
+      "name": "own-centre local derivative RMSE",
+      "family": "AXIS_C",
+      "formula": "rmse(d1(gen[P-11:P+12]), d1(gt[G-11:G+12]))",
+      "direction": "lower_better",
+      "tier": "secondary",
+      "unit": "amplitude/sample",
+      "coverage_required": true
+    },
+    "C7": {
+      "id": "C7",
+      "name": "own-centre local curvature error",
+      "family": "AXIS_C",
+      "formula": "mean(abs(d2(gen[P-11:P+12]) - d2(gt[G-11:G+12])))",
+      "direction": "lower_better",
+      "tier": "secondary",
+      "unit": "amplitude/sample^2",
+      "coverage_required": true
+    },
+    "C8": {
+      "id": "C8",
+      "name": "own-centre local correlation",
+      "family": "AXIS_C",
+      "formula": "corr(gen[P-10:P+16], gt[G-10:G+16])",
+      "direction": "higher_better",
+      "tier": "secondary",
+      "unit": "correlation",
+      "coverage_required": true
+    },
+    "J1": {
+      "id": "J1",
+      "name": "GT-anchored local raw RMSE",
+      "family": "JOINT",
+      "formula": "rmse(gen[G-10:G+16], gt[G-10:G+16])",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "amplitude",
+      "coverage_required": true,
+      "notes": "combines shape and placement by construction"
+    },
+    "J2": {
+      "id": "J2",
+      "name": "GT-anchored local derivative RMSE",
+      "family": "JOINT",
+      "formula": "rmse(d1(gen[G-11:G+12]), d1(gt[G-11:G+12]))",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "amplitude/sample",
+      "coverage_required": true
+    },
+    "J3": {
+      "id": "J3",
+      "name": "GT-anchored local curvature error",
+      "family": "JOINT",
+      "formula": "mean(abs(d2(gen[G-11:G+12]) - d2(gt[G-11:G+12])))",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "amplitude/sample^2",
+      "coverage_required": true
+    },
+    "J4": {
+      "id": "J4",
+      "name": "GT-anchored local correlation",
+      "family": "JOINT",
+      "formula": "corr(gen[G-10:G+16], gt[G-10:G+16])",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "correlation",
+      "coverage_required": true
+    },
+    "D1": {
+      "id": "D1",
+      "name": "alignment sensitivity, local raw RMSE",
+      "family": "JOINT",
+      "formula": "J1 - C5 (same functional)",
+      "direction": "diagnostic",
+      "tier": "diagnostic",
+      "unit": "amplitude",
+      "coverage_required": true
+    },
+    "D2": {
+      "id": "D2",
+      "name": "alignment sensitivity, local derivative RMSE",
+      "family": "JOINT",
+      "formula": "J2 - C6 (same functional)",
+      "direction": "diagnostic",
+      "tier": "diagnostic",
+      "unit": "amplitude/sample",
+      "coverage_required": true
+    },
+    "D3": {
+      "id": "D3",
+      "name": "alignment sensitivity, local curvature error",
+      "family": "JOINT",
+      "formula": "J3 - C7 (same functional)",
+      "direction": "diagnostic",
+      "tier": "diagnostic",
+      "unit": "amplitude/sample^2",
+      "coverage_required": true
+    },
+    "F1_50": {
+      "id": "F1_50",
+      "name": "joint event fidelity F1@50",
+      "family": "JOINT_EVENT",
+      "formula": "F1 of the frozen one-to-one match at +-50 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "F1_100": {
+      "id": "F1_100",
+      "name": "joint event fidelity F1@100",
+      "family": "JOINT_EVENT",
+      "formula": "F1 at +-100 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "F1_150": {
+      "id": "F1_150",
+      "name": "joint event fidelity F1@150",
+      "family": "JOINT_EVENT",
+      "formula": "F1 at +-150 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "F1_200": {
+      "id": "F1_200",
+      "name": "joint event fidelity F1@200",
+      "family": "JOINT_EVENT",
+      "formula": "F1 at +-200 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "PREC": {
+      "id": "PREC",
+      "name": "joint event fidelity precision",
+      "family": "JOINT_EVENT",
+      "formula": "precision of the +-50 ms match",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "REC": {
+      "id": "REC",
+      "name": "joint event fidelity recall",
+      "family": "JOINT_EVENT",
+      "formula": "recall of the +-50 ms match",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "S->G and P->G"
+    },
+    "AD_F1_50": {
+      "id": "AD_F1_50",
+      "name": "adherence F1@50",
+      "family": "ADHERENCE",
+      "formula": "F1 of P->S at +-50 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "P->S"
+    },
+    "AD_F1_100": {
+      "id": "AD_F1_100",
+      "name": "adherence F1@100",
+      "family": "ADHERENCE",
+      "formula": "F1 of P->S at +-100 ms",
+      "direction": "higher_better",
+      "tier": "primary",
+      "unit": "F1",
+      "coverage_required": true,
+      "event_pair": "P->S"
+    },
+    "AD_MISS": {
+      "id": "AD_MISS",
+      "name": "adherence missing",
+      "family": "ADHERENCE",
+      "formula": "unmatched S / abs(S)",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "P->S"
+    },
+    "AD_SPUR": {
+      "id": "AD_SPUR",
+      "name": "adherence spurious",
+      "family": "ADHERENCE",
+      "formula": "unmatched P / abs(S)",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "fraction",
+      "coverage_required": true,
+      "event_pair": "P->S"
+    },
+    "AD_MAE": {
+      "id": "AD_MAE",
+      "name": "adherence matched timing MAE",
+      "family": "ADHERENCE",
+      "formula": "mean abs(p_j - s_i) / fs * 1000 over P->S matches",
+      "direction": "lower_better",
+      "tier": "primary",
+      "unit": "ms",
+      "coverage_required": true,
+      "event_pair": "P->S"
+    }
+  },
+  "topology_definitions": {
+    "T0": "M == K AND every supplied event assigned to a unique GT event within +-150 ms AND no unmatched GT AND no unmatched S",
+    "T1": "M == K but the event set is imperfect at +-150 ms",
+    "T2": "M < K (undercount)",
+    "T3": "M > K (overcount)"
+  },
+  "matching": {
+    "S_to_G": {
+      "tolerance_ms": 150.0,
+      "synthetic_arms": "exact construction identity from O3/E1",
+      "predicted_schedules": "monotonic one-to-one dynamic-programming assignment",
+      "objective_hierarchy": [
+        "maximise matched cardinality",
+        "minimise total absolute timing error",
+        "deterministic tie break: transition preference match -> skip-ref -> skip-pred, indices ascending"
+      ],
+      "label": "TARGET-DERIVED DIAGNOSTIC MATCHING",
+      "prohibited": [
+        "shift S",
+        "repair S",
+        "insert events",
+        "delete events",
+        "modify inference"
+      ]
+    },
+    "P_to_S": {
+      "tolerance_ms": 50.0,
+      "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+    },
+    "P_to_G": {
+      "tolerances_ms": [
+        50.0,
+        100.0,
+        150.0,
+        200.0
+      ],
+      "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+    }
+  },
+  "support": {
+    "own_centre": [
+      -10,
+      15
+    ],
+    "gt_anchored": [
+      -10,
+      15
+    ],
+    "derivative_slice": [
+      -11,
+      12
+    ],
+    "eligibility": "c - 11 >= 0 and c + 15 <= n_time - 1",
+    "fs": 128,
+    "n_time": 1024,
+    "prohibited": [
+      "local cross-correlation shift",
+      "DTW",
+      "oracle shift",
+      "amplitude optimisation",
+      "waveform renormalisation beyond the frozen preprocessing"
+    ]
+  },
+  "normalization": {
+    "T4_train_IQR": 0.5053170621395111,
+    "T6_train_IQR": 0.22995377704501152,
+    "T7_train_IQR": 0.033796727107052275,
+    "T8_train_IQR": 31.25,
+    "source": "artifacts/o1_component_extractability/target_scaling.json (frozen O1 train IQRs)"
+  },
+  "aggregation": {
+    "order": [
+      "per-beat",
+      "median within window",
+      "mean within subject",
+      "equal-subject macro"
+    ],
+    "subjects": [
+      "an0",
+      "k2s"
+    ],
+    "note": "unless a metric definition itself specifies otherwise"
+  },
+  "bootstrap": {
+    "unit": "underlying ECG-window cluster (all four site rows of one target ECG move together)",
+    "stratification": "subject, equal weight",
+    "n_replicates": 2000,
+    "rng": "default_rng(20260904)",
+    "prohibited": [
+      "bootstrapping beats independently"
+    ]
+  },
+  "effect_orientation": {
+    "higher_is_better": "effect = NEW - REFERENCE",
+    "lower_is_better": "effect = REFERENCE - NEW",
+    "meaning": "positive always means NEW is better",
+    "damage_tables_only": "Damage = Error_condition - Error_reference; the table title MUST say 'positive = more damage'",
+    "prohibited": [
+      "mixing conventions within one table"
+    ]
+  },
+  "coverage_requirements": {
+    "C1_schedule_to_gt_identity": "fraction of supplied events carrying a GT identity",
+    "C2_generated_to_supplied_adherence": "fraction of identified supplied events matched by a generated event",
+    "C3_full_chain_P_S_G": "fraction of supplied events with a complete eligible chain",
+    "C4_gt_beats_excluded": "fraction of GT beats absent from the own-centre comparison",
+    "C5_generated_beats_excluded": "fraction of generated beats absent from the own-centre comparison",
+    "rule": "every morphology metric row must carry all five; morphology reported without coverage is INVALID",
+    "own_centre_does_not_penalise": [
+      "missing beats",
+      "unmatched extra beats"
+    ],
+    "those_penalties_live_in": "AXIS_A"
+  },
+  "mandatory_reporting_block": {
+    "A_event_set": [
+      "A5 exact-set fraction",
+      "A1 absolute count error",
+      "A3 missing",
+      "A4 spurious",
+      "A6 T0/T1/T2/T3"
+    ],
+    "B_placement": [
+      "B2 matched timing MAE",
+      "B3 p90 timing AE",
+      "B5 T0-only timing MAE",
+      "B6 T0-only p90"
+    ],
+    "C_joint_event": [
+      "F1_50",
+      "F1_100",
+      "F1_150"
+    ],
+    "D_generator_adherence": [
+      "AD_F1_50",
+      "AD_MAE"
+    ],
+    "E_own_centre_morphology": [
+      "C1",
+      "C2",
+      "C3",
+      "C4",
+      "C6",
+      "C7",
+      "chain coverage"
+    ],
+    "F_gt_anchored_joint_structure": [
+      "J1",
+      "J2",
+      "J3",
+      "J4"
+    ],
+    "rule": "no future experiment may omit an axis because the result is unfavourable"
+  },
+  "prohibited_comparisons": [
+    {
+      "comparison": "own-centre T6 (C2) versus GT-anchored local derivative RMSE (J2)",
+      "reason": "cross-functional; different functionals on different scales. This ambiguity is what E1 exposed.",
+      "use_instead": "same-functional alignment sensitivity D1/D2/D3"
+    }
+  ],
+  "terminology": {
+    "prohibited_labels": {
+      "GT-anchored family": [
+        "pure morphology",
+        "morphology-only"
+      ],
+      "F1 family": [
+        "pure timing accuracy"
+      ],
+      "T4/T6/T7/T8": [
+        "placement metric",
+        "evidence that placement is correct"
+      ]
+    },
+    "required_labels": {
+      "JOINT": "GT-ANCHORED JOINT STRUCTURE",
+      "JOINT_EVENT": "JOINT EVENT FIDELITY",
+      "AXIS_C": "OWN-CENTRE BEAT MORPHOLOGY",
+      "S->G identity for predicted schedules": "TARGET-DERIVED DIAGNOSTIC MATCHING"
+    },
+    "descriptive_labels": {
+      "HIGH ADHERENCE": "P->S F1@50 >= 0.90; descriptive only, never a success criterion"
+    }
+  },
+  "scalar_metric_warning": {
+    "statement": "T4/T6/T7/T8 are own-centre / local shape summary metrics, not standalone placement metrics.",
+    "e1_measurement": "under jitter, re-centring changed these scalar primitives by <= 0.0035 at every level while same-functional waveform alignment sensitivity changed by up to +0.28",
+    "prohibited_inference": "'placement is correct' from good T4/T6/T7/T8 alone"
+  },
+  "future_experiment_policy": {
+    "must_preregister_before_training": [
+      "schedule-side reference arm",
+      "generator reference arm",
+      "improvement margins",
+      "non-inferiority margins",
+      "seed count",
+      "compute budget"
+    ],
+    "may_not": [
+      "change metric definitions",
+      "remove a metric family",
+      "redefine coverage",
+      "change matching",
+      "change support",
+      "change aggregation",
+      "replace event-set metrics with F1 only"
+    ],
+    "research_priority": "EVENT-SET FIRST, TIMING SECOND (priority, not an architecture prescription)"
+  }
+}

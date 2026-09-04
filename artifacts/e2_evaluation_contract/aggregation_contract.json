@@ -1,0 +1,34 @@
+{
+  "contract_version": "e2-event-geometry-contract-v1",
+  "aggregation": {
+    "order": [
+      "per-beat",
+      "median within window",
+      "mean within subject",
+      "equal-subject macro"
+    ],
+    "subjects": [
+      "an0",
+      "k2s"
+    ],
+    "note": "unless a metric definition itself specifies otherwise"
+  },
+  "bootstrap": {
+    "unit": "underlying ECG-window cluster (all four site rows of one target ECG move together)",
+    "stratification": "subject, equal weight",
+    "n_replicates": 2000,
+    "rng": "default_rng(20260904)",
+    "prohibited": [
+      "bootstrapping beats independently"
+    ]
+  },
+  "effect_orientation": {
+    "higher_is_better": "effect = NEW - REFERENCE",
+    "lower_is_better": "effect = REFERENCE - NEW",
+    "meaning": "positive always means NEW is better",
+    "damage_tables_only": "Damage = Error_condition - Error_reference; the table title MUST say 'positive = more damage'",
+    "prohibited": [
+      "mixing conventions within one table"
+    ]
+  }
+}

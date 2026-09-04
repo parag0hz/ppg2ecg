@@ -1,0 +1,14 @@
+{
+  "contract_version": "e2-event-geometry-contract-v1",
+  "C1_schedule_to_gt_identity": "fraction of supplied events carrying a GT identity",
+  "C2_generated_to_supplied_adherence": "fraction of identified supplied events matched by a generated event",
+  "C3_full_chain_P_S_G": "fraction of supplied events with a complete eligible chain",
+  "C4_gt_beats_excluded": "fraction of GT beats absent from the own-centre comparison",
+  "C5_generated_beats_excluded": "fraction of generated beats absent from the own-centre comparison",
+  "rule": "every morphology metric row must carry all five; morphology reported without coverage is INVALID",
+  "own_centre_does_not_penalise": [
+    "missing beats",
+    "unmatched extra beats"
+  ],
+  "those_penalties_live_in": "AXIS_A"
+}

@@ -282,3 +282,15 @@ dist/
 *.log
 .DS_Store
 .ipynb_checkpoints/
+
+# --- E2 evaluation contract: DEFINITIONS ONLY are version-controlled ---
+# artifacts/ is ignored above because it holds results and large files. The E2 contract is not a result:
+# it is the frozen measurement definition that future experiments must import, so exactly these five
+# definitional JSON files are tracked. Every E2 validation RESULT stays ignored.
+!artifacts/e2_evaluation_contract/
+artifacts/e2_evaluation_contract/*
+!artifacts/e2_evaluation_contract/contract_v1.json
+!artifacts/e2_evaluation_contract/metric_taxonomy.json
+!artifacts/e2_evaluation_contract/matching_contract.json
+!artifacts/e2_evaluation_contract/aggregation_contract.json
+!artifacts/e2_evaluation_contract/coverage_contract.json

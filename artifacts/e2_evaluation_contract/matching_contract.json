@@ -1,0 +1,40 @@
+{
+  "contract_version": "e2-event-geometry-contract-v1",
+  "S_to_G": {
+    "tolerance_ms": 150.0,
+    "synthetic_arms": "exact construction identity from O3/E1",
+    "predicted_schedules": "monotonic one-to-one dynamic-programming assignment",
+    "objective_hierarchy": [
+      "maximise matched cardinality",
+      "minimise total absolute timing error",
+      "deterministic tie break: transition preference match -> skip-ref -> skip-pred, indices ascending"
+    ],
+    "label": "TARGET-DERIVED DIAGNOSTIC MATCHING",
+    "prohibited": [
+      "shift S",
+      "repair S",
+      "insert events",
+      "delete events",
+      "modify inference"
+    ]
+  },
+  "P_to_S": {
+    "tolerance_ms": 50.0,
+    "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+  },
+  "P_to_G": {
+    "tolerances_ms": [
+      50.0,
+      100.0,
+      150.0,
+      200.0
+    ],
+    "matcher": "frozen greedy one-to-one rpeaks.match_rpeaks"
+  },
+  "topology_definitions": {
+    "T0": "M == K AND every supplied event assigned to a unique GT event within +-150 ms AND no unmatched GT AND no unmatched S",
+    "T1": "M == K but the event set is imperfect at +-150 ms",
+    "T2": "M < K (undercount)",
+    "T3": "M > K (overcount)"
+  }
+}

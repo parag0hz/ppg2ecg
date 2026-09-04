@@ -332,3 +332,26 @@ def test_claim_limits_are_stated():
         assert banned in FLAT, banned
     assert "confidence-calibrated" not in PREREG
     assert "not causal" in SRCS["main"] or "observational" in SRCS["main"]
+
+
+def test_reconstruction_gate_treats_an_undefined_quantity_as_agreement():
+    import importlib.util
+    sp = importlib.util.spec_from_file_location("e1_main_t", ROOT / "scripts/e1_decompose.py")
+    m = importlib.util.module_from_spec(sp); sp.loader.exec_module(m)
+    nan = float("nan")
+    assert m.agree(nan, nan, 1e-9)                      # MISS/EXTRA leave max_abs_shift undefined in O3 too
+    assert not m.agree(nan, 1.0, 1e-9) and not m.agree(1.0, nan, 1e-9)
+    assert m.agree(1.0, 1.0 + 1e-12, 1e-9) and not m.agree(1.0, 1.001, 1e-9)
+    assert "the exact O3 expression" in SRCS["main"]     # the shift is recomputed, never copied from O3
+
+
+def test_chaining_uses_gt_sample_positions_not_beat_indices():
+    """A GT beat index is not a time. Coverage collapses to a few percent if the two are confused."""
+    src = SRCS["main"]
+    assert "gpos = np.asarray(gt_pk[i], dtype=np.int64)" in src
+    assert "gp = int(gpos[g])" in src and "the GT beat's SAMPLE POSITION" in src
+    assert "E1.beat_shape(gen[i], Yd[i], int(p[pj]), gp, iqr)" in src
+    assert "E1.beat_shape(gen[i], Yd[i], gp, gp, iqr)" in src
+    assert "int(p[pj]) - gp" in src
+    assert "analyse_arm(gen, Yd, S, P, pairs, gt_pk, iqr" in src
+

@@ -42,6 +42,13 @@ def rd(p):
     return list(csv.DictReader(open(p)))
 
 
+def agree(a: float, b: float, tol: float) -> bool:
+    """Both undefined counts as agreement: O3 records NaN for a quantity that a family leaves undefined."""
+    if not np.isfinite(a) and not np.isfinite(b):
+        return True
+    return bool(np.isfinite(a) and np.isfinite(b) and abs(a - b) <= tol)
+
+
 def o3row(name, cond, rep=REP, arm=None):
     rows = rd(O3ART / name)
     for r in rows:
@@ -52,13 +59,14 @@ def o3row(name, cond, rep=REP, arm=None):
     raise KeyError(f"{name}: {cond} rep{rep} arm={arm}")
 
 
-def analyse_arm(gen, Yd, S, P, pairs, iqr, n_time=E1.T_LEN):
+def analyse_arm(gen, Yd, S, P, pairs, gt_pk, iqr, n_time=E1.T_LEN):
     """Per-window own-centre + GT-anchored beat analysis over chained beats. Returns (window rows, beat rows)."""
     wrows, brows = [], []
     for i in range(len(gen)):
         s = np.asarray(S[i], dtype=np.int64)
         p = np.asarray(P[i], dtype=np.int64)
-        ident = {int(a): int(b) for a, b in pairs[i]}                 # supplied index -> GT index
+        gpos = np.asarray(gt_pk[i], dtype=np.int64)                   # GT sample positions
+        ident = {int(a): int(b) for a, b in pairs[i]}                 # supplied index -> GT BEAT INDEX
         chain, _fp, _fn = RP.match_rpeaks(s, p, E1.FS, E1.TOL_CHAIN_MS)
         beats, n_chain = [], 0
         for si, pj in chain:
@@ -66,13 +74,14 @@ def analyse_arm(gen, Yd, S, P, pairs, iqr, n_time=E1.T_LEN):
                 continue                                             # inserted beat: no GT identity
             n_chain += 1
             g = ident[si]
-            own = E1.beat_shape(gen[i], Yd[i], int(p[pj]), int(g), iqr)
-            gta = E1.beat_shape(gen[i], Yd[i], int(g), int(g), iqr)
+            gp = int(gpos[g])                                          # the GT beat's SAMPLE POSITION
+            own = E1.beat_shape(gen[i], Yd[i], int(p[pj]), gp, iqr)
+            gta = E1.beat_shape(gen[i], Yd[i], gp, gp, iqr)
             if own is None or gta is None:
                 continue
             row = {"row": i, "supplied_index": si, "gen_index": int(pj), "gt_index": int(g),
-                   "gen_pos": int(p[pj]), "sup_pos": int(s[si]), "gt_pos": int(g),
-                   "gen_to_gt_ae_ms": abs(int(p[pj]) - int(g)) / E1.FS * 1000.0,
+                   "gen_pos": int(p[pj]), "sup_pos": int(s[si]), "gt_pos": gp,
+                   "gen_to_gt_ae_ms": abs(int(p[pj]) - gp) / E1.FS * 1000.0,
                    "gen_to_sup_ae_ms": abs(int(p[pj]) - int(s[si])) / E1.FS * 1000.0,
                    **{f"own_{k}": v for k, v in own.items()},
                    **{f"gt_{k}": v for k, v in gta.items()}}
@@ -109,6 +118,8 @@ def boot(a_rows, b_rows, key, SUB, CLUSTER):
     d = a - b
     res = C.O1E.cluster_bootstrap(d, SUB, CLUSTER, n_boot=E1.BOOT_N, seed=E1.BOOT_SEED)
     res["n_dropped_windows"] = int(np.sum(~np.isfinite(d)))
+    res["damage_verdict"] = ("damage confirmed" if res["lo"] > 0 else
+                             ("better than the reference" if res["hi"] < 0 else "unresolved"))
     res["A_mean"] = C.macro(a, SUB)
     res["B_mean"] = C.macro(b, SUB)
     return res
@@ -151,12 +162,10 @@ def main() -> int:
         SUPP[name] = S
         PAIRS[name] = [np.stack([pp[:, 0], pp[:, 1]], axis=1) if len(pp) else pp for pp in RPn]
         o3m = o3row("perturbation_manifest.csv", O3NAME[name])
+        shift = [np.abs(np.asarray(S[i], float) - np.asarray(gt_pk[i], float)).max()
+                 if len(S[i]) == len(gt_pk[i]) else np.nan for i in range(len(X))]   # the exact O3 expression
         got = {"mean_M": float(np.mean([len(s) for s in S])),
-               "max_abs_shift_samples": float(np.nanmax([np.abs(np.asarray(S[i], float) -
-                                                                np.asarray(gt_pk[i], float)).max()
-                                                         if len(S[i]) == len(gt_pk[i]) else np.nan
-                                                         for i in range(len(X))]))
-               if fam == "JITTER" else float(o3m["max_abs_shift_samples"])}
+               "max_abs_shift_samples": float(np.nanmax(shift)) if np.isfinite(shift).any() else np.nan}
         q = [O3.schedule_quality(gt_pk[i], S[i]) for i in range(len(X))]
         o3q = o3row("schedule_quality_metrics.csv", O3NAME[name])
         for k in ("f1_at_50", "f1_at_150", "timing_mae_ms", "missing", "spurious", "beats_ratio_dev"):
@@ -164,8 +173,9 @@ def main() -> int:
         exp = {"mean_M": float(o3m["mean_M"]), "max_abs_shift_samples": float(o3m["max_abs_shift_samples"]),
                **{k: float(o3q[k]) for k in ("f1_at_50", "f1_at_150", "timing_mae_ms", "missing",
                                              "spurious", "beats_ratio_dev")}}
-        bad = {k: [got[k], v] for k, v in exp.items() if not (abs(got[k] - v) <= REG_TOL_SCHED)}
-        sched_gate.append({"arm": name, "max_abs_diff": max(abs(got[k] - v) for k, v in exp.items()),
+        bad = {k: [got[k], v] for k, v in exp.items() if not agree(got[k], v, REG_TOL_SCHED)}
+        fin = [abs(got[k] - v) for k, v in exp.items() if np.isfinite(got[k]) and np.isfinite(v)]
+        sched_gate.append({"arm": name, "max_abs_diff": max(fin) if fin else 0.0,
                            "passed": not bad, "mismatches": json.dumps(bad), **{f"o3_{k}": v for k, v in exp.items()}})
         if bad:
             raise RuntimeError(f"SCHEDULE RECONSTRUCTION GATE FAILED (STOP): {name}: {bad}")
@@ -218,7 +228,7 @@ def main() -> int:
     W, BEATS, COV, TOPO, PLACE = {}, {}, {}, {}, {}
     for name, _f, _l in ARMS:
         P = C.R2E.pmap(C.S0._peaks, list(PRED[name].astype(np.float64)))
-        w, b = analyse_arm(PRED[name], Yd, SUPP[name], P, PAIRS[name], iqr)
+        w, b = analyse_arm(PRED[name], Yd, SUPP[name], P, PAIRS[name], gt_pk, iqr)
         W[name], BEATS[name] = w, b
         COV[name] = coverage(w, gt_pk, SUPP[name])
         TOPO[name] = [E1.topology(gt_pk[i], SUPP[name][i]) for i in range(len(X))]
@@ -287,6 +297,21 @@ def main() -> int:
             "TopologyExcessDamage_MISS = Damage(MISS1,ORACLE) - Damage(JITTER8,ORACLE)")
         add(f"excess_EXTRA_{lab}", W["EXTRA1"], W["JITTER_8"], f"own_{k}",
             "TopologyExcessDamage_EXTRA = Damage(EXTRA1,ORACLE) - Damage(JITTER8,ORACLE)")
+    for lab, ownk, gtk in (("T6", f"own_{T6K}", "gt_local_deriv_rmse"),
+                           ("T7", f"own_{T7K}", "gt_local_curvature_err")):
+        a = [{"d": r[gtk]} for r in W["JITTER_4"]]
+        b = [{"d": r[gtk]} for r in W["ORACLE"]]
+        gt_dmg = boot(a, b, "d", SUB, CLUSTER)
+        own_dmg = res[f"JITTER4_damage_{lab}"]
+        brows.append({"contrast": f"POSTHOC_own_{lab}_vs_gt_waveform_damage_J4", "metric": f"{ownk} | {gtk}",
+                      "orientation": "positive = FIRST arm worse", "point": gt_dmg["point"] - own_dmg["point"],
+                      "lo": "", "hi": "", "verdict": "", "damage_verdict": "",
+                      "note": "SECONDARY, POST-HOC, NOT A GATE: the task wording pairs own-centre T6/T7 damage "
+                              "against GT-anchored DERIVATIVE/CURVATURE damage, whereas the frozen "
+                              "preregistration gate P3/P4 uses the same-functional GT-anchored T6/T7; both are "
+                              "reported and only the frozen gate can move the verdict",
+                      "own_damage_point": own_dmg["point"], "gt_waveform_damage_point": gt_dmg["point"],
+                      "A_mean": gt_dmg["A_mean"], "B_mean": gt_dmg["B_mean"], "n_dropped_windows": 0})
     C.wcsv(ART / "paired_bootstrap.csv", brows)
     C.wcsv(ART / "synthetic_contrasts.csv",
            [{"arm": a, "schedule_mae_ms": float(np.nanmean([p["mae_ms"] for p in PLACE[a]])),
@@ -332,7 +357,7 @@ def main() -> int:
     for i in range(len(X)):
         m, _ur, _up = E1.dp_match(gt_pk[i], S_r1[i], E1.FS, E1.TOL_IDENTITY_MS)
         pairs_r1.append(np.asarray([(j, g) for g, j in m], dtype=np.int64).reshape(-1, 2))
-    W["R1-SCHEDULE"], BEATS["R1-SCHEDULE"] = analyse_arm(p_r1, Yd, S_r1, P_r1, pairs_r1, iqr)
+    W["R1-SCHEDULE"], BEATS["R1-SCHEDULE"] = analyse_arm(p_r1, Yd, S_r1, P_r1, pairs_r1, gt_pk, iqr)
     COV["R1-SCHEDULE"] = coverage(W["R1-SCHEDULE"], gt_pk, S_r1)
     COV["R1-SCHEDULE"]["adherence_f1_at_50"] = C.macro(
         [O3.adherence(S_r1[i], P_r1[i])["adherence_f1_at_50"] for i in range(len(X))], SUB)

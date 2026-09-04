@@ -305,3 +305,8 @@ artifacts/e3_beat_set_first/*
 !artifacts/e3_beat_set_first/train_only_threshold_control.json
 !artifacts/e3_beat_set_first/train_feature_manifest.json
 !artifacts/e3_beat_set_first/count_readout_manifest.json
+
+# Literature survey working material (2026-09-04) — PDFs and reference clones stay out of git
+paper/
+external_ref/
+fig.html

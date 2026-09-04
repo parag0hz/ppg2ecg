@@ -1,0 +1,75 @@
+{
+  "splits": [
+    {
+      "protocol": "D1-subject-holdout",
+      "seed": 42,
+      "corpus": "bidmc",
+      "rule": "natural-sorted subject ids -> numpy.random.Generator(PCG64(42)).permutation -> train = ceil(0.70*n) (capped at n-2), val = max(1, floor(rest/2)), test = the remainder",
+      "n_subjects": 51,
+      "train": [
+        "bidmc04",
+        "bidmc05",
+        "bidmc06",
+        "bidmc08",
+        "bidmc10",
+        "bidmc11",
+        "bidmc16",
+        "bidmc17",
+        "bidmc18",
+        "bidmc19",
+        "bidmc21",
+        "bidmc22",
+        "bidmc24",
+        "bidmc25",
+        "bidmc26",
+        "bidmc27",
+        "bidmc28",
+        "bidmc29",
+        "bidmc30",
+        "bidmc31",
+        "bidmc33",
+        "bidmc34",
+        "bidmc36",
+        "bidmc39",
+        "bidmc40",
+        "bidmc41",
+        "bidmc42",
+        "bidmc43",
+        "bidmc44",
+        "bidmc45",
+        "bidmc46",
+        "bidmc47",
+        "bidmc48",
+        "bidmc50",
+        "bidmc51",
+        "bidmc53"
+      ],
+      "val": [
+        "bidmc01",
+        "bidmc07",
+        "bidmc12",
+        "bidmc13",
+        "bidmc20",
+        "bidmc23",
+        "bidmc37"
+      ],
+      "test": [
+        "bidmc02",
+        "bidmc03",
+        "bidmc09",
+        "bidmc14",
+        "bidmc15",
+        "bidmc35",
+        "bidmc38",
+        "bidmc52"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "D1 \u00a75 split for BIDMC; written before any bidmc weight update",
+    "processed": "data/processed/bidmc_8s",
+    "corpus_identity_sha256": "2f070a249b286e58ae940dc91b3d7ab6b558570a78a1f87d80bc8dcda5fd0fba",
+    "corpus_identity_rule": "sha256 of json.dumps of the natural-sorted list of [subject, n_windows, per-file sha256] triples taken from the corpus MANIFEST.json 'files' block",
+    "corpus_manifest_sha256": "22a86937b6ec70fe86aeb59992baca77bc87de19a58d3ee39d85774c5a9c4614"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "splits": [
+    {
+      "protocol": "D1-subject-holdout",
+      "seed": 42,
+      "corpus": "capnobase",
+      "rule": "natural-sorted subject ids -> numpy.random.Generator(PCG64(42)).permutation -> train = ceil(0.70*n) (capped at n-2), val = max(1, floor(rest/2)), test = the remainder",
+      "n_subjects": 42,
+      "train": [
+        "0023",
+        "0028",
+        "0029",
+        "0030",
+        "0032",
+        "0035",
+        "0038",
+        "0115",
+        "0121",
+        "0122",
+        "0123",
+        "0127",
+        "0128",
+        "0133",
+        "0134",
+        "0142",
+        "0147",
+        "0148",
+        "0149",
+        "0150",
+        "0309",
+        "0311",
+        "0312",
+        "0313",
+        "0325",
+        "0328",
+        "0330",
+        "0331",
+        "0332",
+        "0370"
+      ],
+      "val": [
+        "0009",
+        "0018",
+        "0103",
+        "0105",
+        "0125",
+        "0333"
+      ],
+      "test": [
+        "0015",
+        "0016",
+        "0031",
+        "0104",
+        "0322",
+        "0329"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "D1 \u00a75 split for CapnoBase; written before any capnobase weight update",
+    "processed": "data/processed/capnobase_8s",
+    "corpus_identity_sha256": "c5d4ade2b9635f77d3603012da1376a4e7fa917709adc7639dacbfe6da371186",
+    "corpus_identity_rule": "sha256 of json.dumps of the natural-sorted list of [subject, n_windows, per-file sha256] triples taken from the corpus MANIFEST.json 'files' block",
+    "corpus_manifest_sha256": "0a053f73a1334916a660ffdcf296debf688504fbfbf9e77e05e181ebcab5cd81"
+  }
+}

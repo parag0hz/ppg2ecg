@@ -1,0 +1,38 @@
+{
+  "splits": [
+    {
+      "protocol": "D1-subject-holdout",
+      "seed": 42,
+      "corpus": "wildppg",
+      "rule": "natural-sorted subject ids -> numpy.random.Generator(PCG64(42)).permutation -> train = ceil(0.70*n) (capped at n-2), val = max(1, floor(rest/2)), test = the remainder",
+      "n_subjects": 14,
+      "train": [
+        "an0",
+        "fex",
+        "k2s",
+        "n31",
+        "ngh",
+        "p5d",
+        "qm9",
+        "trh",
+        "tz8",
+        "w4p"
+      ],
+      "val": [
+        "l38",
+        "u7y"
+      ],
+      "test": [
+        "e61",
+        "p9p"
+      ]
+    }
+  ],
+  "extra": {
+    "note": "D1 \u00a75 split for WildPPG; written before any wildppg weight update",
+    "processed": "data/processed/wildppg_8s",
+    "corpus_identity_sha256": "f185280c39a68bddaa18c32494df4c7145e1e80442451078e0c68806b6a35b75",
+    "corpus_identity_rule": "sha256 of json.dumps of the natural-sorted list of [subject, n_windows, per-file sha256] triples taken from the corpus MANIFEST.json 'files' block",
+    "corpus_manifest_sha256": "5cd54bbfb42e63275290e1fb7f35bd2d40092b9e13c4f63d56cdbedba5b679dc"
+  }
+}

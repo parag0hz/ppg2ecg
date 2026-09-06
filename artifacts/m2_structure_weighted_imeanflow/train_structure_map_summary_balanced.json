@@ -1,0 +1,60 @@
+{
+ "n_windows": 8192,
+ "n_subjects": 12,
+ "subjects": [
+  "e61",
+  "fex",
+  "l38",
+  "n31",
+  "ngh",
+  "p5d",
+  "p9p",
+  "qm9",
+  "trh",
+  "tz8",
+  "u7y",
+  "w4p"
+ ],
+ "sampling": "balanced per subject",
+ "T": 1024,
+ "lambda_struct": 2.0,
+ "weight": {
+  "min": 0.5728734074374714,
+  "mean": 1.0,
+  "max": 2.574515913272317
+ },
+ "finite_fraction": 1.0,
+ "mean_normalisation_error": {
+  "max": 4.440892098500626e-16,
+  "mean": 4.85722573273506e-17
+ },
+ "q95": {
+  "min": 0.04572937114935479,
+  "median": 0.34684762799879515,
+  "max": 0.5338732489966783
+ },
+ "frac_m_gt_0.5": 0.08067119121551514,
+ "frac_m_gt_0.8": 0.06222116947174072,
+ "top20_derivative_energy_concentration": {
+  "median": 0.8288041407897668,
+  "mean": 0.8037408658522133,
+  "p05": 0.6147632567031325,
+  "p95": 0.8857929779214214
+ },
+ "ess_over_T": {
+  "min": 0.8391374573585685,
+  "median": 0.868504403089243,
+  "frac_ge_0.50": 1.0
+ },
+ "gates": {
+  "S0-A_all_finite": true,
+  "S0-B_mean_normalisation": true,
+  "S0-C_top20_derivative_energy_median_gt_0.50": true,
+  "S0-D_ess_ratio_ge_0.50_for_99.5pct": true
+ },
+ "all_gates_pass": true,
+ "qrs_concentration_diagnostic": {
+  "note": "DIAGNOSTIC ONLY (prereg \u00a79): GT R peaks describe where weight falls; no R annotation enters arm S and no gate depends on this",
+  "fraction_of_excess_weight_within_R_pm10": 0.6540219757894257
+ }
+}

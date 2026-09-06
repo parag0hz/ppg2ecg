@@ -1,0 +1,12 @@
+{
+ "seed": 42,
+ "init_state_sha256": "a79e527d065f4e0b9e8342534a516acf4256037bc4bae2de94928c964ad7961b",
+ "n_parameters": 4568707,
+ "construction": "seed_everything(42, deterministic=True); MeanFlowS5(build_penguin_backbone(h_dim=128, ssm_block_num=4, ssm_ratio=2.0, mlp_ratio=2.0, sample_rate=128), cond_mode='h_only', h_scale=1.0)",
+ "note": "arms U, S (and X, Q if reached) construct the model this way under --seed 42, so the initialization is identical by construction; this hash makes that checkable rather than assumed",
+ "epochs": 66,
+ "early_stopping": "DISABLED via --no-early-stop so the arms are step-for-step paired",
+ "steps_per_epoch": 4583,
+ "optimizer_steps": 302478,
+ "a4_reference_state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e"
+}

@@ -25,6 +25,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.imeanflow import MeanFlowS5, fixed_imf_mse, imeanflow_loss, imf_bank_hash, make_imf_banks, sample_meanflow, sample_tr
+from ppg2ecg.flow.structure_weight import shifted_structure_weight, structure_weight
 from ppg2ecg.flow.interval_exposure import ARMS as C1_ARMS, sample_tr_c1
 from ppg2ecg.models import build_penguin_backbone, count_params
 from ppg2ecg.training.train_a0 import git_sha, load_arrays
@@ -65,6 +66,13 @@ def parse_args(argv=None):
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--epochs", type=int, default=300)
     ap.add_argument("--patience", type=int, default=20)
+    # M2 (docs/M2_STRUCTURE_WEIGHTED_IMEANFLOW_PREREGISTRATION.md). Default None keeps this trainer bit-identical
+    # to its pre-M2 behaviour for every historical arm; only the loss multiplier changes when an arm is named.
+    ap.add_argument("--m2-arm", choices=["U", "S", "X", "Q"], default=None,
+                    help="U uniform (explicit control), S soft gradient-structure, X shifted control, Q hard-QRS control")
+    ap.add_argument("--m2-rpeaks", default=None, help="npz of per-window GT R peaks; ARM Q only, TRAINING ONLY")
+    ap.add_argument("--no-early-stop", action="store_true",
+                    help="M2 §3: run the full --epochs budget so paired arms are step-for-step identical")
     ap.add_argument("--c1-arm", choices=list(C1_ARMS), default="B",
                     help="C1 target-interval exposure arm (docs/C1_INTERVAL_EXPOSURE_CONTROL_PREREGISTRATION.md). 'B' is a bit-identical no-op replay of the historical sampler; it is the ONLY thing that may differ between C1 arms.")
     ap.add_argument("--min-delta", type=float, default=1e-4)
@@ -97,6 +105,22 @@ def parse_args(argv=None):
     ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None)
     return ap.parse_args(argv)
+
+
+def m2_weight(args, ecg: torch.Tensor):
+    """M2 spatial loss weight for this micro-batch, or None (docs/M2_STRUCTURE_WEIGHTED_IMEANFLOW_PREREGISTRATION.md §7).
+
+    None for every historical arm AND for M2 arm U, so the uniform path is the untouched pre-M2 code path rather than
+    a multiplication by ones. Arm Q is a target-derived ROI control and needs GT R peaks, TRAINING ONLY.
+    """
+    arm = getattr(args, "m2_arm", None)
+    if arm in (None, "U"):
+        return None
+    if arm == "S":
+        return structure_weight(ecg)
+    if arm == "X":
+        return shifted_structure_weight(ecg)
+    raise NotImplementedError("ARM Q requires per-window GT R peaks; it is a secondary control run by its own driver")
 
 
 def main(argv=None):
@@ -193,7 +217,9 @@ def main(argv=None):
                     t, r, _ = sample_tr_c1(Bc, tr_gen, arm=args.c1_arm, **tr_kw)
                     t, r = t.to(device), r.to(device)
                     e = torch.randn(Bc, 1, ecg_c.shape[1], device=device)
-                    loss, info = imeanflow_loss(net, ecg_c.unsqueeze(1), ppg_c.unsqueeze(1), e, t, r, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode)
+                    ecg_in = ecg_c.unsqueeze(1)
+                    sw = m2_weight(args, ecg_in)  # None for every historical arm and for M2 arm U
+                    loss, info = imeanflow_loss(net, ecg_in, ppg_c.unsqueeze(1), e, t, r, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, structure_weight=sw)
                     if not (torch.isfinite(loss) and torch.isfinite(info["mse"]) and torch.isfinite(info["dudt_abs_mean"])):
                         raise RuntimeError(f"non-finite loss at epoch {epoch}: {loss.item()} info={ {k: float(v) for k, v in info.items()} }")
                     (loss * (Bc / B)).backward()  # mean over the full batch of 64
@@ -229,7 +255,7 @@ def main(argv=None):
                 state["no_improve"] += 1
             state["epoch"] = epoch + 1
             torch.save({"state_dict": net.state_dict(), "optimizer": opt.state_dict(), "loader_generator": gen.get_state(), "tr_generator": tr_gen.get_state(), "rng_cpu": torch.get_rng_state(), "rng_cuda": torch.cuda.get_rng_state_all() if device.type == "cuda" else [], "train_state": state, "epoch": epoch}, last_ckpt)
-            stop = state["no_improve"] >= args.patience
+            stop = (state["no_improve"] >= args.patience) and not args.no_early_stop
             if stop:
                 event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
             wrow = {k: float(np.mean([w[k] for w in ws])) for k in WSTAT_KEYS} if ws else {k: float("nan") for k in WSTAT_KEYS}

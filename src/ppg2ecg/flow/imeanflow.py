@@ -102,10 +102,18 @@ def compound_V(u_fn: Callable, z_t: torch.Tensor, t: torch.Tensor, r: torch.Tens
 
 
 def imeanflow_loss(net: MeanFlowS5, x: torch.Tensor, ppg: torch.Tensor, e: torch.Tensor, t: torch.Tensor, r: torch.Tensor,
-                   norm_p: float = 1.0, norm_eps: float = 0.01, jvp_mode: str = "forward", v_tangent: torch.Tensor | None = None):
+                   norm_p: float = 1.0, norm_eps: float = 0.01, jvp_mode: str = "forward", v_tangent: torch.Tensor | None = None,
+                   structure_weight: torch.Tensor | None = None):
     """iMF loss for a batch. x, e, ppg: [B,1,T]; t, r: [B,1] with r <= t.
     v_theta (JVP tangent) = u_theta(z_t, t, t) evaluated WITHOUT gradient (boundary condition; the official code takes the
-    aux-head prediction, also gradient-free through the stop-gradiented JVP). Returns (loss, info)."""
+    aux-head prediction, also gradient-free through the stop-gradiented JVP). Returns (loss, info).
+
+    `structure_weight` is the ONLY M2 addition (docs/M2_STRUCTURE_WEIGHTED_IMEANFLOW_PREREGISTRATION.md §2.1): a
+    training-only mean-1 spatial weight of shape [B,1,T] multiplying the squared error INSIDE the temporal sum. It is
+    None for arm U and every historical arm, in which case this function is bit-identical to its pre-M2 form. The
+    adaptive weight `w` is deliberately computed from the UNWEIGHTED delta2 so that it stays bit-identical between
+    arms — deriving it from the weighted quantity would be a second algorithmic difference, which the
+    preregistration forbids."""
     tt = t.reshape(-1, 1, 1)
     z_t = (1 - tt) * x + tt * e
     v_tgt = e - x
@@ -117,9 +125,13 @@ def imeanflow_loss(net: MeanFlowS5, x: torch.Tensor, ppg: torch.Tensor, e: torch
         return net.u(z, ppg, t_, t_ - r_)
 
     u, dudt, V = compound_V(u_fn, z_t, t, r, v_tangent, jvp_mode)
-    delta2 = ((V - v_tgt) ** 2).flatten(1).sum(1)  # per-sample sum over dims (imf.py L385)
+    sq = (V - v_tgt) ** 2
+    delta2 = sq.flatten(1).sum(1)  # per-sample sum over dims (imf.py L385)
     w = 1.0 / (delta2.detach() + norm_eps) ** norm_p  # adaptive weight, stop-gradient (MF Eq. 22; imf.py L380-382)
-    loss = (delta2 * w).mean()
+    if structure_weight is None:
+        loss = (delta2 * w).mean()
+    else:
+        loss = ((sq * structure_weight.to(sq.dtype)).flatten(1).sum(1) * w).mean()  # M2 arm S; w is the UNWEIGHTED one
     # diagnostics only (A8 §11) — the loss above is unchanged; w is already stop-gradiented
     wd = w.detach()
     info = {"mse": ((V - v_tgt) ** 2).mean().detach(), "delta2_mean": delta2.mean().detach(), "u_abs_mean": u.abs().mean().detach(), "dudt_abs_mean": dudt.abs().mean().detach(), "v_tangent_abs_mean": v_tangent.abs().mean().detach(),

@@ -1,0 +1,39 @@
+{
+ "source": "src/ppg2ecg/flow/imeanflow.py:104-127 (imeanflow_loss)",
+ "t_r_convention": "t,r : [B,1] with r <= t; t=0 is data, t=1 is noise; u_fn(z,t_,r_) = net.u(z, ppg, t_, t_-r_)",
+ "z_t": "z_t = (1 - t) * x + t * e   with tt = t.reshape(-1,1,1)",
+ "V_target": "v_tgt = e - x",
+ "v_tangent": "u_theta(z_t, ppg, t, 0) under torch.no_grad() when not supplied (boundary condition, gradient-free)",
+ "existing_weight": {
+  "expression": "w = 1.0 / (delta2.detach() + norm_eps) ** norm_p",
+  "shape": "[B] \u2014 PER-SAMPLE scalar, not per-timestep",
+  "stop_gradient": true,
+  "norm_p": 1.0,
+  "norm_eps": 0.01
+ },
+ "reduction_order": "square -> flatten(1).sum(1) over (channel,time) -> multiply per-sample w -> mean over batch",
+ "temporal_reduction": "SUM over time, NOT mean \u2014 a mean-1 structure weight therefore preserves the delta2 scale",
+ "tensor_shapes": {
+  "x": "[B,1,T]",
+  "e": "[B,1,T]",
+  "ppg": "[B,1,T]",
+  "z_t": "[B,1,T]",
+  "t": "[B,1]",
+  "r": "[B,1]",
+  "T": 1024
+ },
+ "averaged_over": {
+  "batch": true,
+  "channel": "summed",
+  "time": "summed"
+ },
+ "ecg_preprocessing": "128 Hz, 8 s = 1024 samples, ECG 0.5 Hz high-pass Butterworth order 4 filtfilt, per-window z-score then min-max to [-1,1]",
+ "underspecification_resolved": {
+  "question": "is the adaptive weight w computed from the unweighted or the structure-weighted delta2?",
+  "decision": "UNWEIGHTED \u2014 so w is bit-identical between arms U and S for identical inputs",
+  "why": "spec \u00a77 requires preserving the existing weighting exactly and permits exactly one algorithmic difference; deriving w from the structure-weighted delta2 would be a second difference"
+ },
+ "proposed_loss": "delta2_sw = ((V - v_tgt)**2 * structure_weight).flatten(1).sum(1); loss = (delta2_sw * w).mean()",
+ "structure_weight_shape": "[B,1,T], broadcasts over the channel axis only, carries no gradient",
+ "arm_U_equivalence": "structure_weight == 1 must reproduce the baseline loss bit-exactly (unit-tested)"
+}

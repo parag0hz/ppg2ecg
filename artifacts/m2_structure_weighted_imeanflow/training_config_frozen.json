@@ -1,0 +1,71 @@
+{
+ "source": "outputs/a4_imeanflow_wildppg_seed42/train_meta.json",
+ "a4_args": {
+  "exp_name": "a4_imeanflow_wildppg_seed42",
+  "out_dir": "/home/kwy00/ppg2ecg-one-step/outputs/a4_imeanflow_wildppg_seed42",
+  "processed": "data/processed/wildppg_8s",
+  "manifest": "data/manifests/split_a4_wildppg_seed42.json",
+  "seed": 42,
+  "epochs": 300,
+  "patience": 20,
+  "min_delta": 0.0001,
+  "batch_size": 64,
+  "lr": 0.001,
+  "weight_decay": 0.01,
+  "h_dim": 128,
+  "blocks": 4,
+  "ssm_ratio": 2.0,
+  "mlp_ratio": 2.0,
+  "sample_rate": 128,
+  "p_mean": -0.4,
+  "p_std": 1.0,
+  "data_proportion": 0.5,
+  "norm_p": 1.0,
+  "norm_eps": 0.01,
+  "jvp_mode": "forward",
+  "cond_mode": "h_only",
+  "h_scale": 1.0,
+  "micro_batch": 32,
+  "val_batch": 32,
+  "n_val_banks": 4,
+  "bank_seed": 1000,
+  "gen_diag_every": 1,
+  "gen_diag_windows": 128,
+  "val_every_steps": 220,
+  "val_subsample": 4096,
+  "resume": false,
+  "limit_windows": null
+ },
+ "params_total": 4568707,
+ "train_windows": 293271,
+ "steps_per_epoch": 4583,
+ "a4_epochs_run": 66,
+ "a4_optimizer_steps": 302478,
+ "m2_budget_rule": "both arms run exactly 66 epochs with early stopping DISABLED, so U and S are step-for-step paired and neither exceeds A4's realised budget",
+ "data_proportion_note": "0.5 is passed to sample_tr (the t/r sampler), NOT to the DataLoader; every train window is seen each epoch",
+ "split": {
+  "train": [
+   "e61",
+   "fex",
+   "l38",
+   "n31",
+   "ngh",
+   "p5d",
+   "p9p",
+   "qm9",
+   "trh",
+   "tz8",
+   "u7y",
+   "w4p"
+  ],
+  "val": [
+   "an0",
+   "k2s"
+  ],
+  "test_FORBIDDEN": [
+   "kjd",
+   "ssx"
+  ]
+ },
+ "selection": "fixed_imf_mse, 4 banks, bank_seed 1000, val_every_steps 220, val_subsample 4096"
+}

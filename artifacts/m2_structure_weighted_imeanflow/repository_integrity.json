@@ -1,0 +1,28 @@
+{
+ "checked": "2026-09-07",
+ "head": "006b42e01f8dc6e7a8637356c9dbab91081b6dfa",
+ "origin_main": "006b42e01f8dc6e7a8637356c9dbab91081b6dfa",
+ "clean_tree": "clean at the \u00a72 check, before M2 documents/artifacts were written; the only untracked paths now are the M2 preregistration and this artifacts directory",
+ "spec_required_head": "89c4fed527b6829143bd9fd09f03505eaff148fc",
+ "spec_head_matches": false,
+ "deviation_D1": "re-anchored to current HEAD; git diff 89c4fed..HEAD over flow/ training/ models/ configs/ external/ is empty and no commit touched outputs/ or the E2 contract",
+ "m2_dependency_diff_empty": true,
+ "penguin": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+ "imeanflow": "bf60cd7cb653f6628e59d48034b333c5eba445e2",
+ "a4_checkpoint_md5": "31c042d291052fbb6dc15263ad316be2",
+ "a4_state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+ "a4_selection_metric": 0.11945885431656277,
+ "a4_epochs_run": 66,
+ "a4_best_epoch": 45,
+ "e2_contract_sha256": "06e869412114e1efb9ab6624540aebc141495e2690150f4e512df7676c5a9115",
+ "c2_outputs_present": false,
+ "forbidden_subjects": [
+  "kjd",
+  "ssx"
+ ],
+ "determinism_evidence": {
+  "a4_state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+  "c1_arm_b_state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f (measured identical)",
+  "conclusion": "training is bit-exactly reproducible; \u00a712 reproduction tolerance set to BIT-EXACT"
+ }
+}

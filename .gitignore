@@ -306,6 +306,28 @@ artifacts/e3_beat_set_first/*
 !artifacts/e3_beat_set_first/train_feature_manifest.json
 !artifacts/e3_beat_set_first/count_readout_manifest.json
 
+# --- M2 GSW-iMF: hash-bearing records are tracked so the pre-training freeze is verifiable ---
+# The preregistration commits the integrity/audit/config records BEFORE any structure map or training run.
+# Generated waveform tensors, checkpoints and per-window result CSVs stay ignored (preregistration section 28);
+# only these small records and the gate/decision summaries are committed.
+!artifacts/m2_structure_weighted_imeanflow/
+artifacts/m2_structure_weighted_imeanflow/*
+!artifacts/m2_structure_weighted_imeanflow/repository_integrity.json
+!artifacts/m2_structure_weighted_imeanflow/imeanflow_loss_audit.json
+!artifacts/m2_structure_weighted_imeanflow/training_config_frozen.json
+!artifacts/m2_structure_weighted_imeanflow/provenance.json
+!artifacts/m2_structure_weighted_imeanflow/structure_map_definition.json
+!artifacts/m2_structure_weighted_imeanflow/train_structure_map_summary.json
+!artifacts/m2_structure_weighted_imeanflow/paired_initialization_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/arm_u_training_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/arm_s_training_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/arm_x_training_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/arm_q_training_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/parameter_audit.json
+!artifacts/m2_structure_weighted_imeanflow/gates.csv
+!artifacts/m2_structure_weighted_imeanflow/decision.json
+!artifacts/m2_structure_weighted_imeanflow/figures_manifest.json
+
 # Literature survey working material (2026-09-04) — PDFs and reference clones stay out of git
 paper/
 external_ref/

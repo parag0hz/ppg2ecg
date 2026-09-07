@@ -1,0 +1,38 @@
+{
+ "erratum": "docs/M3_SEC_IMEANFLOW_ERRATUM.md",
+ "append_only": true,
+ "frozen_preregistration_edited": false,
+ "frozen_preregistration_sha": "d5db1c919a5462e18bc26a0c7b828567f71ee978",
+ "authoritative_measured_values": {
+  "f32_d1_abs": 2.384185791015625e-07,
+  "f32_d2_abs": 9.5367431640625e-07,
+  "f64_d1_abs": 0.0,
+  "f64_d2_abs": 0.0,
+  "matched_dtype_abs": 0.0
+ },
+ "original_1e-6_absolute_threshold_satisfied": {
+  "D1": true,
+  "D2": true
+ },
+ "robustness": {
+  "n_independent_samples": 20,
+  "d2_min": 7.152557373046875e-07,
+  "d2_max": 9.5367431640625e-07,
+  "n_exceeding_1e-6": 0,
+  "conclusion": "satisfied robustly, not marginally"
+ },
+ "corrected_statements": [
+  "prereg \u00a74 prose: 'the absolute bound is unattainable' \u2014 WRONG, it is attained",
+  "prereg \u00a74 / derivative_operator_audit.json deviation field: measured discrepancy '1.2e-6' \u2014 WRONG, the recorded measurement is 9.5367431640625e-07"
+ ],
+ "root_cause": "an earlier throwaway probe compared UNLIKE inputs: torch received a float32-rounded copy while the frozen numpy operator received the full float64 array, so the gap included input-rounding error and was not a measurement of operator equivalence. The committed audit feeds both implementations the identical float32 array.",
+ "changes_method": false,
+ "changes_hyperparameter": false,
+ "changes_loss": false,
+ "changes_operator": false,
+ "changes_gate": false,
+ "changes_training_rule": false,
+ "changes_evaluation_rule": false,
+ "changes_scientific_result": false,
+ "m3_result_existed_when_written": false
+}

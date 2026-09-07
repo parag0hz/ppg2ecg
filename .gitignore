@@ -350,6 +350,7 @@ artifacts/m3_sec_imeanflow/*
 !artifacts/m3_sec_imeanflow/provenance.json
 !artifacts/m3_sec_imeanflow/train_numerical_audit.json
 !artifacts/m3_sec_imeanflow/gradient_diagnostic.json
+!artifacts/m3_sec_imeanflow/t_bin_diagnostic.json
 !artifacts/m3_sec_imeanflow/arm_e_training_manifest.json
 !artifacts/m3_sec_imeanflow/arm_v_training_manifest.json
 !artifacts/m3_sec_imeanflow/parameter_latency_audit.json

@@ -1,0 +1,12 @@
+{
+ "n_microbatches": 16,
+ "descriptive_only": true,
+ "grad_norm_base_mean": 4.307001322507858,
+ "grad_norm_lambda_sec_mean": 62.704660415649414,
+ "grad_norm_total_mean": 65.28558361530304,
+ "cosine_mean": 0.5810475964099169,
+ "cosine_min": 0.4364710748195648,
+ "cosine_max": 0.7732478380203247,
+ "ratio_lambda_sec_over_base": 14.558774358383078,
+ "policy": "no gate; lambda, sampler, layer choice and weighting may not change because of these numbers"
+}

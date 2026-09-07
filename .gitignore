@@ -340,6 +340,8 @@ artifacts/m2_structure_weighted_imeanflow/*
 artifacts/m3_sec_imeanflow/*
 !artifacts/m3_sec_imeanflow/repository_integrity.json
 !artifacts/m3_sec_imeanflow/erratum_operator_equivalence.json
+!artifacts/m3_sec_imeanflow/extra_forward_state_audit.json
+!artifacts/m3_sec_imeanflow/baseline_path_regression.json
 !artifacts/m3_sec_imeanflow/endpoint_algebra_audit.json
 !artifacts/m3_sec_imeanflow/derivative_operator_audit.json
 !artifacts/m3_sec_imeanflow/t_geometry_audit.json

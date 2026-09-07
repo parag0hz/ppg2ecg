@@ -1,0 +1,12 @@
+{
+ "dropout_modules": [],
+ "batchnorm_modules": [],
+ "droppath_modules": [],
+ "n_named_buffers": 0,
+ "buffers": [],
+ "ordinary_loss_identical_A_vs_B": true,
+ "rng_state_identical_after_extra_forward": true,
+ "buffers_identical_after_extra_forward": true,
+ "result": "PASS",
+ "note": "net.u is deterministic given its inputs: no dropout, no batchnorm running stats, no stochastic depth, and it consumes no RNG, so the extra endpoint forward cannot make the U/E comparison ambiguous."
+}

@@ -25,6 +25,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.imeanflow import MeanFlowS5, fixed_imf_mse, imeanflow_loss, imf_bank_hash, make_imf_banks, sample_meanflow, sample_tr
+from ppg2ecg.flow.endpoint_structure import LAMBDA_SEC, clean_endpoint, sec_loss, value_loss
 from ppg2ecg.flow.structure_weight import shifted_structure_weight, structure_weight
 from ppg2ecg.flow.interval_exposure import ARMS as C1_ARMS, sample_tr_c1
 from ppg2ecg.models import build_penguin_backbone, count_params
@@ -73,6 +74,11 @@ def parse_args(argv=None):
     ap.add_argument("--m2-rpeaks", default=None, help="npz of per-window GT R peaks; ARM Q only, TRAINING ONLY")
     ap.add_argument("--no-early-stop", action="store_true",
                     help="M2 §3: run the full --epochs budget so paired arms are step-for-step identical")
+    # M3 (docs/M3_SEC_IMEANFLOW_PREREGISTRATION.md). Default None keeps this trainer on the untouched pre-M3 path.
+    # ARM U / historical mode must BYPASS the SEC branch entirely: no endpoint construction, no second net.u call,
+    # no changed RNG consumption, no changed mutable state (prereg §6, spec §5).
+    ap.add_argument("--m3-arm", choices=["U", "E", "V"], default=None,
+                    help="E = SEC-iMF (structural endpoint consistency); V = value-endpoint control; U = explicit baseline")
     ap.add_argument("--c1-arm", choices=list(C1_ARMS), default="B",
                     help="C1 target-interval exposure arm (docs/C1_INTERVAL_EXPOSURE_CONTROL_PREREGISTRATION.md). 'B' is a bit-identical no-op replay of the historical sampler; it is the ONLY thing that may differ between C1 arms.")
     ap.add_argument("--min-delta", type=float, default=1e-4)
@@ -217,9 +223,17 @@ def main(argv=None):
                     t, r, _ = sample_tr_c1(Bc, tr_gen, arm=args.c1_arm, **tr_kw)
                     t, r = t.to(device), r.to(device)
                     e = torch.randn(Bc, 1, ecg_c.shape[1], device=device)
-                    ecg_in = ecg_c.unsqueeze(1)
+                    ecg_in, ppg_in = ecg_c.unsqueeze(1), ppg_c.unsqueeze(1)
                     sw = m2_weight(args, ecg_in)  # None for every historical arm and for M2 arm U
-                    loss, info = imeanflow_loss(net, ecg_in, ppg_c.unsqueeze(1), e, t, r, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, structure_weight=sw)
+                    loss, info = imeanflow_loss(net, ecg_in, ppg_in, e, t, r, norm_p=args.norm_p, norm_eps=args.norm_eps, jvp_mode=args.jvp_mode, structure_weight=sw)
+                    if getattr(args, "m3_arm", None) in ("E", "V"):
+                        # M3 §6: ONE extra training-only forward at h = t (r = 0). Never reachable at inference.
+                        tt = t.reshape(-1, 1, 1)
+                        z_t = (1 - tt) * ecg_in + tt * e
+                        x0_hat = clean_endpoint(net, z_t, ppg_in, t)
+                        aux = sec_loss(x0_hat, ecg_in)[0] if args.m3_arm == "E" else value_loss(x0_hat, ecg_in)
+                        loss = loss + LAMBDA_SEC * aux
+                        info["m3_aux"] = aux.detach()
                     if not (torch.isfinite(loss) and torch.isfinite(info["mse"]) and torch.isfinite(info["dudt_abs_mean"])):
                         raise RuntimeError(f"non-finite loss at epoch {epoch}: {loss.item()} info={ {k: float(v) for k, v in info.items()} }")
                     (loss * (Bc / B)).backward()  # mean over the full batch of 64

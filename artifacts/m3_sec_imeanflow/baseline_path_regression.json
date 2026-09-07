@@ -1,0 +1,21 @@
+{
+ "n_microbatches": 16,
+ "comparisons": {
+  "loss": true,
+  "mse": true,
+  "adaptive_w": true,
+  "delta2_V": true,
+  "gradients": true,
+  "rng_state": true,
+  "optimizer_update": true
+ },
+ "net_u_calls": {
+  "m3_disabled": 32,
+  "arm_U": 32,
+  "arm_E": 48
+ },
+ "endpoint_branch_called_when_disabled": false,
+ "arm_E_extra_calls_per_microbatch": 1.0,
+ "result": "PASS",
+ "note": "arm U and M3-disabled take the identical code path: same loss, V, adaptive weight, gradients, RNG state and optimiser update, and net.u is called the same number of times, so no endpoint forward occurs."
+}

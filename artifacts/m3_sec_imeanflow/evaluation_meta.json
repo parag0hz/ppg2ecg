@@ -1,0 +1,69 @@
+{
+ "head": "b71f91c891d9add4d788092da3b63cbf8265df91",
+ "val_subjects": [
+  "an0",
+  "k2s"
+ ],
+ "n_rows": 49200,
+ "n_clusters": 12400,
+ "nfes": [
+  4
+ ],
+ "source_seeds": [
+  0
+ ],
+ "arms": [
+  "U",
+  "E"
+ ],
+ "tolerances_ms": [
+  50.0,
+  100.0,
+  150.0,
+  200.0
+ ],
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260904,
+  "rule": "E2 clustering: all site rows sharing one target ECG move together; subject-stratified; equal subject weight"
+ },
+ "checkpoints": [
+  {
+   "arm": "U",
+   "path": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
+   "ckpt_kind": "best",
+   "sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7",
+   "best_epoch": 45,
+   "m2_arm": "U",
+   "seed": 42
+  },
+  {
+   "arm": "E",
+   "path": "outputs/m3_arm_E_seed42/checkpoint_best.pt",
+   "ckpt_kind": "best",
+   "sha256": "ed68fb3ee6f7b2e844754f05caef1670d459996174a2a89e48c30d3bf57434ee",
+   "best_epoch": 60,
+   "m2_arm": null,
+   "seed": 42
+  }
+ ],
+ "timings": [
+  {
+   "arm": "U",
+   "nfe": 4,
+   "source_seed": 0,
+   "gen_seconds": 237.14578464766964,
+   "windows": 49200,
+   "windows_per_s": 207.467318354813
+  },
+  {
+   "arm": "E",
+   "nfe": 4,
+   "source_seed": 0,
+   "gen_seconds": 237.3484094166197,
+   "windows": 49200,
+   "windows_per_s": 207.29020312766798
+  }
+ ],
+ "no_alignment": "no oracle shift, no cross-correlation, no DTW \u2014 nothing is translated"
+}

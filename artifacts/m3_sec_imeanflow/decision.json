@@ -1,0 +1,66 @@
+{
+ "stage": "M3",
+ "method": "SEC-iMF",
+ "arm": "E",
+ "verdict": "D",
+ "verdict_text": "SEC-IMEANFLOW NOT SUPPORTED",
+ "clause": "preregistration \u00a711: 'G1 or G2 fails -> verdict D, SEC-IMEANFLOW NOT SUPPORTED, STOP.'",
+ "why": "G1 requires BOTH a relative improvement >= 5% AND a 95% CI entirely > 0. The CI condition is met (the improvement is significant) but the magnitude condition is not (+2.66% < 5%). Nothing in \u00a710 or \u00a711 conditions on the sign of the effect, so a favourable-but-small G1 fails exactly as a hostile one would.",
+ "G1": {
+  "metric": "qrs_deriv_rmse",
+  "U": 0.3209976751293294,
+  "E": 0.3124484618374968,
+  "rel_improvement": 0.026633256108126484,
+  "ci_lo": 0.008316620595609893,
+  "ci_hi": 0.008766112240725023,
+  "magnitude_ok": false,
+  "ci_ok": true,
+  "result": "FAIL"
+ },
+ "G2": {
+  "metric": "qrs_curvature_err",
+  "U": 0.21436754231131114,
+  "E": 0.19740401155964216,
+  "rel_improvement": 0.0791329254828794,
+  "ci_lo": 0.01678781352579388,
+  "ci_hi": 0.01714673151154082,
+  "magnitude_ok": true,
+  "ci_ok": true,
+  "result": "PASS"
+ },
+ "G3": {
+  "an0": {
+   "qrs_deriv_rmse": 0.03504212561394195,
+   "qrs_curvature_err": 0.08943283029611818
+  },
+  "k2s": {
+   "qrs_deriv_rmse": 0.01844033564349207,
+   "qrs_curvature_err": 0.06903667038333358
+  }
+ },
+ "counterfactual": "Had G1 passed, N3 (qrs_ptp_dev, -0.0628 vs a 5% margin) also fails, so the stop tree would have given verdict B, not A.",
+ "n7_does_not_fail_alone": {
+  "N3": "FAIL",
+  "N7": "FAIL",
+  "consequence": "prereg \u00a710's 'if it alone fails the verdict must explicitly say spectral trade-off' clause is NOT triggered"
+ },
+ "arms_not_run_per_stop_rule": [
+  "V (value-endpoint control)"
+ ],
+ "not_run_per_stop_rule": [
+  "NFE 1/2 sweep",
+  "source seeds 1-3",
+  "multi-seed",
+  "test subjects"
+ ],
+ "primary": {
+  "nfe": 4,
+  "source_seed": 0,
+  "subjects": [
+   "an0",
+   "k2s"
+  ],
+  "n_rows_per_arm": 49200,
+  "n_clusters": 12400
+ }
+}

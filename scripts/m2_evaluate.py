@@ -41,7 +41,10 @@ TOLS = (50.0, 100.0, 150.0, 200.0)
 BOOT_N, BOOT_SEED = 2000, 20260904
 ARMS = {"U": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
         "S": "outputs/m2_arm_S_seed42/checkpoint_best.pt",
-        "X": "outputs/m2_arm_X_seed42/checkpoint_best.pt"}
+        "X": "outputs/m2_arm_X_seed42/checkpoint_best.pt",
+        # M3 arms: the SAME frozen evaluator, definitions unmodified (M3 prereg §9)
+        "E": "outputs/m3_arm_E_seed42/checkpoint_best.pt",
+        "V": "outputs/m3_arm_V_seed42/checkpoint_best.pt"}
 
 
 def _peaks(sig):
@@ -247,10 +250,15 @@ def main() -> int:
 
     # paired effects, primary seed only
     eff = []
-    if "U" in arms and "S" in arms:
+    # The arm paired against U. Exactly one non-U arm may be passed: a silent priority order would let an
+    # invocation of --arms U,S,E pair U-vs-S while the caller believed it was evaluating E.
+    non_u = [a for a in arms if a != "U"]
+    assert len(non_u) <= 1, f"pass exactly one non-U arm to keep the pairing unambiguous; got {non_u}"
+    other = non_u[0] if non_u else None
+    if "U" in arms and other:
         for nfe in nfes:
             iu = [r for r in rows if r["arm"] == "U" and r["nfe"] == nfe and r["source_seed"] == seeds[0]]
-            is_ = [r for r in rows if r["arm"] == "S" and r["nfe"] == nfe and r["source_seed"] == seeds[0]]
+            is_ = [r for r in rows if r["arm"] == other and r["nfe"] == nfe and r["source_seed"] == seeds[0]]
             assert len(iu) == len(is_) == len(X)
             cl = np.array([r["cluster"] for r in iu])
             sb = np.array([r["subject"] for r in iu])
@@ -262,7 +270,7 @@ def main() -> int:
                 orient = "neutral" if is_neutral(k) else ("lower_better" if is_lower_better(k) else "higher_better")
                 b = clustered_paired_bootstrap(u, s, cl, sb, "lower_better" if orient == "neutral" else orient)
                 mu, ms = macro(u, cl, sb), macro(s, cl, sb)
-                eff.append({"nfe": nfe, "metric": k, "orientation": orient, "U": mu, "S": ms,
+                eff.append({"nfe": nfe, "metric": k, "orientation": orient, "arm": other, "U": mu, "S": ms,
                             "effect": b["point"], "ci_lo": b["lo"], "ci_hi": b["hi"],
                             "rel_improvement": (mu - ms) / abs(mu) if orient == "lower_better" and mu else
                                                (ms - mu) / abs(mu) if mu else np.nan,

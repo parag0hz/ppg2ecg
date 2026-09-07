@@ -1,9 +1,13 @@
 {
  "stage": "M3",
  "method": "SEC-iMF",
- "arm": "E",
- "preregistration": "docs/M3_SEC_IMEANFLOW_PREREGISTRATION.md",
+ "verdict": "D",
+ "head": "b71f91c891d9add4d788092da3b63cbf8265df91",
  "M3_START_SHA": "1cf0d361e739ca9f26d7cd9b988cbbd1e85e8e29",
+ "prereg_sha": "d5db1c919a5462e18bc26a0c7b828567f71ee978",
+ "erratum_sha": "88f85cea9264d4d34188d35be4a0d67194e45579",
+ "implementation_sha": "c1aa8bd8f2440ee21fa511a2c2de588cd6466421",
+ "numerical_audit_sha": "b71f91c891d9add4d788092da3b63cbf8265df91",
  "frozen": {
   "eps_struct": 1e-06,
   "lambda_SEC": 0.1,
@@ -13,7 +17,27 @@
   "optimizer_steps": 14409,
   "validation_rounds": 66,
   "primary_nfe": 4,
-  "primary_source_seed": 0,
-  "selection": "fixed_imf_mse, 4 banks, bank_seed 1000, min_delta 1e-4"
+  "primary_source_seed": 0
+ },
+ "validation_metrics_csv": {
+  "path": "artifacts/m3_sec_imeanflow/validation_metrics.csv",
+  "bytes": 96022812,
+  "sha256": "06cf1dd75c3d337d5bf5e2fb675d7f75bed3319f81994ca8178d3964c1228ecd",
+  "note": "not committed (prereg \u00a712 / repo policy stores hashes instead)"
+ },
+ "checkpoints": {
+  "U": {
+   "path": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
+   "file_sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7",
+   "state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+   "selected_epoch": 45,
+   "retrained_for_M3": false
+  },
+  "E": {
+   "path": "outputs/m3_arm_E_seed42/checkpoint_best.pt",
+   "file_sha256": "ed68fb3ee6f7b2e844754f05caef1670d459996174a2a89e48c30d3bf57434ee",
+   "selected_epoch": 60,
+   "optimizer_steps": 14409
+  }
  }
 }

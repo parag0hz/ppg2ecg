@@ -22,9 +22,9 @@ from __future__ import annotations
 
 import torch
 
-EPS_STRUCT: float = 1e-6      # frozen (prereg §7); never changed after results
-LAMBDA_SEC: float = 0.10      # frozen (prereg §7)
-W_D1: float = 0.5             # frozen mixture (prereg §7)
+EPS_STRUCT: float = 1e-6      # frozen (prereg §6); never changed after results
+LAMBDA_SEC: float = 0.10      # frozen (prereg §6)
+W_D1: float = 0.5             # frozen mixture (prereg §6)
 W_D2: float = 0.5
 
 
@@ -41,7 +41,7 @@ def d2(x: torch.Tensor) -> torch.Tensor:
 def clean_endpoint(net, z_t: torch.Tensor, ppg: torch.Tensor, t: torch.Tensor) -> torch.Tensor:
     """x0_hat = z_t - t * u(z_t, ppg, t, t) — one extra TRAINING forward; never reachable at inference.
 
-    Gradients flow through u0 into the network (prereg §9). `t` is [B,1] and broadcasts over the waveform axis.
+    Gradients flow through u0 into the network (prereg §6). `t` is [B,1] and broadcasts over the waveform axis.
     """
     u0 = net.u(z_t, ppg, t, t)
     return z_t - t.reshape(-1, 1, 1) * u0
@@ -49,9 +49,9 @@ def clean_endpoint(net, z_t: torch.Tensor, ppg: torch.Tensor, t: torch.Tensor) -
 
 def sec_loss(x0_hat: torch.Tensor, x: torch.Tensor, eps: float = EPS_STRUCT,
              w1: float = W_D1, w2: float = W_D2) -> tuple[torch.Tensor, dict]:
-    """L_SEC = mean_b[ w1*L1_b + w2*L2_b ], the dimensionless relative derivative errors of prereg §7.
+    """L_SEC = mean_b[ w1*L1_b + w2*L2_b ], the dimensionless relative derivative errors of prereg §6.
 
-    The per-sample denominators s1, s2 are DETACHED; x0_hat, d1_hat and d2_hat are NOT (prereg §9). The target x is
+    The per-sample denominators s1, s2 are DETACHED; x0_hat, d1_hat and d2_hat are NOT (prereg §6). The target x is
     data and carries no gradient. Returns (loss, per-sample diagnostics).
     """
     flat = lambda a: a.flatten(1)  # noqa: E731  — [B,1,T] -> [B,T*C]; the waveform axis is last in both layouts
@@ -66,7 +66,7 @@ def sec_loss(x0_hat: torch.Tensor, x: torch.Tensor, eps: float = EPS_STRUCT,
 
 
 def value_loss(x0_hat: torch.Tensor, x: torch.Tensor, eps: float = EPS_STRUCT) -> torch.Tensor:
-    """ARM V control (prereg §22): waveform-VALUE endpoint consistency, no derivative terms.
+    """ARM V control (prereg §11): waveform-VALUE endpoint consistency, no derivative terms.
 
     Reached only if the primary gates pass; defined here so the two arms differ solely in the auxiliary term.
     """

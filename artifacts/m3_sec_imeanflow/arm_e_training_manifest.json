@@ -1,0 +1,32 @@
+{
+ "exactly_14409_optimizer_steps": true,
+ "66_validation_rounds": true,
+ "no_early_truncation": true,
+ "no_early_stop_event_in_log": true,
+ "parameter_count_identical_to_U": true,
+ "tensor_names_and_shapes_identical": true,
+ "selection_criterion_is_fixed_imf_mse": true,
+ "selected_epoch_is_the_argmin_of_that_metric": true,
+ "selection_metric_not_a_gate_metric": true,
+ "arm_recorded_as_E": true,
+ "seed_42": true,
+ "checkpoints_differ_from_U": true,
+ "U": {
+  "epoch": 45,
+  "state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+  "file_sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7",
+  "selection": 0.11945885431656277
+ },
+ "E": {
+  "epoch": 60,
+  "state_sha256": "e9a8c39a978dd47111dac23dec24f971b3a61b686518bb0e3e776894fe965a40",
+  "file_sha256": "ed68fb3ee6f7b2e844754f05caef1670d459996174a2a89e48c30d3bf57434ee",
+  "selection": 0.12485977127911865,
+  "opt_steps": 14409,
+  "rounds": 66,
+  "gpu_hours": 4.840844988211368,
+  "peak_mem_MiB": 20546.748046875,
+  "params": 4568707
+ },
+ "all_pass": true
+}

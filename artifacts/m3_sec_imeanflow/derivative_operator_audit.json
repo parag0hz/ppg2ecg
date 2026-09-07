@@ -1,0 +1,43 @@
+{
+ "source": "src/ppg2ecg/evaluation/m1_structural.py L39-47 (read, not inferred from metric names)",
+ "D1": {
+  "formula": "x[n+1] - x[n]",
+  "frozen_impl": "np.diff(np.asarray(x, dtype=np.float64))",
+  "torch_impl": "x[..., 1:] - x[..., :-1]",
+  "output_length": "T-1",
+  "padding": "none",
+  "smoothing": "none",
+  "sample_rate_scaling": "none",
+  "r_dependent": false
+ },
+ "D2": {
+  "formula": "x[n+2] - 2*x[n+1] + x[n]",
+  "frozen_impl": "x[2:] - 2.0*x[1:-1] + x[:-2]",
+  "torch_impl": "x[..., 2:] - 2.0*x[..., 1:-1] + x[..., :-2]",
+  "output_length": "T-2",
+  "padding": "none",
+  "smoothing": "none",
+  "sample_rate_scaling": "none",
+  "r_dependent": false
+ },
+ "support_distinction": "M3 reuses the frozen finite-difference operators, but not the GT-R-dependent QRS support used by the evaluation metrics.",
+ "evaluation_support": "qrs_core_morphology slices pred[r-CORE-1 : r+CORE+2], CORE=10 (80 ms), around GT R peaks (m1_structural L101,108,112). qrs_deriv_rmse and qrs_curvature_err exist only on that support.",
+ "m3_support": "the WHOLE clean-endpoint waveform; no R peak, QRS mask, event mask, predicted peak or other target-derived support enters the M3 auxiliary",
+ "equivalence": {
+  "f64_d1": 0.0,
+  "f64_d2": 0.0,
+  "f32_d1_abs": 2.384185791015625e-07,
+  "f32_d2_abs": 9.5367431640625e-07,
+  "f32_d1_rel_eps": 0.4999967515679645,
+  "f32_d2_rel_eps": 0.7706923665550738,
+  "matched_dtype_max": 0.0
+ },
+ "equivalence_criteria": {
+  "float64_absolute": "<= 1e-12 : PASS (measured 0.000e+00 for both operators)",
+  "matched_dtype_formula": "BIT-IDENTICAL required : PASS (measured exactly 0.0) \u2014 this is the operator-identity test",
+  "float32_vs_frozen_float64": "the frozen numpy casts to float64 internally, so a float32 torch tensor cannot match it to 1e-6 absolute when |d2| ~ 11: float32 eps * 11 = 1.3e-6. The absolute gap measured is 1.2e-6 and the criterion is therefore stated RELATIVELY: <= 2 float32 ulp of max|d2|."
+ },
+ "deviation_from_specification": "the specification asked for float32 max|diff| <= 1e-6 against the frozen operators. That bound is not attainable for float32 inputs at |d2| ~ 11 and is a precision artefact, not an operator mismatch: in matched dtype the two implementations are BIT-IDENTICAL. Recorded rather than fudged.",
+ "output_lengths_verified": true,
+ "result": "PASS"
+}

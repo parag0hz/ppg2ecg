@@ -1,0 +1,12 @@
+{
+ "path": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
+ "file_sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7",
+ "state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+ "selected_epoch": 45,
+ "selection_metric": 0.11945885431656277,
+ "m2_arm": "U",
+ "seed": 42,
+ "params": 4568707,
+ "identical_to_A4": true,
+ "A4_path": "outputs/a4_imeanflow_wildppg_seed42/checkpoint_best.pt"
+}

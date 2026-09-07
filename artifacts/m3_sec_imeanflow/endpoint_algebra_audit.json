@@ -1,0 +1,17 @@
+{
+ "production_update": "z_r = z_t - (t - r) * net.u(z_t, ppg, t, t - r)  [imeanflow.sample_meanflow L157-166; event_reliability.sample_meanflow_schedule L68-84 \u2014 identical]",
+ "h_convention": "h = t - r, passed as the 4th argument of net.u",
+ "endpoint_jump": "r = 0  =>  h0 = t  =>  u0 = net.u(z_t, ppg, t, t);  x0_hat = z_t - t * u0",
+ "t_broadcast": "t is [B,1]; reshape(-1,1,1) broadcasts over the waveform axis, matching imeanflow_loss L109",
+ "z_t": "z_t = (1 - t) x + t e  (t = 0 data, t = 1 noise)",
+ "one_step_sampler_identity": "sample_meanflow(n_steps=1) computes e - 1*u(e, ppg, 1, 1), i.e. exactly x0_hat at t = 1",
+ "oracle_gate": {
+  "generic": 4.76837158203125e-07,
+  "t0": 0.0,
+  "t1": 0.0
+ },
+ "gate_threshold": 1e-06,
+ "gate_result": "PASS",
+ "verified_against_source": true,
+ "not_taken_on_trust_from_the_specification": true
+}

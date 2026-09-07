@@ -1,0 +1,26 @@
+{
+ "imports": [
+  "torch",
+  "__future__.annotations"
+ ],
+ "forbidden_symbol_hits_in_code": {
+  "detect_rpeaks": [],
+  "gt_peaks": [],
+  "tau_map": [],
+  "region_masks": [],
+  "qrs_core_morphology": [],
+  "event": [],
+  "rpeak": [],
+  "structure_weight": [],
+  "qrs": []
+ },
+ "docstring_mentions_allowed": true,
+ "result": "PASS",
+ "target_derived_quantities": [
+  "x",
+  "D1(x)",
+  "D2(x)",
+  "per-window denominators s1,s2"
+ ],
+ "training_only": true
+}

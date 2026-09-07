@@ -1,0 +1,30 @@
+{
+ "checked": "2026-09-07",
+ "M3_START_SHA": "1cf0d361e739ca9f26d7cd9b988cbbd1e85e8e29",
+ "origin_main": "1cf0d361e739ca9f26d7cd9b988cbbd1e85e8e29",
+ "m2_result_sha": "1cf0d361e739ca9f26d7cd9b988cbbd1e85e8e29",
+ "m2_verdict": "D \u2014 STRUCTURE-WEIGHTED IMEANFLOW NOT SUPPORTED",
+ "m2_prereg_sha": "e8a80843b4e663887c283270eaaaa6dee4b504d1",
+ "m2_prereg_commits_since": 0,
+ "m2_impl_sha": "f84a923",
+ "descendant_of_m2_impl": true,
+ "m2_arms_X_Q_never_run": true,
+ "penguin": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+ "imeanflow": "bf60cd7cb653f6628e59d48034b333c5eba445e2",
+ "a4_md5": "31c042d291052fbb6dc15263ad316be2",
+ "a4_state_sha256": "20ba7234f25e0fe30960ba0e441d4b9f751c20003c85fee80ec3c08367aa095e",
+ "e2_contract_sha256": "06e869412114e1efb9ab6624540aebc141495e2690150f4e512df7676c5a9115",
+ "c2_outputs": 0,
+ "forbidden_subjects": [
+  "kjd",
+  "ssx"
+ ],
+ "no_m3_result_at_preregistration": {
+  "training_outputs": 0,
+  "checkpoints": 0,
+  "validation_metrics": 0,
+  "sec_wired_into_trainer": false,
+  "note": "only algebra/operator audits exist, which produce no scientific result"
+ },
+ "uncommitted_model_or_training_changes": 0
+}

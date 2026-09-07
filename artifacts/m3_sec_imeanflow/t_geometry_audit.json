@@ -1,0 +1,14 @@
+{
+ "identity": "x0_hat - x = t * (e - x - u0)",
+ "commutation": "t is a per-sample scalar constant along the waveform axis, so it commutes with D1 and D2: D1(x0_hat)-D1(x) = t*D1(e-x-u0), likewise D2",
+ "consequence": "the squared SEC numerators inherit a t^2 factor, so L_SEC is approximately proportional to t^2",
+ "numeric_identity_max_error": 5.329070518200751e-15,
+ "t_halving_L1_ratio": {
+  "mean": 0.25000000000000006,
+  "sd": 6.299476273319086e-16,
+  "expected": 0.25
+ },
+ "frozen_decision": "NO 1/t weighting, NO 1/t^2 weighting, NO clipping by t, NO minimum-t threshold, NO time-dependent lambda, NO rebalanced t sampler",
+ "prereg_sentence": "The endpoint structural auxiliary inherits the natural t-dependent scaling of the direct t->0 endpoint construction. No inverse-t normalization is applied.",
+ "not_claimed_optimal": true
+}

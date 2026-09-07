@@ -334,6 +334,27 @@ artifacts/m2_structure_weighted_imeanflow/*
 !artifacts/m2_structure_weighted_imeanflow/evaluation_meta_lastepoch.json
 # validation_metrics.csv is 562 MB and stays out; its sha256 lives in provenance.json (prereg §28)
 
+# --- M3 SEC-iMF: pre-training audits are committed WITH the preregistration so the freeze is verifiable ---
+# No M3 result exists at preregistration time. Result CSVs, checkpoints and generated waveforms stay ignored.
+!artifacts/m3_sec_imeanflow/
+artifacts/m3_sec_imeanflow/*
+!artifacts/m3_sec_imeanflow/repository_integrity.json
+!artifacts/m3_sec_imeanflow/endpoint_algebra_audit.json
+!artifacts/m3_sec_imeanflow/derivative_operator_audit.json
+!artifacts/m3_sec_imeanflow/t_geometry_audit.json
+!artifacts/m3_sec_imeanflow/sec_call_graph_audit.json
+!artifacts/m3_sec_imeanflow/baseline_reference_manifest.json
+!artifacts/m3_sec_imeanflow/provenance.json
+!artifacts/m3_sec_imeanflow/train_numerical_audit.json
+!artifacts/m3_sec_imeanflow/gradient_diagnostic.json
+!artifacts/m3_sec_imeanflow/arm_e_training_manifest.json
+!artifacts/m3_sec_imeanflow/arm_v_training_manifest.json
+!artifacts/m3_sec_imeanflow/parameter_latency_audit.json
+!artifacts/m3_sec_imeanflow/bootstrap_effects.csv
+!artifacts/m3_sec_imeanflow/gates.csv
+!artifacts/m3_sec_imeanflow/decision.json
+!artifacts/m3_sec_imeanflow/figures_manifest.json
+
 # Literature survey working material (2026-09-04) — PDFs and reference clones stay out of git
 paper/
 external_ref/

@@ -1,0 +1,42 @@
+{
+ "stage": "M2",
+ "method": "GSW-iMF",
+ "verdict": "D",
+ "verdict_text": "STRUCTURE-WEIGHTED IMEANFLOW NOT SUPPORTED",
+ "clause": "preregistration \u00a713: 'G1 or G2 fails -> verdict D, STOP. No lambda tuning, no smoothing change, no extra control arms.'",
+ "G1": {
+  "metric": "qrs_deriv_rmse",
+  "U": 0.3209976751293294,
+  "S": 0.3334245150764789,
+  "rel_improvement": -0.038713177415203213,
+  "ci_lo": -0.012648157026734327,
+  "ci_hi": -0.012198155624731432,
+  "ci_side": "below_zero (S WORSE)",
+  "result": "FAIL"
+ },
+ "G2": {
+  "metric": "qrs_curvature_err",
+  "U": 0.21436754231131114,
+  "S": 0.24471669737739632,
+  "rel_improvement": -0.14157532777052229,
+  "ci_lo": -0.03054639296187616,
+  "ci_hi": -0.030156246517854878,
+  "ci_side": "below_zero (S WORSE)",
+  "result": "FAIL"
+ },
+ "both_gates_fail_on_both_conditions": "the relative change is an INCREASE in error, not a >=5% reduction, and both CIs lie entirely BELOW zero, i.e. S is significantly worse",
+ "arms_not_run_per_stop_rule": [
+  "X (shifted control)",
+  "Q (hard-QRS control)"
+ ],
+ "primary": {
+  "nfe": 4,
+  "source_seed": 0,
+  "n_clusters": null,
+  "subjects": [
+   "an0",
+   "k2s"
+  ]
+ },
+ "head": "f84a923ac68e5ffcb326dbbf65037403a7f68c28"
+}

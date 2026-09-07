@@ -328,6 +328,11 @@ artifacts/m2_structure_weighted_imeanflow/*
 !artifacts/m2_structure_weighted_imeanflow/gates.csv
 !artifacts/m2_structure_weighted_imeanflow/decision.json
 !artifacts/m2_structure_weighted_imeanflow/figures_manifest.json
+!artifacts/m2_structure_weighted_imeanflow/bootstrap_effects.csv
+!artifacts/m2_structure_weighted_imeanflow/bootstrap_effects_lastepoch.csv
+!artifacts/m2_structure_weighted_imeanflow/evaluation_meta.json
+!artifacts/m2_structure_weighted_imeanflow/evaluation_meta_lastepoch.json
+# validation_metrics.csv is 562 MB and stays out; its sha256 lives in provenance.json (prereg §28)
 
 # Literature survey working material (2026-09-04) — PDFs and reference clones stay out of git
 paper/

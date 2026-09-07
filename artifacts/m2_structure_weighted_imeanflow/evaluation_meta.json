@@ -1,0 +1,152 @@
+{
+ "head": "f84a923ac68e5ffcb326dbbf65037403a7f68c28",
+ "val_subjects": [
+  "an0",
+  "k2s"
+ ],
+ "n_rows": 49200,
+ "n_clusters": 12400,
+ "nfes": [
+  1,
+  2,
+  4
+ ],
+ "source_seeds": [
+  0,
+  1,
+  2,
+  3
+ ],
+ "arms": [
+  "U",
+  "S"
+ ],
+ "tolerances_ms": [
+  50.0,
+  100.0,
+  150.0,
+  200.0
+ ],
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260904,
+  "rule": "E2 clustering: all site rows sharing one target ECG move together; subject-stratified; equal subject weight"
+ },
+ "checkpoints": [
+  {
+   "arm": "U",
+   "path": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
+   "sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7",
+   "best_epoch": 45,
+   "m2_arm": "U",
+   "seed": 42
+  },
+  {
+   "arm": "S",
+   "path": "outputs/m2_arm_S_seed42/checkpoint_best.pt",
+   "sha256": "843b187ea68e8c414974418ee1bced97e04b2f53ff4e9fee1be5da050f342491",
+   "best_epoch": 60,
+   "m2_arm": "S",
+   "seed": 42
+  }
+ ],
+ "timings": [
+  {
+   "arm": "U",
+   "nfe": 1,
+   "source_seed": 0,
+   "gen_seconds": 59.22898061480373,
+   "windows": 49200,
+   "windows_per_s": 830.6744348678343
+  },
+  {
+   "arm": "U",
+   "nfe": 2,
+   "source_seed": 0,
+   "gen_seconds": 118.52839895710349,
+   "windows": 49200,
+   "windows_per_s": 415.0903954908387
+  },
+  {
+   "arm": "U",
+   "nfe": 4,
+   "source_seed": 0,
+   "gen_seconds": 236.87231587804854,
+   "windows": 49200,
+   "windows_per_s": 207.7068390944012
+  },
+  {
+   "arm": "U",
+   "nfe": 4,
+   "source_seed": 1,
+   "gen_seconds": 237.2287106900476,
+   "windows": 49200,
+   "windows_per_s": 207.39479575169347
+  },
+  {
+   "arm": "U",
+   "nfe": 4,
+   "source_seed": 2,
+   "gen_seconds": 237.24604506092146,
+   "windows": 49200,
+   "windows_per_s": 207.3796424609149
+  },
+  {
+   "arm": "U",
+   "nfe": 4,
+   "source_seed": 3,
+   "gen_seconds": 237.2294696890749,
+   "windows": 49200,
+   "windows_per_s": 207.3941322066101
+  },
+  {
+   "arm": "S",
+   "nfe": 1,
+   "source_seed": 0,
+   "gen_seconds": 59.26812975294888,
+   "windows": 49200,
+   "windows_per_s": 830.1257388259676
+  },
+  {
+   "arm": "S",
+   "nfe": 2,
+   "source_seed": 0,
+   "gen_seconds": 118.55155298905447,
+   "windows": 49200,
+   "windows_per_s": 415.0093251375838
+  },
+  {
+   "arm": "S",
+   "nfe": 4,
+   "source_seed": 0,
+   "gen_seconds": 237.29885917296633,
+   "windows": 49200,
+   "windows_per_s": 207.3334872804352
+  },
+  {
+   "arm": "S",
+   "nfe": 4,
+   "source_seed": 1,
+   "gen_seconds": 237.2361407293938,
+   "windows": 49200,
+   "windows_per_s": 207.38830031854445
+  },
+  {
+   "arm": "S",
+   "nfe": 4,
+   "source_seed": 2,
+   "gen_seconds": 237.2831917530857,
+   "windows": 49200,
+   "windows_per_s": 207.34717717046297
+  },
+  {
+   "arm": "S",
+   "nfe": 4,
+   "source_seed": 3,
+   "gen_seconds": 237.3447188558057,
+   "windows": 49200,
+   "windows_per_s": 207.29342635970144
+  }
+ ],
+ "no_alignment": "no oracle shift, no cross-correlation, no DTW \u2014 nothing is translated"
+}

@@ -1,0 +1,20 @@
+{
+ "head": "f84a923ac68e5ffcb326dbbf65037403a7f68c28",
+ "generated_by": "scripts/m2_finalize.py",
+ "validation_metrics_csv": {
+  "path": "artifacts/m2_structure_weighted_imeanflow/validation_metrics.csv",
+  "bytes": 576315699,
+  "sha256": "40b3a5295d5c303c8c0f8dc6eaf479ad9230259f46f65d236252c0f0aef0c1ee",
+  "note": "562 MB: not committed (prereg \u00a728 stores hashes instead)"
+ },
+ "checkpoints": {
+  "U": {
+   "path": "outputs/m2_arm_U_seed42/checkpoint_best.pt",
+   "sha256": "8beaff6cd9cb6db4b3bdf2023ae2676df439a9e94c0d1a34658627ec76d8a6d7"
+  },
+  "S": {
+   "path": "outputs/m2_arm_S_seed42/checkpoint_best.pt",
+   "sha256": "843b187ea68e8c414974418ee1bced97e04b2f53ff4e9fee1be5da050f342491"
+  }
+ }
+}

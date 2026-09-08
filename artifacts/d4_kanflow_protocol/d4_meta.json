@@ -1,0 +1,39 @@
+{
+ "source": "outputs/d1_<corpus>_seed42/eval/summary_by_nfe.csv (D1 run, frozen)",
+ "no_training_or_metric_recomputation": true,
+ "scale_factors_ours_vs_zscore": {
+  "BIDMC": 2.76,
+  "CAPNO": 4.66,
+  "VitalDB": 2.54
+ },
+ "mimic_afib": "deliberately empty: waveforms not held (~1.08 TB) and the cohort has five irreconcilable definitions",
+ "kanflow_table": {
+  "BIDMC": {
+   "MAE": 0.53,
+   "RMSE": 0.82,
+   "FD": 30.71,
+   "micro_f1": 0.7,
+   "macro_f1": 0.72,
+   "rr_mae_ms": 19.8,
+   "hr_abs_err": 10.29
+  },
+  "CAPNO": {
+   "MAE": 0.56,
+   "RMSE": 0.81,
+   "FD": 25.57,
+   "micro_f1": 0.4,
+   "macro_f1": 0.54,
+   "rr_mae_ms": 20.86,
+   "hr_abs_err": 5.75
+  },
+  "VitalDB": {
+   "MAE": 0.56,
+   "RMSE": 0.89,
+   "FD": 3.04,
+   "micro_f1": 0.76,
+   "macro_f1": 0.78,
+   "rr_mae_ms": 15.24,
+   "hr_abs_err": 0.67
+  }
+ }
+}

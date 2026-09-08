@@ -1,0 +1,27 @@
+{
+ "corpus": "wesad_resp",
+ "task": "Resp",
+ "segment_len_s": 4,
+ "processed": "wesad_resp_4s",
+ "manifest": "split_d3_wesad_resp_seed42.json",
+ "test_subjects": [
+  "S10",
+  "S16"
+ ],
+ "n_test_windows": 2781,
+ "source_seed": 0,
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260904,
+  "rule": "subject-clustered, equal subject weight"
+ },
+ "resp_window_s": 60,
+ "checkpoints": [
+  {
+   "arm": "iMF",
+   "path": "outputs/d3_wesad_resp_seed42/checkpoint_best.pt",
+   "sha256": "4dc30afb8148cce42c155e87730c0ddbf3bf8c0c44106c50d037ea03b7b1f1be",
+   "epoch": 26
+  }
+ ]
+}

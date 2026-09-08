@@ -1,0 +1,42 @@
+{
+ "splits": [
+  {
+   "protocol": "D1-subject-holdout",
+   "seed": 42,
+   "corpus": "wesad_resp",
+   "rule": "natural-sorted subject ids -> numpy.random.Generator(PCG64(42)).permutation -> train = ceil(0.70*n) (capped at n-2), val = max(1, floor(rest/2)), test = the remainder",
+   "n_subjects": 15,
+   "train": [
+    "S2",
+    "S4",
+    "S5",
+    "S6",
+    "S7",
+    "S8",
+    "S9",
+    "S11",
+    "S13",
+    "S14",
+    "S17"
+   ],
+   "val": [
+    "S3",
+    "S15"
+   ],
+   "test": [
+    "S10",
+    "S16"
+   ]
+  }
+ ],
+ "extra": {
+  "protocol": "D3 PENGUIN-protocol replication; frozen d1_common 70/15/15 rule, seed 42",
+  "corpus": "data/processed/wesad_resp_4s",
+  "segment_len_s": 4,
+  "windows": {
+   "train": 15994,
+   "val": 2936,
+   "test": 2781
+  }
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "corpus": "bidmc_resp",
+ "task": "Resp",
+ "segment_len_s": 4,
+ "processed": "bidmc_resp_4s",
+ "manifest": "split_d3_bidmc_resp_seed42.json",
+ "test_subjects": [
+  "bidmc_02",
+  "bidmc_03",
+  "bidmc_09",
+  "bidmc_14",
+  "bidmc_15",
+  "bidmc_34",
+  "bidmc_37",
+  "bidmc_52"
+ ],
+ "n_test_windows": 960,
+ "source_seed": 0,
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260904,
+  "rule": "subject-clustered, equal subject weight"
+ },
+ "resp_window_s": 60,
+ "checkpoints": [
+  {
+   "arm": "iMF",
+   "path": "outputs/d3_bidmc_resp_seed42/checkpoint_best.pt",
+   "sha256": "5fad91d0d52226a9e47cfb5ade94fc8bd9384f226b1ee607d867ac94b083ed6c",
+   "epoch": 27
+  }
+ ]
+}

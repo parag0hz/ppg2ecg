@@ -360,6 +360,16 @@ artifacts/m3_sec_imeanflow/*
 !artifacts/m3_sec_imeanflow/decision.json
 !artifacts/m3_sec_imeanflow/figures_manifest.json
 
+# --- D3 / D4: metric tables and metadata are tracked; per-window CSVs and checkpoints stay out ---
+!artifacts/d3_penguin_six_dataset/
+artifacts/d3_penguin_six_dataset/*
+!artifacts/d3_penguin_six_dataset/metrics_*.csv
+!artifacts/d3_penguin_six_dataset/meta_*.json
+!artifacts/d4_kanflow_protocol/
+artifacts/d4_kanflow_protocol/*
+!artifacts/d4_kanflow_protocol/*.csv
+!artifacts/d4_kanflow_protocol/*.json
+
 # Literature survey working material (2026-09-04) — PDFs and reference clones stay out of git
 paper/
 external_ref/

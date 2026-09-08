@@ -1,0 +1,26 @@
+{
+ "corpus": "uci_bp",
+ "task": "ABP",
+ "segment_len_s": 8,
+ "processed": "uci_bp_8s",
+ "manifest": "split_d3_uci_bp_seed42.json",
+ "test_subjects": [
+  "uci00"
+ ],
+ "n_test_windows": 45997,
+ "source_seed": 0,
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260904,
+  "rule": "subject-clustered, equal subject weight"
+ },
+ "resp_window_s": null,
+ "checkpoints": [
+  {
+   "arm": "iMF",
+   "path": "outputs/d3_uci_bp_seed42/checkpoint_best.pt",
+   "sha256": "32aac42a27f2e5f645504979662fe478cf9b2bf156960ec6c06ac0ccdcf284a7",
+   "epoch": 49
+  }
+ ]
+}

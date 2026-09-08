@@ -1,0 +1,35 @@
+{
+ "splits": [
+  {
+   "protocol": "D1-subject-holdout",
+   "seed": 42,
+   "corpus": "uci_bp",
+   "rule": "natural-sorted subject ids -> numpy.random.Generator(PCG64(42)).permutation -> train = ceil(0.70*n) (capped at n-2), val = max(1, floor(rest/2)), test = the remainder",
+   "n_subjects": 8,
+   "train": [
+    "uci01",
+    "uci02",
+    "uci03",
+    "uci04",
+    "uci06",
+    "uci07"
+   ],
+   "val": [
+    "uci05"
+   ],
+   "test": [
+    "uci00"
+   ]
+  }
+ ],
+ "extra": {
+  "protocol": "D3 PENGUIN-protocol replication; frozen d1_common 70/15/15 rule, seed 42",
+  "corpus": "data/processed/uci_bp_8s",
+  "segment_len_s": 8,
+  "windows": {
+   "train": 263458,
+   "val": 46785,
+   "test": 45997
+  }
+ }
+}

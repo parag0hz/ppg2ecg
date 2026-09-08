@@ -1,0 +1,145 @@
+dataset,metric,nfe,ours,kanflow_published,comparable_to_kanflow,incomparability_reason
+BIDMC,mae,1,0.4645956139814902,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,mae,2,0.46041819115871274,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,mae,4,0.45347866028175554,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,mae,10,0.4544032580694971,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,mae,25,0.45544340211258094,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,mae,50,0.45591306735481935,0.53,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,1,0.5599710603700607,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,2,0.5570978562783853,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,4,0.5492608733421411,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,10,0.5511663405495448,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,25,0.5527443614226434,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,rmse,50,0.553401093488215,0.82,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+BIDMC,fid_default_features,1,157.70033721656694,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,fid_default_features,2,141.28690268208595,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,fid_default_features,4,161.8552692891798,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,fid_default_features,10,190.70896226735164,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,fid_default_features,25,203.373238159798,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,fid_default_features,50,207.75159125522936,30.71,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,1,0.9246607390174177,,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,2,0.8150318649345233,,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,4,0.7910451443793136,,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,10,0.7884323560851044,,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,25,0.7919505312175412,,False,different FD definition; ours is a surrogate feature space
+BIDMC,discrete_frechet,50,0.7941905110783409,,False,different FD definition; ours is a surrogate feature space
+BIDMC,micro_f1,1,0.494141656122592,0.7,True,
+BIDMC,micro_f1,2,0.4927685100174599,0.7,True,
+BIDMC,micro_f1,4,0.49744042656624343,0.7,True,
+BIDMC,micro_f1,10,0.49842281665785665,0.7,True,
+BIDMC,micro_f1,25,0.5003499691270384,0.7,True,
+BIDMC,micro_f1,50,0.49949496713298286,0.7,True,
+BIDMC,macro_f1,1,0.49376763830213866,0.72,True,
+BIDMC,macro_f1,2,0.4929865722047542,0.72,True,
+BIDMC,macro_f1,4,0.4976673619824462,0.72,True,
+BIDMC,macro_f1,10,0.49844315064304245,0.72,True,
+BIDMC,macro_f1,25,0.5003388256342898,0.72,True,
+BIDMC,macro_f1,50,0.4994764286719575,0.72,True,
+BIDMC,rr_mae_ms,1,16.745343097693233,19.8,True,
+BIDMC,rr_mae_ms,2,17.50779410879907,19.8,True,
+BIDMC,rr_mae_ms,4,17.74568334795866,19.8,True,
+BIDMC,rr_mae_ms,10,18.050264977100746,19.8,True,
+BIDMC,rr_mae_ms,25,18.130149458864373,19.8,True,
+BIDMC,rr_mae_ms,50,18.16403516065947,19.8,True,
+BIDMC,hr_abs_err,1,1.9724916512091473,10.29,True,
+BIDMC,hr_abs_err,2,1.5943811679899669,10.29,True,
+BIDMC,hr_abs_err,4,1.5996433900872566,10.29,True,
+BIDMC,hr_abs_err,10,1.6245494607018294,10.29,True,
+BIDMC,hr_abs_err,25,1.6125703259838966,10.29,True,
+BIDMC,hr_abs_err,50,1.6450934296065032,10.29,True,
+CAPNO,mae,1,0.38554828890096693,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,mae,2,0.37305882388661665,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,mae,4,0.3528770870299984,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,mae,10,0.3398254345645045,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,mae,25,0.3349969375253088,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,mae,50,0.3335676494631161,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,1,0.47200754731340555,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,2,0.4555356876217036,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,4,0.4359717140351432,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,10,0.42565776920070647,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,25,0.4222046428598283,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,rmse,50,0.42123157595349237,0.81,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+CAPNO,fid_default_features,1,271.3191431835884,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,fid_default_features,2,243.74980477025233,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,fid_default_features,4,251.00311245304326,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,fid_default_features,10,277.81923465579166,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,fid_default_features,25,290.61622680692,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,fid_default_features,50,295.083943880905,25.57,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,1,0.9015201401072166,,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,2,0.8305121872803687,,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,4,0.7904476902230978,,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,10,0.7721273125443582,,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,25,0.7679755126174617,,False,different FD definition; ours is a surrogate feature space
+CAPNO,discrete_frechet,50,0.7643514409570749,,False,different FD definition; ours is a surrogate feature space
+CAPNO,micro_f1,1,0.5054240055171609,0.4,True,
+CAPNO,micro_f1,2,0.49120917921256485,0.4,True,
+CAPNO,micro_f1,4,0.49583594648200763,0.4,True,
+CAPNO,micro_f1,10,0.5028883666371171,0.4,True,
+CAPNO,micro_f1,25,0.5074702555276746,0.4,True,
+CAPNO,micro_f1,50,0.5097989541688821,0.4,True,
+CAPNO,macro_f1,1,0.49943837905874783,0.54,True,
+CAPNO,macro_f1,2,0.4851027897404279,0.54,True,
+CAPNO,macro_f1,4,0.4902778543377459,0.54,True,
+CAPNO,macro_f1,10,0.49766365733370704,0.54,True,
+CAPNO,macro_f1,25,0.5025790504730582,0.54,True,
+CAPNO,macro_f1,50,0.5049690729771594,0.54,True,
+CAPNO,rr_mae_ms,1,16.69058193866045,20.86,True,
+CAPNO,rr_mae_ms,2,17.773923812374036,20.86,True,
+CAPNO,rr_mae_ms,4,17.41154842073026,20.86,True,
+CAPNO,rr_mae_ms,10,16.10938633588523,20.86,True,
+CAPNO,rr_mae_ms,25,14.871180053002751,20.86,True,
+CAPNO,rr_mae_ms,50,14.877928543293129,20.86,True,
+CAPNO,hr_abs_err,1,17.510532323282543,5.75,True,
+CAPNO,hr_abs_err,2,18.072617494349817,5.75,True,
+CAPNO,hr_abs_err,4,19.14089272605323,5.75,True,
+CAPNO,hr_abs_err,10,19.99498525236436,5.75,True,
+CAPNO,hr_abs_err,25,20.28114572957713,5.75,True,
+CAPNO,hr_abs_err,50,20.382208001256902,5.75,True,
+VitalDB,mae,1,0.40045365062735205,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,mae,2,0.4041569108856503,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,mae,4,0.3954362989689168,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,mae,10,0.39506906915460793,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,mae,25,0.3963348376137979,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,mae,50,0.3972398511997319,0.56,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,1,0.4782243382033566,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,2,0.4825321087459665,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,4,0.47332030538754616,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,10,0.4722136312808121,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,25,0.47346758424075724,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,rmse,50,0.47444873883505134,0.89,False,"amplitude scale: KANFlow z-score only, ours z-score then min-max[-1,1] (2.5-4.7x)"
+VitalDB,fid_default_features,1,169.1274783227826,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,fid_default_features,2,131.43164037514265,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,fid_default_features,4,126.91557123122834,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,fid_default_features,10,161.60983986314193,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,fid_default_features,25,182.83725935371262,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,fid_default_features,50,189.9455189514505,3.04,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,1,0.726420552735712,,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,2,0.6800565909548631,,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,4,0.6600693189465777,,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,10,0.6498594359625638,,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,25,0.6492147900365608,,False,different FD definition; ours is a surrogate feature space
+VitalDB,discrete_frechet,50,0.6497521622728901,,False,different FD definition; ours is a surrogate feature space
+VitalDB,micro_f1,1,0.75158847247497,0.76,True,
+VitalDB,micro_f1,2,0.7587475122799542,0.76,True,
+VitalDB,micro_f1,4,0.7683317603396874,0.76,True,
+VitalDB,micro_f1,10,0.7724763131283333,0.76,True,
+VitalDB,micro_f1,25,0.7721399811990852,0.76,True,
+VitalDB,micro_f1,50,0.7714820360872805,0.76,True,
+VitalDB,macro_f1,1,0.7542395406243211,0.78,True,
+VitalDB,macro_f1,2,0.7584849703001922,0.78,True,
+VitalDB,macro_f1,4,0.7650576513548897,0.78,True,
+VitalDB,macro_f1,10,0.7646205775996926,0.78,True,
+VitalDB,macro_f1,25,0.7621094250179927,0.78,True,
+VitalDB,macro_f1,50,0.7606800738867914,0.78,True,
+VitalDB,rr_mae_ms,1,17.849140353230933,15.24,True,
+VitalDB,rr_mae_ms,2,15.93169726768729,15.24,True,
+VitalDB,rr_mae_ms,4,14.983790119906812,15.24,True,
+VitalDB,rr_mae_ms,10,14.32013210387256,15.24,True,
+VitalDB,rr_mae_ms,25,14.158502905281201,15.24,True,
+VitalDB,rr_mae_ms,50,14.089950955540681,15.24,True,
+VitalDB,hr_abs_err,1,8.018635990119455,0.67,True,
+VitalDB,hr_abs_err,2,7.472024203130006,0.67,True,
+VitalDB,hr_abs_err,4,7.278770012682474,0.67,True,
+VitalDB,hr_abs_err,10,7.396313294561797,0.67,True,
+VitalDB,hr_abs_err,25,7.545304068975637,0.67,True,
+VitalDB,hr_abs_err,50,7.614059235541174,0.67,True,

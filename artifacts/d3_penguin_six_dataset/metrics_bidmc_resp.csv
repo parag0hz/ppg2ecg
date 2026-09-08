@@ -1,0 +1,5 @@
+corpus,task,arm,nfe,metric,subject_macro_mean,ci_lo,ci_hi,pooled_mean,n_units,n_subjects,gen_seconds
+bidmc_resp,Resp,iMF,1,RR,4.203125,3.40625,5.109375,4.203125,64,8,0.7531372476369143
+bidmc_resp,Resp,iMF,2,RR,4.046875,3.25,4.984375,4.046875,64,8,1.0793294999748468
+bidmc_resp,Resp,iMF,4,RR,4.140625,3.40625,5.046875,4.140625,64,8,2.154287103097886
+bidmc_resp,Resp,iMF,50,RR,4.3125,3.46875,5.296875,4.3125,64,8,27.971106958109885

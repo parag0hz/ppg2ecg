@@ -374,3 +374,6 @@ artifacts/d4_kanflow_protocol/*
 paper/
 external_ref/
 fig.html
+
+# U1: symlink view of raw WildPPG (firewall: 14 subjects, no kjd/ssx)
+data/raw_u1_wildppg_view/

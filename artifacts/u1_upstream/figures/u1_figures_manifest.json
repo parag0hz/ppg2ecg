@@ -1,0 +1,62 @@
+{
+  "PPG-DaLiA": {
+    "test_file": "subject9.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_PPG-DaLiA_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 25,
+    "segment_len_s": 4,
+    "fs": 128
+  },
+  "WildPPG": {
+    "test_file": "subject9.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_WildPPG_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 0,
+    "segment_len_s": 4,
+    "fs": 128
+  },
+  "BIDMC": {
+    "test_file": "subject2.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_BIDMC_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 6,
+    "segment_len_s": 4,
+    "fs": 128
+  },
+  "WESAD": {
+    "test_file": "subject9.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_WESAD_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 9,
+    "segment_len_s": 4,
+    "fs": 128
+  },
+  "UCI-BP": {
+    "test_file": "subject2.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_UCI-BP_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 9,
+    "segment_len_s": 4,
+    "fs": 128
+  },
+  "MIMIC-BP": {
+    "test_file": "subject1432.pkl",
+    "windows": "0..5 (upstream test-split order, first file)",
+    "checkpoint": "outputs/u1_upstream/PENGUIN_MIMIC-BP_u1/ckpt/pretrain_ckpt.pth",
+    "sampler": "upstream Heun n_step=25 (50 NFE)",
+    "seed": 42,
+    "checkpoint_epoch_0based": 17,
+    "segment_len_s": 4,
+    "fs": 128
+  }
+}

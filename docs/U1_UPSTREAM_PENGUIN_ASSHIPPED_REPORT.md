@@ -213,3 +213,37 @@ upstream's own filesystem-order split; our A3/A4/iMF arms run 8 s windows on thi
 splits. Putting the two side by side would repeat exactly the budget-mismatch error D3 already had to
 correct. Establishing a fair joint comparison would require a separate, preregistered stage that fixes
 window length and split for both.
+
+## 9. Qualitative figures
+
+`artifacts/u1_upstream/figures/`, produced by `scripts/u1_figures.py` from U1's own checkpoints —
+upstream's model, upstream's sampler (Heun `n_step=25`, 50 NFE), upstream's test split, shipped 4 s
+windows. Window selection is deterministic and was fixed before any window was viewed: the first six
+windows of the test split in upstream's own concatenation order (first file of `file_path["test_path"]`,
+stored order). Sampling is seeded with upstream's `fix_seed(42)`.
+
+| file | what it shows |
+|---|---|
+| `u1_paper_style_qualitative.png/pdf` | the published figure's layout — rows PPG / original vital sign / PENGUIN, columns grouped into ECG, respiration and ABP — on our own results |
+| `u1_paper_style_annotated.png/pdf` | the same, with each column captioned by its U1 metric against the published value and the checkpoint epoch that produced it |
+| `u1_test_window_variability.png/pdf` | six consecutive test windows per dataset, target black over PENGUIN orange, so a single favourable window cannot stand in for the result |
+
+The published figure also carries a **PaPaGei-S** row. PaPaGei-S was not trained in U1, so that row is
+absent rather than filled from another source.
+
+Three things are visible in the variability grid that the scalar table does not show:
+
+1. **ECG beats are generated but not placed.** On PPG-DaLiA and WildPPG the model emits R-peak-shaped
+   deflections at roughly the right rate, but they do not land on the target's beats, and the generated
+   trace carries a baseline offset relative to the target. This is the rate-vs-placement dissociation D1
+   and D2 already measured, now visible in the released model's own output.
+2. **Respiration is frequently near-antiphase.** BIDMC windows 0, 2, 3 and 5 and WESAD windows 0 and 2
+   show the prediction tracking the correct period while inverted or badly phase-shifted. Upstream's
+   `RespRateError` reads the FFT argmax, which is phase-blind — so these windows can score well on the
+   published metric while being wrong about when the breath happened.
+3. **ABP tracks best of the three tasks, and overshoots systolic peaks.** UCI-BP and MIMIC-BP pulses
+   align in shape and timing, with the prediction exceeding the target at the peaks. That is exactly the
+   asymmetry behind SBP (window maximum, noise-sensitive) missing while DBP (window minimum) reproduces.
+
+WildPPG's panel is the one-epoch checkpoint described in §3.1 — its visible degradation is the same
+selection failure that produced 31.006 bpm, not a separate defect.

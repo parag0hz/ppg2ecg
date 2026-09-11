@@ -75,3 +75,44 @@ def test_fd_subset_is_exact_linspace_never_a_stride():
     assert fd_subset(500).tolist() == list(range(500))
     s = fd_subset(10_000)
     assert len(s) == 3000 and s[0] == 0 and s[-1] == 9999 and len(np.unique(s)) == len(s)
+
+
+# ------------------------------------------------------------------ U2-D5 evaluation budget
+eval_subset = _ns["eval_subset"]
+EVAL_TARGET = _ns["EVAL_TARGET"]
+
+
+def _subj(counts):
+    return np.concatenate([np.full(n, f"s{i}") for i, n in enumerate(counts)])
+
+
+def test_small_corpora_are_untouched():
+    s = _subj([120] * 8)                       # BIDMC-shaped: 960 windows, well under the cap
+    assert eval_subset(s, 15).size == 960
+
+
+@pytest.mark.parametrize("k", [1, 2, 15])
+def test_every_kept_block_is_k_consecutive_windows(k):
+    """Resp/ABP metric windows concatenate k CONSECUTIVE segments; a per-window subsample would
+    silently splice unrelated segments into one metric window."""
+    sel = eval_subset(_subj([46348, 46348]), k)
+    assert sel.size % k == 0
+    for i in range(0, sel.size, k):
+        assert np.all(np.diff(sel[i:i + k]) == 1)
+
+
+def test_cap_is_per_subject_so_no_subject_is_dropped():
+    s = _subj([210] * 229)                     # MIMIC-BP-shaped
+    sel = eval_subset(s, 2)
+    kept = {u for u in np.unique(s[sel])}
+    assert kept == set(np.unique(s)), "every test subject must survive the cap"
+    counts = [int((s[sel] == u).sum()) for u in np.unique(s)]
+    assert max(counts) - min(counts) <= 2, "subjects must be sampled evenly"
+
+
+def test_selection_is_deterministic_and_spans_the_recording():
+    s = _subj([92696])
+    a, b = eval_subset(s, 1), eval_subset(s, 1)
+    assert np.array_equal(a, b)
+    assert a[0] == 0 and a[-1] >= 92696 - 2    # exact linspace spans the whole recording
+    assert a.size <= EVAL_TARGET

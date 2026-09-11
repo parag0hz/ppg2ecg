@@ -35,6 +35,7 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "artifacts/u2_paired"
 BOOT_N, BOOT_SEED, BATCH = 2000, 20260911, 64
 FS, SEG = 128, 4
+EVAL_TARGET = 12000   # deviation U2-D5: evaluation-window budget, see `eval_subset`
 
 CORPORA = {   # slug: (task, PENGUIN metric window in seconds)
     "u2_dalia": ("ECG", 8), "u2_wildppg": ("ECG", 8),
@@ -68,6 +69,38 @@ def load_test(slug: str):
         Y.append(d["y"].astype(np.float64))
         S.append(np.full(len(d["x"]), s))
     return np.concatenate(X), np.concatenate(Y), np.concatenate(S), split
+
+
+def eval_subset(subj: np.ndarray, k: int, target: int = EVAL_TARGET) -> np.ndarray:
+    """Deviation U2-D5 -- deterministic evaluation-window budget.
+
+    The preregistration costed training (§12) but not evaluation. Measured on this GPU, scoring the
+    FULL test splits at 4 noise draws over the 7-point NFE grid is 26 GPU-hours, dominated by arm C
+    at NFE 50 on the three large corpora. This caps the windows scored, per subject, so the cost is
+    bounded without changing anything a result could depend on:
+
+      * the cap is fixed by compute alone, before any large-corpus number exists, and BIDMC (already
+        evaluated at full size) is under it, so no result informed the choice;
+      * selection is exact `linspace` within each subject -- never an integer stride, the defect D1
+        had to fix -- so it is deterministic and spans each recording;
+      * Resp/ABP metric windows concatenate `k` CONSECUTIVE segments, so selection is over blocks of
+        k, never individual windows, and contiguity inside a metric window is preserved;
+      * the identical index set is used for both arms and every NFE point, so the §9 pairing holds.
+
+    Corpora whose test split is already under the cap are untouched.
+    """
+    subs = np.unique(subj)
+    per = max(k, int(np.ceil(target / len(subs)) // k * k))
+    keep = []
+    for s in subs:
+        idx = np.flatnonzero(subj == s)
+        n_blocks = len(idx) // k
+        want = min(per // k, n_blocks)
+        if want <= 0:
+            continue
+        blocks = np.unique(np.linspace(0, n_blocks - 1, want).round().astype(int))
+        keep.append(np.concatenate([idx[b * k:(b + 1) * k] for b in blocks]))
+    return np.sort(np.concatenate(keep))
 
 
 def build(ckpt: Path, dev):
@@ -223,7 +256,13 @@ def main() -> int:
     OUT.mkdir(parents=True, exist_ok=True)
 
     X, Y, S, split = load_test(slug)
-    print(f"[u2] {slug}: task={task} test windows={len(X)} subjects={len(split['test'])}")
+    n_full = len(X)
+    k_seg = PM.segments_per_metric_window(window_s, SEG) if task in ("Resp", "ABP") else 1
+    sel = eval_subset(S, k_seg)
+    X, Y, S = X[sel], Y[sel], S[sel]
+    print(f"[u2] {slug}: task={task} test windows={len(X)} of {n_full} "
+          f"({'uncapped' if len(X) == n_full else f'U2-D5 cap, blocks of {k_seg}'}) "
+          f"subjects={len(split['test'])}", flush=True)
 
     nets, cks = {}, {}
     for arm in ("C", "I"):
@@ -301,7 +340,8 @@ def main() -> int:
         w = csv.DictWriter(f, fieldnames=list(pairs[0])); w.writeheader(); w.writerows(pairs)
     (OUT / f"meta_{slug}.json").write_text(json.dumps(
         {"corpus": slug, "task": task, "metric_window_s": window_s, "segment_len_s": SEG,
-         "test_subjects": split["test"], "n_test_windows": int(len(X)),
+         "test_subjects": split["test"], "n_test_windows": int(len(X)), "n_test_windows_full": int(n_full),
+         "eval_window_budget": EVAL_TARGET, "metric_window_segments": int(k_seg),
          "noise_draws": args.noise_draws, "checkpoints": cks,
          "bootstrap": {"n": BOOT_N, "seed": BOOT_SEED, "rule": "paired, subject-clustered, equal subject weight"},
          "fd_subsample_max": FD_MAX}, indent=1))

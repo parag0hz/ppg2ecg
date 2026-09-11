@@ -1,0 +1,106 @@
+{
+ "splits": [
+  {
+   "protocol": "U2-paired-subject-holdout",
+   "seed": 20260911,
+   "corpus": "u2_wildppg",
+   "dataset": "WildPPG",
+   "task": "ECG",
+   "rule": "subjects sorted by numeric index -> numpy.random.default_rng(20260911).permutation; n_test = n_val = max(2, round(0.15 n)); test = perm[:n_test], val = perm[n_test:2*n_test], train = remainder. UCI-BP (n=4 after U1-P1 deduplication) is fixed at 2/1/1.",
+   "deduplicated": null,
+   "n_subjects": 14,
+   "train": [
+    "subject0",
+    "subject2",
+    "subject3",
+    "subject4",
+    "subject6",
+    "subject7",
+    "subject10",
+    "subject11",
+    "subject12",
+    "subject13"
+   ],
+   "val": [
+    "subject1",
+    "subject9"
+   ],
+   "test": [
+    "subject5",
+    "subject8"
+   ]
+  }
+ ],
+ "extra": {
+  "source": "data/processed/upstream_u1/WildPPG (upstream preprocess.py, shipped 4 s)",
+  "source_sha256": {
+   "subject0": "36a09c2f944eefdc9e42244498ed70883898e8c32d9e3f19cc32e791a78ae7bc",
+   "subject1": "4770d377e123da57215fcf5aaaf1982ed6150b9aa162bcc2dc077b99020410cc",
+   "subject2": "bd19d305d112c16613171885e30e4e726420540a49211094975fee13af501509",
+   "subject3": "54dd7c79de304b39b98da9e590be32d0d641ff7c60c109fa3c65c0260b68be08",
+   "subject4": "7f365379847744a8a270149f83ab65da2c0e24152b2d9d02d356dc66d948e4cc",
+   "subject5": "a6e5156a72c41c048553dd7ed3c8212694d852bc2728dfef34a6385531e2d8b3",
+   "subject6": "fd834b113a1028f0d89638061f4f6be8c4d7571831c86e993691b6c10dcfe378",
+   "subject7": "8d123c03694aa6908e6bf8d49c8390471068c14b346660a06c1610720e5bb30f",
+   "subject8": "ae911da9a212d08e1a0887c6c8e81441eae0270cd74b0c433faaf056fb2d7a10",
+   "subject9": "6aeb9892f8bea709a22412c88144aaf0344d173e7169a123afa2d8f795829dfa",
+   "subject10": "f4b960103cd392fc583f97490cf4e420076e669827033b7b1cae3765db0c52ef",
+   "subject11": "6325b9c1f7c5f4ff70555f9a972dc05435976856ec01429cce2395f5aa6c9deb",
+   "subject12": "e4d06b998c5791ce5f7cf25554250b2d336d611cc1b2384b0d1affe59d45cd94",
+   "subject13": "2a010dbd4cb3eb7d1f44f28f71235e7c5160e5481ed66d36dd1a423cf82a6ac4"
+  },
+  "target_sha256_16": {
+   "subject0": "5ec629d7370a2ce2",
+   "subject1": "191abac21c4bba49",
+   "subject2": "5d4e5dffd6f175d5",
+   "subject3": "728667df5c72b3aa",
+   "subject4": "400fb506d0073a1d",
+   "subject5": "3aee01bf58237345",
+   "subject6": "2e44eef244d3163b",
+   "subject7": "ee91cfd13b4e215b",
+   "subject8": "853a407ded77f078",
+   "subject9": "2cac70409a515f4c",
+   "subject10": "9e1a1a24704c0f76",
+   "subject11": "505d0cb8391df338",
+   "subject12": "3652bd17d49a0fcc",
+   "subject13": "56378b4bfaa1b8ed"
+  },
+  "windows_per_subject": {
+   "subject0": 44368,
+   "subject1": 44456,
+   "subject2": 48144,
+   "subject3": 54832,
+   "subject4": 47952,
+   "subject5": 47680,
+   "subject6": 52880,
+   "subject7": 52064,
+   "subject8": 45016,
+   "subject9": 47392,
+   "subject10": 51824,
+   "subject11": 52280,
+   "subject12": 47712,
+   "subject13": 50040
+  },
+  "n_windows": {
+   "train": 502096,
+   "val": 91848,
+   "test": 92696
+  },
+  "wildppg_subject_map": {
+   "subject0": "WildPPG_Part_an0.mat",
+   "subject1": "WildPPG_Part_e61.mat",
+   "subject2": "WildPPG_Part_fex.mat",
+   "subject3": "WildPPG_Part_k2s.mat",
+   "subject4": "WildPPG_Part_l38.mat",
+   "subject5": "WildPPG_Part_n31.mat",
+   "subject6": "WildPPG_Part_ngh.mat",
+   "subject7": "WildPPG_Part_p5d.mat",
+   "subject8": "WildPPG_Part_p9p.mat",
+   "subject9": "WildPPG_Part_qm9.mat",
+   "subject10": "WildPPG_Part_trh.mat",
+   "subject11": "WildPPG_Part_tz8.mat",
+   "subject12": "WildPPG_Part_u7y.mat",
+   "subject13": "WildPPG_Part_w4p.mat"
+  }
+ }
+}

@@ -98,6 +98,7 @@ def parse_args(argv=None):
     ap.add_argument("--sample-rate", type=int, default=128)
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
+    ap.add_argument("--segment-len", type=int, default=8, help="window length in seconds the processed corpus must have (T == sample_rate * segment_len). Default 8 = the historical assertion, unchanged; U2 runs the shipped PENGUIN 4 s.")
     ap.add_argument("--max-steps", type=int, default=None, help="U2 §6: stop after exactly N optimizer steps. Default None = unchanged behaviour; the round structure alone is corpus-dependent (min(epoch, --val-every-steps)), so epochs x val-every-steps is NOT a step budget.")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
@@ -133,7 +134,7 @@ def main(argv=None):
         stride = -(-len(x_va) // args.val_subsample)
         x_va, y_va = x_va[::stride], y_va[::stride]
     T = x_tr.shape[1]
-    assert T == args.sample_rate * 8 or args.limit_windows, f"expected 8 s windows ({args.sample_rate*8}), got T={T}"
+    assert T == args.sample_rate * args.segment_len or args.limit_windows, f"expected {args.segment_len} s windows ({args.sample_rate*args.segment_len}), got T={T}"
     x_tr_t, y_tr_t = torch.from_numpy(x_tr).to(device), torch.from_numpy(y_tr).to(device)
     x_va_t, y_va_t = torch.from_numpy(x_va).to(device), torch.from_numpy(y_va).to(device)
 

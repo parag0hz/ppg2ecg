@@ -1,0 +1,55 @@
+{
+ "splits": [
+  {
+   "protocol": "U2-paired-subject-holdout",
+   "seed": 20260911,
+   "corpus": "u2_ucibp",
+   "dataset": "UCI-BP",
+   "task": "ABP",
+   "rule": "subjects sorted by numeric index -> numpy.random.default_rng(20260911).permutation; n_test = n_val = max(2, round(0.15 n)); test = perm[:n_test], val = perm[n_test:2*n_test], train = remainder. UCI-BP (n=4 after U1-P1 deduplication) is fixed at 2/1/1.",
+   "deduplicated": [
+    0,
+    1,
+    4,
+    5
+   ],
+   "n_subjects": 4,
+   "train": [
+    "subject0",
+    "subject4"
+   ],
+   "val": [
+    "subject5"
+   ],
+   "test": [
+    "subject1"
+   ]
+  }
+ ],
+ "extra": {
+  "source": "data/processed/upstream_u1/UCI-BP (upstream preprocess.py, shipped 4 s)",
+  "source_sha256": {
+   "subject0": "0edd755da189883576fd7e0ec4a1bdbdeb36d5e29634c1a2baad544b25dcc73a",
+   "subject1": "89053c5dcbd2e4fb607ff9cd59f08fa7598453c3a07a428468ef0f2c1623ffa6",
+   "subject4": "524994caa6d7e6e71911668230756352697c8fc6e4ceb1d10ff88587f92fe5aa",
+   "subject5": "3a2b8a410b3659fb20fc927bcdfcfc98e3d12f9aa8e8b6b0ee91c724b9f6353e"
+  },
+  "target_sha256_16": {
+   "subject0": "ce18ef9d472dbffa",
+   "subject1": "6276f09f02cd2caf",
+   "subject4": "d8a5e4b7a27aed69",
+   "subject5": "0b08cdede403c172"
+  },
+  "windows_per_subject": {
+   "subject0": 91994,
+   "subject1": 73554,
+   "subject4": 97122,
+   "subject5": 93570
+  },
+  "n_windows": {
+   "train": 189116,
+   "val": 93570,
+   "test": 73554
+  }
+ }
+}

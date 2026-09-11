@@ -1,0 +1,94 @@
+{
+ "splits": [
+  {
+   "protocol": "U2-paired-subject-holdout",
+   "seed": 20260911,
+   "corpus": "u2_wesad",
+   "dataset": "WESAD",
+   "task": "Resp",
+   "rule": "subjects sorted by numeric index -> numpy.random.default_rng(20260911).permutation; n_test = n_val = max(2, round(0.15 n)); test = perm[:n_test], val = perm[n_test:2*n_test], train = remainder. UCI-BP (n=4 after U1-P1 deduplication) is fixed at 2/1/1.",
+   "deduplicated": null,
+   "n_subjects": 15,
+   "train": [
+    "subject0",
+    "subject2",
+    "subject3",
+    "subject4",
+    "subject5",
+    "subject7",
+    "subject9",
+    "subject11",
+    "subject12",
+    "subject13",
+    "subject14"
+   ],
+   "val": [
+    "subject8",
+    "subject10"
+   ],
+   "test": [
+    "subject1",
+    "subject6"
+   ]
+  }
+ ],
+ "extra": {
+  "source": "data/processed/upstream_u1/WESAD (upstream preprocess.py, shipped 4 s)",
+  "source_sha256": {
+   "subject0": "10d5487043f33471dae8f6f3709aba3715561fbe429aaf465b4b842ff3f8c072",
+   "subject1": "ad3fd8f7989600e3572abfabc614dd725ee44182cf6c303b5f59135c5ef845be",
+   "subject2": "00ca77a2de372e33fcc3474c0ee9b18ab375799fefa348e2a6d0711a06c042aa",
+   "subject3": "30adfd7ac3c56fd48ddd67cb68a8888ae267038a1e939cddcbf23e28a4824209",
+   "subject4": "4184733a643403328ff125d55a0c4888f9c60bff49883c135509e7ef9d9d0bca",
+   "subject5": "64fdd0843f9586da0154f1944d7a25ce0a2c2eba16b858f6435af2103701d992",
+   "subject6": "d8c0c7b11d6bf24b07d0b80eda2fe19449211a0092a33c78a29f8131a896049f",
+   "subject7": "5f9c724018412ab33ad59432ad65ccf8e066c9e7f4114ef92b7fc186ebdb9a0b",
+   "subject8": "06c4b056e222f64fefbb93f7fef28107bf6134fbef18d4ded74dbbc30ad8781f",
+   "subject9": "33e0b6a3f841fb257ef1111f3f1e349b58a7eab3fa82d42a0a81dc2ca5c4df66",
+   "subject10": "518e207cca612ad5242dcafe88a7ee7a37b18beb8b97c5f99d4bf39ae8e14b06",
+   "subject11": "2b3c248022177c9e9aef0e34a1d7549bf6a5be4252d4b9ff419c8e011423dc1a",
+   "subject12": "23ad71a582c6f72e4dddb60ac039468e9f24f46fe09e02dc3327cb9b2b13ee4b",
+   "subject13": "31e8e8f04bcfd89d20673ec560754ce3d3e31133724b5d5f0e0ead94d66bac2d",
+   "subject14": "bafc67c163671e36e17f8fcec0a3fa77936c9ef20c253b51e2573c0d3c8a0da2"
+  },
+  "target_sha256_16": {
+   "subject0": "2c9005da151ed355",
+   "subject1": "d5146d7ec7dc225c",
+   "subject2": "486020ddcb4fc5ba",
+   "subject3": "534aecabfdbdda88",
+   "subject4": "4380165795717e1b",
+   "subject5": "2804554f2763a7ef",
+   "subject6": "5d137c034da3b0a2",
+   "subject7": "eb4f28150d0368a6",
+   "subject8": "abf3ade0c4dd320d",
+   "subject9": "1eacc80d3c6e242e",
+   "subject10": "d36cb0af5c8e1888",
+   "subject11": "f522c113ddd1f8bd",
+   "subject12": "3222041e1bad4d1b",
+   "subject13": "fd5c4547c34da853",
+   "subject14": "2402cf817e7208f0"
+  },
+  "windows_per_subject": {
+   "subject0": 1374,
+   "subject1": 1308,
+   "subject2": 1384,
+   "subject3": 1387,
+   "subject4": 1313,
+   "subject5": 1407,
+   "subject6": 1480,
+   "subject7": 1519,
+   "subject8": 1623,
+   "subject9": 1605,
+   "subject10": 1564,
+   "subject11": 1767,
+   "subject12": 1309,
+   "subject13": 1366,
+   "subject14": 1305
+  },
+  "n_windows": {
+   "train": 15736,
+   "val": 3187,
+   "test": 2788
+  }
+ }
+}

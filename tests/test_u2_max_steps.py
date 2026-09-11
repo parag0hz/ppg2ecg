@@ -98,3 +98,18 @@ def test_with_the_flag_the_budget_is_exactly_n_on_every_corpus(n_train):
 def test_budget_is_independent_of_round_length():
     for spr in (55, 110, 220, 440):
         assert realised_steps(592_000, spr=spr, max_steps=14_000) == 14_000
+
+
+# ------------------------------------------------------------------ U2 runs the shipped 4 s
+def test_a0_window_guard_is_segment_length_aware_and_defaults_to_8():
+    """train_a0 hard-coded an 8 s window assertion; train_a2 never had one, which is why D3 could
+    train 4 s corpora on arm I only. U2 runs PENGUIN's shipped 4 s on BOTH arms."""
+    assert train_a0.parse_args(["--out-dir", "/tmp/u2"]).segment_len == 8
+    assert train_a0.parse_args(["--out-dir", "/tmp/u2", "--segment-len", "4"]).segment_len == 4
+    src = SRC["train_a0"]
+    assert "args.sample_rate * args.segment_len" in src
+    assert "args.sample_rate * 8" not in src, "the hard-coded 8 s assumption must be gone"
+
+
+def test_a2_has_no_window_length_guard_to_contradict_it():
+    assert "expected 8 s windows" not in SRC["train_a2"]

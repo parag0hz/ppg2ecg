@@ -1,0 +1,94 @@
+{
+ "splits": [
+  {
+   "protocol": "U2-paired-subject-holdout",
+   "seed": 20260911,
+   "corpus": "u2_dalia",
+   "dataset": "PPG-DaLiA",
+   "task": "ECG",
+   "rule": "subjects sorted by numeric index -> numpy.random.default_rng(20260911).permutation; n_test = n_val = max(2, round(0.15 n)); test = perm[:n_test], val = perm[n_test:2*n_test], train = remainder. UCI-BP (n=4 after U1-P1 deduplication) is fixed at 2/1/1.",
+   "deduplicated": null,
+   "n_subjects": 15,
+   "train": [
+    "subject0",
+    "subject2",
+    "subject3",
+    "subject4",
+    "subject5",
+    "subject7",
+    "subject9",
+    "subject11",
+    "subject12",
+    "subject13",
+    "subject14"
+   ],
+   "val": [
+    "subject8",
+    "subject10"
+   ],
+   "test": [
+    "subject1",
+    "subject6"
+   ]
+  }
+ ],
+ "extra": {
+  "source": "data/processed/upstream_u1/PPG-DaLiA (upstream preprocess.py, shipped 4 s)",
+  "source_sha256": {
+   "subject0": "35108fc133d64457c2288c0ae3e5169d32c7127d25ed6d4e43da41b7a9ddf4ae",
+   "subject1": "55239792ee633a29713a216ccd3e13d629391afb2e45215034f18d0da20b7392",
+   "subject2": "bda78baa2d8e787f65e30dc4b0918a2ebcc9e204b73af87b952c2109968289de",
+   "subject3": "2b60cdb067a9dad0c6df9bfadb18ea24b0229d5adc40bbcdd6ceb425d7c2fbae",
+   "subject4": "1e40be2485c7f56fb7eeef0c33c3eee76e100cdf49c25cf4e6b460b8f60d34ac",
+   "subject5": "23fcc6acd5a729b9de752e8d0583863344ae81381ef22e3533f8157801c75d30",
+   "subject6": "3316632728901f709c8e2c59c1407a3b155b924177c928ad6d0429cf619ddd5b",
+   "subject7": "eb393d495c673909ccc0df8d0a8d2c8b1e97bb862ed795775711cd5f89e622cd",
+   "subject8": "4b2f23aab00366f059c8dd5f0d83bde58e89e1ad26683350084bb99305904ac5",
+   "subject9": "4c795ad25c782a45696ce71e58b629ef83059fd39ef2e8c41d1c532c690be968",
+   "subject10": "2820a05039a0ca349fec8a7b4708bcfc66ac35d228594a3e599ebba37d830f48",
+   "subject11": "b226163abc268354edd1c82d7050ef08d456c8afe74a545a2ee85216be3a130b",
+   "subject12": "921d0e282f2d67ba6dac7b4fe93c6d1d1e5753b1440dee3854e646aac5ba7f6c",
+   "subject13": "a1a878a69c558ddcbed8254b495e440980220504b3df706fbe35d8f668fa694f",
+   "subject14": "df0b347ac7dd300dfd5d988e5e07e4b1c3ef56038829e0de3575bf8cbf691b69"
+  },
+  "target_sha256_16": {
+   "subject0": "cd673192a761ff7b",
+   "subject1": "78327ecee4b9187b",
+   "subject2": "693ad2e7c3f91bc4",
+   "subject3": "8bc1779479ca283c",
+   "subject4": "d2d0751e0e0b60af",
+   "subject5": "857dd8a87b3c20f0",
+   "subject6": "9df7092978ae7b54",
+   "subject7": "29c9de37641faa70",
+   "subject8": "87d1dfd542a704de",
+   "subject9": "2274e2a90ef732cc",
+   "subject10": "cdb82f38919d0ff0",
+   "subject11": "6d651e24969b7135",
+   "subject12": "a05cdb00700824f1",
+   "subject13": "00fd6899bb63b9c7",
+   "subject14": "5ebbcdec7e341e7b"
+  },
+  "windows_per_subject": {
+   "subject0": 2303,
+   "subject1": 2051,
+   "subject2": 2185,
+   "subject3": 2287,
+   "subject4": 2326,
+   "subject5": 1312,
+   "subject6": 2335,
+   "subject7": 2020,
+   "subject8": 2140,
+   "subject9": 2662,
+   "subject10": 2262,
+   "subject11": 1978,
+   "subject12": 2284,
+   "subject13": 2239,
+   "subject14": 1984
+  },
+  "n_windows": {
+   "train": 23580,
+   "val": 4402,
+   "test": 4386
+  }
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "corpus": "u2_bidmc",
+ "task": "Resp",
+ "metric_window_s": 60,
+ "segment_len_s": 4,
+ "test_subjects": [
+  "subject4",
+  "subject10",
+  "subject17",
+  "subject24",
+  "subject34",
+  "subject35",
+  "subject49",
+  "subject51"
+ ],
+ "n_test_windows": 960,
+ "noise_draws": 4,
+ "checkpoints": {
+  "C": {
+   "path": "outputs/u2_bidmc_armC_seed42/checkpoint_best.pt",
+   "sha256": "8efdcd7eb7400120422906a1b01e5aee7441ba264a37ba33147d69c38dc69159",
+   "epoch": 91,
+   "steps": 14000
+  },
+  "I": {
+   "path": "outputs/u2_bidmc_armI_seed42/checkpoint_best.pt",
+   "sha256": "bafa5d83dd707116d436cfcd07cb9b305777ae2c3429703f40d9694fa07994e9",
+   "epoch": 51,
+   "steps": 14000
+  }
+ },
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260911,
+  "rule": "paired, subject-clustered, equal subject weight"
+ },
+ "fd_subsample_max": 3000
+}

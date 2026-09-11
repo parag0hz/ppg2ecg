@@ -107,6 +107,7 @@ def parse_args(argv=None):
     ap.add_argument("--gen-diag-windows", type=int, default=128)
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
+    ap.add_argument("--max-steps", type=int, default=None, help="U2 §6: stop after exactly N optimizer steps. Default None = unchanged behaviour; the round structure alone is corpus-dependent (min(epoch, --val-every-steps)), so epochs x val-every-steps is NOT a step budget.")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None)
@@ -250,6 +251,8 @@ def main(argv=None):
                 ua.append(acc["u"])
                 da.append(acc["d"])
                 ws.append({_k: acc[_k] for _k in WSTAT_KEYS})
+                if args.max_steps and state["opt_steps"] >= args.max_steps:
+                    break  # U2 §6: exact, corpus-independent step budget
             net.eval()
             val_fixed = fixed_imf_mse(net, x_va_t, y_va_t, banks, args.val_batch, args.jvp_mode)[0]
             do_diag = args.gen_diag_every > 0 and ((epoch + 1) % args.gen_diag_every == 0 or epoch == 0)
@@ -269,9 +272,10 @@ def main(argv=None):
                 state["no_improve"] += 1
             state["epoch"] = epoch + 1
             torch.save({"state_dict": net.state_dict(), "optimizer": opt.state_dict(), "loader_generator": gen.get_state(), "tr_generator": tr_gen.get_state(), "rng_cpu": torch.get_rng_state(), "rng_cuda": torch.cuda.get_rng_state_all() if device.type == "cuda" else [], "train_state": state, "epoch": epoch}, last_ckpt)
-            stop = (state["no_improve"] >= args.patience) and not args.no_early_stop
+            stop = ((state["no_improve"] >= args.patience) and not args.no_early_stop) or bool(args.max_steps and state["opt_steps"] >= args.max_steps)
             if stop:
-                event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
+                reason = f"max_steps({args.max_steps})" if args.max_steps and state["opt_steps"] >= args.max_steps else f"early_stop(patience={args.patience})"
+                event = (event + ";" if event else "") + reason
             wrow = {k: float(np.mean([w[k] for w in ws])) for k in WSTAT_KEYS} if ws else {k: float("nan") for k in WSTAT_KEYS}
             row = dict(epoch=epoch, train_loss_weighted=np.mean(lw), train_mse=np.mean(lm), train_u_abs=np.mean(ua), train_dudt_abs=np.mean(da), **wrow, val_imf_mse_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, diag_beats_ratio=d_beats, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], opt_steps=state["opt_steps"], event=event)
             with open(log_path, "a", newline="") as f:
@@ -279,7 +283,7 @@ def main(argv=None):
             print(f"epoch {epoch+1:3d}/{args.epochs} lossW {row['train_loss_weighted']:.4f} mse {row['train_mse']:.4f} |u| {row['train_u_abs']:.3f} |dudt| {row['train_dudt_abs']:.3f} valMSEfixed {val_fixed:.5f} w(med {row['w_median']:.2e} p10 {row['w_p10']:.2e} p90 {row['w_p90']:.2e} sat {row['w_saturation_frac']:.3f}) diag1NFE(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f} beats {d_beats:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
             if stop:
                 break
-        summary = {"exp_name": args.exp_name, "objective": "improved_meanflow", "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": "fixed_imf_mse", "best_selection_metric": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "opt_steps": state["opt_steps"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
+        summary = {"exp_name": args.exp_name, "objective": "improved_meanflow", "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": "fixed_imf_mse", "best_selection_metric": state["best"], "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "opt_steps": state["opt_steps"], "max_steps": args.max_steps, "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
         (out / "training_summary.json").write_text(json.dumps(summary, indent=1))
         (out / "TRAINING_DONE").write_text(json.dumps(summary))
         print("TRAINING_DONE", json.dumps(summary), flush=True)

@@ -98,6 +98,7 @@ def parse_args(argv=None):
     ap.add_argument("--sample-rate", type=int, default=128)
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
+    ap.add_argument("--max-steps", type=int, default=None, help="U2 §6: stop after exactly N optimizer steps. Default None = unchanged behaviour; the round structure alone is corpus-dependent (min(epoch, --val-every-steps)), so epochs x val-every-steps is NOT a step budget.")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
     ap.add_argument("--limit-windows", type=int, default=None, help="smoke: cap windows per subject")
@@ -147,7 +148,7 @@ def main(argv=None):
     train_loader = DataLoader(TensorDataset(x_tr_t, y_tr_t), batch_size=args.batch_size, shuffle=True, generator=gen)
     val_loader = DataLoader(TensorDataset(x_va_t, y_va_t), batch_size=args.batch_size, shuffle=False)
 
-    state = {"epoch": 0, "best": float("inf"), "best_epoch": -1, "no_improve": 0, "elapsed": 0.0, "peak_mem": 0.0}
+    state = {"epoch": 0, "best": float("inf"), "best_epoch": -1, "no_improve": 0, "elapsed": 0.0, "peak_mem": 0.0, "opt_steps": 0}
     last_ckpt, best_ckpt = out / "checkpoint_last.pt", out / "checkpoint_best.pt"
     log_path = out / "training_log.csv"
     if args.resume and last_ckpt.exists():
@@ -159,6 +160,7 @@ def main(argv=None):
         if device.type == "cuda":
             torch.cuda.set_rng_state_all([t.cpu() for t in ck["rng_cuda"]])
         state = ck["train_state"]
+        state.setdefault("opt_steps", 0)  # checkpoints written before U2 carry no counter
         print(f"[resume] from epoch {state['epoch']} best {state['best']:.4f} @ {state['best_epoch']}")
     else:
         with open(log_path, "w", newline="") as f:
@@ -217,6 +219,9 @@ def main(argv=None):
                 loss = model.optimize(pred, ecg, opt)  # MSE(v_pred, x1 - x0); AdamW step
                 losses.append(loss.item())
                 maes.append((pred - ecg).abs().mean().item())
+                state["opt_steps"] += 1
+                if args.max_steps and state["opt_steps"] >= args.max_steps:
+                    break  # U2 §6: exact, corpus-independent step budget
             do_val_mae = args.val_mae_every > 0 and (epoch + 1) % args.val_mae_every == 0
             val_bm, val_win, val_cfm = run_val(epoch) if do_val_mae else (float("nan"), float("nan"), float("nan"))
             val_fixed = fixed_cfm_loss(model.eval(), x_va_t, y_va_t, banks, args.batch_size)[0] if banks else float("nan")
@@ -237,16 +242,17 @@ def main(argv=None):
                 state["no_improve"] += 1
             state["epoch"] = epoch + 1
             torch.save({"state_dict": model.state_dict(), "optimizer": opt.state_dict(), "loader_generator": gen.get_state(), "rng_cpu": torch.get_rng_state(), "rng_cuda": torch.cuda.get_rng_state_all(), "train_state": state, "epoch": epoch}, last_ckpt)
-            stop = state["no_improve"] >= args.patience
+            stop = state["no_improve"] >= args.patience or bool(args.max_steps and state["opt_steps"] >= args.max_steps)
             if stop:
-                event = (event + ";" if event else "") + f"early_stop(patience={args.patience})"
+                reason = f"max_steps({args.max_steps})" if args.max_steps and state["opt_steps"] >= args.max_steps else f"early_stop(patience={args.patience})"
+                event = (event + ";" if event else "") + reason
             row = dict(epoch=epoch, train_loss=np.mean(losses), train_mae_monitor=np.mean(maes), val_mae_batchmean=val_bm, val_mae_window=val_win, val_cfm_loss=val_cfm, val_cfm_fixed=val_fixed, selection_metric=sel, diag_hr_abs_err=d_hr, diag_morph_corr=d_morph, diag_amp_ratio=d_amp, lr=opt.param_groups[0]["lr"], epoch_time_s=ep_time, elapsed_s=state["elapsed"], peak_mem_MiB=peak, is_best=int(is_best), best_epoch=state["best_epoch"], no_improve=state["no_improve"], event=event)
             with open(log_path, "a", newline="") as f:
                 csv.DictWriter(f, fieldnames=LOG_FIELDS).writerow(row)
             print(f"epoch {epoch+1:3d}/{args.epochs} loss {row['train_loss']:.4f} trainMAE(monitor) {row['train_mae_monitor']:.4f} valMAE {val_bm:.4f} valCFMfixed {val_fixed:.5f} sel {sel:.5f} diag(HR {d_hr:.1f} morph {d_morph:.3f} amp {d_amp:.2f}) {ep_time:.0f}s peak {peak:.0f}MiB best@{state['best_epoch']+1} {event}", flush=True)
             if stop:
                 break
-        summary = {"exp_name": args.exp_name, "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": args.select, "best_selection_metric": state["best"], "best_val_mae_batchmean": state["best"] if args.select == "val_mae" else None, "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
+        summary = {"exp_name": args.exp_name, "epochs_run": state["epoch"], "best_epoch": state["best_epoch"], "selection_criterion": args.select, "best_selection_metric": state["best"], "best_val_mae_batchmean": state["best"] if args.select == "val_mae" else None, "early_stopped": state["no_improve"] >= args.patience, "total_train_time_s": state["elapsed"], "peak_mem_MiB": state["peak_mem"], "opt_steps": state["opt_steps"], "max_steps": args.max_steps, "finished": datetime.now().isoformat(timespec="seconds"), "checkpoint_best": str(best_ckpt)}
         (out / "training_summary.json").write_text(json.dumps(summary, indent=1))
         (out / "TRAINING_DONE").write_text(json.dumps(summary))
         print("TRAINING_DONE", json.dumps(summary), flush=True)

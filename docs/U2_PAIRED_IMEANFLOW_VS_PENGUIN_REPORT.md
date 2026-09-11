@@ -305,3 +305,35 @@ Recommendations only; nothing here is implemented.
 - UCI-BP deduplicated to `{0,1,4,5}`; the build fails if two survivors share a target hash.
 - Frozen A4 checkpoint md5 `31c042d291052fbb6dc15263ad316be2` and arm-U state sha256 `20ba7234…` unchanged.
 - C2 remains deferred. No checkpoint, prediction, `.pkl` or raw data is in git.
+
+---
+
+## 10. Erratum (2026-09-12) — §5.4 understated what is already known
+
+§5.4 says of the ABP failure: *"The mechanism is not established here."* That is true of U2 in isolation
+and **misleading as written**, because this project had already established it and I failed to connect the
+two results.
+
+**A8** (`docs/A8_ABP_SCALE_SENSITIVITY_REPORT.md`, preregistered `d6ca9dd`) ran exactly this control on
+MIMIC-BP and returned a frozen verdict of **SCALE SENSITIVITY CONFIRMED**. Changing only the target
+representation — one global train-only affine `y_norm = (y − μ_train)/σ_train`, μ = 77.571767 mmHg,
+σ = 22.275611 mmHg, with every prediction inverse-transformed to mmHg before any metric — took iMeanFlow-1
+out of the pathological regime entirely: pulse-template correlation 0.140 → **0.876**, HF-energy ratio
+0.550 → **0.050** (GT 0.043), upstroke-slope ratio 6.13 → **1.49**, systolic-peak F1 0.336 → **0.874**,
+RMSE 32.3 → **18.2 mmHg**. OT-CFM and the MSE proxy were unchanged within A8's preregistered tolerance.
+
+So the correct reading of U2 §5.4 is: **iMeanFlow's ABP collapse is scale-driven, and a single train-only
+affine is already known to remove it — for OT-CFM specifically, nothing changes.** What U2 adds is that the
+collapse reproduces at the shipped 4 s on a different split, and that it extends to UCI-BP, which A8 never
+covered.
+
+Two things in §5.4 stand and are not retracted: the adaptive-weight hypothesis I floated there is still
+not supported by inspection (the weight largely cancels in `(δ²·sg(w)).mean()`), so "scale-driven" is not
+the same as "the adaptive weight collapsed"; and U2's ABP numbers are what they are — arm I was trained on
+raw mmHg, exactly as upstream ships it, and lost.
+
+The §8 recommendation "settle the ABP mechanism" is therefore **withdrawn as already answered**. What
+remains open is narrower and is carried into U3: whether A8's fix transfers to the 4 s protocol and to
+UCI-BP.
+
+This erratum is appended, not edited into §5.4, so the original wording stays visible.

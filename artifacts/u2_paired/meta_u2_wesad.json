@@ -1,0 +1,35 @@
+{
+ "corpus": "u2_wesad",
+ "task": "Resp",
+ "metric_window_s": 60,
+ "segment_len_s": 4,
+ "test_subjects": [
+  "subject1",
+  "subject6"
+ ],
+ "n_test_windows": 2775,
+ "n_test_windows_full": 2788,
+ "eval_window_budget": 12000,
+ "metric_window_segments": 15,
+ "noise_draws": 4,
+ "checkpoints": {
+  "C": {
+   "path": "outputs/u2_wesad_armC_seed42/checkpoint_best.pt",
+   "sha256": "f563ba9625248a0f526fd3f8c2db9ed8942750781e718f6dedca9782478161cc",
+   "epoch": 100,
+   "steps": 14000
+  },
+  "I": {
+   "path": "outputs/u2_wesad_armI_seed42/checkpoint_best.pt",
+   "sha256": "119ca510b0e3e679e4027873f39b7138f324ef2233947e95cef761ab32fe9dce",
+   "epoch": 37,
+   "steps": 14000
+  }
+ },
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260911,
+  "rule": "paired, subject-clustered, equal subject weight"
+ },
+ "fd_subsample_max": 3000
+}

@@ -186,5 +186,99 @@
   "counts": true,
   "smallest_k": null,
   "verdict": "NOT non-inferior at any k <= 4"
+ },
+ {
+  "corpus": "u2_wesad",
+  "task": "Resp",
+  "n_test_subjects": 2,
+  "cells": [
+   {
+    "metric": "RR",
+    "k": 1,
+    "armC50": 5.020188247712879,
+    "armI": 5.12689127375088,
+    "diff_I_minus_C": 0.10670302603800141,
+    "ci_lo": 0.060344827586206906,
+    "ci_hi": 0.15306122448979592,
+    "margin": 0.5,
+    "armC_span": 0.786608608960826,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   },
+   {
+    "metric": "RR",
+    "k": 2,
+    "armC50": 5.020188247712879,
+    "armI": 5.119575416373446,
+    "diff_I_minus_C": 0.09938716866056768,
+    "ci_lo": 0.08908045977011494,
+    "ci_hi": 0.1096938775510204,
+    "margin": 0.5,
+    "armC_span": 0.786608608960826,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   },
+   {
+    "metric": "RR",
+    "k": 4,
+    "armC50": 5.020188247712879,
+    "armI": 5.122962115880835,
+    "diff_I_minus_C": 0.10277386816795685,
+    "ci_lo": 0.05612244897959184,
+    "ci_hi": 0.14942528735632185,
+    "margin": 0.5,
+    "armC_span": 0.786608608960826,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   },
+   {
+    "metric": "Resp_corr",
+    "k": 1,
+    "armC50": 0.038099616244831117,
+    "armI": 0.0017574423888191625,
+    "diff_I_minus_C": -0.03634217385601196,
+    "ci_lo": -0.04442590535659862,
+    "ci_hi": -0.0282584423554253,
+    "margin": -0.05,
+    "armC_span": 0.10751818334495457,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   },
+   {
+    "metric": "Resp_corr",
+    "k": 2,
+    "armC50": 0.038099616244831117,
+    "armI": 0.002032732458509283,
+    "diff_I_minus_C": -0.036066883786321835,
+    "ci_lo": -0.04452631448933208,
+    "ci_hi": -0.027607453083311594,
+    "margin": -0.05,
+    "armC_span": 0.10751818334495457,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   },
+   {
+    "metric": "Resp_corr",
+    "k": 4,
+    "armC50": 0.038099616244831117,
+    "armI": 0.00217723276927967,
+    "diff_I_minus_C": -0.03592238347555145,
+    "ci_lo": -0.04437425449972772,
+    "ci_hi": -0.027470512451375176,
+    "margin": -0.05,
+    "armC_span": 0.10751818334495457,
+    "informative": true,
+    "non_inferior": true,
+    "n_subjects": 2
+   }
+  ],
+  "counts": true,
+  "smallest_k": 1,
+  "verdict": "NON-INFERIOR at k=1"
  }
 ]

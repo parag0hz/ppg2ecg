@@ -1,0 +1,35 @@
+{
+ "corpus": "u2_wildppg",
+ "task": "ECG",
+ "metric_window_s": 8,
+ "segment_len_s": 4,
+ "test_subjects": [
+  "subject5",
+  "subject8"
+ ],
+ "n_test_windows": 12000,
+ "n_test_windows_full": 92696,
+ "eval_window_budget": 12000,
+ "metric_window_segments": 1,
+ "noise_draws": 4,
+ "checkpoints": {
+  "C": {
+   "path": "outputs/u2_wildppg_armC_seed42/checkpoint_best.pt",
+   "sha256": "dbfd4b4cc2541e3da017b87d07f162823b77d918d545a6727976f810f85b288d",
+   "epoch": 55,
+   "steps": 14000
+  },
+  "I": {
+   "path": "outputs/u2_wildppg_armI_seed42/checkpoint_best.pt",
+   "sha256": "4a2b2d98dfddc4b368c149541ea680eb6bcf092b785fcd05e7f13f9e93bf1597",
+   "epoch": 26,
+   "steps": 14000
+  }
+ },
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260911,
+  "rule": "paired, subject-clustered, equal subject weight"
+ },
+ "fd_subsample_max": 3000
+}

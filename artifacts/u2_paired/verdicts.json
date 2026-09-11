@@ -16,6 +16,7 @@
     "armC_span": 7.535877123030012,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -30,6 +31,7 @@
     "armC_span": 7.535877123030012,
     "informative": true,
     "non_inferior": false,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -44,6 +46,7 @@
     "armC_span": 7.535877123030012,
     "informative": true,
     "non_inferior": false,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -58,6 +61,7 @@
     "armC_span": 0.023514775733525728,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -72,6 +76,7 @@
     "armC_span": 0.023514775733525728,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -86,6 +91,7 @@
     "armC_span": 0.023514775733525728,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    }
   ],
@@ -110,6 +116,7 @@
     "armC_span": 0.8359375,
     "informative": true,
     "non_inferior": false,
+    "gate_suppressed": null,
     "n_subjects": 8
    },
    {
@@ -124,6 +131,7 @@
     "armC_span": 0.8359375,
     "informative": true,
     "non_inferior": false,
+    "gate_suppressed": null,
     "n_subjects": 8
    },
    {
@@ -138,6 +146,7 @@
     "armC_span": 0.8359375,
     "informative": true,
     "non_inferior": false,
+    "gate_suppressed": null,
     "n_subjects": 8
    },
    {
@@ -152,6 +161,7 @@
     "armC_span": 0.038523547760265835,
     "informative": false,
     "non_inferior": false,
+    "gate_suppressed": "would PASS",
     "n_subjects": 8
    },
    {
@@ -166,6 +176,7 @@
     "armC_span": 0.038523547760265835,
     "informative": false,
     "non_inferior": false,
+    "gate_suppressed": "would PASS",
     "n_subjects": 8
    },
    {
@@ -180,6 +191,7 @@
     "armC_span": 0.038523547760265835,
     "informative": false,
     "non_inferior": false,
+    "gate_suppressed": "would PASS",
     "n_subjects": 8
    }
   ],
@@ -204,6 +216,7 @@
     "armC_span": 0.786608608960826,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -218,6 +231,7 @@
     "armC_span": 0.786608608960826,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -232,6 +246,7 @@
     "armC_span": 0.786608608960826,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -246,6 +261,7 @@
     "armC_span": 0.10751818334495457,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -260,6 +276,7 @@
     "armC_span": 0.10751818334495457,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
    },
    {
@@ -274,7 +291,108 @@
     "armC_span": 0.10751818334495457,
     "informative": true,
     "non_inferior": true,
+    "gate_suppressed": null,
     "n_subjects": 2
+   }
+  ],
+  "counts": true,
+  "smallest_k": 1,
+  "verdict": "NON-INFERIOR at k=1"
+ },
+ {
+  "corpus": "u2_mimicbp",
+  "task": "ABP",
+  "n_test_subjects": 229,
+  "cells": [
+   {
+    "metric": "DBP",
+    "k": 1,
+    "armC50": 10.146128272705921,
+    "armI": 23.616885404439437,
+    "diff_I_minus_C": 13.442070064259969,
+    "ci_lo": 12.65401812368365,
+    "ci_hi": 14.230122004836288,
+    "margin": 1.0,
+    "armC_span": 0.05217310667117658,
+    "informative": false,
+    "non_inferior": false,
+    "gate_suppressed": "would FAIL",
+    "n_subjects": 229
+   },
+   {
+    "metric": "DBP",
+    "k": 2,
+    "armC50": 10.146128272705921,
+    "armI": 22.65691015741991,
+    "diff_I_minus_C": 12.478865026070203,
+    "ci_lo": 11.70508466659475,
+    "ci_hi": 13.252645385545655,
+    "margin": 1.0,
+    "armC_span": 0.05217310667117658,
+    "informative": false,
+    "non_inferior": false,
+    "gate_suppressed": "would FAIL",
+    "n_subjects": 229
+   },
+   {
+    "metric": "DBP",
+    "k": 4,
+    "armC50": 10.146128272705921,
+    "armI": 20.5380518124894,
+    "diff_I_minus_C": 10.366646491247895,
+    "ci_lo": 9.614227657713345,
+    "ci_hi": 11.119065324782444,
+    "margin": 1.0,
+    "armC_span": 0.05217310667117658,
+    "informative": false,
+    "non_inferior": false,
+    "gate_suppressed": "would FAIL",
+    "n_subjects": 229
+   },
+   {
+    "metric": "SBP",
+    "k": 1,
+    "armC50": 17.112164012689817,
+    "armI": 16.599854337636522,
+    "diff_I_minus_C": -0.5041539504178065,
+    "ci_lo": -0.7552158671255114,
+    "ci_hi": -0.25309203371010175,
+    "margin": 1.0,
+    "armC_span": 2.781553386000123,
+    "informative": true,
+    "non_inferior": true,
+    "gate_suppressed": null,
+    "n_subjects": 229
+   },
+   {
+    "metric": "SBP",
+    "k": 2,
+    "armC50": 17.112164012689817,
+    "armI": 14.190382161395119,
+    "diff_I_minus_C": -2.920880588910145,
+    "ci_lo": -3.640660720028491,
+    "ci_hi": -2.2011004577917985,
+    "margin": 1.0,
+    "armC_span": 2.781553386000123,
+    "informative": true,
+    "non_inferior": true,
+    "gate_suppressed": null,
+    "n_subjects": 229
+   },
+   {
+    "metric": "SBP",
+    "k": 4,
+    "armC50": 17.112164012689817,
+    "armI": 14.182931692759622,
+    "diff_I_minus_C": -2.923417670770022,
+    "ci_lo": -3.8486683045932804,
+    "ci_hi": -1.9981670369467637,
+    "margin": 1.0,
+    "armC_span": 2.781553386000123,
+    "informative": true,
+    "non_inferior": true,
+    "gate_suppressed": null,
+    "n_subjects": 229
    }
   ],
   "counts": true,

@@ -46,11 +46,18 @@ def cell(r: dict) -> dict:
         non_inferior = lo > d
     span = float(r["armC_span_nfe1_to_50"])
     informative = span >= abs(d)
+    # What the gate suppressed. §8's gate is TWO-SIDED as frozen -- "cannot contribute to a dataset
+    # verdict, whatever arm I scores on it" -- so it withholds earned FAILURES as well as unearned
+    # passes. That is a defect in the rule (a gate should only ever withhold a PASS), and it fires on
+    # MIMIC-BP DBP, where arm I misses the margin by 13x yet the cell is dropped because arm C is
+    # NFE-insensitive there. The rule is frozen and applied as written; this field makes what it hid
+    # impossible to miss in the report.
+    suppressed = None if informative else ("would PASS" if non_inferior else "would FAIL")
     return {"metric": m, "k": int(r["k"]), "armC50": float(r["armC_nfe50"]),
             "armI": float(r["armI_nfek"]), "diff_I_minus_C": (lo + hi) / 2,
             "ci_lo": lo, "ci_hi": hi, "margin": d, "armC_span": span,
             "informative": informative, "non_inferior": bool(non_inferior and informative),
-            "n_subjects": int(r["n_subjects"])}
+            "gate_suppressed": suppressed, "n_subjects": int(r["n_subjects"])}
 
 
 def dataset_verdict(slug: str) -> dict | None:
@@ -95,10 +102,18 @@ def main() -> None:
     for v in results:
         print(f"[{v['corpus']}]")
         for c in v["cells"]:
-            flag = "PASS" if c["non_inferior"] else ("gate" if not c["informative"] else "fail")
+            flag = "PASS" if c["non_inferior"] else (f"GATED ({c['gate_suppressed']})" if not c["informative"] else "fail")
             print(f"   {c['metric']:10s} k={c['k']}  C@50 {c['armC50']:8.4f}  I {c['armI']:8.4f}  "
                   f"CI(I-C) [{c['ci_lo']:+8.4f},{c['ci_hi']:+8.4f}]  margin {c['margin']:+.3f}  "
                   f"span {c['armC_span']:.4f}  {flag}")
+        print()
+    hidden = [(v["corpus"], c["metric"], c["k"]) for v in results for c in v["cells"]
+              if c["gate_suppressed"] == "would FAIL"]
+    if hidden:
+        print("WARNING -- the frozen §8 gate is two-sided and suppressed these FAILING cells;")
+        print("a verdict on such a dataset is not a clean pass. Reported, never smoothed over:")
+        for corpus, m, k in hidden:
+            print(f"   {corpus} {m} k={k}")
         print()
     counted = [v for v in results if v["counts"]]
     wins = [v for v in counted if v.get("smallest_k")]

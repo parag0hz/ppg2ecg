@@ -1,0 +1,135 @@
+{
+ "prereg": "4d14865",
+ "git": {
+  "commit": "4d14865fe9c938a2687842145b759b3715fca6e4",
+  "dirty_files": 3
+ },
+ "utc": "2026-09-12T11:27:57.120402+00:00",
+ "test_subjects_loaded": [],
+ "generator": {
+  "path": "outputs/c1_imf_baseline_replay_seed42/checkpoint_best.pt",
+  "state_sha256": "47d7ccb94e5dbf7190d777f852b18f107f3ce2628d160b5e01ff96ef2a1d0d0f"
+ },
+ "cohort": {
+  "windows": 512,
+  "subjects": [
+   "an0",
+   "k2s"
+  ]
+ },
+ "config": {
+  "sources": 32,
+  "nfes": [
+   1,
+   4
+  ],
+  "min_detect": 16,
+  "gt_anchor_ms": 150.0,
+  "alphas": [
+   0.5,
+   0.2,
+   0.1
+  ],
+  "tolerance": 0.1
+ },
+ "results": {
+  "1": {
+   "nfe": 1,
+   "n_gt_beats": 5004,
+   "n_eligible": 3547,
+   "detection_rate": 0.7088329336530775,
+   "spread_ms": 51.5566708920156,
+   "abs_bias_ms": 28.66567006060854,
+   "pit_ks": 0.193943238417442,
+   "spread_vs_absbias_spearman": 0.016495764470704232,
+   "pit_hist_10bins": [
+    37,
+    154,
+    226,
+    335,
+    348,
+    543,
+    488,
+    484,
+    494,
+    438
+   ],
+   "pit_ks_pvalue": 2.3915938665808518e-117,
+   "bias_mean_ms": -13.788865382846797,
+   "bias_median_ms": -15.625,
+   "spread_median_ms": 50.50099724209648,
+   "absbias_over_spread_median": 0.5004997262321064,
+   "coverage_50": 0.5865684427149545,
+   "delta_50": 0.08656844271495445,
+   "delta_50_ci": [
+    0.06992149566825505,
+    0.10299480797933937
+   ],
+   "coverage_80": 0.8329478441754676,
+   "delta_80": 0.03294784417546759,
+   "delta_80_ci": [
+    0.0210324135224975,
+    0.04547804762725431
+   ],
+   "coverage_90": 0.9015422322079849,
+   "delta_90": 0.0015422322079848838,
+   "delta_90_ci": [
+    -0.007833834988594317,
+    0.011334653132891679
+   ],
+   "verdict": "TIMING POSTERIOR CALIBRATED"
+  },
+  "4": {
+   "nfe": 4,
+   "n_gt_beats": 5004,
+   "n_eligible": 3503,
+   "detection_rate": 0.7000399680255796,
+   "spread_ms": 48.13513892375134,
+   "abs_bias_ms": 29.350159875964437,
+   "pit_ks": 0.18883813873822436,
+   "spread_vs_absbias_spearman": 0.048209369628051384,
+   "pit_hist_10bins": [
+    72,
+    168,
+    230,
+    285,
+    335,
+    471,
+    476,
+    419,
+    510,
+    537
+   ],
+   "pit_ks_pvalue": 7.501669170195788e-110,
+   "bias_mean_ms": -13.681809159170072,
+   "bias_median_ms": -15.364583333333334,
+   "spread_median_ms": 46.76145522282697,
+   "absbias_over_spread_median": 0.544329275275263,
+   "coverage_50": 0.5432803489406924,
+   "delta_50": 0.04328034894069244,
+   "delta_50_ci": [
+    0.026433781462199723,
+    0.058997512689196986
+   ],
+   "coverage_80": 0.7953451754972176,
+   "delta_80": -0.004654824502782429,
+   "delta_80_ci": [
+    -0.017966513396597335,
+    0.00711921814335121
+   ],
+   "coverage_90": 0.8689655003797794,
+   "delta_90": -0.031034499620220646,
+   "delta_90_ci": [
+    -0.04221274494143573,
+    -0.020537180080650176
+   ],
+   "verdict": "TIMING POSTERIOR CALIBRATED"
+  }
+ },
+ "libs": {
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "python": "3.13.9"
+ },
+ "seconds": 111.4
+}

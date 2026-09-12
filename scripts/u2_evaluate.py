@@ -105,6 +105,14 @@ def eval_subset(subj: np.ndarray, k: int, target: int = EVAL_TARGET) -> np.ndarr
 
 def build(ckpt: Path, dev):
     ck = torch.load(ckpt, map_location="cpu", weights_only=False)
+    if "model_cfg" not in ck:
+        # U3-B: checkpoint_last.pt carries only weights + optimiser + RNG + train_state. The
+        # architecture config lives in checkpoint_best.pt of the SAME run, written by the same
+        # process from the same args, so it is the config these weights were trained under.
+        sib = torch.load(ckpt.with_name("checkpoint_best.pt"), map_location="cpu", weights_only=False)
+        for k in ("model_cfg", "imf_cfg", "args", "target_norm"):
+            if k in sib:
+                ck[k] = sib[k]
     bare = not any(k.startswith("backbone.") for k in ck["state_dict"])
     backbone = build_penguin_backbone(**ck["model_cfg"]).to(dev).eval()
     if bare:                                     # arm C: OT-CFM stores the bare backbone
@@ -248,6 +256,9 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--corpus", required=True, choices=list(CORPORA))
     ap.add_argument("--noise-draws", type=int, default=4, help="prereg §7: 4 draws, seeds 0..n-1")
+    ap.add_argument("--checkpoint", choices=["best", "last"], default="best",
+                    help="U3-B: 'last' = both arms at exactly 14,000 optimizer steps, breaking the "
+                         "selection asymmetry (arm C peaks at 80%% of the budget, arm I at 37%%)")
     args = ap.parse_args()
 
     slug = args.corpus
@@ -266,12 +277,16 @@ def main() -> int:
 
     nets, cks = {}, {}
     for arm in ("C", "I"):
-        ck_path = ROOT / f"outputs/{slug}_arm{arm}_seed42/checkpoint_best.pt"
+        ck_path = ROOT / f"outputs/{slug}_arm{arm}_seed42/checkpoint_{args.checkpoint}.pt"
         assert ck_path.exists(), f"missing checkpoint: {ck_path}"
         net, ck, kind = build(ck_path, dev)
         assert kind == arm, f"{ck_path} is a {kind} checkpoint but was loaded as arm {arm}"
+        realised = int((ck.get("train_state") or {}).get("opt_steps", -1))
+        if args.checkpoint == "last":
+            assert realised == 14000, f"{ck_path}: opt_steps {realised}, expected 14000 (U3-B §4)"
         nets[arm], cks[arm] = net, {"path": str(ck_path.relative_to(ROOT)), "sha256": sha256(ck_path),
-                                    "epoch": int(ck["epoch"]), "steps": int(ck.get("args", {}).get("max_steps") or -1)}
+                                    "epoch": int(ck["epoch"]), "opt_steps": realised,
+                                    "steps": int(ck.get("args", {}).get("max_steps") or -1)}
 
     # per-unit metric values, averaged over the noise draws; draws share e0 between arms (pairing)
     acc: dict[tuple, list] = {}
@@ -334,18 +349,19 @@ def main() -> int:
                               within_subject_ci_lo=wi["lo"], within_subject_ci_hi=wi["hi"],
                               armC_span_nfe1_to_50=delta_c, n_subjects=ns))
 
-    with open(OUT / f"metrics_{slug}.csv", "w", newline="") as f:
+    tag = "" if args.checkpoint == "best" else "_last"
+    with open(OUT / f"metrics_{slug}{tag}.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
-    with open(OUT / f"paired_{slug}.csv", "w", newline="") as f:
+    with open(OUT / f"paired_{slug}{tag}.csv", "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=list(pairs[0])); w.writeheader(); w.writerows(pairs)
-    (OUT / f"meta_{slug}.json").write_text(json.dumps(
-        {"corpus": slug, "task": task, "metric_window_s": window_s, "segment_len_s": SEG,
+    (OUT / f"meta_{slug}{tag}.json").write_text(json.dumps(
+        {"corpus": slug, "task": task, "checkpoint": args.checkpoint, "metric_window_s": window_s, "segment_len_s": SEG,
          "test_subjects": split["test"], "n_test_windows": int(len(X)), "n_test_windows_full": int(n_full),
          "eval_window_budget": EVAL_TARGET, "metric_window_segments": int(k_seg),
          "noise_draws": args.noise_draws, "checkpoints": cks,
          "bootstrap": {"n": BOOT_N, "seed": BOOT_SEED, "rule": "paired, subject-clustered, equal subject weight"},
          "fd_subsample_max": FD_MAX}, indent=1))
-    print(f"[u2] wrote metrics_{slug}.csv ({len(rows)} rows), paired_{slug}.csv ({len(pairs)} rows)")
+    print(f"[u2] wrote metrics_{slug}{tag}.csv ({len(rows)} rows), paired_{slug}{tag}.csv ({len(pairs)} rows)")
     return 0
 
 

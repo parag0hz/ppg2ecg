@@ -1,0 +1,38 @@
+{
+ "corpus": "u2_wesad",
+ "task": "Resp",
+ "checkpoint": "last",
+ "metric_window_s": 60,
+ "segment_len_s": 4,
+ "test_subjects": [
+  "subject1",
+  "subject6"
+ ],
+ "n_test_windows": 2775,
+ "n_test_windows_full": 2788,
+ "eval_window_budget": 12000,
+ "metric_window_segments": 15,
+ "noise_draws": 4,
+ "checkpoints": {
+  "C": {
+   "path": "outputs/u2_wesad_armC_seed42/checkpoint_last.pt",
+   "sha256": "4cc84be693a8bee4585de51ba93ffe44a342b1b8c5e4ad23d159cf0e8f673d95",
+   "epoch": 113,
+   "opt_steps": 14000,
+   "steps": 14000
+  },
+  "I": {
+   "path": "outputs/u2_wesad_armI_seed42/checkpoint_last.pt",
+   "sha256": "be1e41db1789c51f7832c4418dea9c38a5caf0e238cb5b0bc898dc805c1456eb",
+   "epoch": 113,
+   "opt_steps": 14000,
+   "steps": 14000
+  }
+ },
+ "bootstrap": {
+  "n": 2000,
+  "seed": 20260911,
+  "rule": "paired, subject-clustered, equal subject weight"
+ },
+ "fd_subsample_max": 3000
+}

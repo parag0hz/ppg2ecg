@@ -30,6 +30,7 @@ PRIMARY = {"ECG": ("HR", "Rpeak_F1"), "Resp": ("RR", "Resp_corr"), "ABP": ("SBP"
 TASK = {"u2_dalia": "ECG", "u2_wildppg": "ECG", "u2_bidmc": "Resp",
         "u2_wesad": "Resp", "u2_ucibp": "ABP", "u2_mimicbp": "ABP"}
 EXCLUDED_MIN_SUBJECTS = 2          # §5/§9: fewer than two test subjects -> point estimate only
+ONE_SIDED = False                  # U3-A: set by --one-sided; a gate may then withhold a PASS only
 
 
 def cell(r: dict) -> dict:
@@ -53,6 +54,10 @@ def cell(r: dict) -> dict:
     # NFE-insensitive there. The rule is frozen and applied as written; this field makes what it hid
     # impossible to miss in the report.
     suppressed = None if informative else ("would PASS" if non_inferior else "would FAIL")
+    if ONE_SIDED and not informative and not non_inferior:
+        # U3-A: a failing cell always counts, whatever arm C's span. A gate exists to stop an arm
+        # claiming credit where the sampling budget buys nothing; a failure needs no such protection.
+        informative, suppressed = True, None
     return {"metric": m, "k": int(r["k"]), "armC50": float(r["armC_nfe50"]),
             "armI": float(r["armI_nfek"]), "diff_I_minus_C": (lo + hi) / 2,
             "ci_lo": lo, "ci_hi": hi, "margin": d, "armC_span": span,
@@ -60,8 +65,11 @@ def cell(r: dict) -> dict:
             "gate_suppressed": suppressed, "n_subjects": int(r["n_subjects"])}
 
 
+TAG = ""   # U3-B: "_last" reads the fixed-step (14,000 optimizer steps) evaluation
+
+
 def dataset_verdict(slug: str) -> dict | None:
-    f = ART / f"paired_{slug}.csv"
+    f = ART / f"paired_{slug}{TAG}.csv"
     if not f.exists():
         return None
     rows = [r for r in csv.DictReader(f.open()) if r["metric"] in MARGIN]
@@ -93,6 +101,13 @@ def dataset_verdict(slug: str) -> dict | None:
 
 
 def main() -> None:
+    global ONE_SIDED, TAG
+    import sys
+    ONE_SIDED = "--one-sided" in sys.argv
+    TAG = "_last" if "--last" in sys.argv else ""
+    if TAG:
+        print("checkpoint: LAST (both arms at exactly 14,000 optimizer steps, U3-B)")
+    print(f"gate: {'ONE-SIDED (U3-A sensitivity analysis)' if ONE_SIDED else 'TWO-SIDED (U2 §8, as frozen)'}\n")
     results = [v for v in (dataset_verdict(s) for s in TASK) if v]
     print(f"{'corpus':11s} {'task':5s} {'subj':>5s}  {'verdict':46s}")
     print("-" * 72)
@@ -125,7 +140,8 @@ def main() -> None:
         print(f"  §9 stage verdict (5 countable): {rule}")
     else:
         print("  (stage verdict withheld until all six datasets are evaluated)")
-    (ART / "verdicts.json").write_text(json.dumps(results, indent=1))
+    name = f"verdicts{'_one_sided' if ONE_SIDED else ''}{TAG}.json"
+    (ART / name).write_text(json.dumps(results, indent=1))
 
 
 if __name__ == "__main__":

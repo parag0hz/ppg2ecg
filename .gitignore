@@ -11,6 +11,10 @@ outputs/*
 artifacts/*
 !outputs/.gitkeep
 !artifacts/.gitkeep
+!artifacts/n1_*/
+!artifacts/n1_*/**
+artifacts/n1_*/**/*.npz
+artifacts/n1_*/**/*.pt
 !artifacts/u2_*/
 !artifacts/u2_*/**
 artifacts/u2_*/**/*.npz

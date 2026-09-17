@@ -89,16 +89,17 @@ def main(argv=None):
             bb = b[i:i + args.micro_batch]
             loss, info = vimf_loss(net, Y[bb][:, None], X[bb][:, None], draws)
             (loss * len(bb) / args.batch_size).backward()
-            acc["loss"].append(float(loss)); acc["loss_u"].append(float(info["loss_u"])); acc["loss_v"].append(float(info["loss_v"]))
+            acc["loss"].append(loss.item()); acc["loss_u"].append(float(info["loss_u"])); acc["loss_v"].append(float(info["loss_v"]))
         opt.step(); sched.step(); step += 1
         if not np.isfinite(acc["loss"][-1]):
             (out / "TRAINING_FAILED").write_text(f"non-finite loss at step {step}\n"); raise SystemExit(1)
         if step % args.log_every == 0 or step == args.max_steps:
             net.eval(); vu, vv = [], []
             g = torch.Generator().manual_seed(1000)
-            for i in range(0, len(XV), 64):
-                _, inf = vimf_loss(net, YV[i:i + 64], XV[i:i + 64], g)
-                vu.append(float(inf["loss_u"])); vv.append(float(inf["loss_v"]))
+            with torch.no_grad():  # monitor only; chunks no larger than a training micro-batch
+                for i in range(0, len(XV), args.micro_batch):
+                    _, inf = vimf_loss(net, YV[i:i + args.micro_batch], XV[i:i + args.micro_batch], g)
+                    vu.append(float(inf["loss_u"])); vv.append(float(inf["loss_v"]))
             row = {"step": step, "loss": np.mean(acc["loss"]), "loss_u": np.mean(acc["loss_u"]), "loss_v": np.mean(acc["loss_v"]),
                    "val_loss_u": np.mean(vu), "val_loss_v": np.mean(vv), "lr": sched.get_last_lr()[0],
                    "sec": round(time.time() - t0, 1), "peak_GiB": round(torch.cuda.max_memory_allocated() / 2**30, 2)}

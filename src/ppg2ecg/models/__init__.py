@@ -11,9 +11,18 @@ PENGUIN_DALIA_CFG = dict(n_step=25, sample_rate=128, h_dim=128, ssm_block_num=4,
 
 
 def build_penguin_backbone(**overrides):
-    """Instantiate upstream `PENGUIN(...)` with the shipped PPG-DaLiA hyper-parameters (+overrides)."""
+    """Instantiate upstream `PENGUIN(...)` with the shipped PPG-DaLiA hyper-parameters (+overrides).
+
+    BB1: `arch="attn"` (with optional `attn_heads`) swaps every S5 mixer for self-attention, see attn_backbone.py.
+    Without `arch` (every historical checkpoint) the call is unchanged."""
     PENGUIN = import_upstream_penguin()
+    arch = overrides.pop("arch", "s5")
+    heads = overrides.pop("attn_heads", 4)
     cfg = {**PENGUIN_DALIA_CFG, **overrides}
+    if arch == "attn":
+        from ppg2ecg.models.attn_backbone import build_attn_backbone
+        return build_attn_backbone(PENGUIN, cfg, heads)
+    assert arch == "s5", arch
     return PENGUIN(**cfg)
 
 

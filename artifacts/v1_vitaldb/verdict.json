@@ -1,0 +1,90 @@
+{
+ "H1": "NON-INFERIOR at k=1",
+ "H1_cells": [
+  {
+   "k": 1,
+   "HR": {
+    "diff_I_minus_C50": 0.452939163876967,
+    "ci_lo": 0.35100940175453443,
+    "ci_hi": 0.5556519133805347,
+    "margin": 1.0,
+    "armC_span": 1.2144666929426648,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "Rpeak_F1": {
+    "diff_I_minus_C50": 0.029462486092293346,
+    "ci_lo": 0.02778271888724046,
+    "ci_hi": 0.03119207220577152,
+    "margin": -0.02,
+    "armC_span": 0.11089541304562989,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "non_inferior": true
+  },
+  {
+   "k": 2,
+   "HR": {
+    "diff_I_minus_C50": -0.2801675891296778,
+    "ci_lo": -0.3960022286191192,
+    "ci_hi": -0.17094329035559483,
+    "margin": 1.0,
+    "armC_span": 1.2144666929426648,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "Rpeak_F1": {
+    "diff_I_minus_C50": 0.02765132356476965,
+    "ci_lo": 0.025725407968423875,
+    "ci_hi": 0.02952760607197787,
+    "margin": -0.02,
+    "armC_span": 0.11089541304562989,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "non_inferior": true
+  },
+  {
+   "k": 4,
+   "HR": {
+    "diff_I_minus_C50": -0.7057838387445858,
+    "ci_lo": -0.8388369436682888,
+    "ci_hi": -0.5726075617916765,
+    "margin": 1.0,
+    "armC_span": 1.2144666929426648,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "Rpeak_F1": {
+    "diff_I_minus_C50": 0.0316865784192956,
+    "ci_lo": 0.029561451979961635,
+    "ci_hi": 0.03370334940831904,
+    "margin": -0.02,
+    "armC_span": 0.11089541304562989,
+    "pass_": true,
+    "gate_withheld": false
+   },
+   "non_inferior": true
+  }
+ ],
+ "H2": "SUPERIOR",
+ "H2_diff_consensusI1K16_minus_C50single": {
+  "point": -3.011695324799186,
+  "ci_lo": -3.130843578827722,
+  "ci_hi": -2.896814748531082
+ },
+ "n_patients": 1156,
+ "n_windows": 19543,
+ "checkpoints": {
+  "C": {
+   "path": "outputs/v1_vitaldb_armC_seed42/checkpoint_last.pt",
+   "sha256": "05c9748b6629f33da967160ca638d7a346936d5fce42c2a9219212fabf8ee94b"
+  },
+  "I": {
+   "path": "outputs/v1_vitaldb_armI_seed42/checkpoint_last.pt",
+   "sha256": "ddbc39e66f8a71c7c8fb86c0639d741a6e1158bd9eb57e650515ae475b23f512"
+  }
+ },
+ "ref_hr_nan": 0
+}

@@ -1,0 +1,128 @@
+{
+ "corpus": "u2_dalia",
+ "val_subjects": [
+  "subject8",
+  "subject10"
+ ],
+ "windows": 4096,
+ "rows": [
+  {
+   "arm": "C",
+   "nfe": 50,
+   "K": 1,
+   "nfe_cost": 50,
+   "hr_err": 14.81049285877154,
+   "f1": 0.15570732758613992,
+   "label": "PENGUIN NFE50 K=1",
+   "gen_s_per_seed": 242.5
+  },
+  {
+   "arm": "C",
+   "nfe": 50,
+   "K": 4,
+   "nfe_cost": 200,
+   "hr_err": 12.344584238901197,
+   "f1": 0.15195012788717815,
+   "hr_err_from_consensus_peaks": 17.540111704014052,
+   "label": "PENGUIN NFE50 K=4",
+   "gen_s_per_seed": 242.5
+  },
+  {
+   "arm": "C",
+   "nfe": 1,
+   "K": 1,
+   "nfe_cost": 1,
+   "hr_err": 41.48292292890526,
+   "f1": 0.06261650607964085,
+   "label": "PENGUIN NFE1 K=1",
+   "gen_s_per_seed": 4.3
+  },
+  {
+   "arm": "C",
+   "nfe": 1,
+   "K": 4,
+   "nfe_cost": 4,
+   "hr_err": 38.72763603447487,
+   "f1": 0.034283927606681516,
+   "hr_err_from_consensus_peaks": 41.98615941164665,
+   "label": "PENGUIN NFE1 K=4",
+   "gen_s_per_seed": 4.3
+  },
+  {
+   "arm": "C",
+   "nfe": 1,
+   "K": 16,
+   "nfe_cost": 16,
+   "hr_err": 38.08162434048963,
+   "f1": 0.003465099082774864,
+   "hr_err_from_consensus_peaks": 29.13153992902222,
+   "label": "PENGUIN NFE1 K=16",
+   "gen_s_per_seed": 4.3
+  },
+  {
+   "arm": "I",
+   "nfe": 1,
+   "K": 1,
+   "nfe_cost": 1,
+   "hr_err": 18.918521963156877,
+   "f1": 0.1493654234390118,
+   "label": "iMF NFE1 K=1",
+   "gen_s_per_seed": 4.1
+  },
+  {
+   "arm": "I",
+   "nfe": 1,
+   "K": 4,
+   "nfe_cost": 4,
+   "hr_err": 16.197913713148708,
+   "f1": 0.14337503313010264,
+   "hr_err_from_consensus_peaks": 21.366172433160372,
+   "label": "iMF NFE1 K=4",
+   "gen_s_per_seed": 4.1
+  },
+  {
+   "arm": "I",
+   "nfe": 1,
+   "K": 16,
+   "nfe_cost": 16,
+   "hr_err": 15.197719897610408,
+   "f1": 0.011550649599966007,
+   "hr_err_from_consensus_peaks": 40.84953160094646,
+   "label": "iMF NFE1 K=16",
+   "gen_s_per_seed": 4.1
+  },
+  {
+   "arm": "I",
+   "nfe": 2,
+   "K": 1,
+   "nfe_cost": 2,
+   "hr_err": 17.940518175680936,
+   "f1": 0.14904335381307648,
+   "label": "iMF NFE2 K=1",
+   "gen_s_per_seed": 9.3
+  },
+  {
+   "arm": "I",
+   "nfe": 2,
+   "K": 4,
+   "nfe_cost": 8,
+   "hr_err": 15.30844259021986,
+   "f1": 0.14382292934610835,
+   "hr_err_from_consensus_peaks": 20.773786846008512,
+   "label": "iMF NFE2 K=4",
+   "gen_s_per_seed": 9.3
+  },
+  {
+   "arm": "I",
+   "nfe": 2,
+   "K": 16,
+   "nfe_cost": 32,
+   "hr_err": 14.528131761675397,
+   "f1": 0.014378024175961904,
+   "hr_err_from_consensus_peaks": 28.743319006989793,
+   "label": "iMF NFE2 K=16",
+   "gen_s_per_seed": 9.3
+  }
+ ],
+ "ref_hr_nan": 0
+}

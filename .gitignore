@@ -414,5 +414,6 @@ fig.html
 # U1: symlink view of raw WildPPG (firewall: 14 subjects, no kjd/ssx)
 data/raw_u1_wildppg_view/
 !artifacts/p1_consensus/
+!artifacts/p1_consensus/**
 artifacts/p1_consensus/**/*.npz
 artifacts/p1_consensus/**/*.pt

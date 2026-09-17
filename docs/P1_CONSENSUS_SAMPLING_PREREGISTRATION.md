@@ -17,3 +17,12 @@ Frozen before any P1 number exists. Evaluation only: no weight update, no test s
 | Also stated, not a gate | Whether iMF K = 16 (16 or 32 NFE) is below PENGUIN-50 single-sample HR error. |
 | Fixed | Detector `neurokit`, tolerance 50 ms, all rules above. Nothing is tuned after results. |
 | Outputs | `artifacts/p1_consensus/` (JSON/CSV); samples as float16 npz in `outputs/p1_consensus/` (not in git) for P2. |
+
+## Amendment 1 (before any P1 number; frozen document above left unchanged)
+
+The consensus-peak rule above uses a Gaussian of σ = 20 ms scaled so one vote peaks at 1.0. Sample-to-sample
+R-peak spread is ≈ 50 ms (X4-0), so 16 agreeing samples spread over ±50 ms reach only ≈ 6 < K/2 and the rule
+would reject beats every sample produced. Found by reading the rule against X4-0, not from any P1 output.
+**Replacement:** count the samples' peaks inside ±50 ms (the F1 tolerance) of each position; keep local maxima
+with ≥ K/2 votes, ≥ 250 ms apart; position = median of the votes inside that ±50 ms box. Everything else,
+including the GO rule (which is on HR, not on this rule), is unchanged.

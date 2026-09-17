@@ -426,3 +426,6 @@ artifacts/v1_vitaldb/**/*.npz
 !artifacts/qual_model_dataset/**
 !artifacts/bb1_backbone/
 !artifacts/bb1_backbone/**
+data/pretrained/
+!artifacts/vm1_vanilla_imf/
+!artifacts/vm1_vanilla_imf/**

@@ -417,3 +417,5 @@ data/raw_u1_wildppg_view/
 !artifacts/p1_consensus/**
 artifacts/p1_consensus/**/*.npz
 artifacts/p1_consensus/**/*.pt
+!artifacts/v0_vitaldb_audit/
+!artifacts/v0_vitaldb_audit/**

@@ -1,0 +1,39 @@
+{
+ "n_case_files": 6156,
+ "n_cases_in_cases_csv": 6388,
+ "n_has_both": 6156,
+ "rule": {
+  "min_duration_s": 600.0,
+  "min_finite_frac": 0.95
+ },
+ "n_eligible_cases": 6043,
+ "n_eligible_subjects": 5782,
+ "n_subjects_with_multiple_cases": 209,
+ "eligible_hours": 18307.6,
+ "eligible_windows_4s_before_nan_drop": 16473798,
+ "median_case_duration_min": 160.2,
+ "fail_reasons": {
+  "missing_track": 0,
+  "short": 0,
+  "nan": 113
+ },
+ "preop_ecg_top": {
+  "Normal Sinus Rhythm": 5972,
+  "1st degree A-V block": 11,
+  "Incomplete right bundle branch block": 9,
+  "Atrial fibrillation": 7,
+  "Right bundle branch block": 7,
+  "Premature ventricular complexes": 6,
+  "Premature atrial complexes": 6,
+  "Left anterior fascicular block": 3
+ },
+ "sex": {
+  "M": 3031,
+  "F": 3012
+ },
+ "age_median_iqr": [
+  59.0,
+  48.0,
+  68.0
+ ]
+}

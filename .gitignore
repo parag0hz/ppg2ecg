@@ -431,3 +431,6 @@ data/pretrained/
 !artifacts/vm1_vanilla_imf/**
 !artifacts/sr1_seeds/
 !artifacts/sr1_seeds/**
+!artifacts/pz1_personalisation/
+!artifacts/pz1_personalisation/**
+artifacts/pz1_personalisation/**/*.npz

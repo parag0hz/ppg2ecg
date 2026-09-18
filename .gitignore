@@ -436,3 +436,6 @@ data/pretrained/
 artifacts/pz1_personalisation/**/*.npz
 !artifacts/pz2_calibration_budget/
 !artifacts/pz2_calibration_budget/**
+!artifacts/pz3_per_patient/
+!artifacts/pz3_per_patient/**
+artifacts/pz3_per_patient/**/*.npz

@@ -1,0 +1,22 @@
+{
+ "verdict": {
+  "HR|C1": "WINS FOR MOST PATIENTS",
+  "HR|I1": "LOSES FOR MOST PATIENTS",
+  "HR|S1": "WINS FOR MOST PATIENTS",
+  "HR|I1_K16": "WINS FOR MOST PATIENTS",
+  "Rpeak_F1|C1": "WINS FOR MOST PATIENTS",
+  "Rpeak_F1|I1": "WINS FOR MOST PATIENTS",
+  "Rpeak_F1|S1": "LOSES FOR MOST PATIENTS",
+  "morph_corr@GT|C1": "WINS FOR MOST PATIENTS",
+  "morph_corr@GT|I1": "WINS FOR MOST PATIENTS",
+  "morph_corr@GT|S1": "LOSES FOR MOST PATIENTS",
+  "morph_corr@GT|GLOBAL_tmpl": "WINS FOR MOST PATIENTS",
+  "morph_corr@GT|CAL32s_tmpl": "WINS FOR MOST PATIENTS"
+ },
+ "sbv_tertile_edges": [
+  0.028804944417984726,
+  0.048436260961716514
+ ],
+ "n_patients": 1156,
+ "n_aligned_windows": 9760
+}

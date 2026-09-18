@@ -434,3 +434,5 @@ data/pretrained/
 !artifacts/pz1_personalisation/
 !artifacts/pz1_personalisation/**
 artifacts/pz1_personalisation/**/*.npz
+!artifacts/pz2_calibration_budget/
+!artifacts/pz2_calibration_budget/**

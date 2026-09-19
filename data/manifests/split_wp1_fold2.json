@@ -1,0 +1,51 @@
+{
+ "splits": [
+  {
+   "protocol": "WP1-subject-4fold",
+   "seed": 20260919,
+   "fold": 2,
+   "corpus": "u2_wildppg",
+   "dataset": "WildPPG",
+   "task": "ECG",
+   "train": [
+    "subject0",
+    "subject1",
+    "subject10",
+    "subject11",
+    "subject3",
+    "subject5",
+    "subject6",
+    "subject8",
+    "subject9"
+   ],
+   "val": [
+    "subject4",
+    "subject7"
+   ],
+   "test": [
+    "subject12",
+    "subject13",
+    "subject2"
+   ]
+  }
+ ],
+ "extra": {
+  "wildppg_subject_map": {
+   "subject0": "WildPPG_Part_an0.mat",
+   "subject1": "WildPPG_Part_e61.mat",
+   "subject2": "WildPPG_Part_fex.mat",
+   "subject3": "WildPPG_Part_k2s.mat",
+   "subject4": "WildPPG_Part_l38.mat",
+   "subject5": "WildPPG_Part_n31.mat",
+   "subject6": "WildPPG_Part_ngh.mat",
+   "subject7": "WildPPG_Part_p5d.mat",
+   "subject8": "WildPPG_Part_p9p.mat",
+   "subject9": "WildPPG_Part_qm9.mat",
+   "subject10": "WildPPG_Part_trh.mat",
+   "subject11": "WildPPG_Part_tz8.mat",
+   "subject12": "WildPPG_Part_u7y.mat",
+   "subject13": "WildPPG_Part_w4p.mat"
+  },
+  "source": "data/processed/u2_wildppg (U2 corpus, 14 subjects)"
+ }
+}

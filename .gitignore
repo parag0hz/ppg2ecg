@@ -443,3 +443,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/rf1_reflow/**
 !artifacts/cd1_consistency/
 !artifacts/cd1_consistency/**
+!artifacts/wp1_wildppg/
+!artifacts/wp1_wildppg/**

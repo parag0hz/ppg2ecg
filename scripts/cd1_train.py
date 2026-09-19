@@ -41,13 +41,15 @@ def main():
     ap.add_argument("--n-disc", type=int, default=25)
     ap.add_argument("--ema", type=float, default=0.999)
     ap.add_argument("--log-every", type=int, default=220)
+    ap.add_argument("--manifest", default="data/manifests/split_v1_vitaldb_seed42.json")
+    ap.add_argument("--processed", default="data/processed/v1_vitaldb")
     args = ap.parse_args()
     out = Path(args.out_dir); out.mkdir(parents=True, exist_ok=True)
     seed_everything(args.seed, deterministic=False)
     up = assert_upstream_pinned()
     dev = torch.device("cuda")
-    split = read_manifest(ROOT / "data/manifests/split_v1_vitaldb_seed42.json")[0]
-    x_tr, y_tr, _ = load_arrays(ROOT / "data/processed/v1_vitaldb", split["train"])
+    split = read_manifest(ROOT / args.manifest)[0]
+    x_tr, y_tr, _ = load_arrays(ROOT / args.processed, split["train"])
     X, Y = torch.from_numpy(x_tr).to(dev), torch.from_numpy(y_tr).to(dev)
     ck = torch.load(args.teacher, map_location="cpu", weights_only=False)
     if "model_cfg" not in ck:

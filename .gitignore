@@ -439,3 +439,5 @@ artifacts/pz1_personalisation/**/*.npz
 !artifacts/pz3_per_patient/
 !artifacts/pz3_per_patient/**
 artifacts/pz3_per_patient/**/*.npz
+!artifacts/rf1_reflow/
+!artifacts/rf1_reflow/**

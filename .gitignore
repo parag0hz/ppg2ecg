@@ -451,3 +451,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/lat1_latency/**
 !artifacts/ed1_consensus_decoding/
 !artifacts/ed1_consensus_decoding/**
+!artifacts/ed2_decoding_transfer/
+!artifacts/ed2_decoding_transfer/**

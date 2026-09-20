@@ -1,0 +1,76 @@
+{
+ "splits": [
+  {
+   "protocol": "MC1-subject-holdout",
+   "seed": 20260920,
+   "corpus": "bidmc",
+   "task": "ECG",
+   "train": [
+    "bidmc01",
+    "bidmc05",
+    "bidmc06",
+    "bidmc09",
+    "bidmc12",
+    "bidmc14",
+    "bidmc15",
+    "bidmc17",
+    "bidmc19",
+    "bidmc20",
+    "bidmc21",
+    "bidmc23",
+    "bidmc25",
+    "bidmc26",
+    "bidmc27",
+    "bidmc28",
+    "bidmc29",
+    "bidmc30",
+    "bidmc36",
+    "bidmc37",
+    "bidmc38",
+    "bidmc39",
+    "bidmc43",
+    "bidmc44",
+    "bidmc45",
+    "bidmc46",
+    "bidmc47",
+    "bidmc48",
+    "bidmc51",
+    "bidmc52",
+    "bidmc53"
+   ],
+   "val": [
+    "bidmc02",
+    "bidmc24",
+    "bidmc31",
+    "bidmc34",
+    "bidmc50"
+   ],
+   "test": [
+    "bidmc03",
+    "bidmc04",
+    "bidmc07",
+    "bidmc08",
+    "bidmc10",
+    "bidmc11",
+    "bidmc13",
+    "bidmc16",
+    "bidmc18",
+    "bidmc22",
+    "bidmc33",
+    "bidmc35",
+    "bidmc40",
+    "bidmc41",
+    "bidmc42"
+   ]
+  }
+ ],
+ "extra": {
+  "processed": "data/processed/mc1_bidmc_4s",
+  "n_subjects": 51,
+  "n_windows": {
+   "train": 3720,
+   "val": 600,
+   "test": 1800
+  }
+ }
+}

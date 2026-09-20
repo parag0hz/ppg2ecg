@@ -453,3 +453,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/ed1_consensus_decoding/**
 !artifacts/ed2_decoding_transfer/
 !artifacts/ed2_decoding_transfer/**
+!artifacts/mc1_multicorpus/
+!artifacts/mc1_multicorpus/**

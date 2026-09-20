@@ -1,0 +1,40 @@
+{
+ "splits": [
+  {
+   "protocol": "MC1-subject-holdout",
+   "seed": 20260920,
+   "corpus": "dalia",
+   "task": "ECG",
+   "train": [
+    "subject1",
+    "subject11",
+    "subject12",
+    "subject13",
+    "subject14",
+    "subject2",
+    "subject3",
+    "subject4",
+    "subject9"
+   ],
+   "val": [
+    "subject5",
+    "subject7"
+   ],
+   "test": [
+    "subject0",
+    "subject10",
+    "subject6",
+    "subject8"
+   ]
+  }
+ ],
+ "extra": {
+  "processed": "data/processed/u2_dalia",
+  "n_subjects": 15,
+  "n_windows": {
+   "train": 19996,
+   "val": 3332,
+   "test": 9040
+  }
+ }
+}

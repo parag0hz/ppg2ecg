@@ -445,3 +445,7 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/cd1_consistency/**
 !artifacts/wp1_wildppg/
 !artifacts/wp1_wildppg/**
+!artifacts/ab1_consensus/
+!artifacts/ab1_consensus/**
+!artifacts/lat1_latency/
+!artifacts/lat1_latency/**

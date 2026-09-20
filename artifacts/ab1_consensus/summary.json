@@ -1,0 +1,11 @@
+{
+ "saturation_K_median_rule": {
+  "iMF-1": null,
+  "iMF-2": null,
+  "CD-1": 16,
+  "PENGUIN-1": 4,
+  "PENGUIN-50": null
+ },
+ "n_patients": 1156,
+ "n_windows": 19543
+}

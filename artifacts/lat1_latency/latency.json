@@ -1,0 +1,78 @@
+{
+ "cpu|PENGUIN-50": {
+  "median_ms": 2285.515775496606,
+  "p90_ms": 2330.504104727879,
+  "nfe": 50,
+  "threads": 4
+ },
+ "cpu|PENGUIN-1": {
+  "median_ms": 45.824538508895785,
+  "p90_ms": 47.589917737059295,
+  "nfe": 1,
+  "threads": 4
+ },
+ "cpu|iMF-1": {
+  "median_ms": 45.48221355071291,
+  "p90_ms": 48.25547261862084,
+  "nfe": 1,
+  "threads": 4
+ },
+ "cpu|CD-1": {
+  "median_ms": 44.4385104929097,
+  "p90_ms": 48.95243739010766,
+  "nfe": 1,
+  "threads": 4
+ },
+ "cpu|smallDiT-1": {
+  "median_ms": 5.117285472806543,
+  "p90_ms": 6.815156259108336,
+  "nfe": 1,
+  "threads": 4
+ },
+ "cuda|PENGUIN-50": {
+  "median_ms": 963.1120624835603,
+  "p90_ms": 966.9666322530247,
+  "nfe": 50,
+  "threads": null
+ },
+ "cuda|PENGUIN-1": {
+  "median_ms": 19.552761979866773,
+  "p90_ms": 22.999693057499826,
+  "nfe": 1,
+  "threads": null
+ },
+ "cuda|iMF-1": {
+  "median_ms": 19.39488050993532,
+  "p90_ms": 19.84720411710441,
+  "nfe": 1,
+  "threads": null
+ },
+ "cuda|CD-1": {
+  "median_ms": 19.484461983665824,
+  "p90_ms": 22.866241680458188,
+  "nfe": 1,
+  "threads": null
+ },
+ "cuda|smallDiT-1": {
+  "median_ms": 2.765415993053466,
+  "p90_ms": 2.873678132891655,
+  "nfe": 1,
+  "threads": null
+ },
+ "cpu|iMF-1 x16 (consensus)": {
+  "median_ms": 727.7154168114066,
+  "nfe": 16
+ },
+ "cpu|CD-1 x16 (consensus)": {
+  "median_ms": 711.0161678865552,
+  "nfe": 16
+ },
+ "cuda|iMF-1 x16 (consensus)": {
+  "median_ms": 310.3180881589651,
+  "nfe": 16
+ },
+ "cuda|CD-1 x16 (consensus)": {
+  "median_ms": 311.7513917386532,
+  "nfe": 16
+ }
+}

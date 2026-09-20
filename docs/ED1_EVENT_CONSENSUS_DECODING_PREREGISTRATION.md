@@ -29,3 +29,10 @@ R-peak F1 @ 50 ms, RR-MAE, MAE, RMSE, FD) plus `morph_corr@GT` (PZ3). Paired, pa
 Reported, not gated: the same contrasts against PENGUIN-50; HR error against the K = 16 HR-median consensus; FD;
 reliability — Spearman(vote-position SD, |timing error|) over matched events, and F1 / coverage when only events with
 vote fraction ≥ 0.75 are kept.
+
+## Amendment 1 — frozen parameters (validation patients only; committed before the test set is touched)
+From `artifacts/ed1_consensus_decoding/params.json` (full 3 × 3 grid per generator is in that file):
+- **iMF (arm I):** w = 50 ms, θ = 0.375, b = 0 samples — validation F1 0.7594, HR 7.07.
+- **Consistency distillation (arm D):** w = 50 ms, θ = 0.25, b = −1 sample — validation F1 0.7642, HR 7.10.
+Selection followed the frozen rule (best F1; within 0.002 → lower HR). The whole grid lies within 0.015 F1, so the
+result is not sensitive to the choice. No test window has been generated or scored at this point.

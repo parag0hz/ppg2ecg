@@ -457,3 +457,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/mc1_multicorpus/**
 !artifacts/qual_by_dataset/
 !artifacts/qual_by_dataset/**
+!artifacts/kn1_kan/
+!artifacts/kn1_kan/**

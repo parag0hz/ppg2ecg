@@ -99,6 +99,7 @@ def parse_args(argv=None):
     ap.add_argument("--val-every-steps", type=int, default=None, help="validation round = min(epoch, N optimizer steps); default: one epoch (A0-b/A2)")
     ap.add_argument("--val-subsample", type=int, default=None, help="deterministic uniform stride subsample of the validation windows to at most N (A4 rule)")
     ap.add_argument("--segment-len", type=int, default=8, help="window length in seconds the processed corpus must have (T == sample_rate * segment_len). Default 8 = the historical assertion, unchanged; U2 runs the shipped PENGUIN 4 s.")
+    ap.add_argument("--backbone", choices=["s5", "kan-outer", "kan-all"], default="s5", help="KN1: kan-* = FFN MLPs replaced by RBF-KAN; default s5 = unchanged upstream backbone")
     ap.add_argument("--max-steps", type=int, default=None, help="U2 §6: stop after exactly N optimizer steps. Default None = unchanged behaviour; the round structure alone is corpus-dependent (min(epoch, --val-every-steps)), so epochs x val-every-steps is NOT a step budget.")
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--target-norm", default=None, help="A8: path to normalization.json (global train-only affine applied to the TARGET only)")
@@ -141,7 +142,8 @@ def main(argv=None):
     banks = make_banks(len(x_va), T, args.n_val_banks, args.bank_seed) if args.n_val_banks > 0 else []
     banks_hash = bank_hash(banks) if banks else None
 
-    model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio).to(device)
+    arch_kw = {} if args.backbone == "s5" else {"arch": "kan", "kan_blocks": args.backbone.split("-")[1]}  # KN1; {} = every historical run
+    model = build_penguin_backbone(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio, **arch_kw).to(device)
     params = count_params(model, exclude_prefixes=("cross_attn", "revin"))
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
     gen = torch.Generator()
@@ -237,7 +239,7 @@ def main(argv=None):
             event = ""
             if is_best:
                 state.update(best=sel, best_epoch=epoch, no_improve=0)
-                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "selection": {"criterion": args.select, "value": sel, "min_delta": args.min_delta}, "val_cfm_fixed": val_fixed, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio), "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
+                torch.save({"state_dict": model.state_dict(), "epoch": epoch, "selection": {"criterion": args.select, "value": sel, "min_delta": args.min_delta}, "val_cfm_fixed": val_fixed, "val_mae_batchmean": val_bm, "val_mae_window": val_win, "model_cfg": dict(n_step=args.n_step, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio, **arch_kw), "target_norm": {"mu": tnorm.mu, "sigma": tnorm.sigma, "source": tnorm.source}, "args": vars(args), "seed": args.seed, "git": meta["git"], "upstream_commit": UPSTREAM_COMMIT}, best_ckpt)
                 event = "best"
             else:
                 state["no_improve"] += 1

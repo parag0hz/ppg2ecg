@@ -14,14 +14,19 @@ def build_penguin_backbone(**overrides):
     """Instantiate upstream `PENGUIN(...)` with the shipped PPG-DaLiA hyper-parameters (+overrides).
 
     BB1: `arch="attn"` (with optional `attn_heads`) swaps every S5 mixer for self-attention, see attn_backbone.py.
+    KN1: `arch="kan"` (with `kan_blocks` = "outer" | "all") swaps the FFN MLPs for RBF-KAN layers, see kan_backbone.py.
     Without `arch` (every historical checkpoint) the call is unchanged."""
     PENGUIN = import_upstream_penguin()
     arch = overrides.pop("arch", "s5")
     heads = overrides.pop("attn_heads", 4)
+    kan_blocks = overrides.pop("kan_blocks", "outer")
     cfg = {**PENGUIN_DALIA_CFG, **overrides}
     if arch == "attn":
         from ppg2ecg.models.attn_backbone import build_attn_backbone
         return build_attn_backbone(PENGUIN, cfg, heads)
+    if arch == "kan":
+        from ppg2ecg.models.kan_backbone import build_kan_backbone
+        return build_kan_backbone(PENGUIN, cfg, kan_blocks)
     assert arch == "s5", arch
     return PENGUIN(**cfg)
 

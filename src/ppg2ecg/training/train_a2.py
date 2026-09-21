@@ -87,7 +87,7 @@ def parse_args(argv=None):
     ap.add_argument("--weight-decay", type=float, default=0.01)
     ap.add_argument("--h-dim", type=int, default=128)
     ap.add_argument("--blocks", type=int, default=4)
-    ap.add_argument("--backbone", choices=["s5", "attn"], default="s5", help="BB1: attn = S5 mixers replaced by self-attention")
+    ap.add_argument("--backbone", choices=["s5", "attn", "kan-outer", "kan-all"], default="s5", help="BB1: attn = S5 mixers replaced by self-attention; KN1: kan-* = FFN MLPs replaced by RBF-KAN")
     ap.add_argument("--attn-heads", type=int, default=4)
     ap.add_argument("--ssm-ratio", type=float, default=2.0)
     ap.add_argument("--mlp-ratio", type=float, default=2.0)
@@ -158,7 +158,8 @@ def main(argv=None):
     banks = make_imf_banks(len(x_va), T, args.n_val_banks, args.bank_seed, **tr_kw)
     banks_hash = imf_bank_hash(banks)
 
-    arch_kw = {} if args.backbone == "s5" else {"arch": args.backbone, "attn_heads": args.attn_heads}
+    arch_kw = ({} if args.backbone == "s5" else {"arch": "attn", "attn_heads": args.attn_heads} if args.backbone == "attn"
+               else {"arch": "kan", "kan_blocks": args.backbone.split("-")[1]})
     backbone = build_penguin_backbone(n_step=1, sample_rate=args.sample_rate, h_dim=args.h_dim, ssm_block_num=args.blocks, ssm_ratio=args.ssm_ratio, mlp_ratio=args.mlp_ratio, **arch_kw)
     net = MeanFlowS5(backbone, cond_mode=args.cond_mode, h_scale=args.h_scale).to(device)
     params = count_params(backbone, exclude_prefixes=("cross_attn", "revin"))

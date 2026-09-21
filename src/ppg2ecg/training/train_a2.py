@@ -25,6 +25,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from ppg2ecg.data.splits import read_manifest
 from ppg2ecg.data.target_norm import TargetNorm
 from ppg2ecg.flow.imeanflow import MeanFlowS5, fixed_imf_mse, imeanflow_loss, imf_bank_hash, make_imf_banks, sample_meanflow, sample_tr
+from ppg2ecg.flow.aux_losses import mae_pcc_loss, stft_loss
 from ppg2ecg.flow.endpoint_structure import LAMBDA_SEC, clean_endpoint, sec_loss, value_loss
 from ppg2ecg.flow.structure_weight import shifted_structure_weight, structure_weight
 from ppg2ecg.flow.interval_exposure import ARMS as C1_ARMS, sample_tr_c1
@@ -79,6 +80,9 @@ def parse_args(argv=None):
     # no changed RNG consumption, no changed mutable state (prereg §6, spec §5).
     ap.add_argument("--m3-arm", choices=["U", "E", "V"], default=None,
                     help="E = SEC-iMF (structural endpoint consistency); V = value-endpoint control; U = explicit baseline")
+    ap.add_argument("--aux-loss", choices=["none", "mae_pcc", "stft"], default="none", help="LW1: training-only endpoint auxiliary loss; none = every historical arm")
+    ap.add_argument("--aux-alpha", type=float, default=0.5, help="LW1 mae_pcc: alpha * MAE_n + (1 - alpha) * (1 - PCC)")
+    ap.add_argument("--aux-lambda", type=float, default=0.5, help="LW1: loss = L_iMF + lambda * L_aux")
     ap.add_argument("--c1-arm", choices=list(C1_ARMS), default="B",
                     help="C1 target-interval exposure arm (docs/C1_INTERVAL_EXPOSURE_CONTROL_PREREGISTRATION.md). 'B' is a bit-identical no-op replay of the historical sampler; it is the ONLY thing that may differ between C1 arms.")
     ap.add_argument("--min-delta", type=float, default=1e-4)
@@ -239,6 +243,13 @@ def main(argv=None):
                         aux = sec_loss(x0_hat, ecg_in)[0] if args.m3_arm == "E" else value_loss(x0_hat, ecg_in)
                         loss = loss + LAMBDA_SEC * aux
                         info["m3_aux"] = aux.detach()
+                    if getattr(args, "aux_loss", "none") != "none":
+                        # LW1: one extra training-only forward at h = t (the M3 endpoint); never reachable at inference.
+                        tt = t.reshape(-1, 1, 1)
+                        x0_hat = clean_endpoint(net, (1 - tt) * ecg_in + tt * e, ppg_in, t)
+                        aux, aux_info = mae_pcc_loss(x0_hat, ecg_in, args.aux_alpha) if args.aux_loss == "mae_pcc" else stft_loss(x0_hat, ecg_in)
+                        loss = loss + args.aux_lambda * aux
+                        info.update(aux_info)
                     if not (torch.isfinite(loss) and torch.isfinite(info["mse"]) and torch.isfinite(info["dudt_abs_mean"])):
                         raise RuntimeError(f"non-finite loss at epoch {epoch}: {loss.item()} info={ {k: float(v) for k, v in info.items()} }")
                     (loss * (Bc / B)).backward()  # mean over the full batch of 64

@@ -459,3 +459,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/qual_by_dataset/**
 !artifacts/kn1_kan/
 !artifacts/kn1_kan/**
+!artifacts/lw1_aux_loss/
+!artifacts/lw1_aux_loss/**

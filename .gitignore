@@ -461,3 +461,7 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/kn1_kan/**
 !artifacts/lw1_aux_loss/
 !artifacts/lw1_aux_loss/**
+!artifacts/dw1_depth_width/
+!artifacts/dw1_depth_width/**
+!artifacts/db1_discriminative_hr/
+!artifacts/db1_discriminative_hr/**

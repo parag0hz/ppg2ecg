@@ -52,3 +52,7 @@ CD and PENGUIN. Median was preregistered and is kept; the differences are within
 
 **The consensus arm is still three times faster than one PENGUIN-50 sample on a 4-thread CPU**, while being 3.0 bpm
 more accurate. A 4 s window at 5.1 ms (small DiT) leaves a 780× real-time margin on CPU.
+
+## Erratum (2026-09-22, from DW2 part B)
+The K = 1 rows are noise-seed-0 draws. Over 32 draws, PENGUIN 1 NFE single-sample HR error averages 8.68 (seed 0: 7.33);
+the "PENGUIN NFE 1 K = 1 7.329 best at 1 NFE" reading is seed-0-specific. Pooled cells (K > 1) are unaffected.

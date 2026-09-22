@@ -46,3 +46,8 @@ Reference: PENGUIN at its shipped Heun 25 (50 NFE), K = 1: 9.64; K = 4 (200 NFE)
 5. **PENGUIN at S = 1 (7.33) is still the best single-NFE HR** on this corpus, and (K = 8, S = 2) makes PENGUIN itself
    competitive (6.51) — i.e. the consensus recipe transfers to the incumbent model with no retraining at all.
 6. Single seed; VitalDB only (regular rhythm). The width-vs-depth ordering on the wearable corpora is untested.
+
+## Erratum (2026-09-22, from DW2 part B)
+The K = 1 cells above are the noise-seed-0 draw, not an expectation over draws. Averaged over 32 draws, single-sample HR
+error at S = 1 is PENGUIN 8.68 (not 7.33), iMF 10.13, CD 8.27. Point 5 ("PENGUIN at S = 1 is still the best single-NFE
+HR") therefore rests on one favourable draw and is withdrawn; cells with K > 1 are unaffected.

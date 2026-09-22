@@ -465,3 +465,7 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/dw1_depth_width/**
 !artifacts/db1_discriminative_hr/
 !artifacts/db1_discriminative_hr/**
+!artifacts/dw2_mechanism/
+!artifacts/dw2_mechanism/**
+!artifacts/wd1_wildppg/
+!artifacts/wd1_wildppg/**

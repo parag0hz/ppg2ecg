@@ -473,3 +473,9 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/dw2_multiseed/**
 !artifacts/rd1_direct_rpeak/
 !artifacts/rd1_direct_rpeak/**
+!artifacts/tt_expa_solver/
+!artifacts/tt_expa_solver/**
+!artifacts/tt_expb_mechanism/
+!artifacts/tt_expb_mechanism/**
+!artifacts/tt_expd_targets/
+!artifacts/tt_expd_targets/**

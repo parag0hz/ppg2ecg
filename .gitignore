@@ -471,3 +471,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/wd1_wildppg/**
 !artifacts/dw2_multiseed/
 !artifacts/dw2_multiseed/**
+!artifacts/rd1_direct_rpeak/
+!artifacts/rd1_direct_rpeak/**

@@ -93,10 +93,10 @@ def main():
     pp = lambda v: np.array([np.nanmean(v[pid == s]) for s in subs])  # noqa: E731
     ci = lambda v: V.cluster_ci(v, pid)  # noqa: E731
     err, rows, lat, quality = {}, [], {}, []
-    for seed in SEEDS:
-        sampler = make_sampler(seed, dev)
-        for B, grid in GRID.items():
-            for solver, cells in grid.items():
+    for B in GRID:                                              # primary budget (32) for every seed first, then 50
+        for seed in SEEDS:
+            sampler = make_sampler(seed, dev)
+            for solver, cells in GRID[B].items():
                 for K, steps in cells:
                     H = hr_rows(sampler, ex, X, seed, solver, steps, K, lat)
                     with np.errstate(all="ignore"):
@@ -108,18 +108,19 @@ def main():
                                      total_nfe=K * nfe_of(solver, steps), hr_err=mu, ci_lo=lo, ci_hi=hi, ms_per_sample_gpu=ms,
                                      ms_per_window_gpu=K * ms if np.isfinite(ms) else np.nan))
                     print(f"[expA] seed {seed:2d} B {B} {solver:5s} (K {K:2d}, steps {steps:2d}, NFE/sample {nfe_of(solver, steps):2d})  HR {mu:.3f} [{lo:.3f}, {hi:.3f}]", flush=True)
-        if seed == 42:                                          # single-sample quality by depth, noise seed 0 (as DW1)
-            for solver, steps_list in (("heun", (1, 2, 4, 5, 8, 16, 25)), ("euler", (1, 2, 4, 5, 8, 10, 16, 32, 50))):
-                for steps in steps_list:
-                    w, _ = sampler(X, 0, solver, steps)
-                    hyp_peaks = list(ex.map(_peaks, list(w), chunksize=256))
-                    prf = PMX.rpeak_prf_at(w, Y, FS, 50.0, peaks=(ref_peaks, hyp_peaks))
-                    beat = PMX.beat_level_metrics(w, Y, FS, 50.0, peaks=(ref_peaks, hyp_peaks))
-                    i = U2.fd_subset(len(w))
-                    quality.append(dict(solver=solver, steps=steps, nfe=nfe_of(solver, steps), f1=ci(prf["rpeak_f1"])[0],
-                                        hr_single=ci(beat["hr_abs_err"])[0], fd=float(PMX.kanflow_fd(w[i], Y[i]))))
-                    print(f"[expA] quality seed 42 {solver:5s} steps {steps:2d} NFE {quality[-1]['nfe']:2d}  F1 {quality[-1]['f1']:.4f}  FD {quality[-1]['fd']:.2f}  HR(1 draw) {quality[-1]['hr_single']:.3f}", flush=True)
-        del sampler; torch.cuda.empty_cache()
+            del sampler; torch.cuda.empty_cache()
+    sampler = make_sampler(42, dev)                             # single-sample quality by depth, noise seed 0 (as DW1)
+    for solver, steps_list in (("heun", (1, 2, 4, 5, 8, 16, 25)), ("euler", (1, 2, 4, 5, 8, 10, 16, 32, 50))):
+        for steps in steps_list:
+            w, _ = sampler(X, 0, solver, steps)
+            hyp_peaks = list(ex.map(_peaks, list(w), chunksize=256))
+            prf = PMX.rpeak_prf_at(w, Y, FS, 50.0, peaks=(ref_peaks, hyp_peaks))
+            beat = PMX.beat_level_metrics(w, Y, FS, 50.0, peaks=(ref_peaks, hyp_peaks))
+            i = U2.fd_subset(len(w))
+            quality.append(dict(solver=solver, steps=steps, nfe=nfe_of(solver, steps), f1=ci(prf["rpeak_f1"])[0],
+                                hr_single=ci(beat["hr_abs_err"])[0], fd=float(PMX.kanflow_fd(w[i], Y[i]))))
+            print(f"[expA] quality seed 42 {solver:5s} steps {steps:2d} NFE {quality[-1]['nfe']:2d}  F1 {quality[-1]['f1']:.4f}  FD {quality[-1]['fd']:.2f}  HR(1 draw) {quality[-1]['hr_single']:.3f}", flush=True)
+    del sampler; torch.cuda.empty_cache()
 
     def contrast(seed, a, b):
         d = err[(seed,) + a] - err[(seed,) + b]

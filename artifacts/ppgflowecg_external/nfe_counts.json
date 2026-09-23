@@ -1,0 +1,74 @@
+{
+ "definition": "calls per sampling call; one call processes the whole batch, so per-sample counts are identical",
+ "per_S": {
+  "5": {
+   "flow_net": 5,
+   "enc_ecg": 1,
+   "enc_ppg": 1,
+   "dec_ecg": 1,
+   "output_shape": [
+    4,
+    1280
+   ],
+   "finite": true
+  },
+  "10": {
+   "flow_net": 10,
+   "enc_ecg": 1,
+   "enc_ppg": 1,
+   "dec_ecg": 1,
+   "output_shape": [
+    4,
+    1280
+   ],
+   "finite": true
+  },
+  "15": {
+   "flow_net": 15,
+   "enc_ecg": 1,
+   "enc_ppg": 1,
+   "dec_ecg": 1,
+   "output_shape": [
+    4,
+    1280
+   ],
+   "finite": true
+  },
+  "20": {
+   "flow_net": 20,
+   "enc_ecg": 1,
+   "enc_ppg": 1,
+   "dec_ecg": 1,
+   "output_shape": [
+    4,
+    1280
+   ],
+   "finite": true
+  },
+  "25": {
+   "flow_net": 25,
+   "enc_ecg": 1,
+   "enc_ppg": 1,
+   "dec_ecg": 1,
+   "output_shape": [
+    4,
+    1280
+   ],
+   "finite": true
+  }
+ },
+ "vector_field_nfe_equals_S": true,
+ "fixed_overhead_per_sample": {
+  "vae_encoder_ecg (official: only its output shape is used)": 1,
+  "vae_encoder_ppg (stochastic posterior sample)": 1,
+  "vae_decoder_ecg": 1
+ },
+ "euler_update": "x <- x + (1/S) * v(x, t), t on linspace(0, 1, S+1)[:-1]; one vector-field call per step",
+ "released_Trainer.sample_shift": {
+  "called_with_sampling_steps": 5,
+  "flow_net_calls": 10,
+  "finding": "sampling_steps is not forwarded to the model (engine/solver.py:276-280); the model default num_steps=10 runs",
+  "identical_to_our_driver_at_S10_same_seed": true,
+  "max_abs_diff_vs_our_S10": 0.0
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "1_is_git_repository": {
+  "ppgflowecg/ (user-provided)": false,
+  "note": "contains only the paper PDF and the two released checkpoints; no source code",
+  "source_used": "external/PPGFlowECG (git submodule of https://github.com/PKUDigitalHealth/PPGFlowECG)"
+ },
+ "2_exact_git_commit": "56b2cd2cfa738388c60daccd788d511aa8698085",
+ "3_git_status": {
+  "porcelain": "",
+  "clean": true
+ },
+ "4_checkpoint_filenames": [
+  "VAE-iter-40000.pth",
+  "checkpoint-10.pt"
+ ],
+ "5_checkpoint_sha256": {
+  "checkpoint-10.pt": "50f1af67ad258ef5eea7ac0c09525f156f6b1997a3068575f08d4d8c6a05ecdb"
+ },
+ "6_vae_cardioalign_sha256": {
+  "VAE-iter-40000.pth": "c186633aa40fa2b2e32421588b8e68d7f95a30e8069f8161fbdbcedd97347d6d"
+ },
+ "7_paper_pdf": [
+  "2509.19774v2.pdf"
+ ],
+ "8_config_files": [
+  "config/cardioalign_encoder.yaml",
+  "config/latent_rectified_flow.yaml"
+ ],
+ "9_official_sampling": "engine/solver.py Trainer.sample_shift: vae_encoder_ecg(ecg)[0] (shape only) -> vae_encoder_ppg(ppg)[0] (cond) -> ema.ema_model.sample_shift(shape, cond) -> vae_decoder_ecg",
+ "10_model_load_path": "main.py: instantiate_from_config(config['model']) -> Trainer(config, ...) (loads VAE via load_vae_ecg / load_vae_ppg) -> Trainer.load(milestone=10): results_folder/checkpoints/checkpoint-10.pt",
+ "11_sample_and_sample_shift": "model/latent_rectified_flow/rectified_flow.py: sample(shape, num_steps) = explicit Euler from x ~ N(0, I) at t = 0 to t = 1 (data), timesteps linspace(0,1,S+1)[:-1]; sample_shift(shape, num_steps=10, cond) = sample(...)",
+ "12_preprocessing_assumptions": "data_process_to_npz/step1.py: per 10-s window, PPG Butterworth band-pass 0.5-8 Hz order 3 (mne, IIR), ECG high-pass 0.5 Hz order 5 + 50 Hz notch, resample_poly to 128 Hz, per-window z-score; step2.py: Savitzky-Golay (PPG 7/2, ECG 11/2) + quality selection. Native rates hard-coded in step1 for the released pipeline: ECG 125 Hz, PPG 25 Hz.",
+ "13_expected_ppg_input_shape": "[B, 1280, 1] (10 s x 128 Hz; the Trainer unsqueezes [B, 1280])",
+ "14_expected_ecg_output_shape": "[B, 1280, 1]",
+ "15_latent_dimensions": "[B, 4, 40] (VAE_Encoder: 8 channels -> mean / log-variance 4 each, length 1280/32)",
+ "16_cardioalign_load_sequence": "Trainer.__init__: load_vae_ecg -> VAE_Encoder <- encoder_ecg, VAE_Decoder <- decoder_ecg; load_vae_ppg -> VAE_Encoder <- encoder_ecg (sic), VAE_Decoder <- decoder_ppg; all eval(), requires_grad False",
+ "strict_load": {
+  "model": {
+   "missing": [],
+   "unexpected": []
+  },
+  "ema": {
+   "missing": [],
+   "unexpected": []
+  },
+  "vae.encoder_ecg": {
+   "missing": [],
+   "unexpected": []
+  },
+  "vae.decoder_ecg": {
+   "missing": [],
+   "unexpected": []
+  },
+  "vae.encoder_ppg<-encoder_ecg": {
+   "missing": [],
+   "unexpected": []
+  }
+ },
+ "strict_load_ok": true,
+ "checkpoint_step": 10000,
+ "checkpoint_keys": [
+  "ema",
+  "model",
+  "opt",
+  "step"
+ ],
+ "vae_checkpoint_keys": [
+  "decoder_ecg",
+  "decoder_ppg",
+  "encoder_ecg",
+  "encoder_ppg",
+  "hparams",
+  "iteration",
+  "optimizer",
+  "scheduler"
+ ],
+ "vae_encoder_ppg_equals_encoder_ecg_in_checkpoint": true,
+ "ema_equals_online_model": false,
+ "sampler_network": "EMA model (ema.ema_model), as in the official Trainer.sample_shift",
+ "parameters": {
+  "flow_net": 6857988,
+  "vae_encoder": 96491984,
+  "vae_decoder_ecg": 110915114
+ },
+ "flow_dropout_p_values": [
+  0.0
+ ],
+ "flow_training_flag": true,
+ "stochasticity_sources": [
+  "vae_encoder_ecg posterior noise (consumed, output unused)",
+  "vae_encoder_ppg posterior noise (cond)",
+  "Euler initial noise x ~ N(0, I)"
+ ],
+ "sampling_steps_forwarding": "sampling_steps is not forwarded to the model (engine/solver.py:276-280); the model default num_steps=10 runs",
+ "provenance_wording": "authors' officially released checkpoint; training provenance is strongly implied to be MCMED by the released training configuration but is not explicitly documented for the checkpoint itself",
+ "upstream_modified": false,
+ "official_function_source_sha256": {
+  "evaluation/calculate_metric.py::get_Rpeaks_ECG": "dd620bc23c0687e9526edbbd547fb085485642c6bd0f8a6d9228d7883b9e371f",
+  "evaluation/calculate_metric.py::get_peaks_PPG": "22efd7febd9b1138d748e12f33668694d1af25401d10d61806433559002ed75f",
+  "evaluation/calculate_metric.py::heartbeats_ecg": "5b60a16532ec05191e8943f8546d83a58f4e494fd4587a0864eafde2ea3897b4",
+  "evaluation/calculate_metric.py::heartbeats_ppg": "224da29f3017fe31d1a2d26de2c323e8df08b3f7e97218d4a965038410c47bff",
+  "evaluation/calculate_metric.py::ecg_bpm_array": "dc6748068aa437863efa4fdbb89dbefb3b25a63a39ae97e1e134a24e47e5a392",
+  "evaluation/calculate_metric.py::ppg_bpm_array": "737c73f7143205966705b57b58aa274b18e271c356f53d83ec26619bd9d35c2c",
+  "evaluation/calculate_metric.py::MAE_hr": "37568ccc98846b05db83523670598ba96880e2ea768fc2066cae0cabd104aad9",
+  "data_process_to_npz/step1.py::ppg_clean_elgendi_mne": "9033fa870c468cccac3006fa307db87f8e5fadfbad326aadaaa7f3b1d5a108c2",
+  "data_process_to_npz/step1.py::ecg_clean_nk_mne": "892bd6ebf86a3db9462933cb974aa66228beb622b9672d9a400e3685bcb42685",
+  "data_process_to_npz/step1.py::data_resampler": "9ef240459be67800adf20f8d05ec48c4685086c9da968b5af0ba53d9bf57a2b0",
+  "data_process_to_npz/step1.py::data_normalizer": "1fb1e02f8cdb38e5a728a9d4bed15c8c26dc213e99b05241ff2ff3dbba64f463",
+  "data_process_to_npz/step2.py::_safe_savgol": "0f0a9970598e1b8295992507d036ab16419b3a6fadd066a622d82ef0ab6ef160",
+  "data_process_to_npz/step2.py::_batch_savgol": "346a182303a9987f9c0920d0a73c6a9ff9dcc4fb69afd99046fb521e2c4fe391"
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "BIDMC": {
+  "K32_S1": {
+   "nfe": 32,
+   "sequential_batch1_ms": 627.7485392056406,
+   "batched_K_ms": 20.574126858264208
+  },
+  "K16_S2": {
+   "nfe": 32,
+   "sequential_batch1_ms": 624.7902079485357,
+   "batched_K_ms": 39.572231005877256
+  },
+  "K8_S4": {
+   "nfe": 32,
+   "sequential_batch1_ms": 619.4635278079659,
+   "batched_K_ms": 78.38634005747736
+  },
+  "K4_S8": {
+   "nfe": 32,
+   "sequential_batch1_ms": 619.7516408283263,
+   "batched_K_ms": 154.2615608777851
+  },
+  "K2_S16": {
+   "nfe": 32,
+   "sequential_batch1_ms": 615.0188830215484,
+   "batched_K_ms": 308.27332311309874
+  },
+  "K1_S32": {
+   "nfe": 32,
+   "sequential_batch1_ms": 615.1814078912139,
+   "batched_K_ms": 614.8819020017982
+  },
+  "K16_S1": {
+   "nfe": 16,
+   "sequential_batch1_ms": 311.4427858963609,
+   "batched_K_ms": 19.599952967837453
+  },
+  "K8_S2": {
+   "nfe": 16,
+   "sequential_batch1_ms": 309.4993990380317,
+   "batched_K_ms": 39.00157590396702
+  },
+  "K4_S4": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.8467478044331,
+   "batched_K_ms": 77.44744792580605
+  },
+  "K2_S8": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.8802521340549,
+   "batched_K_ms": 154.97229900211096
+  },
+  "K1_S16": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.8676851000637,
+   "batched_K_ms": 308.32710303366184
+  },
+  "heun50_K1": {
+   "nfe": 50,
+   "sequential_batch1_ms": 963.131969794631,
+   "batched_K_ms": null
+  }
+ },
+ "WESAD": {
+  "K32_S1": {
+   "nfe": 32,
+   "sequential_batch1_ms": 623.7777061760426,
+   "batched_K_ms": 20.010421983897686
+  },
+  "K16_S2": {
+   "nfe": 32,
+   "sequential_batch1_ms": 614.9306390434504,
+   "batched_K_ms": 39.064125856384635
+  },
+  "K8_S4": {
+   "nfe": 32,
+   "sequential_batch1_ms": 619.1813650075346,
+   "batched_K_ms": 77.42014317773283
+  },
+  "K4_S8": {
+   "nfe": 32,
+   "sequential_batch1_ms": 613.2793889846653,
+   "batched_K_ms": 154.84799002297223
+  },
+  "K2_S16": {
+   "nfe": 32,
+   "sequential_batch1_ms": 614.4773431587964,
+   "batched_K_ms": 308.2763340789825
+  },
+  "K1_S32": {
+   "nfe": 32,
+   "sequential_batch1_ms": 614.7292838431895,
+   "batched_K_ms": 613.8125348370522
+  },
+  "K16_S1": {
+   "nfe": 16,
+   "sequential_batch1_ms": 309.40365488640964,
+   "batched_K_ms": 19.57940706051886
+  },
+  "K8_S2": {
+   "nfe": 16,
+   "sequential_batch1_ms": 308.4764590021223,
+   "batched_K_ms": 38.741837022826076
+  },
+  "K4_S4": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.25571513175964,
+   "batched_K_ms": 76.87882403843105
+  },
+  "K2_S8": {
+   "nfe": 16,
+   "sequential_batch1_ms": 308.00420814193785,
+   "batched_K_ms": 154.3044599238783
+  },
+  "K1_S16": {
+   "nfe": 16,
+   "sequential_batch1_ms": 309.3213429674506,
+   "batched_K_ms": 307.85353505052626
+  },
+  "heun50_K1": {
+   "nfe": 50,
+   "sequential_batch1_ms": 961.8091860320419,
+   "batched_K_ms": null
+  }
+ }
+}

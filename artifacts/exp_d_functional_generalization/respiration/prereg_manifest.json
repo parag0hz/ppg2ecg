@@ -1,0 +1,304 @@
+{
+ "prereg": "docs/EXP_D_FUNCTIONAL_GENERALIZATION_PREREGISTRATION.md (eddbe60)",
+ "code_head_at_analysis": "eddbe602225f1741bae59939778c4754a286d18e",
+ "datasets": {
+  "BIDMC": {
+   "dataset": "BIDMC",
+   "checkpoint": "outputs/u1_upstream/PENGUIN_BIDMC_u1/ckpt/pretrain_ckpt.pth",
+   "sha256": "fa8b3d96706fb066e2389e4a621977ef249a631e371d03186861eff2b7790518",
+   "epoch": 6,
+   "n_windows": 720,
+   "n_blocks": 48,
+   "n_subjects": 6,
+   "windows_per_block": 15,
+   "draws": {
+    "1": 32,
+    "2": 16,
+    "4": 16,
+    "8": 16,
+    "16": 2,
+    "32": 1
+   },
+   "noise": "z_d = torch.randn(N,1,512, generator=Generator().manual_seed(d)), same for every S",
+   "nonfinite_samples": {
+    "1": 0,
+    "2": 0,
+    "4": 0,
+    "8": 0,
+    "16": 0,
+    "32": 0,
+    "heun50": 0
+   },
+   "FD_draw0": {
+    "1": 149.13570597623405,
+    "2": 107.19721934191574,
+    "4": 64.39884283026191,
+    "8": 51.44157800134258,
+    "16": 45.505850899840596,
+    "32": 42.80835000133561,
+    "heun50": 40.5467804642563
+   },
+   "latency_ms": {
+    "K32_S1": {
+     "nfe": 32,
+     "sequential_batch1_ms": 627.7485392056406,
+     "batched_K_ms": 20.574126858264208
+    },
+    "K16_S2": {
+     "nfe": 32,
+     "sequential_batch1_ms": 624.7902079485357,
+     "batched_K_ms": 39.572231005877256
+    },
+    "K8_S4": {
+     "nfe": 32,
+     "sequential_batch1_ms": 619.4635278079659,
+     "batched_K_ms": 78.38634005747736
+    },
+    "K4_S8": {
+     "nfe": 32,
+     "sequential_batch1_ms": 619.7516408283263,
+     "batched_K_ms": 154.2615608777851
+    },
+    "K2_S16": {
+     "nfe": 32,
+     "sequential_batch1_ms": 615.0188830215484,
+     "batched_K_ms": 308.27332311309874
+    },
+    "K1_S32": {
+     "nfe": 32,
+     "sequential_batch1_ms": 615.1814078912139,
+     "batched_K_ms": 614.8819020017982
+    },
+    "K16_S1": {
+     "nfe": 16,
+     "sequential_batch1_ms": 311.4427858963609,
+     "batched_K_ms": 19.599952967837453
+    },
+    "K8_S2": {
+     "nfe": 16,
+     "sequential_batch1_ms": 309.4993990380317,
+     "batched_K_ms": 39.00157590396702
+    },
+    "K4_S4": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.8467478044331,
+     "batched_K_ms": 77.44744792580605
+    },
+    "K2_S8": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.8802521340549,
+     "batched_K_ms": 154.97229900211096
+    },
+    "K1_S16": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.8676851000637,
+     "batched_K_ms": 308.32710303366184
+    },
+    "heun50_K1": {
+     "nfe": 50,
+     "sequential_batch1_ms": 963.131969794631,
+     "batched_K_ms": null
+    }
+   },
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "torch": "2.11.0+cu130"
+  },
+  "WESAD": {
+   "dataset": "WESAD",
+   "checkpoint": "outputs/u1_upstream/PENGUIN_WESAD_u1/ckpt/pretrain_ckpt.pth",
+   "sha256": "946dd2b1e60490814e4bcf314eb881b502bf3295c3c04f8036761b4e148347c3",
+   "epoch": 9,
+   "n_windows": 1605,
+   "n_blocks": 107,
+   "n_subjects": 1,
+   "windows_per_block": 15,
+   "draws": {
+    "1": 32,
+    "2": 16,
+    "4": 16,
+    "8": 16,
+    "16": 2,
+    "32": 1
+   },
+   "noise": "z_d = torch.randn(N,1,512, generator=Generator().manual_seed(d)), same for every S",
+   "nonfinite_samples": {
+    "1": 0,
+    "2": 0,
+    "4": 0,
+    "8": 0,
+    "16": 0,
+    "32": 0,
+    "heun50": 0
+   },
+   "FD_draw0": {
+    "1": 159.35037675580372,
+    "2": 110.30922147325231,
+    "4": 38.28996540531739,
+    "8": 11.54288344765223,
+    "16": 6.180051543297395,
+    "32": 4.514221202164606,
+    "heun50": 3.897803090657362
+   },
+   "latency_ms": {
+    "K32_S1": {
+     "nfe": 32,
+     "sequential_batch1_ms": 623.7777061760426,
+     "batched_K_ms": 20.010421983897686
+    },
+    "K16_S2": {
+     "nfe": 32,
+     "sequential_batch1_ms": 614.9306390434504,
+     "batched_K_ms": 39.064125856384635
+    },
+    "K8_S4": {
+     "nfe": 32,
+     "sequential_batch1_ms": 619.1813650075346,
+     "batched_K_ms": 77.42014317773283
+    },
+    "K4_S8": {
+     "nfe": 32,
+     "sequential_batch1_ms": 613.2793889846653,
+     "batched_K_ms": 154.84799002297223
+    },
+    "K2_S16": {
+     "nfe": 32,
+     "sequential_batch1_ms": 614.4773431587964,
+     "batched_K_ms": 308.2763340789825
+    },
+    "K1_S32": {
+     "nfe": 32,
+     "sequential_batch1_ms": 614.7292838431895,
+     "batched_K_ms": 613.8125348370522
+    },
+    "K16_S1": {
+     "nfe": 16,
+     "sequential_batch1_ms": 309.40365488640964,
+     "batched_K_ms": 19.57940706051886
+    },
+    "K8_S2": {
+     "nfe": 16,
+     "sequential_batch1_ms": 308.4764590021223,
+     "batched_K_ms": 38.741837022826076
+    },
+    "K4_S4": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.25571513175964,
+     "batched_K_ms": 76.87882403843105
+    },
+    "K2_S8": {
+     "nfe": 16,
+     "sequential_batch1_ms": 308.00420814193785,
+     "batched_K_ms": 154.3044599238783
+    },
+    "K1_S16": {
+     "nfe": 16,
+     "sequential_batch1_ms": 309.3213429674506,
+     "batched_K_ms": 307.85353505052626
+    },
+    "heun50_K1": {
+     "nfe": 50,
+     "sequential_batch1_ms": 961.8091860320419,
+     "batched_K_ms": null
+    }
+   },
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "torch": "2.11.0+cu130"
+  }
+ },
+ "sampler": "Euler (ppg2ecg.flow.samplers.euler_sample) on upstream grid; reference Heun-25 = 50 NFE",
+ "estimator": "nested draws 0..K-1, median consensus",
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20260924
+ },
+ "cells_B32": [
+  [
+   32,
+   1
+  ],
+  [
+   16,
+   2
+  ],
+  [
+   8,
+   4
+  ],
+  [
+   4,
+   8
+  ],
+  [
+   2,
+   16
+  ],
+  [
+   1,
+   32
+  ]
+ ],
+ "cells_B16": [
+  [
+   16,
+   1
+  ],
+  [
+   8,
+   2
+  ],
+  [
+   4,
+   4
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   1,
+   16
+  ]
+ ],
+ "headline": {
+  "B32_width_(32,1)-(1,32)": [
+   [
+    32,
+    1
+   ],
+   [
+    1,
+    32
+   ]
+  ],
+  "B32_intermediate_(8,4)-(1,32)": [
+   [
+    8,
+    4
+   ],
+   [
+    1,
+    32
+   ]
+  ],
+  "B16_width_(16,1)-(1,16)": [
+   [
+    16,
+    1
+   ],
+   [
+    1,
+    16
+   ]
+  ],
+  "B16_intermediate_(4,4)-(1,16)": [
+   [
+    4,
+    4
+   ],
+   [
+    1,
+    16
+   ]
+  ]
+ }
+}

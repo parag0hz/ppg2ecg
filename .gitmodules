@@ -4,3 +4,6 @@
 [submodule "external/iMeanFlow"]
 	path = external/iMeanFlow
 	url = https://github.com/Lyy-iiis/imeanflow.git
+[submodule "external/RDDM"]
+	path = external/RDDM
+	url = https://github.com/DebadityaQU/RDDM.git

@@ -137,3 +137,10 @@ depth, at increasing budget) and the functional-error-dependence measurement at 
 depth-versus-width* question can be asked of an external checkpoint only through PPGFlowECG, and only after its provenance
 is resolved. If RDDM's reduced-step sampling is shown in R0 to be invalid, that is reported as **"sampler does not support
 shallow inference"**, not as a failure of the method to transfer.
+
+## Update after RDDM R0 (2026-09-23)
+- RDDM checkpoint downloaded; sha256 `rddm_main_network.pth` e90490a9…0eb9, `rddm_condition_encoder_1.pth` 9f8ef5d7…7223,
+  `rddm_condition_encoder_2.pth` 3c7cbbc1…c3bd (full hashes in `docs/RDDM_R0_REPRODUCTION_REPORT.md`).
+- "Reduced-step sampling supported? — No" is now also **empirical**: the official loader with `nT = 5` fails to load the
+  released weights (the 10-step schedule is stored in the checkpoint as buffers, loaded strictly).
+- R0 verdict: **REPRODUCTION PARTIAL** (see the R0 report).

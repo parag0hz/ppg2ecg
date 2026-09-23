@@ -1,0 +1,42 @@
+{
+ "purpose": "boundary diagnostic, not a candidate allocation: can the released weights be sampled with fewer steps through the official loader?",
+ "call": "diffusion.load_pretrained_DPM(PATH, nT, type='RDDM') (official, unmodified)",
+ "nT=10": {
+  "RMSE": 0.1844964474439621,
+  "FD_batch512_fixed_order": 3.6704805649271632,
+  "MAE_HR_hamilton": 2.7420196353736612,
+  "HR_neurokit": [
+   2.304476756830691,
+   1.3521575916405606,
+   3.5692576124677604
+  ],
+  "Rpeak_F1_50ms": [
+   0.8235876176098516,
+   0.742418578623498,
+   0.8960984435724236
+  ],
+  "RR_MAE_ms": [
+   15.692057636628675,
+   14.363597858149852,
+   17.13361624524247
+  ],
+  "MAE": [
+   0.0909499004483223,
+   0.0833204984664917,
+   0.0987621322274208
+  ],
+  "RMSE_window": [
+   0.1786748766899109,
+   0.17013508081436157,
+   0.18757803738117218
+  ],
+  "n_windows": 5040,
+  "n_subjects": 42
+ },
+ "nT=5": {
+  "result": "LOAD FAILS",
+  "error": "RuntimeError: Error(s) in loading state_dict for RDDM: size mismatch for alpha_t: copying a param with shape torch.Size([11]) from checkpoint, the shape in current model is torch.Size([6]) (same for oneover_sqrta, sqrt_beta_t, alphabar_t, sqrtab, sqrtmab, ...)"
+ },
+ "nT=2": "not attempted (same failure mode)",
+ "reading": "The 10-step linear-beta schedule is stored in the released checkpoint as registered buffers (length T+1 = 11). The official loader loads with strict=True, so any nT != 10 is rejected. Reduced-step sampling of the released RDDM therefore requires changing the loading code or the sampler, i.e. a new inference algorithm."
+}

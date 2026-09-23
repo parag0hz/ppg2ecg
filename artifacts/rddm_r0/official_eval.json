@@ -1,0 +1,66 @@
+{
+ "evaluator": "external/RDDM/std_eval.py::eval_diffusion @ 7d5348843c3985c211a23ae5105a2d9497d5156a (unmodified)",
+ "checkpoint_dir": "/home/kwy00/ppg2ecg-one-step/data/pretrained/rddm",
+ "nT": 10,
+ "batch_size": 512,
+ "order": [
+  "4s:WESAD",
+  "4s:CAPNO",
+  "4s:DALIA",
+  "4s:BIDMC",
+  "8s:WESAD",
+  "8s:DALIA",
+  "8s:CAPNO",
+  "8s:BIDMC"
+ ],
+ "results": {
+  "WESAD|4s": {
+   "RMSE_score": 0.23437580078414996,
+   "MAE_HR_ECG": 2.7728751044900366,
+   "FD": 3.974910667945463,
+   "seconds": 145.6
+  },
+  "CAPNO|4s": {
+   "RMSE_score": 0.18483849637441682,
+   "MAE_HR_ECG": 2.896849861024127,
+   "FD": 3.5263596435702538,
+   "seconds": 35.0
+  },
+  "DALIA|4s": {
+   "RMSE_score": 0.21992425026696946,
+   "MAE_HR_ECG": 3.5694269695622602,
+   "FD": 4.349365166019836,
+   "seconds": 217.8
+  },
+  "BIDMC|4s": {
+   "RMSE_score": 0.2104678106654638,
+   "MAE_HR_ECG": 1.775592391567191,
+   "FD": 4.733398179086247,
+   "seconds": 42.3
+  },
+  "WESAD|8s": {
+   "RMSE_score": 0.23482626072631946,
+   "MAE_HR_ECG": 2.6041004080032155,
+   "FD": 2.877352836973141,
+   "seconds": 126.8
+  },
+  "DALIA|8s": {
+   "RMSE_score": 0.21808416416073242,
+   "MAE_HR_ECG": 3.2421779765281116,
+   "FD": 2.9341301329039458,
+   "seconds": 190.2
+  },
+  "CAPNO|8s": {
+   "RMSE_score": 0.18574244504931972,
+   "MAE_HR_ECG": 2.5481433483121076,
+   "FD": 2.5009967172465637,
+   "seconds": 30.9
+  },
+  "BIDMC|8s": {
+   "RMSE_score": 0.20723844844316022,
+   "MAE_HR_ECG": 1.4977167330092587,
+   "FD": 3.3740715665515673,
+   "seconds": 37.6
+  }
+ }
+}

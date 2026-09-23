@@ -481,3 +481,5 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/tt_expd_targets/**
 !artifacts/b3_bootstrap/
 !artifacts/b3_bootstrap/**
+!artifacts/rddm_r0/
+!artifacts/rddm_r0/**

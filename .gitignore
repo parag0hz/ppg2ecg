@@ -494,3 +494,9 @@ artifacts/pz3_per_patient/**/*.npz
 
 # user-provided PPGFlowECG files (checkpoints, paper) — never committed
 /ppgflowecg/
+
+# M1 — pilot→future-gain prediction (small artifacts only; banks live in outputs/, which stays ignored)
+!artifacts/m1_pilot_gain_prediction/
+!artifacts/m1_pilot_gain_prediction/*.json
+!artifacts/m1_pilot_gain_prediction/*.csv
+!artifacts/m1_pilot_gain_prediction/*.png

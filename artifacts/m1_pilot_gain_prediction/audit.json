@@ -1,0 +1,251 @@
+{
+ "audit_date": "2026-09-24",
+ "head_commit": "b1eb66a",
+ "read_only": true,
+ "splits": {
+  "manifest": "data/manifests/split_v1_vitaldb_seed42.json",
+  "protocol": "V1-patient-holdout",
+  "split_seed": 20260917,
+  "n_cases": {
+   "train": 4517,
+   "val": 302,
+   "test": 1224
+  },
+  "n_patients": {
+   "train": 4337,
+   "val": 289,
+   "test": 1156
+  },
+  "n_windows": {
+   "train": 288400,
+   "val": 4822,
+   "test": 19543
+  }
+ },
+ "checkpoints": {
+  "iMF": {
+   "path": "outputs/v1_vitaldb_armI_seed42/checkpoint_last.pt",
+   "sha256": "ddbc39e66f8a71c7c8fb86c0639d741a6e1158bd9eb57e650515ae475b23f512"
+  },
+  "CD": {
+   "path": "outputs/cd1_vitaldb_armD_seed42/checkpoint_last.pt",
+   "sha256": "faea968bf297e81ffcb49d7fc7bc7dd28b6b1506874908122e0b2d2ff5195952"
+  },
+  "PENGUIN": {
+   "path": "outputs/v1_vitaldb_armC_seed42/checkpoint_last.pt",
+   "sha256": "05c9748b6629f33da967160ca638d7a346936d5fce42c2a9219212fabf8ee94b"
+  }
+ },
+ "hr_functional": {
+  "impl": "scripts/v1_evaluate.py::_hr",
+  "definition": "R.hr_bpm(R.detect_rpeaks(row, 128, 'neurokit'), 128)",
+  "fs_hz": 128,
+  "reference_test_cache": "outputs/sr1_eval/arm_{I,C,D}_seed42.npz::ref_hr",
+  "reference_identical_across_arms": true,
+  "reference_test_finite": 19543,
+  "reference_test_n": 19543
+ },
+ "seed_alignment_across_depths": {
+  "z0": "torch.Generator().manual_seed(seed); randn(N,1,W) \u2014 independent of S",
+  "exact_for": [
+   "iMF",
+   "PENGUIN"
+  ],
+  "prefix_paired_for": [
+   "CD (S-1 re-noising draws share a prefix)"
+  ]
+ },
+ "banks": {
+  "test": {
+   "iMF_S1": {
+    "path": "outputs/dw1_raw/hr_I1.npy",
+    "K_available": 32,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 18171,
+    "dtype": "float32",
+    "usable": true
+   },
+   "iMF_S2": {
+    "path": "outputs/tt_expb_raw/hr_I_seed42_S2.npy",
+    "K_available": 32,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 17820,
+    "dtype": "float64",
+    "usable": true
+   },
+   "iMF_S4": {
+    "path": "outputs/tt_expb_raw/hr_I_seed42_S4.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 17139,
+    "dtype": "float64",
+    "usable": true
+   },
+   "iMF_S8": {
+    "path": "outputs/tt_expb_raw/hr_I_seed42_S8.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 16639,
+    "dtype": "float64",
+    "usable": true
+   },
+   "CD_S1": {
+    "path": "outputs/dw1_raw/hr_D1.npy",
+    "K_available": 32,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 17839,
+    "dtype": "float32",
+    "usable": true
+   },
+   "CD_S2": {
+    "path": "outputs/dw1_raw/hr_D2.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 18910,
+    "dtype": "float32",
+    "usable": true
+   },
+   "CD_S4": {
+    "path": "outputs/tt_expb_raw/hr_D_seed42_S4.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 18402,
+    "dtype": "float64",
+    "usable": true
+   },
+   "CD_S8": {
+    "path": "outputs/tt_expb_raw/hr_D_seed42_S8.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 18457,
+    "dtype": "float64",
+    "usable": true
+   },
+   "PENGUIN_S1": {
+    "path": "outputs/dw1_raw/hr_C1.npy",
+    "K_available": 32,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 16797,
+    "dtype": "float32",
+    "usable": true
+   },
+   "PENGUIN_S2": {
+    "path": "outputs/dw1_raw/hr_C2.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 17631,
+    "dtype": "float32",
+    "usable": true
+   },
+   "PENGUIN_S4": {
+    "path": "outputs/tt_expb_raw/hr_C_seed42_S4.npy",
+    "K_available": 32,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 18016,
+    "dtype": "float64",
+    "usable": true
+   },
+   "PENGUIN_S8": {
+    "path": "outputs/tt_expb_raw/hr_C_seed42_S8.npy",
+    "K_available": 16,
+    "K_used": 16,
+    "n_windows": 19543,
+    "windows_all16_and_ref_finite": 19116,
+    "dtype": "float64",
+    "usable": true
+   }
+  },
+  "val": {
+   "iMF_S1": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "iMF_S2": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "iMF_S4": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "iMF_S8": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "CD_S1": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "CD_S2": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "CD_S4": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "CD_S8": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "PENGUIN_S1": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "PENGUIN_S2": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "PENGUIN_S4": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   },
+   "PENGUIN_S8": {
+    "path": null,
+    "K_available": 0,
+    "usable": false
+   }
+  }
+ },
+ "waveforms": {
+  "test_subset": "outputs/tt_expb_raw/wave_{I,D,C}_seed42_S{1,2,4,8}.npy",
+  "shape": [
+   16,
+   2000,
+   512
+  ],
+  "full_test": false,
+  "val": false
+ },
+ "val_bank_status": "absent \u2014 generation plan in docs/M1_PILOT_GAIN_PREDICTION_AUDIT.md \u00a77",
+ "primary_condition_met": {
+  "val_patients": true,
+  "test_patients": true,
+  "K_ge_16": true,
+  "alignment": true,
+  "val_bank_exists": false,
+  "verdict": "PROCEED after documented val generation"
+ }
+}

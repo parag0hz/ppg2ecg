@@ -1,0 +1,5 @@
+outputs/dw1_raw
+outputs/dw2_raw
+outputs/tt_expa_raw
+outputs/tt_expb_raw
+outputs/ed1_cache

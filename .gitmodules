@@ -7,3 +7,6 @@
 [submodule "external/RDDM"]
 	path = external/RDDM
 	url = https://github.com/DebadityaQU/RDDM.git
+[submodule "external/PPGFlowECG"]
+	path = external/PPGFlowECG
+	url = https://github.com/PKUDigitalHealth/PPGFlowECG.git

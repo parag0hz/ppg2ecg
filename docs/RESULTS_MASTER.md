@@ -277,6 +277,7 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 깊이가 사는 것은 모델마다 다름 (샘플 개선 / 모을 수 있게 / 무의미) | EXP-B B1: K = 16 고정에서 iMF ΔI −0.71, PENGUIN Δ이득 +0.89, CD Δ중심 +0.03 | 강함 (VitalDB, seed 42) |
 | 깊이 기준선이 Euler 때문에 약했던 것이 아님 | EXP-A: 정품 Heun과 순수 깊이 차이 ≤ 0.31 bpm(2/3 seed CI가 0 포함), 폭 위주가 최강 깊이 기준선 대비 −3.3~−4.6 bpm (3/3 seed) | 강함 |
 | 심박수만 필요하면 직접 회귀가 더 낫다 | DB1 VitalDB 5.69 vs 합의 6.2~6.7; WD1 WildPPG 8.76 vs 9.27 (−0.52 [−1.08, −0.04], 10/14명) | 강함 (주장 범위 한정용) |
+| 외부 모델(독립 개발·공개 체크포인트)에서도 다중 샘플 합의가 기능값 오차를 줄이고, 이득 크기는 기능값 오차의 비중복성이 결정 | RDDM-EXT(공개 RDDM, T = 10 고정, 재학습 없음): VitalDB(외부) K = 16 − K = 1 = −0.554 [−0.629, −0.479] bpm, 환자 수준 Spearman(ρ̄_p, G_p) = −0.414 [−0.460, −0.366], 파형 다양성은 −0.126(반대 방향). 단 이득은 6 %로 작고(ρ̄ 0.89), 중앙값 > 평균 이점은 재현 안 됨, 절대 성능은 PPG 피크 세기보다 나쁨 → **PARTIAL**. 고정 예산 깊이 대 폭은 외부 모델에서 **검증 불가**(RDDM은 공식 로더가 nT ≠ 10 거부, PPGFlowECG는 체크포인트 출처 미확인) | 중간 (예산이 K와 함께 증가하는 조건) |
 | 비트 위치만 필요하면 직접 검출기로 충분하다 | RD1 VitalDB F1 0.773 vs 디코딩 0.765 (차이 < 0.02 여백), RR-MAE 7.7 vs 10.8 ms, 13배 작고 380배 빠름 | 강함 (주장 범위 한정용) |
 | 합의 디코딩 (F1, 박동 간격) | 2/5 데이터셋에서 F1 기준 통과, 1곳에서 해로움 | 조건부 |
 | HRV 개선 | 상대 우위만, 절대 수준 사용 불가 | 보조 |
@@ -308,6 +309,7 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 솔버 공정성 (Euler vs 정품 Heun) · 오차 분해 메커니즘 | `docs/TT_EXPA_SOLVER_FAIRNESS_REPORT.md`, `docs/TT_EXPB_DECOMPOSITION_REPORT.md`, `docs/B3_FUNCTIONAL_ERROR_MECHANISM_REPORT.md`, `docs/CONSENSUS_INFERENCE_THEORY_NOTE.md` |
 | 직접 HR 회귀 기준선 (VitalDB · WildPPG) | `docs/DB1_DISCRIMINATIVE_HR_BASELINE_REPORT.md`, `docs/WD1_WILDPPG_REGRESSION_AND_ALLOCATION_REPORT.md` |
 | 직접 R 피크 검출기 기준선 | `docs/RD1_DIRECT_RPEAK_DETECTOR_REPORT.md` |
+| 외부 모델 감사 · RDDM 재현 · RDDM 외부 합의 · PPGFlowECG 출처 | `docs/EXTERNAL_MODEL_AUDIT.md`, `docs/RDDM_R0_REPRODUCTION_REPORT.md`, `docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md`, `docs/PPGFLOWECG_PROVENANCE_AUDIT.md` |
 | 합의 디코딩 · HRV | `docs/ED1_EVENT_CONSENSUS_DECODING_REPORT.md`, `docs/ED2_DECODING_WILDPPG_AND_HRV_REPORT.md` |
 | 개인화 | `docs/PZ1_…`, `docs/PZ2_…`, `docs/PZ3_…_REPORT.md` |
 | 효과 없었던 시도 | `docs/BB1_BACKBONE_SENSITIVITY_REPORT.md`, `docs/KN1_KAN_FFN_REPORT.md` |

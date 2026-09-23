@@ -1,0 +1,32 @@
+{
+ "note": "POST-HOC (defined after the preregistered analysis was read); descriptive, not criteria",
+ "across_corpus_relative_gain_G16_over_I16": {
+  "VITALDB": 0.061692790019095875,
+  "WESAD": 0.18246941827967547,
+  "CAPNO": 0.15916316262986646,
+  "DALIA": 0.1442282952942027,
+  "BIDMC": 0.20359344887611353
+ },
+ "spearman_rho_vs_relative_gain": -0.8999999999999998,
+ "patient_spearman_rho_vs_G_over_I": {
+  "point": -0.559987715717118,
+  "p2.5": -0.6016175951935795,
+  "p97.5": -0.5125259404026995
+ },
+ "patient_spearman_rho_vs_I_level": {
+  "point": 0.369451255998092,
+  "p2.5": 0.3138958980923738,
+  "p97.5": 0.422697123877184
+ },
+ "lag_generated_vs_target_ms_draw0": {
+  "median": 109,
+  "IQR": [
+   47,
+   180
+  ],
+  "share_abs_le_50ms": 0.073,
+  "median_max_xcorr": 0.345,
+  "median_xcorr_at_zero_lag": -0.016,
+  "method": "per-window cross-correlation lag within +/-500 ms, draw 0, all 19,543 windows (computed separately, same inputs)"
+ }
+}

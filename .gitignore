@@ -489,6 +489,8 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/pfe_provenance/**
 !artifacts/ppgflowecg_external/
 !artifacts/ppgflowecg_external/**
+!artifacts/exp_d_functional_generalization/
+!artifacts/exp_d_functional_generalization/**
 
 # user-provided PPGFlowECG files (checkpoints, paper) — never committed
 /ppgflowecg/

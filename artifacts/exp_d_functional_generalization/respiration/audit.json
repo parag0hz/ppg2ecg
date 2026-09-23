@@ -1,0 +1,361 @@
+{
+ "upstream_commit": "6cd70cdefb91f10efeb8dce34019b5067cb25344",
+ "upstream_clean": true,
+ "cached_generated_samples_found": [],
+ "datasets": {
+  "BIDMC": {
+   "dataset": "BIDMC",
+   "task": "respiration",
+   "checkpoint": "outputs/u1_upstream/PENGUIN_BIDMC_u1/ckpt/pretrain_ckpt.pth",
+   "sha256": "fa8b3d96706fb066e2389e4a621977ef249a631e371d03186861eff2b7790518",
+   "size_bytes": 20474279,
+   "epoch_saved": 6,
+   "checkpoint_keys": [
+    "cfg",
+    "epoch",
+    "state_dict"
+   ],
+   "cfg": {
+    "train.dataset": "BIDMC",
+    "train.model": "PENGUIN",
+    "seed": 42,
+    "segment_len_s": 4,
+    "resample_rate_hz": 128,
+    "ppg_fs_raw": 125.0,
+    "label": "Resp",
+    "label_fs_raw": 125.0,
+    "label_bandpass": true,
+    "label_freq_range": [
+     -1,
+     1
+    ],
+    "label_zscore": true,
+    "label_normalize": true,
+    "ppg_bandpass": true,
+    "ppg_freq_range": [
+     0.5,
+     4
+    ],
+    "ppg_zscore": true,
+    "ppg_normalize": true,
+    "n_step": 25,
+    "h_dim": 128,
+    "fold_num": 8,
+    "epoch_num_cap": 300,
+    "ema_decay_in_cfg": 0.999,
+    "metric_window_s": {
+     "HeartRateError": 8,
+     "SBPError": 8,
+     "DBPError": 8,
+     "RespRateError": 60
+    }
+   },
+   "strict_load": {
+    "missing": [],
+    "unexpected": []
+   },
+   "parameters": 4568707,
+   "split": {
+    "train_subjects": 41,
+    "val_subjects": 6,
+    "test_subjects": 6,
+    "n_windows": {
+     "train": 4920,
+     "val": 720,
+     "test": 720
+    },
+    "subject_disjoint": true,
+    "duplicate_groups": {}
+   },
+   "test_windows_per_subject": {
+    "min": 120,
+    "max": 120,
+    "total": 720
+   },
+   "metric_block": {
+    "seconds": 60,
+    "windows_per_block": 15,
+    "all_test_subjects_divisible": true,
+    "test_blocks": 48,
+    "blocks_straddling_subjects_in_upstream_stream": 0
+   },
+   "train_target_units_check": {
+    "n_train_subjects_read": 30,
+    "min": -1.0,
+    "max": 1.0,
+    "mean": -0.14579437673091888,
+    "per_window_max_median": 1.0,
+    "per_window_min_median": -1.0,
+    "per_window_minmax_is_pm1_share": 1.0
+   },
+   "upstream_sampler": {
+    "n_step": 25,
+    "vector_field_calls_upstream": 50,
+    "vector_field_calls_ours": 50,
+    "our_heun_equals_upstream_max_abs_diff": 0.0
+   },
+   "nfe_euler_by_S": {
+    "1": 1,
+    "2": 2,
+    "4": 4,
+    "8": 8,
+    "16": 16,
+    "32": 32
+   },
+   "nfe_heun25": 50,
+   "latency": {
+    "gpu_batch1_ms": {
+     "1": 20.429788972251117,
+     "2": 41.254370007663965,
+     "4": 82.65250397380441,
+     "8": 162.61190851218998,
+     "16": 325.72734053246677,
+     "32": 652.4851655121893,
+     "heun25_50nfe": 1019.4326440105215
+    },
+    "gpu_batch512_per_window_ms": {
+     "1": 0.6361443220157526,
+     "2": 1.2940148885718372,
+     "4": 2.6101905777977663,
+     "8": 5.2734082169081375,
+     "16": 10.580513220702414,
+     "32": 21.32626556840478
+    }
+   },
+   "smoke_train_inputs": {
+    "1": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.29744160175323486,
+     "output_range": [
+      -1.253265142440796,
+      0.8039371967315674
+     ]
+    },
+    "2": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.41240644454956055,
+     "output_range": [
+      -1.0525633096694946,
+      0.6331914663314819
+     ]
+    },
+    "4": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.559101939201355,
+     "output_range": [
+      -1.1297029256820679,
+      0.9204599857330322
+     ]
+    },
+    "8": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.6484068632125854,
+     "output_range": [
+      -1.208673119544983,
+      1.0707027912139893
+     ]
+    },
+    "16": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.6928054690361023,
+     "output_range": [
+      -1.2316176891326904,
+      1.1416559219360352
+     ]
+    },
+    "32": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.7220221161842346,
+     "output_range": [
+      -1.2366794347763062,
+      1.1802996397018433
+     ]
+    }
+   },
+   "fixed_overhead": "none: PENGUIN has no encoder / decoder outside the vector field; the PPG pre-convolution runs inside every vector-field call"
+  },
+  "WESAD": {
+   "dataset": "WESAD",
+   "task": "respiration",
+   "checkpoint": "outputs/u1_upstream/PENGUIN_WESAD_u1/ckpt/pretrain_ckpt.pth",
+   "sha256": "946dd2b1e60490814e4bcf314eb881b502bf3295c3c04f8036761b4e148347c3",
+   "size_bytes": 20474279,
+   "epoch_saved": 9,
+   "checkpoint_keys": [
+    "cfg",
+    "epoch",
+    "state_dict"
+   ],
+   "cfg": {
+    "train.dataset": "WESAD",
+    "train.model": "PENGUIN",
+    "seed": 42,
+    "segment_len_s": 4,
+    "resample_rate_hz": 128,
+    "ppg_fs_raw": 64.0,
+    "label": "Resp",
+    "label_fs_raw": 700.0,
+    "label_bandpass": true,
+    "label_freq_range": [
+     -1,
+     1
+    ],
+    "label_zscore": true,
+    "label_normalize": true,
+    "ppg_bandpass": true,
+    "ppg_freq_range": [
+     0.5,
+     4
+    ],
+    "ppg_zscore": true,
+    "ppg_normalize": true,
+    "n_step": 25,
+    "h_dim": 128,
+    "fold_num": 8,
+    "epoch_num_cap": 300,
+    "ema_decay_in_cfg": 0.999,
+    "metric_window_s": {
+     "HeartRateError": 8,
+     "SBPError": 8,
+     "DBPError": 8,
+     "RespRateError": 60
+    }
+   },
+   "strict_load": {
+    "missing": [],
+    "unexpected": []
+   },
+   "parameters": 4568707,
+   "split": {
+    "train_subjects": 13,
+    "val_subjects": 1,
+    "test_subjects": 1,
+    "n_windows": {
+     "train": 18719,
+     "val": 1387,
+     "test": 1605
+    },
+    "subject_disjoint": true,
+    "duplicate_groups": {}
+   },
+   "test_windows_per_subject": {
+    "min": 1605,
+    "max": 1605,
+    "total": 1605
+   },
+   "metric_block": {
+    "seconds": 60,
+    "windows_per_block": 15,
+    "all_test_subjects_divisible": true,
+    "test_blocks": 107,
+    "blocks_straddling_subjects_in_upstream_stream": 0
+   },
+   "train_target_units_check": {
+    "n_train_subjects_read": 13,
+    "min": -1.0,
+    "max": 1.0,
+    "mean": -0.10563790053129196,
+    "per_window_max_median": 1.0,
+    "per_window_min_median": -1.0,
+    "per_window_minmax_is_pm1_share": 1.0
+   },
+   "upstream_sampler": {
+    "n_step": 25,
+    "vector_field_calls_upstream": 50,
+    "vector_field_calls_ours": 50,
+    "our_heun_equals_upstream_max_abs_diff": 0.0
+   },
+   "nfe_euler_by_S": {
+    "1": 1,
+    "2": 2,
+    "4": 4,
+    "8": 8,
+    "16": 16,
+    "32": 32
+   },
+   "nfe_heun25": 50,
+   "latency": {
+    "gpu_batch1_ms": {
+     "1": 20.509070483967662,
+     "2": 41.09361849259585,
+     "4": 81.90220396500081,
+     "8": 163.22836349718273,
+     "16": 326.58280606847256,
+     "32": 652.3557704640552,
+     "heun25_50nfe": 1022.0228785183281
+    },
+    "gpu_batch512_per_window_ms": {
+     "1": 0.6454096660490904,
+     "2": 1.3171797245377093,
+     "4": 2.614892952806258,
+     "8": 5.29096549780661,
+     "16": 10.584967310478532,
+     "32": 21.306892703250924
+    }
+   },
+   "smoke_train_inputs": {
+    "1": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.17097534239292145,
+     "output_range": [
+      -0.7408380508422852,
+      0.34141260385513306
+     ]
+    },
+    "2": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.31242305040359497,
+     "output_range": [
+      -0.8333193063735962,
+      0.6883074045181274
+     ]
+    },
+    "4": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.5797232389450073,
+     "output_range": [
+      -1.0846827030181885,
+      0.9382308721542358
+     ]
+    },
+    "8": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.7740899324417114,
+     "output_range": [
+      -1.1113473176956177,
+      0.9802696704864502
+     ]
+    },
+    "16": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.8567092418670654,
+     "output_range": [
+      -1.111989140510559,
+      1.0067107677459717
+     ]
+    },
+    "32": {
+     "finite": true,
+     "same_noise_max_abs_diff": 0.0,
+     "different_noise_pairwise_rms_median": 0.890028178691864,
+     "output_range": [
+      -1.1111655235290527,
+      1.0161582231521606
+     ]
+    }
+   },
+   "fixed_overhead": "none: PENGUIN has no encoder / decoder outside the vector field; the PPG pre-convolution runs inside every vector-field call"
+  }
+ }
+}

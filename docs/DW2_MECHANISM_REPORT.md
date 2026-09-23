@@ -42,3 +42,18 @@ Consensus gain = mean single-sample HR error (over the K draws) − K-sample med
    HR error at S = 1 is PENGUIN **8.68** (seed 0: 7.33 — a favourable draw), iMF 10.13 (10.08), CD 8.27 (7.88). The DW1
    statement "PENGUIN at S = 1 is the best single-NFE HR" rests on that one draw; on the draw average PENGUIN (8.68)
    and CD (8.27) are comparable. The grid cells with K > 1 are unaffected.
+
+## Correction note (2026-09-23, from EXP-B `6a2c8a8` and B3-BOOT, prereg `590d191`)
+The numbers above are unchanged; this note corrects their interpretation.
+- **The preregistered HR-SD criterion of part B failed** (PENGUIN S = 1 / S = 4 SD ratio 0.96), and that verdict stands.
+- **The waveform-diversity interpretation given in "Reading it" (points 1, 3, 4) was exploratory, and it does not hold as a
+  mechanism.** EXP-B / B3-BOOT show that across the 12 (model, depth) conditions at K = 16, waveform pairwise RMS is a
+  weaker correlate of the consensus gain than the functional-error quantities (difference in |Spearman| +0.105,
+  95 % patient-bootstrap interval [+0.070, +0.175]), and that **within a model its relation to the gain changes sign**
+  (negative within iMF, positive within CD and PENGUIN, each in 100 % of 5,000 patient-bootstrap replicates). Functional-error
+  dependence (mean cross-sample error correlation ρ̄, equivalently within-condition functional dispersion) keeps the same
+  direction in every model and orders the gain over all four tested depths in every replicate.
+- The statement "spend enough steps for the samples to differ meaningfully, measured on the waveform" is replaced by
+  "spend enough steps for the samples' **functional errors** to be non-redundant". PENGUIN's near-identical one-step
+  waveforms (RMS 0.074, reproduced) still carry a +1.24 bpm gain because their HR errors are correlated at 0.858, not at 1.
+- Current statement and evidence: `docs/B3_FUNCTIONAL_ERROR_MECHANISM_REPORT.md`.

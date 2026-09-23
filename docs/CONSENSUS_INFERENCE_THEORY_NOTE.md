@@ -1,86 +1,102 @@
-# Consensus inference as functional estimation — a minimal formalisation
+# Consensus inference as conditional functional estimation — a minimal formalisation
 
-Written 2026-09-22, **before EXP-B's numbers were read** (prereg `50948e2`, EXP-E). No theorem is claimed; the note fixes the
-vocabulary and the decomposition that EXP-A/B/D report against. Nothing here is fitted to data, and no parameter of it is
-adjusted afterwards.
+**Revision 2026-09-23.** The first version of this note (commit `6b23d25`) was written before EXP-B's numbers were read
+and is kept unchanged in history. This revision restructures it after EXP-B and B3-BOOT and adds §7.2's
+shared / sample-specific decomposition. **Nothing here is fitted to data and no theorem beyond the derivations shown is
+claimed.** Where a formula is exact only for a simplified estimator (the mean) it says so; the method uses the median.
 
-## 1. Objects
-- Condition `c` (a PPG window); target structured output `x*` (the paired ECG); downstream functional `T` (here heart rate;
-  respiratory rate, SBP / DBP for the other PENGUIN targets), target value `y* = T(x*)`.
-- A conditional generator run at per-sample depth `S` (NFE per sample) defines a conditional law
-  `X_S ~ q_{θ,S}(x | c)`; the induced functional is the random variable `Y_S = T(X_S)`.
-- Budget `B = K × S` network evaluations per window; `K` independent samples `X_{S,1}, …, X_{S,K}`.
-- Estimator (the paper's): `m̂_{S,K}(c) = median(Y_{S,1}, …, Y_{S,K})`.
-- Population conditional median `m_S(c) = median_{Y_S | c} Y_S`; population conditional mean `μ_S(c) = E[Y_S | c]`.
+Notation: condition `c` (a PPG window); reference structured output `x*` (the paired ECG); downstream functional `T`
+(heart rate here; respiratory rate or SBP / DBP for PENGUIN's other targets); target value `T* = T(x*)`.
+Per-sample depth `S` (network evaluations per sample), number of samples `K`, budget `B = K × S`.
 
-## 2. The decomposition
-For every window,
+## 7.1 Conditional functional estimation
+A generator run at depth S defines a conditional law, and the functional inherits one:
 ```
-m̂_{S,K} − y*  =  ( m_S − y* )  +  ( m̂_{S,K} − m_S )
+X_{S,k} ~ q_{θ,S}(x | c),      Y_{S,k} = T(X_{S,k}),      k = 1 … K   (independent noise seeds)
+```
+The estimator is the sample median, and its population counterpart the conditional median:
+```
+m̂_{S,K}(c) = median(Y_{S,1}, …, Y_{S,K}),        m_S(c) = Median[ Y_S | c ].
+```
+For every window the error splits exactly into two terms:
+```
+m̂_{S,K} − T*  =  [ m_S − T* ]  +  [ m̂_{S,K} − m_S ]
                  ─────────────     ─────────────────
-                 model / depth-      finite-K estimation
-                 dependent term      term
+                 centre error:      finite-K error:
+                 set by the model   shrinks with K, but only
+                 and by depth S     through non-redundant samples
 ```
-The first term does not depend on K: it is the distance between the centre of the functional's conditional law at depth S
-and the truth. Depth S can move it (by changing `q_{θ,S}`), and so can anything about the model. The second term is the
-sampling error of a K-sample median around its population median; it is the only part width K acts on, and it shrinks with
-K for any fixed S as long as the samples are exchangeable draws from `q_{θ,S}(· | c)`.
+- **Depth S** can move the first term (it changes `q_{θ,S}` and hence `m_S`) and can also change the whole conditional
+  law of `Y_S` — its spread and its shape — which sets the size of the second term.
+- **Width K** acts only on the second term. It reduces it only to the extent that additional samples carry functional
+  information the others do not: if every sample produced the same functional value, `m̂_{S,K} = m_S` for all K and width
+  would buy nothing.
 
-Consequences that are checkable, and are what EXP-B measures:
-- At **fixed K**, changing S changes the first term (centre) and may change the spread of `Y_S | c` (which sets the size of the
-  second term). B1 reports the centre error `|m̂_{S,16} − y*|` (as the best available proxy for the centre at K = 16), the
-  dispersion of `Y_S | c` (MAD, SD), the individual-sample error, and their difference (the "median gain").
-- At **fixed S**, changing K changes only the second term. B2 reports `R(K, S) = E|m̂_{S,K} − y*|` against K. Under the
-  decomposition, `R(K, S)` decreases towards a floor `R_∞(S)` set by the first term; the marginal gain of doubling K should
-  shrink. The plot of `R(K) − R(32)` against `1/K` is examined for that shape; no parametric fit is treated as a result.
-- Pooling helps only if the functional errors of the K samples are **not identical** given c. B3 measures the pairwise
-  correlation of `Y_{S,k} − y*` across windows. If the samples were identical (a degenerate `q_{θ,S}`), the second term would be
-  zero for every K and width could not help; if they are merely correlated, width helps less than for independent draws.
-  This is a statement about the functional's law, not about how different the waveforms look.
+## 7.2 Why dependence between the samples' functional errors matters
+**A model of the error (for intuition).** Write each sample's signed error as a part shared by all samples of the same
+window plus a sample-specific part:
+```
+e_k(c) = Y_{S,k}(c) − T*(c) = b(c) + u_k(c),
+```
+where `b(c)` varies across windows with variance `σ_b²` and the `u_k(c)` are, given c, independent across k with variance
+`σ_u²` and independent of `b`. Then, across windows,
+```
+Var(e_k) = σ² = σ_b² + σ_u²,      Cov(e_k, e_l) = σ_b²  (k ≠ l),      ρ = Corr(e_k, e_l) = σ_b² / σ².
+```
+So **the cross-sample error correlation ρ is the share of the error variance that is shared by all samples of a window**,
+and the within-window spread of the sample functionals estimates `σ_u`, the sample-specific part. The two quantities
+EXP-B / B3-BOOT found to order the consensus gain — low ρ̄, high within-window functional SD — are the relative and the
+absolute measurement of the same component.
 
-## 3. Two pieces of textbook intuition (stated, not asserted for our model)
-**Sample median.** For K i.i.d. draws from a law with density `f_Y` positive and continuous at its median `m`,
+**For the mean of K samples (exact under this model):**
 ```
-Var(m̂_K)  ≈  1 / ( 4 K f_Y(m)² )        (K → ∞)
+ē = b + ū,     Var(ē) = σ_b² + σ_u² / K = σ² [ ρ + (1 − ρ)/K ] = (σ²/K) [ 1 + (K − 1) ρ ],
+K_eff = K / (1 + (K − 1) ρ).
 ```
-so the finite-K term scales like `K^{-1/2}` in standard deviation, and it is smaller when the conditional law is concentrated
-near its median (large `f_Y(m)`), i.e. when the sample functionals are tight. It is robust to a minority of far-off draws (a
-detector that occasionally halves or doubles the rate), which is why the median rather than the mean was preregistered in P1
-and why AB1 found the mean worse for iMF. None of the regularity conditions is verified for our generators: the draws are
-i.i.d. given c by construction (independent noise seeds), but `f_Y` is unknown and the K used (≤ 32) is not asymptotic.
+- `ρ = 1`: every additional sample is redundant — `K_eff = 1`, width buys nothing.
+- `ρ ≈ 0`: the samples' errors are independent — `K_eff → K`.
+- In between, width removes only `σ_u²` and leaves the floor `σ_b² = ρ σ²` untouched. In the language of §7.1, `b(c)` plays
+  the role of the centre error and `u_k` the sample's deviation from the centre.
 
-**Mean estimator (intuition for the budget trade-off).** If the estimator were the mean, with bias `b_S = μ_S − y*` and
-conditional variance `σ_S²`,
-```
-MSE(K, S)  ≈  b_S²  +  σ_S² / K .
-```
-With a fixed budget `K = B / S`,
-```
-MSE(S; B)  ≈  b_S²  +  S · σ_S² / B .
-```
-The second term grows linearly in S at fixed B: every unit of depth is paid for by a lost sample. The first term can fall
-with S (if depth reduces the centre error) or not. An **interior optimum** in S exists when `b_S²` falls steeply at small S
-and flattens afterwards, so that the loss `S σ_S² / B` overtakes the gain from further depth — "refine enough, then sample
-wide". If `b_S` does not depend on S, the optimum is pure width (S at its minimum supported value). If `σ_S²` collapses at
-small S (near-deterministic samples) the second term is small everywhere and the whole trade-off is governed by `b_S`, i.e.
-depth is the only lever. The paper's estimator is the median, so this expression is intuition only; the median analogue
-replaces `σ_S²` by `1 / (4 f_{Y_S}(m_S)²)`.
+**This expression is exact only for the simplified mean / equal-correlation setting and is used as intuition. The
+empirical estimator is the sample median.** For the median of K i.i.d. draws with density `f_Y` positive and continuous
+at the median, `Var(m̂_K) ≈ 1 / (4 K f_Y(m)²)` as K → ∞ — again a statement about the sample-specific part only; the
+median is additionally robust to a minority of far-off draws, which is why it outperforms the mean on these heavy-tailed
+errors (AB1; B3-BOOT §2.3). None of the regularity conditions is verified for our generators, and K ≤ 32 is not
+asymptotic. Observed values for orientation (not fitted): ρ̄ = 0.56–0.86 across the 12 tested conditions, i.e. K_eff ≈
+1.2–1.7 for K = 16 — most of the per-sample HR error variance is shared by the samples of a window.
 
-## 4. How the decomposition reads the existing results (qualitative; no numbers fitted)
-- DW1 / DW2-A found the optimum at S = 1 for CD, S = 2 for iMF, S = 2–4 for PENGUIN. In the language above: for CD the centre
-  term does not improve with depth, so the budget belongs to K; for iMF and PENGUIN a small amount of depth lowers the
-  centre error (or tightens `Y_S | c`) by more than the K it costs, after which the `S σ_S² / B` penalty dominates.
-- Whether the improvement from S = 1 → 2 (iMF) and 1 → 4 (PENGUIN) is a centre effect, a dispersion effect, or both is exactly
-  what B1 separates. The note makes no prediction about which it is.
-- A near-deterministic one-step generator (PENGUIN at S = 1 has almost identical waveforms, DW2-B) can still show a positive
-  median gain in the HR functional if the functional extractor injects sample-to-sample variation. In the decomposition this is
-  ordinary finite-K reduction of `Y_S`'s spread; its origin (generator or extractor) is invisible to the estimator and is what
-  B3's error correlation probes. The note does not claim either origin.
-- Depth's effect on the waveform (FD) is outside the decomposition: `T` discards it. This is why depth can improve FD while
-  leaving `R(K, S)` unchanged or worse, and why the paper must report waveform metrics separately from the functional.
+**Finite-K note.** For K = 2 the sample median *is* the mean of the two draws, so the robustness of the median starts
+only at K = 3. This is an operator property, visible as the K = 2 anomaly in EXP-B2 (B3-BOOT §2.3).
 
-## 5. What the note does not do
-- It does not prove that width beats depth; whether it does is an empirical property of `b_S` and `σ_S` for each model.
-- It does not assume independence beyond the construction (independent noise seeds); conditional exchangeability is enough
-  for the decomposition, and the correlation of *errors across windows* measured in B3 is a different quantity.
-- It does not assign a mechanism to depth; it only names the two terms depth can move.
+## 7.3 Fixed compute
+With `B = K × S` fixed, choosing S also chooses `K = B / S`. Depth therefore changes, at once,
+- the **per-sample functional quality** — the centre error `m_S − T*` and the spread of `Y_S | c`, and
+- the **dependence structure** across samples — how much of the error is shared (ρ) versus sample-specific,
+
+while width supplies the number of estimates the aggregation can use. For the mean-estimator intuition of §7.2, with
+depth-dependent shared error `b_S` and sample-specific variance `σ_{u,S}²` (the mean squared error uses the uncentred
+second moment `E[b_S²]`, which includes any systematic bias):
+```
+MSE(S; B) ≈ E[b_S²]  +  σ_{u,S}² · S / B .
+```
+The second term grows linearly with S at fixed B (each unit of depth costs samples). An **interior optimum** appears when
+a little depth lowers the first term (or raises the removable share) steeply and further depth does not, so that the
+`S / B` penalty takes over:
+- **too little depth** → a large centre error, or functional errors that are highly redundant across samples (high ρ, so
+  width has little to remove);
+- **too much depth** → few samples (small K) and the finite-K reduction is lost.
+If depth changes neither term, the optimum is the smallest supported S (pure width). The observed signs, stated without
+fitting: for iMF, depth lowered the centre error up to S = 2; for PENGUIN, depth lowered both the centre error and the
+shared share of the error (ρ̄ 0.86 → 0.65 from S = 1 to 8); for CD, depth did not change the centre error — S = 2 lowered
+the shared share (ρ̄ 0.73 → 0.63) and raised the gain, but made each sample worse by about as much (individual error
++0.71 bpm), so the median did not move (EXP-B B1 / B3). These are consistent with the DW1 / DW2-A optima (CD S = 1, iMF S = 2, PENGUIN S = 4).
+Because the method is the median, the expression above is intuition for why an interior optimum can exist, not a model of
+where it is.
+
+## What this note does not claim
+- No theorem that width beats depth; whether it does depends on how `E[b_S²]` and `σ_{u,S}²` move with S for each model.
+- No causal identification: EXP-B / B3-BOOT observe that the removable share orders the gain across 12 model-depth
+  conditions; they do not manipulate it independently.
+- The independence of the `u_k` given c is guaranteed only for the noise draws, not for how a detector responds to them;
+  the shared / sample-specific split is a statistical description, not a statement about where the errors come from.

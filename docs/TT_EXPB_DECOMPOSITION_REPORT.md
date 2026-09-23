@@ -125,3 +125,13 @@ samples' functional errors, not how different the waveforms look.**
 3. **The DW1 optima are confirmed at fixed K** (B1-1/B1-2/B1-3), so they are properties of the depth axis, not of K.
 4. Limits: seed 42 for B1 / B3 (three seeds for B2), VitalDB only, one functional (HR). `nan%` up to 5.3 % (PENGUIN S = 1)
    means part of that arm's pooling is over fewer than 16 usable samples. B2-1 failed as written.
+
+## Note added 2026-09-23 (B3-BOOT, prereg `590d191`)
+- The i.i.d. Spearman p-value quoted for B3-2 (p = 3.9 × 10⁻⁷) ignores patient clustering and treats 12 conditions built
+  from the same windows as independent; **it is withdrawn as evidence**. The preregistered patient-clustered bootstrap
+  gives Spearman(ρ̄, G) −0.965, 95 % [−0.986, −0.930], negative in 100 % of 5,000 replicates.
+- "Spearman −1.00 within every model" should read *perfect monotonic ordering over the four tested depths* (retained in
+  every bootstrap replicate for each model); it is an ordering over four points, not a proof.
+- "The mechanism variable is ρ̄" is narrowed: functional SD orders the gain at least as tightly (+1.000 across conditions,
+  partly mechanical), and ρ̄ and SD are two measurements of the sample-specific part of the functional errors. See
+  `docs/B3_FUNCTIONAL_ERROR_MECHANISM_REPORT.md`.

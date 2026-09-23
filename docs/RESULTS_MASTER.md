@@ -277,7 +277,8 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 깊이가 사는 것은 모델마다 다름 (샘플 개선 / 모을 수 있게 / 무의미) | EXP-B B1: K = 16 고정에서 iMF ΔI −0.71, PENGUIN Δ이득 +0.89, CD Δ중심 +0.03 | 강함 (VitalDB, seed 42) |
 | 깊이 기준선이 Euler 때문에 약했던 것이 아님 | EXP-A: 정품 Heun과 순수 깊이 차이 ≤ 0.31 bpm(2/3 seed CI가 0 포함), 폭 위주가 최강 깊이 기준선 대비 −3.3~−4.6 bpm (3/3 seed) | 강함 |
 | 심박수만 필요하면 직접 회귀가 더 낫다 | DB1 VitalDB 5.69 vs 합의 6.2~6.7; WD1 WildPPG 8.76 vs 9.27 (−0.52 [−1.08, −0.04], 10/14명) | 강함 (주장 범위 한정용) |
-| 외부 모델(독립 개발·공개 체크포인트)에서도 다중 샘플 합의가 기능값 오차를 줄이고, 이득 크기는 기능값 오차의 비중복성이 결정 | RDDM-EXT(공개 RDDM, T = 10 고정, 재학습 없음): VitalDB(외부) K = 16 − K = 1 = −0.554 [−0.629, −0.479] bpm, 환자 수준 Spearman(ρ̄_p, G_p) = −0.414 [−0.460, −0.366], 파형 다양성은 −0.126(반대 방향). 단 이득은 6 %로 작고(ρ̄ 0.89), 중앙값 > 평균 이점은 재현 안 됨, 절대 성능은 PPG 피크 세기보다 나쁨 → **PARTIAL**. 고정 예산 깊이 대 폭은 외부 모델에서 **검증 불가**(RDDM은 공식 로더가 nT ≠ 10 거부, PPGFlowECG는 체크포인트 출처 미확인) | 중간 (예산이 K와 함께 증가하는 조건) |
+| 외부 모델(독립 개발·공개 체크포인트)에서도 다중 샘플 합의가 기능값 오차를 줄이고, 이득 크기는 기능값 오차의 비중복성이 결정 | RDDM-EXT(공개 RDDM, T = 10 고정, 재학습 없음): VitalDB(외부) K = 16 − K = 1 = −0.554 [−0.629, −0.479] bpm, 환자 수준 Spearman(ρ̄_p, G_p) = −0.414 [−0.460, −0.366], 파형 다양성은 −0.126(반대 방향). 단 이득은 6 %로 작고(ρ̄ 0.89), 중앙값 > 평균 이점은 재현 안 됨, 절대 성능은 PPG 피크 세기보다 나쁨 → **PARTIAL**. (RDDM은 공식 로더가 nT ≠ 10을 거부해 고정 예산 비교 불가) | 중간 (예산이 K와 함께 증가하는 조건) |
+| 외부 모델에서도 같은 벡터장 NFE라면 깊이보다 폭 (고정 예산) | PPGFlowECG(저자 공개 체크포인트 — 학습 출처는 공개 학습 설정상 MCMED로 강하게 시사되나 체크포인트 자체에는 명시 없음; 재학습 없음, 논문이 검증한 S = 5–25만, VitalDB 1,156명 zero-shot, prereg `3dee94f`): Hamilton HR 폭 − 깊이 B10 −0.240 [−0.272, −0.209], B15 −0.445 [−0.485, −0.406], B20 −0.542 [−0.585, −0.499], B25 −0.588 [−0.634, −0.540] (환자 74–86 %), 프로젝트 HR도 같은 방향 → **STRONG**(동결 규칙). 단 이득은 4–10 %로 작고(ρ̄ 0.92–0.94, K_eff ≈ 1.1), 깊이가 정의된 HR을 전혀 개선하지 않아서(S = 5–25에서 6.14 → 6.20) 생긴 우위이며, 같은 NFE여도 샘플마다 VAE 3회라 순차 실행 벽시계는 폭 쪽이 32–57 % 느림(배치하면 빠름). 생성 파형은 박동 위상을 재현하지 못함(r ≈ 0.01, F1 0.13) | 중간 (HR 한 기능값, 외부 코퍼스 1개, zero-shot) |
 | 비트 위치만 필요하면 직접 검출기로 충분하다 | RD1 VitalDB F1 0.773 vs 디코딩 0.765 (차이 < 0.02 여백), RR-MAE 7.7 vs 10.8 ms, 13배 작고 380배 빠름 | 강함 (주장 범위 한정용) |
 | 합의 디코딩 (F1, 박동 간격) | 2/5 데이터셋에서 F1 기준 통과, 1곳에서 해로움 | 조건부 |
 | HRV 개선 | 상대 우위만, 절대 수준 사용 불가 | 보조 |
@@ -309,7 +310,7 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 솔버 공정성 (Euler vs 정품 Heun) · 오차 분해 메커니즘 | `docs/TT_EXPA_SOLVER_FAIRNESS_REPORT.md`, `docs/TT_EXPB_DECOMPOSITION_REPORT.md`, `docs/B3_FUNCTIONAL_ERROR_MECHANISM_REPORT.md`, `docs/CONSENSUS_INFERENCE_THEORY_NOTE.md` |
 | 직접 HR 회귀 기준선 (VitalDB · WildPPG) | `docs/DB1_DISCRIMINATIVE_HR_BASELINE_REPORT.md`, `docs/WD1_WILDPPG_REGRESSION_AND_ALLOCATION_REPORT.md` |
 | 직접 R 피크 검출기 기준선 | `docs/RD1_DIRECT_RPEAK_DETECTOR_REPORT.md` |
-| 외부 모델 감사 · RDDM 재현 · RDDM 외부 합의 · PPGFlowECG 출처 | `docs/EXTERNAL_MODEL_AUDIT.md`, `docs/RDDM_R0_REPRODUCTION_REPORT.md`, `docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md`, `docs/PPGFLOWECG_PROVENANCE_AUDIT.md` |
+| 외부 모델 감사 · RDDM 재현 · RDDM 외부 합의 · PPGFlowECG 출처 · PPGFlowECG 고정 예산 | `docs/EXTERNAL_MODEL_AUDIT.md`, `docs/RDDM_R0_REPRODUCTION_REPORT.md`, `docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md`, `docs/PPGFLOWECG_PROVENANCE_AUDIT.md`, `docs/PPGFLOWECG_EXTERNAL_FIXED_BUDGET_REPORT.md` |
 | 합의 디코딩 · HRV | `docs/ED1_EVENT_CONSENSUS_DECODING_REPORT.md`, `docs/ED2_DECODING_WILDPPG_AND_HRV_REPORT.md` |
 | 개인화 | `docs/PZ1_…`, `docs/PZ2_…`, `docs/PZ3_…_REPORT.md` |
 | 효과 없었던 시도 | `docs/BB1_BACKBONE_SENSITIVITY_REPORT.md`, `docs/KN1_KAN_FFN_REPORT.md` |

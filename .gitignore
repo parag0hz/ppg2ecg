@@ -483,3 +483,7 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/b3_bootstrap/**
 !artifacts/rddm_r0/
 !artifacts/rddm_r0/**
+!artifacts/rddm_ext/
+!artifacts/rddm_ext/**
+!artifacts/pfe_provenance/
+!artifacts/pfe_provenance/**

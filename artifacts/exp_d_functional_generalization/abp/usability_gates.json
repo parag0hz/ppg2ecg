@@ -1,0 +1,263 @@
+{
+ "amendment": "docs/EXP_D_ABP_PREREGISTRATION_AMENDMENT.md",
+ "gate_cell": [
+  8,
+  4
+ ],
+ "functionals": {
+  "SBP": {
+   "constant_b_F": 114.74031448364258,
+   "mae_consensus_8_4": {
+    "point": 14.530961757650353,
+    "ci": [
+     13.580709421894012,
+     15.564916126533262
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "mae_constant": {
+    "point": 14.600011857876503,
+    "ci": [
+     13.672541828327613,
+     15.597342546783288
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "delta_const": {
+    "point": -0.0690501002261513,
+    "ci": [
+     -0.37851332982859204,
+     0.23156535877619758
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.6654
+   },
+   "gate_A_pass": false,
+   "spearman": {
+    "point": 0.15029833832274658,
+    "ci": [
+     0.07185617349447432,
+     0.22646990329789946
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "gate_B_pass": true,
+   "pearson_secondary": {
+    "point": 0.17155089878414098,
+    "ci": [
+     0.06396169069807439,
+     0.26112694597440006
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "usability": "PARTIALLY INFORMATIVE",
+   "allocation_verdict": "success",
+   "B32_width_points": {
+    "B32_width_(32,1)-(1,32)": -0.3324730441444798,
+    "B32_intermediate_(8,4)-(1,32)": -0.23347692771663042
+   },
+   "evidentiary_verdict": "NOT EVIDENCE FOR GENERALISATION"
+  },
+  "DBP": {
+   "constant_b_F": 54.89292335510254,
+   "mae_consensus_8_4": {
+    "point": 9.93772236310151,
+    "ci": [
+     9.278995531564968,
+     10.598524580683028
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "mae_constant": {
+    "point": 9.419621232302863,
+    "ci": [
+     8.752642517773427,
+     10.105159052244106
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "delta_const": {
+    "point": 0.5181011307986457,
+    "ci": [
+     -0.03770580023093923,
+     1.0596328882442079
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.034
+   },
+   "gate_A_pass": false,
+   "spearman": {
+    "point": 0.27610784022784923,
+    "ci": [
+     0.18574016130314763,
+     0.36610808952036944
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "gate_B_pass": true,
+   "pearson_secondary": {
+    "point": 0.2525386370063074,
+    "ci": [
+     0.16686239102777958,
+     0.3385518661146397
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "usability": "PARTIALLY INFORMATIVE",
+   "allocation_verdict": "depth-clear",
+   "B32_width_points": {
+    "B32_width_(32,1)-(1,32)": 0.830298330072771,
+    "B32_intermediate_(8,4)-(1,32)": 0.8534135589025973
+   },
+   "evidentiary_verdict": "NOT EVIDENCE (not counterevidence)"
+  },
+  "MAP": {
+   "constant_b_F": 75.75119791552424,
+   "mae_consensus_8_4": {
+    "point": 10.36054955737231,
+    "ci": [
+     9.680965443788345,
+     11.043240431128236
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "mae_constant": {
+    "point": 10.363093658330147,
+    "ci": [
+     9.586252159819267,
+     11.164589800622428
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.0
+   },
+   "delta_const": {
+    "point": -0.002544100957836436,
+    "ci": [
+     -0.42793765469059075,
+     0.4082010173387847
+    ],
+    "n_clusters": 190,
+    "share_boot_below_0": 0.5126
+   },
+   "gate_A_pass": false,
+   "spearman": {
+    "point": 0.24383559111759912,
+    "ci": [
+     0.15448773974062197,
+     0.3306636905082435
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "gate_B_pass": true,
+   "pearson_secondary": {
+    "point": 0.2424965849991562,
+    "ci": [
+     0.1586153117460054,
+     0.3250163170014561
+    ],
+    "n_blocks": 19950,
+    "n_subjects": 190
+   },
+   "usability": "PARTIALLY INFORMATIVE",
+   "allocation_verdict": "no clear difference",
+   "B32_width_points": {
+    "B32_width_(32,1)-(1,32)": 0.49627532974287014,
+    "B32_intermediate_(8,4)-(1,32)": 0.2318845968317231
+   },
+   "evidentiary_verdict": "UNINTERPRETABLE / NON-INFORMATIVE TASK"
+  }
+ },
+ "original_frozen_verdict": {
+  "category": "PARTIAL",
+  "per_functional": {
+   "SBP": {
+    "success": true,
+    "depth_clear": false,
+    "directional": true
+   },
+   "DBP": {
+    "success": false,
+    "depth_clear": true,
+    "directional": false
+   },
+   "MAP": {
+    "success": false,
+    "depth_clear": false,
+    "directional": false
+   }
+  },
+  "n_success": 1,
+  "n_depth_clear": 1,
+  "n_directional": 1,
+  "extraction_invalid": false
+ },
+ "cross_functional_evidentiary_verdict": {
+  "category": "NO SUPPORT",
+  "usable": [],
+  "usable_success": [],
+  "usable_depth_clear": [],
+  "usable_directional_only": []
+ },
+ "respiration_retrospective": {
+  "frozen_statistical_verdict": "STRONG (unchanged)",
+  "constant_b_F": 17.0,
+  "mae_consensus_8_4": {
+   "point": 2.8854166666666665,
+   "ci": [
+    2.1145833333333335,
+    3.8541666666666665
+   ],
+   "n_clusters": 6,
+   "share_boot_below_0": 0.0
+  },
+  "mae_constant": {
+   "point": 2.1041666666666665,
+   "ci": [
+    1.0416666666666667,
+    3.4166666666666665
+   ],
+   "n_clusters": 6,
+   "share_boot_below_0": 0.0
+  },
+  "delta_const": {
+   "point": 0.78125,
+   "ci": [
+    0.40625,
+    1.1875
+   ],
+   "n_clusters": 6,
+   "share_boot_below_0": 0.0
+  },
+  "gate_A_pass": false,
+  "spearman": {
+   "point": -0.11191564895622554,
+   "ci": [
+    -0.2982858820640611,
+    0.030146736779209083
+   ],
+   "n_blocks": 48,
+   "n_subjects": 6
+  },
+  "gate_B_pass": false,
+  "pearson_secondary": {
+   "point": -0.13151419130249836,
+   "ci": [
+    -0.3193204464603636,
+    0.040604448537337745
+   ],
+   "n_blocks": 48,
+   "n_subjects": 6
+  },
+  "usability": "UNINFORMATIVE"
+ }
+}

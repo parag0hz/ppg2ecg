@@ -1,0 +1,203 @@
+{
+ "prereg": "docs/EXP_D_FUNCTIONAL_GENERALIZATION_PREREGISTRATION.md (eddbe60)",
+ "code_head_at_analysis": "65dcc977fe04e8254e2219788e132299735cf4f2",
+ "datasets": {
+  "MIMIC-BP": {
+   "dataset": "MIMIC-BP",
+   "checkpoint": "outputs/u1_upstream/PENGUIN_MIMIC-BP_u1/ckpt/pretrain_ckpt.pth",
+   "sha256": "02dd37c199138237e0e98a9994d812f139ea7d436328eafb911d67f7c1b3c1c3",
+   "epoch": 17,
+   "n_windows": 39900,
+   "n_blocks": 19950,
+   "n_subjects": 190,
+   "windows_per_block": 2,
+   "draws": {
+    "1": 32,
+    "2": 16,
+    "4": 16,
+    "8": 16,
+    "16": 2,
+    "32": 1
+   },
+   "noise": "z_d = torch.randn(N,1,512, generator=Generator().manual_seed(d)), same for every S",
+   "nonfinite_samples": {
+    "1": 0,
+    "2": 0,
+    "4": 0,
+    "8": 0,
+    "16": 0,
+    "32": 0,
+    "heun50": 0
+   },
+   "FD_draw0": {
+    "1": 62990.778495976236,
+    "2": 61959.336427212926,
+    "4": 60352.51969080418,
+    "8": 58811.62664096581,
+    "16": 58162.26010964229,
+    "32": 53805.26195802877,
+    "heun50": 57131.80027193681
+   },
+   "latency_ms": {
+    "K32_S1": {
+     "nfe": 32,
+     "sequential_batch1_ms": 624.2183451540768,
+     "batched_K_ms": 20.269059808924794
+    },
+    "K16_S2": {
+     "nfe": 32,
+     "sequential_batch1_ms": 622.837282018736,
+     "batched_K_ms": 39.18902622535825
+    },
+    "K8_S4": {
+     "nfe": 32,
+     "sequential_batch1_ms": 616.2893201690167,
+     "batched_K_ms": 78.30595085397363
+    },
+    "K4_S8": {
+     "nfe": 32,
+     "sequential_batch1_ms": 615.6407280359417,
+     "batched_K_ms": 154.34681600891054
+    },
+    "K2_S16": {
+     "nfe": 32,
+     "sequential_batch1_ms": 613.5892940219492,
+     "batched_K_ms": 308.67626098915935
+    },
+    "K1_S32": {
+     "nfe": 32,
+     "sequential_batch1_ms": 615.8557289745659,
+     "batched_K_ms": 615.5432721134275
+    },
+    "K16_S1": {
+     "nfe": 16,
+     "sequential_batch1_ms": 308.00272012129426,
+     "batched_K_ms": 19.740929128602147
+    },
+    "K8_S2": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.78708402067423,
+     "batched_K_ms": 38.54973497800529
+    },
+    "K4_S4": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.0246980059892,
+     "batched_K_ms": 76.45244291052222
+    },
+    "K2_S8": {
+     "nfe": 16,
+     "sequential_batch1_ms": 305.7634758297354,
+     "batched_K_ms": 154.42330203950405
+    },
+    "K1_S16": {
+     "nfe": 16,
+     "sequential_batch1_ms": 307.21783894114196,
+     "batched_K_ms": 306.16309586912394
+    },
+    "heun50_K1": {
+     "nfe": 50,
+     "sequential_batch1_ms": 958.7672890629619,
+     "batched_K_ms": null
+    }
+   },
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "torch": "2.11.0+cu130"
+  }
+ },
+ "sampler": "Euler (ppg2ecg.flow.samplers.euler_sample) on upstream grid; reference Heun-25 = 50 NFE",
+ "estimator": "nested draws 0..K-1, median consensus",
+ "bootstrap": {
+  "replicates": 5000,
+  "seed": 20260924
+ },
+ "cells_B32": [
+  [
+   32,
+   1
+  ],
+  [
+   16,
+   2
+  ],
+  [
+   8,
+   4
+  ],
+  [
+   4,
+   8
+  ],
+  [
+   2,
+   16
+  ],
+  [
+   1,
+   32
+  ]
+ ],
+ "cells_B16": [
+  [
+   16,
+   1
+  ],
+  [
+   8,
+   2
+  ],
+  [
+   4,
+   4
+  ],
+  [
+   2,
+   8
+  ],
+  [
+   1,
+   16
+  ]
+ ],
+ "headline": {
+  "B32_width_(32,1)-(1,32)": [
+   [
+    32,
+    1
+   ],
+   [
+    1,
+    32
+   ]
+  ],
+  "B32_intermediate_(8,4)-(1,32)": [
+   [
+    8,
+    4
+   ],
+   [
+    1,
+    32
+   ]
+  ],
+  "B16_width_(16,1)-(1,16)": [
+   [
+    16,
+    1
+   ],
+   [
+    1,
+    16
+   ]
+  ],
+  "B16_intermediate_(4,4)-(1,16)": [
+   [
+    4,
+    4
+   ],
+   [
+    1,
+    16
+   ]
+  ]
+ }
+}

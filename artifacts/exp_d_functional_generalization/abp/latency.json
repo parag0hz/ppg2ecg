@@ -1,0 +1,64 @@
+{
+ "MIMIC-BP": {
+  "K32_S1": {
+   "nfe": 32,
+   "sequential_batch1_ms": 624.2183451540768,
+   "batched_K_ms": 20.269059808924794
+  },
+  "K16_S2": {
+   "nfe": 32,
+   "sequential_batch1_ms": 622.837282018736,
+   "batched_K_ms": 39.18902622535825
+  },
+  "K8_S4": {
+   "nfe": 32,
+   "sequential_batch1_ms": 616.2893201690167,
+   "batched_K_ms": 78.30595085397363
+  },
+  "K4_S8": {
+   "nfe": 32,
+   "sequential_batch1_ms": 615.6407280359417,
+   "batched_K_ms": 154.34681600891054
+  },
+  "K2_S16": {
+   "nfe": 32,
+   "sequential_batch1_ms": 613.5892940219492,
+   "batched_K_ms": 308.67626098915935
+  },
+  "K1_S32": {
+   "nfe": 32,
+   "sequential_batch1_ms": 615.8557289745659,
+   "batched_K_ms": 615.5432721134275
+  },
+  "K16_S1": {
+   "nfe": 16,
+   "sequential_batch1_ms": 308.00272012129426,
+   "batched_K_ms": 19.740929128602147
+  },
+  "K8_S2": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.78708402067423,
+   "batched_K_ms": 38.54973497800529
+  },
+  "K4_S4": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.0246980059892,
+   "batched_K_ms": 76.45244291052222
+  },
+  "K2_S8": {
+   "nfe": 16,
+   "sequential_batch1_ms": 305.7634758297354,
+   "batched_K_ms": 154.42330203950405
+  },
+  "K1_S16": {
+   "nfe": 16,
+   "sequential_batch1_ms": 307.21783894114196,
+   "batched_K_ms": 306.16309586912394
+  },
+  "heun50_K1": {
+   "nfe": 50,
+   "sequential_batch1_ms": 958.7672890629619,
+   "batched_K_ms": null
+  }
+ }
+}

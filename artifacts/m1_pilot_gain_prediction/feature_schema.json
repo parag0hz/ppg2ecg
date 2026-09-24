@@ -1,0 +1,46 @@
+{
+ "primary": {
+  "median_A": "StandardScaler",
+  "MAD_A": "log1p then StandardScaler",
+  "IQR_A": "log1p then StandardScaler",
+  "SD_A": "log1p then StandardScaler",
+  "range_A": "log1p then StandardScaler",
+  "meanPair_A": "log1p then StandardScaler",
+  "medPair_A": "log1p then StandardScaler",
+  "bootMedInstab_A": "log1p then StandardScaler",
+  "splitHalfInstab_A": "log1p then StandardScaler",
+  "logS": "StandardScaler"
+ },
+ "extended_appended": {
+  "median_D": "StandardScaler",
+  "MAD_D": "StandardScaler",
+  "medAbs_D": "StandardScaler",
+  "absMedShift": "StandardScaler"
+ },
+ "inputs": "generated HR functional values of the pilot draws A only (snapped to 1e-3 bpm); no reference, error, patient or model identity",
+ "bootMedInstab": "SD (ddof 1) of medians of 64 bootstrap resamples of A; rng default_rng([20260924, cond_idx, window_row_index, part_idx])",
+ "splitHalfInstab": "|median(A[0:4]) - median(A[4:8])| in the stored partition order",
+ "baselines": {
+  "B3_full": [
+   "median_A",
+   "MAD_A",
+   "IQR_A",
+   "SD_A",
+   "range_A",
+   "meanPair_A",
+   "medPair_A",
+   "bootMedInstab_A",
+   "splitHalfInstab_A",
+   "logS"
+  ],
+  "B1_MAD_only": [
+   "MAD_A"
+  ],
+  "B2_SD_only": [
+   "SD_A"
+  ],
+  "B5_logS_only": [
+   "logS"
+  ]
+ }
+}

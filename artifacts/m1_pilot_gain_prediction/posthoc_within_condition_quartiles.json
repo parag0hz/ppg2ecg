@@ -1,0 +1,18 @@
+{
+ "note": "POST-HOC, point only: within-condition quartile contrast (condition-specific cut-offs on B3 predictions), mean over 12 conditions and 32 partitions",
+ "mean": 1.7100090679961764,
+ "per_condition_mean_over_partitions": [
+  1.932,
+  1.717,
+  1.444,
+  1.402,
+  1.509,
+  2.177,
+  1.995,
+  2.14,
+  1.109,
+  1.271,
+  1.633,
+  2.19
+ ]
+}

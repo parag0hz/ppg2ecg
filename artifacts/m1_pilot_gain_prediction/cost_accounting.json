@@ -1,0 +1,66 @@
+{
+ "unit": "vector-field evaluations per window",
+ "per_condition": {
+  "iMF_S1": {
+   "pilot_primary_nfe": 8,
+   "future_nfe": 8,
+   "pilot_extended_nfe": 24
+  },
+  "iMF_S2": {
+   "pilot_primary_nfe": 16,
+   "future_nfe": 16,
+   "pilot_extended_nfe": 48
+  },
+  "iMF_S4": {
+   "pilot_primary_nfe": 32,
+   "future_nfe": 32,
+   "pilot_extended_nfe": 96
+  },
+  "iMF_S8": {
+   "pilot_primary_nfe": 64,
+   "future_nfe": 64,
+   "pilot_extended_nfe": null
+  },
+  "CD_S1": {
+   "pilot_primary_nfe": 8,
+   "future_nfe": 8,
+   "pilot_extended_nfe": 24
+  },
+  "CD_S2": {
+   "pilot_primary_nfe": 16,
+   "future_nfe": 16,
+   "pilot_extended_nfe": 48
+  },
+  "CD_S4": {
+   "pilot_primary_nfe": 32,
+   "future_nfe": 32,
+   "pilot_extended_nfe": 96
+  },
+  "CD_S8": {
+   "pilot_primary_nfe": 64,
+   "future_nfe": 64,
+   "pilot_extended_nfe": null
+  },
+  "PENGUIN_S1": {
+   "pilot_primary_nfe": 8,
+   "future_nfe": 8,
+   "pilot_extended_nfe": 24
+  },
+  "PENGUIN_S2": {
+   "pilot_primary_nfe": 16,
+   "future_nfe": 16,
+   "pilot_extended_nfe": 48
+  },
+  "PENGUIN_S4": {
+   "pilot_primary_nfe": 32,
+   "future_nfe": 32,
+   "pilot_extended_nfe": 96
+  },
+  "PENGUIN_S8": {
+   "pilot_primary_nfe": 64,
+   "future_nfe": 64,
+   "pilot_extended_nfe": null
+  }
+ },
+ "note": "primary features need only the K_pilot = 8 pilot samples at depth S; the extended depth-probe needs the same 8 seeds again at 2S; no adaptive policy is evaluated"
+}

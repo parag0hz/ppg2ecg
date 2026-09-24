@@ -803,7 +803,7 @@ def figure_stage():
             ax[3].annotate(f"S{S}", (x_, y_), textcoords="offset points", xytext=(3, 3), fontsize=6.5, color=col)
     mp_ = mech["point"]
     ax[3].set_xlabel("ρ_A (pilot draws, uses reference)"); ax[3].set_ylabel("G_B (held-out draws)")
-    ax[3].set_title(f"D. cross-fit diagnostic: mean per-partition Spearman(ρ_A, G_B) {mp_['pooled_AB']:+.2f}", fontsize=8.5)
+    ax[3].set_title(f"D. cross-fit diagnostic (uses reference; not deployable)\nmean per-partition Spearman(ρ_A, G_B) {mp_['pooled_AB']:+.2f}", fontsize=8.5)
     ax[3].legend(fontsize=7, frameon=False)
     for a_ in ax:
         a_.grid(lw=0.4, alpha=0.5)

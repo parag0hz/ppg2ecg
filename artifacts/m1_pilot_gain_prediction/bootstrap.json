@@ -1,0 +1,456 @@
+{
+ "replicates": 5000,
+ "seed": 20260924,
+ "unit": "patient (multiplicity weights over all units)",
+ "statistic": "mean over 32 partitions, recomputed in every replicate",
+ "ci95": {
+  "spearman_B3_full": [
+   0.2922887483394842,
+   0.3144009595344174
+  ],
+  "mae_B3_full": [
+   1.9679336067758806,
+   2.0481491687793216
+  ],
+  "spearman_B1_MAD_only": [
+   0.2521726018501525,
+   0.26944871200989245
+  ],
+  "mae_B1_MAD_only": [
+   2.0505677898397323,
+   2.1280979695580746
+  ],
+  "spearman_B2_SD_only": [
+   0.274217219288514,
+   0.2952838082043949
+  ],
+  "mae_B2_SD_only": [
+   2.0010745026785957,
+   2.0799363127635973
+  ],
+  "spearman_B5_logS_only": [
+   0.0810488505029969,
+   0.0871902275431109
+  ],
+  "mae_B5_logS_only": [
+   2.1932135527269363,
+   2.2656336896128155
+  ],
+  "mae_B0_constant": [
+   2.195537619811109,
+   2.268045395108991
+  ],
+  "pearson": [
+   0.28403767917661676,
+   0.31224229013584376
+  ],
+  "r2": [
+   0.07967644140445458,
+   0.09744800489741892
+  ],
+  "quartile_diff": [
+   2.1335354969900506,
+   2.3312758802173197
+  ],
+  "n_top": [
+   52474.7109375,
+   55473.46328125
+  ],
+  "n_bottom": [
+   52473.53046875,
+   55473.3484375
+  ],
+  "q1_mean_obs": [
+   0.9744468001042647,
+   1.0219652971228128
+  ],
+  "q2_mean_obs": [
+   1.3714757102778987,
+   1.4359881868814566
+  ],
+  "q3_mean_obs": [
+   1.8393744787158028,
+   1.9699386705724946
+  ],
+  "q4_mean_obs": [
+   3.12344740165611,
+   3.3376721969508965
+  ],
+  "within_B3_full": [
+   0.19181972235188446,
+   0.21463927892473963
+  ],
+  "within_B3_full_I": [
+   0.18066525004247827,
+   0.20581473037826115
+  ],
+  "within_B3_full_D": [
+   0.20802516541497598,
+   0.23280996436531007
+  ],
+  "within_B3_full_C": [
+   0.18401113644919556,
+   0.208684602878808
+  ],
+  "within_cond_0": [
+   0.1979557242858683,
+   0.22546244002037372
+  ],
+  "within_cond_1": [
+   0.18511953077587617,
+   0.2140296411715072
+  ],
+  "within_cond_2": [
+   0.16435751356970246,
+   0.19475678295379895
+  ],
+  "within_cond_3": [
+   0.16634755617436325,
+   0.1986645132829125
+  ],
+  "within_cond_4": [
+   0.16547242236352408,
+   0.19672869862305936
+  ],
+  "within_cond_5": [
+   0.21620154839090527,
+   0.24405807438329394
+  ],
+  "within_cond_6": [
+   0.21377522115264008,
+   0.24280419926608415
+  ],
+  "within_cond_7": [
+   0.22732845903637786,
+   0.2568301659324113
+  ],
+  "within_cond_8": [
+   0.14714537227258098,
+   0.1751662564646597
+  ],
+  "within_cond_9": [
+   0.16662077164111666,
+   0.19858167445156566
+  ],
+  "within_cond_10": [
+   0.18996812715767397,
+   0.2210275707763687
+  ],
+  "within_cond_11": [
+   0.22158903565797777,
+   0.24874600360326213
+  ],
+  "within_B1_MAD_only": [
+   0.14721256992919676,
+   0.16596770278155715
+  ],
+  "within_B2_SD_only": [
+   0.17606723030976282,
+   0.1967040762868791
+  ],
+  "within_LOMO": [
+   0.19013325806659137,
+   0.21294539113964212
+  ],
+  "within_LOMO_I": [
+   0.18020349039446948,
+   0.2056417730291564
+  ],
+  "within_LOMO_D": [
+   0.20580663845790229,
+   0.2300802167279982
+  ],
+  "within_LOMO_C": [
+   0.18142838397918376,
+   0.20647650340888157
+  ],
+  "model_B3_full_I": [
+   0.20171366857167453,
+   0.22625240422708648
+  ],
+  "model_B3_full_D": [
+   0.2232542470410086,
+   0.24763336048664064
+  ],
+  "model_B3_full_C": [
+   0.37750066162025975,
+   0.40185438358373066
+  ],
+  "model_LOMO_I": [
+   0.1863306480849947,
+   0.21153162394230957
+  ],
+  "model_LOMO_D": [
+   0.22064354646896572,
+   0.24450322724394832
+  ],
+  "model_LOMO_C": [
+   0.35063486095428903,
+   0.3752937072539997
+  ],
+  "delta_pooled_B3_minus_B1": [
+   0.037220335770085544,
+   0.04774661446717434
+  ],
+  "delta_pooled_B3_minus_B2": [
+   0.01695201134728173,
+   0.020096115465426022
+  ],
+  "delta_pooled_B3_minus_B5": [
+   0.20912034664154575,
+   0.2293769352383158
+  ],
+  "delta_within_B3_minus_B1": [
+   0.04071811002152122,
+   0.053182292045958104
+  ],
+  "delta_within_B3_minus_B2": [
+   0.014762813597122287,
+   0.018748705101982375
+  ],
+  "delta_mae_B3_minus_B0": [
+   -0.23077643158799052,
+   -0.21600416100203432
+  ],
+  "spearman_grel": [
+   0.046971445836663205,
+   0.07155715842812604
+  ],
+  "spearman_dwidth_not_crossfitted": [
+   0.07320287135226247,
+   0.08080116573748815
+  ],
+  "common_spearman_B3": [
+   0.27138871792557107,
+   0.2961212026690667
+  ],
+  "common_within_B3": [
+   0.15705540375087695,
+   0.18268512859927105
+  ],
+  "ext_within_B4_extended": [
+   0.17941925148269766,
+   0.20284650661097858
+  ],
+  "ext_pooled_B4_extended": [
+   0.3094344871314724,
+   0.33253677709246476
+  ],
+  "ext_within_noCD_B4_extended": [
+   0.17313231403831555,
+   0.19649565784905834
+  ],
+  "ext_model_B4_extended_I": [
+   0.18973424123856725,
+   0.21528615024886424
+  ],
+  "ext_model_B4_extended_D": [
+   0.20704106420979296,
+   0.23246011491393698
+  ],
+  "ext_model_B4_extended_C": [
+   0.38277163791087965,
+   0.40891904290475806
+  ],
+  "ext_within_B3_ext_rows": [
+   0.1787246438654059,
+   0.2021182406589604
+  ],
+  "ext_pooled_B3_ext_rows": [
+   0.3089928255206008,
+   0.3320188173015947
+  ],
+  "ext_within_noCD_B3_ext_rows": [
+   0.1726216788765634,
+   0.1959882004800633
+  ],
+  "ext_model_B3_ext_rows_I": [
+   0.1897131928727131,
+   0.2152255097686115
+  ],
+  "ext_model_B3_ext_rows_D": [
+   0.20592161211075768,
+   0.23126722159536095
+  ],
+  "ext_model_B3_ext_rows_C": [
+   0.38196391131112156,
+   0.40811259806155387
+  ],
+  "ext_delta_within_B4_minus_B3": [
+   0.0005320992601263724,
+   0.0008774392895318548
+  ],
+  "ext_delta_pooled_B4_minus_B3": [
+   0.00030258601802300933,
+   0.0006953923552952484
+  ],
+  "ext_delta_within_noCD_B4_minus_B3": [
+   0.0002744413172951031,
+   0.0007196124278990357
+  ],
+  "ext_delta_model_I": [
+   -0.0001192887999345075,
+   0.00022458322777610274
+  ],
+  "ext_delta_model_D": [
+   0.0009533661159829864,
+   0.0014656191405194368
+  ],
+  "ext_delta_model_C": [
+   0.0004587983566017039,
+   0.0013325713583364383
+  ]
+ },
+ "share_positive": {
+  "spearman_B3_full": 1.0,
+  "mae_B3_full": 1.0,
+  "spearman_B1_MAD_only": 1.0,
+  "mae_B1_MAD_only": 1.0,
+  "spearman_B2_SD_only": 1.0,
+  "mae_B2_SD_only": 1.0,
+  "spearman_B5_logS_only": 1.0,
+  "mae_B5_logS_only": 1.0,
+  "mae_B0_constant": 1.0,
+  "pearson": 1.0,
+  "r2": 1.0,
+  "quartile_diff": 1.0,
+  "n_top": 1.0,
+  "n_bottom": 1.0,
+  "q1_mean_obs": 1.0,
+  "q2_mean_obs": 1.0,
+  "q3_mean_obs": 1.0,
+  "q4_mean_obs": 1.0,
+  "within_B3_full": 1.0,
+  "within_B3_full_I": 1.0,
+  "within_B3_full_D": 1.0,
+  "within_B3_full_C": 1.0,
+  "within_cond_0": 1.0,
+  "within_cond_1": 1.0,
+  "within_cond_2": 1.0,
+  "within_cond_3": 1.0,
+  "within_cond_4": 1.0,
+  "within_cond_5": 1.0,
+  "within_cond_6": 1.0,
+  "within_cond_7": 1.0,
+  "within_cond_8": 1.0,
+  "within_cond_9": 1.0,
+  "within_cond_10": 1.0,
+  "within_cond_11": 1.0,
+  "within_B1_MAD_only": 1.0,
+  "within_B2_SD_only": 1.0,
+  "within_LOMO": 1.0,
+  "within_LOMO_I": 1.0,
+  "within_LOMO_D": 1.0,
+  "within_LOMO_C": 1.0,
+  "model_B3_full_I": 1.0,
+  "model_B3_full_D": 1.0,
+  "model_B3_full_C": 1.0,
+  "model_LOMO_I": 1.0,
+  "model_LOMO_D": 1.0,
+  "model_LOMO_C": 1.0,
+  "delta_pooled_B3_minus_B1": 1.0,
+  "delta_pooled_B3_minus_B2": 1.0,
+  "delta_pooled_B3_minus_B5": 1.0,
+  "delta_within_B3_minus_B1": 1.0,
+  "delta_within_B3_minus_B2": 1.0,
+  "delta_mae_B3_minus_B0": 0.0,
+  "spearman_grel": 1.0,
+  "spearman_dwidth_not_crossfitted": 1.0,
+  "common_spearman_B3": 1.0,
+  "common_within_B3": 1.0,
+  "ext_within_B4_extended": 1.0,
+  "ext_pooled_B4_extended": 1.0,
+  "ext_within_noCD_B4_extended": 1.0,
+  "ext_model_B4_extended_I": 1.0,
+  "ext_model_B4_extended_D": 1.0,
+  "ext_model_B4_extended_C": 1.0,
+  "ext_within_B3_ext_rows": 1.0,
+  "ext_pooled_B3_ext_rows": 1.0,
+  "ext_within_noCD_B3_ext_rows": 1.0,
+  "ext_model_B3_ext_rows_I": 1.0,
+  "ext_model_B3_ext_rows_D": 1.0,
+  "ext_model_B3_ext_rows_C": 1.0,
+  "ext_delta_within_B4_minus_B3": 1.0,
+  "ext_delta_pooled_B4_minus_B3": 1.0,
+  "ext_delta_within_noCD_B4_minus_B3": 1.0,
+  "ext_delta_model_I": 0.7062,
+  "ext_delta_model_D": 1.0,
+  "ext_delta_model_C": 1.0
+ },
+ "n_nonfinite_replicates": {
+  "spearman_B3_full": 0,
+  "mae_B3_full": 0,
+  "spearman_B1_MAD_only": 0,
+  "mae_B1_MAD_only": 0,
+  "spearman_B2_SD_only": 0,
+  "mae_B2_SD_only": 0,
+  "spearman_B5_logS_only": 0,
+  "mae_B5_logS_only": 0,
+  "mae_B0_constant": 0,
+  "pearson": 0,
+  "r2": 0,
+  "quartile_diff": 0,
+  "n_top": 0,
+  "n_bottom": 0,
+  "q1_mean_obs": 0,
+  "q2_mean_obs": 0,
+  "q3_mean_obs": 0,
+  "q4_mean_obs": 0,
+  "within_B3_full": 0,
+  "within_B3_full_I": 0,
+  "within_B3_full_D": 0,
+  "within_B3_full_C": 0,
+  "within_cond_0": 0,
+  "within_cond_1": 0,
+  "within_cond_2": 0,
+  "within_cond_3": 0,
+  "within_cond_4": 0,
+  "within_cond_5": 0,
+  "within_cond_6": 0,
+  "within_cond_7": 0,
+  "within_cond_8": 0,
+  "within_cond_9": 0,
+  "within_cond_10": 0,
+  "within_cond_11": 0,
+  "within_B1_MAD_only": 0,
+  "within_B2_SD_only": 0,
+  "within_LOMO": 0,
+  "within_LOMO_I": 0,
+  "within_LOMO_D": 0,
+  "within_LOMO_C": 0,
+  "model_B3_full_I": 0,
+  "model_B3_full_D": 0,
+  "model_B3_full_C": 0,
+  "model_LOMO_I": 0,
+  "model_LOMO_D": 0,
+  "model_LOMO_C": 0,
+  "delta_pooled_B3_minus_B1": 0,
+  "delta_pooled_B3_minus_B2": 0,
+  "delta_pooled_B3_minus_B5": 0,
+  "delta_within_B3_minus_B1": 0,
+  "delta_within_B3_minus_B2": 0,
+  "delta_mae_B3_minus_B0": 0,
+  "spearman_grel": 0,
+  "spearman_dwidth_not_crossfitted": 0,
+  "common_spearman_B3": 0,
+  "common_within_B3": 0,
+  "ext_within_B4_extended": 0,
+  "ext_pooled_B4_extended": 0,
+  "ext_within_noCD_B4_extended": 0,
+  "ext_model_B4_extended_I": 0,
+  "ext_model_B4_extended_D": 0,
+  "ext_model_B4_extended_C": 0,
+  "ext_within_B3_ext_rows": 0,
+  "ext_pooled_B3_ext_rows": 0,
+  "ext_within_noCD_B3_ext_rows": 0,
+  "ext_model_B3_ext_rows_I": 0,
+  "ext_model_B3_ext_rows_D": 0,
+  "ext_model_B3_ext_rows_C": 0,
+  "ext_delta_within_B4_minus_B3": 0,
+  "ext_delta_pooled_B4_minus_B3": 0,
+  "ext_delta_within_noCD_B4_minus_B3": 0,
+  "ext_delta_model_I": 0,
+  "ext_delta_model_D": 0,
+  "ext_delta_model_C": 0
+ }
+}

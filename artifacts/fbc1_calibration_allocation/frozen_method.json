@@ -1,0 +1,190 @@
+{
+ "method": "Functional Budget Calibration (FBC)",
+ "primary": "FBC-UCB",
+ "baseline_variant": "FBC-ERM",
+ "prereg_commit": "bf493970e0c1a15b0f790061e4223860b632834f",
+ "prereg_doc": "docs/FBC1_CALIBRATION_ALLOCATION_PREREGISTRATION.md",
+ "prereg_doc_sha256": "6e44f1d9df22a16990a3b2a2c541cbef28565645c817b8977e261975b31e1227",
+ "candidate_grid": {
+  "32": [
+   [
+    32,
+    1
+   ],
+   [
+    16,
+    2
+   ],
+   [
+    8,
+    4
+   ],
+   [
+    4,
+    8
+   ],
+   [
+    2,
+    16
+   ],
+   [
+    1,
+    32
+   ]
+  ],
+  "16": [
+   [
+    16,
+    1
+   ],
+   [
+    8,
+    2
+   ],
+   [
+    4,
+    4
+   ],
+   [
+    2,
+    8
+   ],
+   [
+    1,
+    16
+   ]
+  ]
+ },
+ "candidate_grid_sha256": "99827dd15b5389091fae79152ac1f74f71509d54c57be8567ee0b1b70fe18db6",
+ "risk": "patient-macro mean over patients of the mean window |median_k HR - HR*| (primary); window-micro secondary",
+ "consensus": "median of finite draw HRs (seeds 0..K-1 at depth S); none finite -> fallback constant",
+ "fallback_constant_bpm": 73.143,
+ "hr_snap_decimals": 3,
+ "FBC_ERM": "argmin_a mean_{p in C} L_{p,a}",
+ "FBC_UCB": "argmin_a mean_{p in C} L_{p,a} + t_{0.90, n-1} * SD_{p in C}(L_{p,a}) / sqrt(n)  (SD ddof 1)",
+ "confidence_level_one_sided": 0.9,
+ "tie_rule": "|R_a - R_min| <= 1e-09 -> lower K",
+ "calibration_sizes": [
+  5,
+  10,
+  25,
+  50,
+  100,
+  200
+ ],
+ "headline_n": 25,
+ "subsets_per_size": 200,
+ "calibration_subsets_sha256": "769ee44cf3a1cd3e1510fc045afb49878d99e05d5fbdcafcbc1550a1529294d7",
+ "delta_near": {
+  "iMF|B32": 0.22475185381137797,
+  "iMF|B16": 0.19754618437448468,
+  "CD|B32": 0.211263406373579,
+  "CD|B16": 0.20756689374279153,
+  "PENGUIN|B32": 0.25,
+  "PENGUIN|B16": 0.2332792027104958
+ },
+ "delta_rule": "clip(0.10 x Gap_scale, 0.05, 0.25); Gap_scale = R_val(pure depth) - R_val(full-val best), or max_a |R_val(a) - R_val(best)| if pure depth is not worse",
+ "a_fullval": {
+  "iMF|B32": [
+   16,
+   2
+  ],
+  "iMF|B16": [
+   8,
+   2
+  ],
+  "CD|B32": [
+   32,
+   1
+  ],
+  "CD|B16": [
+   16,
+   1
+  ],
+  "PENGUIN|B32": [
+   16,
+   2
+  ],
+  "PENGUIN|B16": [
+   8,
+   2
+  ]
+ },
+ "baselines": {
+  "pure_width": {
+   "32": [
+    32,
+    1
+   ],
+   "16": [
+    16,
+    1
+   ]
+  },
+  "pure_depth": {
+   "32": [
+    1,
+    32
+   ],
+   "16": [
+    1,
+    16
+   ]
+  },
+  "balanced": {
+   "32": [
+    8,
+    4
+   ],
+   "16": [
+    4,
+    4
+   ]
+  },
+  "historical_static": {
+   "32": {
+    "iMF": [
+     16,
+     2
+    ],
+    "CD": [
+     32,
+     1
+    ],
+    "PENGUIN": [
+     8,
+     4
+    ]
+   },
+   "16": {
+    "iMF": [
+     8,
+     2
+    ],
+    "CD": [
+     16,
+     1
+    ],
+    "PENGUIN": [
+     8,
+     2
+    ]
+   }
+  }
+ },
+ "gate_pass": {
+  "iMF|B32": true,
+  "iMF|B16": true,
+  "CD|B32": true,
+  "CD|B16": true,
+  "PENGUIN|B32": true,
+  "PENGUIN|B16": true
+ },
+ "success_criteria": "preregistration section 12 (A-D STRONG, F1-F4 FAILED, PARTIAL labels, GO rule); non-inferiority margin 0.025 bpm, near-optimal target 0.8",
+ "bootstrap": {
+  "validation_population": "2000 replicates, default_rng([20260925, 1])",
+  "test": "5000 replicates, default_rng([20260925, 3])"
+ },
+ "code_sha256": "06dd443fccd15d218c8062b2ec1cd9e3945e03ba43c64fb33c94d52887e71fc8",
+ "status": "frozen before any calibration-subset result and before any VitalDB TEST read"
+}

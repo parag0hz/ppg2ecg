@@ -500,3 +500,6 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/m1_pilot_gain_prediction/*.json
 !artifacts/m1_pilot_gain_prediction/*.csv
 !artifacts/m1_pilot_gain_prediction/*.png
+# M2 — action-value prediction (small artifacts only)
+!artifacts/m2_action_value/
+!artifacts/m2_action_value/**

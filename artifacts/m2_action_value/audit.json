@@ -1,0 +1,286 @@
+{
+ "split_manifest": "data/manifests/split_v1_vitaldb_seed42.json (patient-level, seed 20260917)",
+ "validation": {
+  "n_windows": 4822,
+  "n_patients": 289,
+  "ref_finite": 1.0
+ },
+ "test": {
+  "n_windows": 19543,
+  "n_patients": 1156,
+  "ref_finite": 1.0
+ },
+ "patient_overlap_val_test": 0,
+ "banks_val": {
+  "iMF_S1": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.008010161758606388,
+   "windows_all16_finite": 0.9330153463293239,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_I_S1.npy",
+   "sha256": "7d46522d36fec10a0b58c2b1e8173824e65e9ad28e41e2e2137cd78e64bbecd2"
+  },
+  "iMF_S2": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.009902530070510162,
+   "windows_all16_finite": 0.913728743260058,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_I_S2.npy",
+   "sha256": "0ab3fb90ebb33aaebd10b9e684a81058ace7047831a08aed35752ff19df9e7cf"
+  },
+  "iMF_S4": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.02365460389879718,
+   "windows_all16_finite": 0.8753629199502281,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_I_S4.npy",
+   "sha256": "8070d4f8324a6aac4307c6f777e4554f33f488a521400c40f7ceca6a4cba06ef"
+  },
+  "iMF_S8": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.03204064703442555,
+   "windows_all16_finite": 0.8500622148486106,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_I_S8.npy",
+   "sha256": "1d8f2a0b53a3fe3123aeb2e13eab46ae954642743f3791107d66905fa88ece15"
+  },
+  "CD_S1": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.01721277478224803,
+   "windows_all16_finite": 0.9110327664869349,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_D_S1.npy",
+   "sha256": "f718333b0adb84099b5298e718470d048a3527d1f726718b567da3adf2f55234"
+  },
+  "CD_S2": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.0027218996267109083,
+   "windows_all16_finite": 0.9657818332642057,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_D_S2.npy",
+   "sha256": "bb027caff21462aa1b3a46f8676b7e3bc4cd4fade94050250afd0cdf0edae8a0"
+  },
+  "CD_S4": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.006299253421816674,
+   "windows_all16_finite": 0.9464952301949399,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_D_S4.npy",
+   "sha256": "b7e5bf873894c5d31f507d2ea5ac5dec8c81c47dc16033dc6c947ad8b56f8713"
+  },
+  "CD_S8": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.006454790543343011,
+   "windows_all16_finite": 0.9456656988801327,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_D_S8.npy",
+   "sha256": "304e2ef1dcfb3a51370fa57e59ce60246d1e1e8b3e06feb77a0c7e3ca2d23dc7"
+  },
+  "PENGUIN_S1": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.05092544587308171,
+   "windows_all16_finite": 0.8614682704272086,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_C_S1.npy",
+   "sha256": "f4dac2a7793ab8e7dcd9632626f2633c2b552f354f18415d5effb9609ea5151c"
+  },
+  "PENGUIN_S2": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.02242326835338034,
+   "windows_all16_finite": 0.8998340937370386,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_C_S2.npy",
+   "sha256": "2e9f6292c88fd6aee20b18ace799ea2b62506e6572fe8161f8a9f0dc6d833a0f"
+  },
+  "PENGUIN_S4": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.014050186644545831,
+   "windows_all16_finite": 0.921401907922024,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_C_S4.npy",
+   "sha256": "a9cd161dea5e3c34998f91932e0b3b9e071c88ff016757b06428830e4bc4986a"
+  },
+  "PENGUIN_S8": {
+   "shape_used": [
+    16,
+    4822
+   ],
+   "nonfinite_sample_rate": 0.0015553712152633762,
+   "windows_all16_finite": 0.9782248029863128,
+   "path": "outputs/m1_pilot_gain_prediction/val_hr_C_S8.npy",
+   "sha256": "8f8770dd37f4b7ed31300a90c0e379550994ede4c396003511f922e7dad7884f"
+  }
+ },
+ "banks_test": {
+  "iMF_S1": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.008014378549864401,
+   "windows_all16_finite": 0.9297958348257688,
+   "path": "outputs/dw1_raw/hr_I1.npy",
+   "sha256": "c29008e2b5500ae508737250023a5726ebf548a90621f2c20280a77bb1b7b5a7",
+   "rows_available": 32
+  },
+  "iMF_S2": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.010198664483446758,
+   "windows_all16_finite": 0.9118354397994167,
+   "path": "outputs/tt_expb_raw/hr_I_seed42_S2.npy",
+   "sha256": "1f842b2ddad48e165b880d4ba19fa904ea07b2648dc977a38609f2a2981a9efd",
+   "rows_available": 32
+  },
+  "iMF_S4": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.02393120298828225,
+   "windows_all16_finite": 0.8769892032952975,
+   "path": "outputs/tt_expb_raw/hr_I_seed42_S4.npy",
+   "sha256": "96f58ec0ab4202d8e48f09852d6a93ebde807a523d36197bdc6788c8d1670264",
+   "rows_available": 16
+  },
+  "iMF_S8": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.032700327482986236,
+   "windows_all16_finite": 0.8514045949956506,
+   "path": "outputs/tt_expb_raw/hr_I_seed42_S8.npy",
+   "sha256": "5c1622039560d2c9322abdee624c1a3a20a0ba7e1c3f98d823c26b971d1d06e3",
+   "rows_available": 16
+  },
+  "CD_S1": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.017774906616179708,
+   "windows_all16_finite": 0.9128076549148032,
+   "path": "outputs/dw1_raw/hr_D1.npy",
+   "sha256": "650e229a1a293aae9a68e331626f82a14afd6bc5d4667031ffc5ffd87eee9e43",
+   "rows_available": 32
+  },
+  "CD_S2": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.002558460829964693,
+   "windows_all16_finite": 0.967609885892647,
+   "path": "outputs/dw1_raw/hr_D2.npy",
+   "sha256": "bea295039580a68d58c7f8947620fbf2ecd3729d31501b8ec737dbdf0bb1e202",
+   "rows_available": 16
+  },
+  "CD_S4": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.0068119019597809955,
+   "windows_all16_finite": 0.9416159238602057,
+   "path": "outputs/tt_expb_raw/hr_D_seed42_S4.npy",
+   "sha256": "42c85597652ef34c7fb47f0b1eab01d0072a291035cd030102bb168ded41667f",
+   "rows_available": 16
+  },
+  "CD_S8": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.0064409251394361156,
+   "windows_all16_finite": 0.9444302307731669,
+   "path": "outputs/tt_expb_raw/hr_D_seed42_S8.npy",
+   "sha256": "801730f42821ecf40462c8f9abc8351701a17ac2ef64b3c22fa56c3f5330d38d",
+   "rows_available": 16
+  },
+  "PENGUIN_S1": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.05286739497518293,
+   "windows_all16_finite": 0.859489331218339,
+   "path": "outputs/dw1_raw/hr_C1.npy",
+   "sha256": "15bff085c0141e55758f70cc90ce3ea23ac3ec975d1e10d1bf3871f28a6e32c2",
+   "rows_available": 32
+  },
+  "PENGUIN_S2": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.022306580361254668,
+   "windows_all16_finite": 0.9021644578621502,
+   "path": "outputs/dw1_raw/hr_C2.npy",
+   "sha256": "eb8573613ed1d5d30ea5d34e30b8c498a280e6d61b179ae8de62294f0f38aaaf",
+   "rows_available": 16
+  },
+  "PENGUIN_S4": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.014564038274574016,
+   "windows_all16_finite": 0.9218646062528782,
+   "path": "outputs/tt_expb_raw/hr_C_seed42_S4.npy",
+   "sha256": "dbcaea59f6c3fc2094ca26043adc9372d8f04ffd54dc017c00f984581d590193",
+   "rows_available": 32
+  },
+  "PENGUIN_S8": {
+   "shape_used": [
+    16,
+    19543
+   ],
+   "nonfinite_sample_rate": 0.00153187842194136,
+   "windows_all16_finite": 0.9781507445121015,
+   "path": "outputs/tt_expb_raw/hr_C_seed42_S8.npy",
+   "sha256": "cf0839b11661e9f2b5091990e89e7e4888cbeac2e871bf4f52cb7a0064fa0d03",
+   "rows_available": 16
+  }
+ },
+ "references": {
+  "val": "outputs/m1_pilot_gain_prediction/val_ref.npz (ref_hr, pid)",
+  "test": "outputs/sr1_eval/arm_I_seed42.npz (ref_hr, pid)"
+ },
+ "seed_provenance": "draw k = torch.Generator().manual_seed(k) over the whole split (z0 = randn(N,1,512)); seeds 0-15 used; rows k of every bank = seed k",
+ "seed_alignment_across_depths": {
+  "iMF": "exact (z0 only randomness)",
+  "PENGUIN": "exact (z0 only randomness)",
+  "CD": "z0 aligned; the S-1 re-noise tensors are injected at t=j/S, so trajectories at S and 2S are not paired beyond z0"
+ },
+ "m2_pairing_requirement": "none: depth outcomes use seed IDs disjoint from the pilot and from the width outcome",
+ "hr_functional": "v1_evaluate._hr = rpeaks.hr_bpm(rpeaks.detect_rpeaks(row, 128, 'neurokit'), 128); NaN iff < 2 peaks",
+ "physiological_range_convention": "[30, 200] bpm (scripts/v1_build_vitaldb.py:54 reference-window drop rule)",
+ "flops_infrastructure": "none found in the repository; NFE and measured latency are reported instead",
+ "test_draw_history": "these test draws (seeds 0-15) were analysed in DW1 / EXP-B / B3 / M1; M2's action outcomes are new functionals of them",
+ "validation_bank_provenance": "M1: scripts/m1_val_bank.py, committed cff9388; S=1 regenerated bitwise identically"
+}

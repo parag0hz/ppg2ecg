@@ -1,0 +1,1272 @@
+{
+ "date": "2026-09-25",
+ "label_use": "none (only reference finiteness, shapes, non-finite rates, sha256)",
+ "splits": {
+  "val": {
+   "n_windows": 4822,
+   "n_patients": 289,
+   "reference_finite": 1.0,
+   "reference_file": "outputs/m1_pilot_gain_prediction/val_ref.npz",
+   "reference_sha256": "a10756b08ac42599d368fe14fbebd3a7c4f24e4ff7680edff85af7662b01d624",
+   "banks": {
+    "iMF_S1": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_I_S1.npy",
+      "outputs/fbc1_calibration_allocation/val_hr_I_S1_seeds16_31.npy"
+     ],
+     "sha256": [
+      "7d46522d36fec10a0b58c2b1e8173824e65e9ad28e41e2e2137cd78e64bbecd2",
+      "bfca19c597210e0ecc591701461a87db2347ecd36e131e5517198cdb9e68d83b"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.007815740356698466
+    },
+    "iMF_S2": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_I_S2.npy"
+     ],
+     "sha256": [
+      "0ab3fb90ebb33aaebd10b9e684a81058ace7047831a08aed35752ff19df9e7cf"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.009902530070510162
+    },
+    "iMF_S4": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_I_S4.npy"
+     ],
+     "sha256": [
+      "8070d4f8324a6aac4307c6f777e4554f33f488a521400c40f7ceca6a4cba06ef"
+     ],
+     "rows_available": 16,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.02296764827872252
+    },
+    "iMF_S8": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_I_S8.npy"
+     ],
+     "sha256": [
+      "1d8f2a0b53a3fe3123aeb2e13eab46ae954642743f3791107d66905fa88ece15"
+     ],
+     "rows_available": 16,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.03157403566984654
+    },
+    "iMF_S16": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_I_S16_seeds0_1.npy"
+     ],
+     "sha256": [
+      "8043f8469065bc2572f1557cd6786910bcfd7c37779c70d7ebc168dbcbac49e3"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.03463293239319784
+    },
+    "iMF_S32": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_I_S32_seeds0_0.npy"
+     ],
+     "sha256": [
+      "6768be998c5ced938429539bdd8d6c139267bc71d7bfc7607d5e1ccdc4ac56bc"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.03608461219411033
+    },
+    "CD_S1": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_D_S1.npy",
+      "outputs/fbc1_calibration_allocation/val_hr_D_S1_seeds16_31.npy"
+     ],
+     "sha256": [
+      "f718333b0adb84099b5298e718470d048a3527d1f726718b567da3adf2f55234",
+      "7f3add16b1b19fe8237b5192c2aae584d7436631d111fc277d9ed697d3df2868"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.017173890501866445
+    },
+    "CD_S2": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_D_S2.npy"
+     ],
+     "sha256": [
+      "bb027caff21462aa1b3a46f8676b7e3bc4cd4fade94050250afd0cdf0edae8a0"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.0027218996267109083
+    },
+    "CD_S4": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_D_S4.npy"
+     ],
+     "sha256": [
+      "b7e5bf873894c5d31f507d2ea5ac5dec8c81c47dc16033dc6c947ad8b56f8713"
+     ],
+     "rows_available": 16,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.006247407714641228
+    },
+    "CD_S8": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_D_S8.npy"
+     ],
+     "sha256": [
+      "304e2ef1dcfb3a51370fa57e59ce60246d1e1e8b3e06feb77a0c7e3ca2d23dc7"
+     ],
+     "rows_available": 16,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.006428867689755288
+    },
+    "CD_S16": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_D_S16_seeds0_1.npy"
+     ],
+     "sha256": [
+      "235e9ad1a2e9b0a2c160affb561d07a928c3e1317da5d8de4b1e6b576ed16e94"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.009850684363334717
+    },
+    "CD_S32": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_D_S32_seeds0_0.npy"
+     ],
+     "sha256": [
+      "9e66bf893cc413ec79811b4f9631d7fe2cd21b59ee21c12751e6eddfcff7b049"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.013687266694317711
+    },
+    "PENGUIN_S1": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_C_S1.npy",
+      "outputs/fbc1_calibration_allocation/val_hr_C_S1_seeds16_31.npy"
+     ],
+     "sha256": [
+      "f4dac2a7793ab8e7dcd9632626f2633c2b552f354f18415d5effb9609ea5151c",
+      "b54b65fc5b6d4f6ccec75df84df286b2ac90dda1634a89f0f53d1615d0484275"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.051145790128577354
+    },
+    "PENGUIN_S2": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_C_S2.npy"
+     ],
+     "sha256": [
+      "2e9f6292c88fd6aee20b18ace799ea2b62506e6572fe8161f8a9f0dc6d833a0f"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.02242326835338034
+    },
+    "PENGUIN_S4": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_C_S4.npy"
+     ],
+     "sha256": [
+      "a9cd161dea5e3c34998f91932e0b3b9e071c88ff016757b06428830e4bc4986a"
+     ],
+     "rows_available": 16,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.013609498133554542
+    },
+    "PENGUIN_S8": {
+     "files": [
+      "outputs/m1_pilot_gain_prediction/val_hr_C_S8.npy"
+     ],
+     "sha256": [
+      "8f8770dd37f4b7ed31300a90c0e379550994ede4c396003511f922e7dad7884f"
+     ],
+     "rows_available": 16,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.0018664454583160513
+    },
+    "PENGUIN_S16": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_C_S16_seeds0_1.npy"
+     ],
+     "sha256": [
+      "a2b4889ea708b9dc00aca189b7754c604cc52a1890a6af3e5c88f751eedbc456"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.00041476565740356696
+    },
+    "PENGUIN_S32": {
+     "files": [
+      "outputs/fbc1_calibration_allocation/val_hr_C_S32_seeds0_0.npy"
+     ],
+     "sha256": [
+      "fab8821bef36d74973b806553484d426d03432ac5f162d4607295a11cb17a39c"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.0006221484861053505
+    }
+   }
+  },
+  "test": {
+   "n_windows": 19543,
+   "n_patients": 1156,
+   "reference_finite": 1.0,
+   "reference_file": "outputs/sr1_eval/arm_I_seed42.npz",
+   "reference_sha256": "67979a7759876789b99b2294475bfa3c12e325494ddf3390d05618434bcb6fb5",
+   "banks": {
+    "iMF_S1": {
+     "files": [
+      "outputs/dw1_raw/hr_I1.npy"
+     ],
+     "sha256": [
+      "c29008e2b5500ae508737250023a5726ebf548a90621f2c20280a77bb1b7b5a7"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.00819347080796193
+    },
+    "iMF_S2": {
+     "files": [
+      "outputs/dw1_raw/hr_I2.npy"
+     ],
+     "sha256": [
+      "f78908711e63e22e14ecc41c8f1e2b111ef54cd0f4e85810f7f2484204e9b181"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.010198664483446758
+    },
+    "iMF_S4": {
+     "files": [
+      "outputs/dw1_raw/hr_I4.npy"
+     ],
+     "sha256": [
+      "46c93ba87512ab141f3bea5b7a0fe113f6ec9c5f7b2a30bd11ed1c71c595c250"
+     ],
+     "rows_available": 8,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.02424781251599038
+    },
+    "iMF_S8": {
+     "files": [
+      "outputs/dw1_raw/hr_I8.npy"
+     ],
+     "sha256": [
+      "5e0b39900a837c18600c7aede60b6d6112eff02112d91421c73fe03cdcc207cc"
+     ],
+     "rows_available": 4,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.0325436217571509
+    },
+    "iMF_S16": {
+     "files": [
+      "outputs/dw1_raw/hr_I16.npy"
+     ],
+     "sha256": [
+      "958e17362e36df05a46a62dc30f39c1e48bfd9b0ce3b584dd2391f995ad94bc0"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.03720002046768664
+    },
+    "iMF_S32": {
+     "files": [
+      "outputs/dw1_raw/hr_I32.npy"
+     ],
+     "sha256": [
+      "6f8056d5c03999743136c2138b3e9c50b3be2f998b3393b4ee6522047d7c7cc3"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.03822340479967252
+    },
+    "CD_S1": {
+     "files": [
+      "outputs/dw1_raw/hr_D1.npy"
+     ],
+     "sha256": [
+      "650e229a1a293aae9a68e331626f82a14afd6bc5d4667031ffc5ffd87eee9e43"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.017977984444558153
+    },
+    "CD_S2": {
+     "files": [
+      "outputs/dw1_raw/hr_D2.npy"
+     ],
+     "sha256": [
+      "bea295039580a68d58c7f8947620fbf2ecd3729d31501b8ec737dbdf0bb1e202"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.002558460829964693
+    },
+    "CD_S4": {
+     "files": [
+      "outputs/dw1_raw/hr_D4.npy"
+     ],
+     "sha256": [
+      "5ae066ef4d2fb6cf2881bf75f202611fe6f4d868974efaf29e47b03789d50392"
+     ],
+     "rows_available": 8,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.006728751982807143
+    },
+    "CD_S8": {
+     "files": [
+      "outputs/dw1_raw/hr_D8.npy"
+     ],
+     "sha256": [
+      "768f839f654c23ceef5ffc5f208dc0144e2685ca18f469bd3850cbd94d13ae22"
+     ],
+     "rows_available": 4,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.005974006037967558
+    },
+    "CD_S16": {
+     "files": [
+      "outputs/dw1_raw/hr_D16.npy"
+     ],
+     "sha256": [
+      "cd5e94c0798bb5aa67d87e9dd0a0adab1056c0be5ff6e6580fb22e859c8b6c33"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.0104129355779563
+    },
+    "CD_S32": {
+     "files": [
+      "outputs/dw1_raw/hr_D32.npy"
+     ],
+     "sha256": [
+      "460bd9e0cda666246a2f5932dc83d2039028d146aa91446ec4120a33ab6b4a18"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.01627181087857545
+    },
+    "PENGUIN_S1": {
+     "files": [
+      "outputs/dw1_raw/hr_C1.npy"
+     ],
+     "sha256": [
+      "15bff085c0141e55758f70cc90ce3ea23ac3ec975d1e10d1bf3871f28a6e32c2"
+     ],
+     "rows_available": 32,
+     "rows_used": 32,
+     "draw_nonfinite_rate_rows_used": 0.052718684439441235
+    },
+    "PENGUIN_S2": {
+     "files": [
+      "outputs/dw1_raw/hr_C2.npy"
+     ],
+     "sha256": [
+      "eb8573613ed1d5d30ea5d34e30b8c498a280e6d61b179ae8de62294f0f38aaaf"
+     ],
+     "rows_available": 16,
+     "rows_used": 16,
+     "draw_nonfinite_rate_rows_used": 0.022306580361254668
+    },
+    "PENGUIN_S4": {
+     "files": [
+      "outputs/dw1_raw/hr_C4.npy"
+     ],
+     "sha256": [
+      "9402fc4b660030dfe755c1c2641fccd7f7f8f22a0997b80bdcd27cd9ef1c2b68"
+     ],
+     "rows_available": 8,
+     "rows_used": 8,
+     "draw_nonfinite_rate_rows_used": 0.01461520749117331
+    },
+    "PENGUIN_S8": {
+     "files": [
+      "outputs/dw1_raw/hr_C8.npy"
+     ],
+     "sha256": [
+      "3248d6b3a55cafe2dea4787e1c12b47967310ef05afe30c374eef435b3ed3dda"
+     ],
+     "rows_available": 4,
+     "rows_used": 4,
+     "draw_nonfinite_rate_rows_used": 0.0014966995855293455
+    },
+    "PENGUIN_S16": {
+     "files": [
+      "outputs/dw1_raw/hr_C16.npy"
+     ],
+     "sha256": [
+      "eb54a55af1a196ec620b94cd8fe57c1e3bfd8ec74ecf4eb24b7320c7869a0694"
+     ],
+     "rows_available": 2,
+     "rows_used": 2,
+     "draw_nonfinite_rate_rows_used": 0.0004861075576932917
+    },
+    "PENGUIN_S32": {
+     "files": [
+      "outputs/dw1_raw/hr_C32.npy"
+     ],
+     "sha256": [
+      "5840a0bb4c1fa324bb53131472acd584efd69c147ae83a3d4c41261d7faad28f"
+     ],
+     "rows_available": 1,
+     "rows_used": 1,
+     "draw_nonfinite_rate_rows_used": 0.0009722151153865834
+    }
+   }
+  }
+ },
+ "cells": [
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py) + FBC1 seeds 16-31",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.007815740356698466,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.009902530070510162,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.02296764827872252,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.03157403566984654,
+   "window_no_finite_draw_rate": 0.0018664454583160513
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.03463293239319784,
+   "window_no_finite_draw_rate": 0.01306511820821236
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.03608461219411033,
+   "window_no_finite_draw_rate": 0.03608461219411033
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.008010161758606388,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.009695147241808378,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.023900871007880548,
+   "window_no_finite_draw_rate": 0.00020738282870178348
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.030796350062214848,
+   "window_no_finite_draw_rate": 0.010576524263790958
+  },
+  {
+   "model": "iMF",
+   "split": "val",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.034218166735794274,
+   "window_no_finite_draw_rate": 0.034218166735794274
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py) + FBC1 seeds 16-31",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.017173890501866445,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0027218996267109083,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.006247407714641228,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.006428867689755288,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.009850684363334717,
+   "window_no_finite_draw_rate": 0.0022812111157196184
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.013687266694317711,
+   "window_no_finite_draw_rate": 0.013687266694317711
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.01721277478224803,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0026959767731231854,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.00679178763998341,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.005806719203649938,
+   "window_no_finite_draw_rate": 0.00020738282870178348
+  },
+  {
+   "model": "CD",
+   "split": "val",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.009746992948983823,
+   "window_no_finite_draw_rate": 0.009746992948983823
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py) + FBC1 seeds 16-31",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.051145790128577354,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.02242326835338034,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.013609498133554542,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0018664454583160513,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.00041476565740356696,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.0006221484861053505,
+   "window_no_finite_draw_rate": 0.0006221484861053505
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.05092544587308171,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.021230817088345084,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.014724180837826627,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "M1 validation bank (m1_val_bank.py)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.001970136872666943,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "val",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "FBC1 generation (fbc1_val_bank.py)",
+   "needs_generation": true,
+   "draw_nonfinite_rate": 0.00041476565740356696,
+   "window_no_finite_draw_rate": 0.00041476565740356696
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.00819347080796193,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.010198664483446758,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.02424781251599038,
+   "window_no_finite_draw_rate": 5.1169216599293864e-05
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0325436217571509,
+   "window_no_finite_draw_rate": 0.0017397533643759913
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.03720002046768664,
+   "window_no_finite_draw_rate": 0.012792304149823467
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.03822340479967252,
+   "window_no_finite_draw_rate": 0.03822340479967252
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.008014378549864401,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.010348974057207184,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.023499462723225707,
+   "window_no_finite_draw_rate": 0.0006651998157908202
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0324924525405516,
+   "window_no_finite_draw_rate": 0.010489689402855242
+  },
+  {
+   "model": "iMF",
+   "split": "test",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.03638131300209794,
+   "window_no_finite_draw_rate": 0.03638131300209794
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.017977984444558153,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.002558460829964693,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.006728751982807143,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.005974006037967558,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0104129355779563,
+   "window_no_finite_draw_rate": 0.001176891981783759
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.01627181087857545,
+   "window_no_finite_draw_rate": 0.01627181087857545
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.017774906616179708,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.002654403111088369,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.006907844240904672,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.005961213733817736,
+   "window_no_finite_draw_rate": 0.0005116921659929387
+  },
+  {
+   "model": "CD",
+   "split": "test",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.011308396868443944,
+   "window_no_finite_draw_rate": 0.011308396868443944
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 32,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.052718684439441235,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 16,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.022306580361254668,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 8,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.01461520749117331,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 4,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0014966995855293455,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 2,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0004861075576932917,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 32,
+   "K": 1,
+   "S": 32,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0009722151153865834,
+   "window_no_finite_draw_rate": 0.0009722151153865834
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 16,
+   "K": 16,
+   "S": 1,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.05286739497518293,
+   "window_no_finite_draw_rate": 5.1169216599293864e-05
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 16,
+   "K": 8,
+   "S": 2,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.02247607839123983,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 16,
+   "K": 4,
+   "S": 4,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.01476231898889628,
+   "window_no_finite_draw_rate": 0.00020467686639717546
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 16,
+   "K": 2,
+   "S": 8,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0014583226730798752,
+   "window_no_finite_draw_rate": 0.0
+  },
+  {
+   "model": "PENGUIN",
+   "split": "test",
+   "B": 16,
+   "K": 1,
+   "S": 16,
+   "available": true,
+   "source": "DW1 test bank (dw1_depth_width.py; rows 0-15 at S=1,2 and S=1 for CD/PENGUIN copied from AB1)",
+   "needs_generation": false,
+   "draw_nonfinite_rate": 0.0006651998157908202,
+   "window_no_finite_draw_rate": 0.0006651998157908202
+  }
+ ],
+ "validation_generation_check": {
+  "I": {
+   "seed": 15,
+   "S": 1,
+   "nan_pattern_identical": true,
+   "max_abs_diff_bpm": 0.0
+  },
+  "D": {
+   "seed": 15,
+   "S": 1,
+   "nan_pattern_identical": true,
+   "max_abs_diff_bpm": 0.0
+  },
+  "C": {
+   "seed": 15,
+   "S": 1,
+   "nan_pattern_identical": true,
+   "max_abs_diff_bpm": 0.0
+  }
+ },
+ "train_reference_hr": {
+  "file": "outputs/db1_hr_regressor/train_hr_labels.npz",
+  "sha256": "c3ef48e3b553fafae95a4b3aaf087b413bfb11ffb74701edfd969cc11b101099",
+  "n": 288400,
+  "median_snapped": 73.143
+ },
+ "generators": {
+  "iMF": {
+   "checkpoint": "outputs/v1_vitaldb_armI_seed42/checkpoint_last.pt",
+   "sha256": "ddbc39e66f8a71c7c8fb86c0639d741a6e1158bd9eb57e650515ae475b23f512",
+   "training_seed": 42
+  },
+  "CD": {
+   "checkpoint": "outputs/cd1_vitaldb_armD_seed42/checkpoint_last.pt",
+   "sha256": "faea968bf297e81ffcb49d7fc7bc7dd28b6b1506874908122e0b2d2ff5195952",
+   "training_seed": 42
+  },
+  "PENGUIN": {
+   "checkpoint": "outputs/v1_vitaldb_armC_seed42/checkpoint_last.pt",
+   "sha256": "05c9748b6629f33da967160ca638d7a346936d5fce42c2a9219212fabf8ee94b",
+   "training_seed": 42
+  }
+ },
+ "samplers": {
+  "iMF": "ER.sample_meanflow_schedule, uniform [1/S]*S",
+  "CD": "f_consistency at t=0 then re-noise at t=j/S with S-1 extra N(0, I) tensors drawn from the same generator after z0",
+  "PENGUIN": "euler_sample, S steps",
+  "code": "scripts/dw1_depth_width.py make_sampler (batch 512)",
+  "noise": "row k = torch.Generator().manual_seed(k), z0 = randn(n_windows, 1, 512) over the whole split"
+ },
+ "hr_functional": "v1_evaluate._hr: neurokit R-peaks, 60*fs*(n-1)/span at 128 Hz; NaN iff < 2 peaks",
+ "patients_shared_val_test": 0
+}

@@ -1,0 +1,148 @@
+{
+ "budget_unit": "generative vector-field evaluations (NFE) per window; B = K x S",
+ "primary_budget": 32,
+ "secondary_budget": 16,
+ "cells": {
+  "32": [
+   {
+    "K": 32,
+    "S": 1,
+    "nfe": 32
+   },
+   {
+    "K": 16,
+    "S": 2,
+    "nfe": 32
+   },
+   {
+    "K": 8,
+    "S": 4,
+    "nfe": 32
+   },
+   {
+    "K": 4,
+    "S": 8,
+    "nfe": 32
+   },
+   {
+    "K": 2,
+    "S": 16,
+    "nfe": 32
+   },
+   {
+    "K": 1,
+    "S": 32,
+    "nfe": 32
+   }
+  ],
+  "16": [
+   {
+    "K": 16,
+    "S": 1,
+    "nfe": 16
+   },
+   {
+    "K": 8,
+    "S": 2,
+    "nfe": 16
+   },
+   {
+    "K": 4,
+    "S": 4,
+    "nfe": 16
+   },
+   {
+    "K": 2,
+    "S": 8,
+    "nfe": 16
+   },
+   {
+    "K": 1,
+    "S": 16,
+    "nfe": 16
+   }
+  ]
+ },
+ "arm_order": "K descending (pure width first, pure depth last); ties -> lower K",
+ "baselines": {
+  "pure_width": {
+   "32": [
+    32,
+    1
+   ],
+   "16": [
+    16,
+    1
+   ]
+  },
+  "pure_depth": {
+   "32": [
+    1,
+    32
+   ],
+   "16": [
+    1,
+    16
+   ]
+  },
+  "balanced": {
+   "32": [
+    8,
+    4
+   ],
+   "16": [
+    4,
+    4
+   ]
+  },
+  "historical_static": {
+   "32": {
+    "iMF": [
+     16,
+     2
+    ],
+    "CD": [
+     32,
+     1
+    ],
+    "PENGUIN": [
+     8,
+     4
+    ]
+   },
+   "16": {
+    "iMF": [
+     8,
+     2
+    ],
+    "CD": [
+     16,
+     1
+    ],
+    "PENGUIN": [
+     8,
+     2
+    ]
+   }
+  },
+  "historical_source": "artifacts/dw1_depth_width/result.json best (K, S) per model and budget (DW1 prereg cc902b3, legacy VitalDB test; seed-stable in DW2 at B = 32)"
+ },
+ "draws": "noise seeds 0..K-1 at depth S (prefix reuse); HR = v1_evaluate._hr snapped to 1e-3 bpm",
+ "consensus": "median of the finite draw HRs; no finite draw -> fallback constant",
+ "fallback_constant_bpm": 73.143,
+ "fallback_source": {
+  "file": "outputs/db1_hr_regressor/train_hr_labels.npz",
+  "sha256": "c3ef48e3b553fafae95a4b3aaf087b413bfb11ffb74701edfd969cc11b101099",
+  "definition": "median reference HR over the VitalDB TRAINING windows (DB1 labels), snapped"
+ },
+ "samplers": {
+  "iMF": "uniform MeanFlow schedule [1/S]*S",
+  "CD": "multistep consistency, re-noise at t=j/S",
+  "PENGUIN": "forward Euler, S steps"
+ },
+ "checkpoints": {
+  "iMF": "outputs/v1_vitaldb_armI_seed42",
+  "CD": "outputs/cd1_vitaldb_armD_seed42",
+  "PENGUIN": "outputs/v1_vitaldb_armC_seed42"
+ }
+}

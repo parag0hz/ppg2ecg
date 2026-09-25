@@ -503,3 +503,6 @@ artifacts/pz3_per_patient/**/*.npz
 # M2 — action-value prediction (small artifacts only)
 !artifacts/m2_action_value/
 !artifacts/m2_action_value/**
+# FBC1 — functional budget calibration (small artifacts only)
+!artifacts/fbc1_calibration_allocation/
+!artifacts/fbc1_calibration_allocation/**

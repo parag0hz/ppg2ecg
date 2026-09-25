@@ -1,0 +1,103 @@
+{
+ "unit": "vector-field NFE per window; latency on RTX 5090 (median of 7 runs, one window, includes host-side sampler overhead and HR-free generation)",
+ "design": {
+  "pilot": "4*S",
+  "width_action": "8*S (8 samples at S)",
+  "depth_action": "8*S (4 samples at 2S)",
+  "total": "12*S"
+ },
+ "term": "equal future vector-field NFE",
+ "flops": "not measured (no FLOPs infrastructure in the repository)",
+ "per_condition": {
+  "iMF_S1": {
+   "width_8xS_sequential_ms": 183.37100418284535,
+   "depth_4x2S_sequential_ms": 218.27312209643424,
+   "width_8xS_batched_ms": 22.32533087953925,
+   "depth_4x2S_batched_ms": 44.81439618393779,
+   "pilot_4xS_batched_ms": 20.98256698809564,
+   "nfe_pilot": 4,
+   "nfe_width": 8,
+   "nfe_depth": 8
+  },
+  "iMF_S2": {
+   "width_8xS_sequential_ms": 391.31750306114554,
+   "depth_4x2S_sequential_ms": 391.3179789669812,
+   "width_8xS_batched_ms": 43.26878394931555,
+   "depth_4x2S_batched_ms": 91.40008804388344,
+   "pilot_4xS_batched_ms": 57.98979802057147,
+   "nfe_pilot": 8,
+   "nfe_width": 16,
+   "nfe_depth": 16
+  },
+  "iMF_S4": {
+   "width_8xS_sequential_ms": 732.9397869762033,
+   "depth_4x2S_sequential_ms": 754.8925899900496,
+   "width_8xS_batched_ms": 90.99460998550057,
+   "depth_4x2S_batched_ms": 201.3711561448872,
+   "pilot_4xS_batched_ms": 85.91701905243099,
+   "nfe_pilot": 16,
+   "nfe_width": 32,
+   "nfe_depth": 32
+  },
+  "CD_S1": {
+   "width_8xS_sequential_ms": 182.47774499468505,
+   "depth_4x2S_sequential_ms": 182.20777506940067,
+   "width_8xS_batched_ms": 24.76817392744124,
+   "depth_4x2S_batched_ms": 44.71710114739835,
+   "pilot_4xS_batched_ms": 24.966219207271934,
+   "nfe_pilot": 4,
+   "nfe_width": 8,
+   "nfe_depth": 8
+  },
+  "CD_S2": {
+   "width_8xS_sequential_ms": 366.23958102427423,
+   "depth_4x2S_sequential_ms": 369.0513588953763,
+   "width_8xS_batched_ms": 44.91769289597869,
+   "depth_4x2S_batched_ms": 91.2204219494015,
+   "pilot_4xS_batched_ms": 46.00271419622004,
+   "nfe_pilot": 8,
+   "nfe_width": 16,
+   "nfe_depth": 16
+  },
+  "CD_S4": {
+   "width_8xS_sequential_ms": 704.8642220906913,
+   "depth_4x2S_sequential_ms": 689.1724709421396,
+   "width_8xS_batched_ms": 88.92742800526321,
+   "depth_4x2S_batched_ms": 267.623248975724,
+   "pilot_4xS_batched_ms": 154.19743699021637,
+   "nfe_pilot": 16,
+   "nfe_width": 32,
+   "nfe_depth": 32
+  },
+  "PENGUIN_S1": {
+   "width_8xS_sequential_ms": 301.60553893074393,
+   "depth_4x2S_sequential_ms": 298.16437396220863,
+   "width_8xS_batched_ms": 41.19941592216492,
+   "depth_4x2S_batched_ms": 73.37716012261808,
+   "pilot_4xS_batched_ms": 40.67061096429825,
+   "nfe_pilot": 4,
+   "nfe_width": 8,
+   "nfe_depth": 8
+  },
+  "PENGUIN_S2": {
+   "width_8xS_sequential_ms": 586.3617060240358,
+   "depth_4x2S_sequential_ms": 583.7407680228353,
+   "width_8xS_batched_ms": 70.92778105288744,
+   "depth_4x2S_batched_ms": 142.28253299370408,
+   "pilot_4xS_batched_ms": 73.17188894376159,
+   "nfe_pilot": 8,
+   "nfe_width": 16,
+   "nfe_depth": 16
+  },
+  "PENGUIN_S4": {
+   "width_8xS_sequential_ms": 1209.0111619327217,
+   "depth_4x2S_sequential_ms": 1145.6768019124866,
+   "width_8xS_batched_ms": 143.88679014518857,
+   "depth_4x2S_batched_ms": 295.7733799703419,
+   "pilot_4xS_batched_ms": 147.94288878329098,
+   "nfe_pilot": 16,
+   "nfe_width": 32,
+   "nfe_depth": 32
+  }
+ }
+}

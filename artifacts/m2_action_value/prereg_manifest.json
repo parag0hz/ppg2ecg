@@ -1,0 +1,65 @@
+{
+ "preregistration_commit": "51e9343",
+ "frozen_policy_commit": "065ea63",
+ "prereg_doc": "docs/M2_ACTION_VALUE_PREREGISTRATION.md",
+ "audit_doc": "docs/M2_ACTION_VALUE_AUDIT.md",
+ "seed": 20260925,
+ "partitions": 32,
+ "sha256": {
+  "artifacts/m2_action_value/partition_manifest.json": "a98a661d765424f69cacfc18cbe7c653e3f9dbc249057e6f4e7eeb7b530514f6",
+  "artifacts/m2_action_value/frozen_policy.json": "59b2d796018cb378c34c7d4986462b11b80129848e8d3a91447b9e4f04dcb7ec",
+  "scripts/m2_run.py": "2cf7fe5cf7b4e836d2d75529c402b192f64c0cb615ec52b3a780ec0074d34cf4",
+  "scripts/m1_run.py": "4b91423f572b3369638c44081719a8675377892c1824ee2792d94d2e3abdf83d",
+  "tests/test_m2_action_null.py": "6cb7c2c3a2bc85ff4b969519fb398313e9f45856d939e9a238ee799c70b4ffd7",
+  "outputs/m1_pilot_gain_prediction/val_ref.npz": "a10756b08ac42599d368fe14fbebd3a7c4f24e4ff7680edff85af7662b01d624",
+  "outputs/sr1_eval/arm_I_seed42.npz": "67979a7759876789b99b2294475bfa3c12e325494ddf3390d05618434bcb6fb5"
+ },
+ "banks": "see artifacts/m2_action_value/audit.json (sha256 of every val / test bank)",
+ "test_condition_mae_width_depth_descriptive": {
+  "iMF_S1": [
+   6.613,
+   6.696,
+   "WIDTH"
+  ],
+  "iMF_S2": [
+   5.974,
+   6.395,
+   "WIDTH"
+  ],
+  "iMF_S4": [
+   5.368,
+   5.797,
+   "WIDTH"
+  ],
+  "CD_S1": [
+   5.473,
+   6.332,
+   "WIDTH"
+  ],
+  "CD_S2": [
+   6.395,
+   6.77,
+   "WIDTH"
+  ],
+  "CD_S4": [
+   6.066,
+   6.393,
+   "WIDTH"
+  ],
+  "PENGUIN_S1": [
+   5.072,
+   4.893,
+   "DEPTH"
+  ],
+  "PENGUIN_S2": [
+   5.264,
+   5.587,
+   "WIDTH"
+  ],
+  "PENGUIN_S4": [
+   5.6,
+   6.105,
+   "WIDTH"
+  ]
+ }
+}

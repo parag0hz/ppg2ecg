@@ -282,6 +282,7 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 같은 원칙이 ECG→HR 밖(호흡→RR)으로 일반화 | EXP-D Part A(U1 업스트림 PENGUIN, BIDMC 6명, prereg `eddbe60`): 폭 − 깊이 B32 (8,4)−(1,32) −1.76 [−2.64, −1.00], B16도 유의 → 동결 규칙상 **STRONG**. 그러나 사후 진단에서 생성 RR이 참조 RR과 상관 ≈ 0(모든 S, 공식 Heun-50 포함)이고 학습셋 중앙값 상수(2.10)가 모든 셀보다 나음 → 합의 이득은 정보 없는 추정량의 분산 축소일 뿐. **원칙의 일반화 근거로 쓰지 않음** | 근거 아님 (기능값이 정보를 담지 않음) |
 | 같은 원칙이 ABP(SBP/DBP/MAP)로 일반화 | EXP-D Part B(U1 PENGUIN MIMIC-BP, 190명, prereg `eddbe60` + 사전 개정 `65dcc97`): 동결 규칙 **PARTIAL**(SBP 폭 우세 −0.33 [−0.49, −0.17], DBP 깊이 우세 +0.83 [+0.35, +1.28], MAP 차이 없음). 그러나 ρ̄ ≈ 0.99(K_eff ≈ 1)라 합의 이득 ≈ 0 — 차이는 전부 단일 샘플의 깊이별 편향 이동. 사용성 게이트: 세 기능값 모두 학습셋 상수보다 낫지 않음(Gate A 실패, Spearman 0.15–0.28) → 교차 기능값 증거 판정 **NO SUPPORT** | 근거 아님 (사용 가능한 기능값 없음) |
 | 파일럿 샘플 통계로 추가 독립 샘플의 합의 이득을 예측할 수 있다 (M1) | prereg `7526201` + 사전 개정 `cff9388`(분할별 통계로 교정: 분할 평균 후 상관은 귀무에서도 +0.17~0.30을 만듦), 검증셋 전용 적합, 테스트 1회(1,156명): 통합 Spearman +0.303 [+0.292, +0.314], **조건 내 +0.203 [+0.192, +0.215]**(12개 조건 모두 CI>0), 사분위 차 +2.23 bpm, 세 모델 모두 양수, LOMO 전이 → **STRONG**(개정 규칙). 단 R² 0.09, 신호의 ~92 %가 SD 하나, 구성상 예상되는 분산→이득 관계, 정책 관련 Δ_width와는 +0.077 | 중간 (필요조건일 뿐, 할당기 효과는 미검증) |
+| 같은 미래 NFE에서 폭/깊이 중 무엇이 나을지 파일럿이 예측한다 (M2) | prereg `51e9343`, 검증셋 동결 `065ea63`, 4/8/4 분리 분할, 테스트 1회: SD-Ridge·SD-임계값·전체-Ridge 모두 '항상 WIDTH'로 수렴, 조건별 정적 규칙(PENGUIN S=1만 DEPTH)보다 +0.015 [+0.006, +0.024] bpm 나쁨, 조건 내 ΔQ 예측 Spearman +0.009 → **FAILED, M3 NO-GO**. 같은 미래 NFE에서 폭이 깊이를 9개 중 8개 조건에서 이김(평균 0.36 bpm) | 강함 (정적 폭 우위) / 적응형 라우팅은 근거 없음 |
 | 비트 위치만 필요하면 직접 검출기로 충분하다 | RD1 VitalDB F1 0.773 vs 디코딩 0.765 (차이 < 0.02 여백), RR-MAE 7.7 vs 10.8 ms, 13배 작고 380배 빠름 | 강함 (주장 범위 한정용) |
 | 합의 디코딩 (F1, 박동 간격) | 2/5 데이터셋에서 F1 기준 통과, 1곳에서 해로움 | 조건부 |
 | HRV 개선 | 상대 우위만, 절대 수준 사용 불가 | 보조 |
@@ -313,7 +314,7 @@ QRS가 없는 붕괴 파형 위에서 피크 검출기가 흔들린 것이지 �
 | 솔버 공정성 (Euler vs 정품 Heun) · 오차 분해 메커니즘 | `docs/TT_EXPA_SOLVER_FAIRNESS_REPORT.md`, `docs/TT_EXPB_DECOMPOSITION_REPORT.md`, `docs/B3_FUNCTIONAL_ERROR_MECHANISM_REPORT.md`, `docs/CONSENSUS_INFERENCE_THEORY_NOTE.md` |
 | 직접 HR 회귀 기준선 (VitalDB · WildPPG) | `docs/DB1_DISCRIMINATIVE_HR_BASELINE_REPORT.md`, `docs/WD1_WILDPPG_REGRESSION_AND_ALLOCATION_REPORT.md` |
 | 직접 R 피크 검출기 기준선 | `docs/RD1_DIRECT_RPEAK_DETECTOR_REPORT.md` |
-| 외부 모델 감사 · RDDM 재현 · RDDM 외부 합의 · PPGFlowECG 출처 · PPGFlowECG 고정 예산 · EXP-D 호흡 / ABP · M1 파일럿 이득 예측 | `docs/EXTERNAL_MODEL_AUDIT.md`, `docs/RDDM_R0_REPRODUCTION_REPORT.md`, `docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md`, `docs/PPGFLOWECG_PROVENANCE_AUDIT.md`, `docs/PPGFLOWECG_EXTERNAL_FIXED_BUDGET_REPORT.md`, `docs/EXP_D_RESPIRATION_REPORT.md`, `docs/EXP_D_ABP_REPORT.md`, `docs/M1_PILOT_GAIN_PREDICTION_REPORT.md` |
+| 외부 모델 감사 · RDDM 재현 · RDDM 외부 합의 · PPGFlowECG 출처 · PPGFlowECG 고정 예산 · EXP-D 호흡 / ABP · M1 파일럿 이득 예측 · M2 행동 가치 | `docs/EXTERNAL_MODEL_AUDIT.md`, `docs/RDDM_R0_REPRODUCTION_REPORT.md`, `docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md`, `docs/PPGFLOWECG_PROVENANCE_AUDIT.md`, `docs/PPGFLOWECG_EXTERNAL_FIXED_BUDGET_REPORT.md`, `docs/EXP_D_RESPIRATION_REPORT.md`, `docs/EXP_D_ABP_REPORT.md`, `docs/M1_PILOT_GAIN_PREDICTION_REPORT.md`, `docs/M2_ACTION_VALUE_REPORT.md` |
 | 합의 디코딩 · HRV | `docs/ED1_EVENT_CONSENSUS_DECODING_REPORT.md`, `docs/ED2_DECODING_WILDPPG_AND_HRV_REPORT.md` |
 | 개인화 | `docs/PZ1_…`, `docs/PZ2_…`, `docs/PZ3_…_REPORT.md` |
 | 효과 없었던 시도 | `docs/BB1_BACKBONE_SENSITIVITY_REPORT.md`, `docs/KN1_KAN_FFN_REPORT.md` |

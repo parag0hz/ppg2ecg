@@ -104,6 +104,7 @@ Width sets: all finite 95–98 %, partial 1.6–4.8 %, none 0 %. Depth sets: all
 
 ## 13. HR-extractor outlier sensitivity (secondary)
 Pilot flags (range [30, 200] bpm, or a pilot HR > 25 % from the pilot median): 22.7 % of test windows (23.3 % on validation).
+
 | subset | MAE P1 | MAE B2 | P1 − B2 |
 |---|---|---|---|
 | all deployable | 5.788 | 5.773 | +0.015 [+0.006, +0.024] |

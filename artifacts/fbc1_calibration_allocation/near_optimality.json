@@ -1,0 +1,234 @@
+{
+ "delta_near": {
+  "iMF|B32": 0.22475185381137797,
+  "iMF|B16": 0.19754618437448468,
+  "CD|B32": 0.211263406373579,
+  "CD|B16": 0.20756689374279153,
+  "PENGUIN|B32": 0.25,
+  "PENGUIN|B16": 0.2332792027104958
+ },
+ "near_optimal_rate": {
+  "iMF|B32|UCB": {
+   "5": 0.435,
+   "10": 0.67,
+   "25": 0.785,
+   "50": 0.955,
+   "100": 0.995,
+   "200": 1.0
+  },
+  "iMF|B32|ERM": {
+   "5": 0.525,
+   "10": 0.7,
+   "25": 0.845,
+   "50": 0.965,
+   "100": 0.995,
+   "200": 1.0
+  },
+  "iMF|B16|UCB": {
+   "5": 0.505,
+   "10": 0.605,
+   "25": 0.675,
+   "50": 0.895,
+   "100": 0.97,
+   "200": 1.0
+  },
+  "iMF|B16|ERM": {
+   "5": 0.565,
+   "10": 0.675,
+   "25": 0.785,
+   "50": 0.925,
+   "100": 0.99,
+   "200": 1.0
+  },
+  "CD|B32|UCB": {
+   "5": 0.445,
+   "10": 0.6,
+   "25": 0.765,
+   "50": 0.9,
+   "100": 0.975,
+   "200": 1.0
+  },
+  "CD|B32|ERM": {
+   "5": 0.565,
+   "10": 0.695,
+   "25": 0.88,
+   "50": 0.94,
+   "100": 0.99,
+   "200": 1.0
+  },
+  "CD|B16|UCB": {
+   "5": 0.605,
+   "10": 0.725,
+   "25": 0.95,
+   "50": 0.995,
+   "100": 1.0,
+   "200": 1.0
+  },
+  "CD|B16|ERM": {
+   "5": 0.705,
+   "10": 0.825,
+   "25": 0.975,
+   "50": 1.0,
+   "100": 1.0,
+   "200": 1.0
+  },
+  "PENGUIN|B32|UCB": {
+   "5": 0.59,
+   "10": 0.72,
+   "25": 0.895,
+   "50": 0.965,
+   "100": 1.0,
+   "200": 1.0
+  },
+  "PENGUIN|B32|ERM": {
+   "5": 0.73,
+   "10": 0.83,
+   "25": 0.95,
+   "50": 1.0,
+   "100": 1.0,
+   "200": 1.0
+  },
+  "PENGUIN|B16|UCB": {
+   "5": 0.34,
+   "10": 0.535,
+   "25": 0.645,
+   "50": 0.92,
+   "100": 0.985,
+   "200": 1.0
+  },
+  "PENGUIN|B16|ERM": {
+   "5": 0.5,
+   "10": 0.675,
+   "25": 0.73,
+   "50": 0.94,
+   "100": 0.985,
+   "200": 1.0
+  }
+ },
+ "required_n (near >= 0.80 or mean regret <= delta)": {
+  "iMF|B32|UCB": 10,
+  "iMF|B32|ERM": 5,
+  "iMF|B16|UCB": 10,
+  "iMF|B16|ERM": 10,
+  "CD|B32|UCB": 10,
+  "CD|B32|ERM": 10,
+  "CD|B16|UCB": 25,
+  "CD|B16|ERM": 10,
+  "PENGUIN|B32|UCB": 25,
+  "PENGUIN|B32|ERM": 10,
+  "PENGUIN|B16|UCB": 25,
+  "PENGUIN|B16|ERM": 10
+ },
+ "verdict_B32": {
+  "criteria": {
+   "UCB": {
+    "A_models": {
+     "iMF": false,
+     "CD": false,
+     "PENGUIN": true
+    },
+    "A": false,
+    "B_models": {
+     "iMF": true,
+     "CD": false,
+     "PENGUIN": true
+    },
+    "B": true,
+    "D_models": {
+     "iMF": true,
+     "CD": true,
+     "PENGUIN": true
+    },
+    "D": true
+   },
+   "ERM": {
+    "A_models": {
+     "iMF": true,
+     "CD": true,
+     "PENGUIN": true
+    },
+    "A": true,
+    "B_models": {
+     "iMF": true,
+     "CD": false,
+     "PENGUIN": true
+    },
+    "B": true,
+    "D_models": {
+     "iMF": true,
+     "CD": true,
+     "PENGUIN": true
+    },
+    "D": true
+   }
+  },
+  "C": false,
+  "C_pooled_UCB_minus_ERM_regret": 0.03382651953641689,
+  "C_pooled_ci": [
+   0.006719949024752732,
+   0.051030427003303784
+  ],
+  "fails": {
+   "F1_no_learning": false,
+   "F2_n50_material_suboptimality": false,
+   "F3_worse_than_historical_static": false,
+   "F4_unstable_at_n25": false
+  },
+  "fail_detail": {
+   "F1_models": {
+    "iMF": false,
+    "CD": false,
+    "PENGUIN": false
+   },
+   "F2_models": {
+    "iMF": false,
+    "CD": false,
+    "PENGUIN": false
+   },
+   "F3_models": {
+    "iMF": false,
+    "CD": false,
+    "PENGUIN": false
+   },
+   "F4_models": {
+    "iMF": false,
+    "CD": false,
+    "PENGUIN": false
+   }
+  },
+  "UCB_meets_ABD": false,
+  "ERM_meets_ABD": true,
+  "verdict": "PARTIAL",
+  "partial_labels": [
+   "calibration selection works, uncertainty-aware variant unsupported",
+   "only 1 of 3 models meets the n = 25 near-optimality criterion",
+   "sample efficiency improves with n but the n = 25 criteria are not met"
+  ],
+  "go": "CONDITIONAL GO (FBC-ERM only; FBC-UCB not supported)",
+  "gate_pass": {
+   "iMF|B32": true,
+   "iMF|B16": true,
+   "CD|B32": true,
+   "CD|B16": true,
+   "PENGUIN|B32": true,
+   "PENGUIN|B16": true
+  }
+ },
+ "B16_descriptive": {
+  "UCB": {
+   "A": false,
+   "B": true,
+   "D": true
+  },
+  "ERM": {
+   "A": false,
+   "B": true,
+   "D": true
+  },
+  "C_pooled_UCB_minus_ERM_regret": 0.0316541224301236,
+  "C_pooled_ci": [
+   0.007004938691521346,
+   0.07356526634473984
+  ]
+ }
+}

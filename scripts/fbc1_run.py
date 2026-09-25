@@ -800,11 +800,19 @@ def test_stage():
 
 
 # ============================================================================ stage: latency / compute accounting
+def other_gpu_procs():
+    import os
+    q = subprocess.run(["nvidia-smi", "--query-compute-apps=pid,process_name", "--format=csv,noheader"], capture_output=True, text=True)
+    return [ln.strip() for ln in q.stdout.splitlines() if ln.strip() and int(ln.split(",")[0]) != os.getpid()]
+
+
 def latency_stage():
     import torch
     import dw1_depth_width as DW
     import v1_evaluate as V
     import vm1_evaluate as VM
+    before = other_gpu_procs()
+    assert not before, f"another GPU job is running, not timing concurrently: {before}"
     dev = torch.device("cuda")
     X, _, _ = VM.load("val")
     x1 = X[:1]
@@ -862,12 +870,15 @@ def latency_stage():
                         "hr_functional_ms_per_sample": {"median": float(np.median(th)), "p90": float(np.percentile(th, 90)), "n": len(th)},
                         "flops": flops}
         del sampler; torch.cuda.empty_cache()
+    after = other_gpu_procs()
     out = {"budget_statement": "fixed generative vector-field evaluation budget (B = K x S NFE); not equal total compute",
+           "other_gpu_processes_at_start": before, "other_gpu_processes_at_end": after,
            "protocol": f"one validation window (content-independent), {WARM} warm-up + {REPS} timed runs per cell and mode; sequential = K "
                        "batch-1 sampler calls of S steps; batched = one call with the window repeated K times; host-side sampler overhead "
                        "(noise generation, transfer) included; HR functional excluded and timed separately on CPU",
            "device": torch.cuda.get_device_name(0),
-           "concurrency_note": "no other GPU job ran; an unrelated CPU-bound process owned by the same user was running on the host",
+           "concurrency_note": "checked with nvidia-smi at start (none) and end (listed above); unrelated CPU-bound processes of the "
+                               "same user may have been running on the host",
            "cells": {str(B): [{"K": K, "S": S, "nfe": K * S} for K, S in cells(B)] for B in BUDGETS}, "per_model": res}
     (ART / "compute_accounting.json").write_text(json.dumps(out, indent=1))
 

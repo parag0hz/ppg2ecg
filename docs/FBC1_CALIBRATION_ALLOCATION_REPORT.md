@@ -294,16 +294,50 @@ network evaluation. B = K·S is *not* called equal total compute.
   32 for (32,1) and 1 for (1,32) at B = 32, and it is where width pays extra.
 - The consensus median itself is negligible.
 
-**Measured wall-clock — PENDING.** The measurement covers sequential batch-1, batched, peak GPU memory, the per-sample
-fixed overhead c0 from T_seq/K = c0 + c1·S, the CPU cost of the HR functional per sample, and FLOPs via
-`torch.utils.flop_counter`.
-- When the result stage ran, the GPU was occupied by an unrelated training job of another project. The preregistered
-  protocol forbids timing concurrently with a major GPU job, and the latency stage now refuses to start in that case.
-- The measurement (10 warm-up + 100 timed runs per cell and mode, one validation window) is armed to start automatically
-  after the GPU has been idle for 2 minutes. It will be added to `compute_accounting.json` and to this section in a
-  follow-up commit.
-- For orientation only, from M2's earlier and noisier measurement: batched width was ~2× faster than depth at equal NFE,
-  and sequential batch-1 was about equal.
+**Measured (RTX 5090, one validation window, 10 warm-up + 100 timed runs per cell and mode, median).** The run was
+made after the GPU had been idle for 2 minutes, and `nvidia-smi` showed no other compute process at start or at end. An
+earlier attempt had started while an unrelated training job of another project held the GPU; it was stopped within
+~2 minutes and wrote nothing. Host-side sampler overhead (noise generation, transfer) is included. The HR functional is
+timed separately on CPU.
+
+| B = 32 cell | NFE | sequential batch-1 ms (iMF / CD / PENGUIN) | batched ms (iMF / CD / PENGUIN) | peak GPU MiB (batched) | HR functional ms / window (K × ~1.04, CPU) |
+|---|---|---|---|---|---|
+| (32,1) | 32 | 638 / 648 / 648 | 20 / 21 / 20 | 461 | 33 |
+| (16,2) | 32 | 625 / 636 / 632 | 40 / 40 / 40 | 245 | 17 |
+| (8,4) | 32 | 623 / 632 / 627 | 78 / 79 / 78 | 137 | 8 |
+| (4,8) | 32 | 619 / 630 / 626 | 155 / 158 / 156 | 83 | 4 |
+| (2,16) | 32 | 618 / 629 / 625 | 310 / 316 / 308 | 56 | 2 |
+| (1,32) | 32 | 621 / 630 / 624 | 619 / 629 / 651 | 42 | 1 |
+
+| B = 16 cell | NFE | sequential batch-1 ms (iMF / CD / PENGUIN) | batched ms (iMF / CD / PENGUIN) | peak GPU MiB (batched) | HR functional ms / window (K × ~1.04, CPU) |
+|---|---|---|---|---|---|
+| (16,1) | 16 | 322 / 324 / 388 | 20 / 20 / 24 | 245 | 17 |
+| (8,2) | 16 | 314 / 317 / 358 | 39 / 39 / 39 | 137 | 8 |
+| (4,4) | 16 | 309 / 316 / 313 | 78 / 79 / 77 | 83 | 4 |
+| (2,8) | 16 | 310 / 315 / 311 | 155 / 158 / 155 | 56 | 2 |
+| (1,16) | 16 | 309 / 315 / 310 | 309 / 316 / 310 | 42 | 1 |
+
+- **Latency per NFE.** One vector-field evaluation costs **≈ 19.4–19.7 ms regardless of batch size** (1 to 32 windows'
+  worth). The fit T_seq/K = c0 + c1·S gives c1 = 19.4 / 19.7 / 19.4 ms per NFE and a negligible per-sample overhead c0 of
+  0.1 / 0.3 / 1.9 ms. PENGUIN's c0 is inflated by two noisy B = 16 cells, (16,1) and (8,2), whose p10–p90 range is
+  314–401 ms.
+- **Sequential batch-1 wall-clock is equal across allocations at fixed B** (≈ B × 19.5 ms): 618–648 ms at B = 32 and
+  309–388 ms at B = 16. This is the only regime where "fixed NFE" also means "fixed time".
+- **Batched wall-clock scales with the number of sequential steps S, not with K.** At B = 32, pure width (32,1) takes
+  20 ms and pure depth (1,32) takes 619–651 ms, a ≈ 30× difference.
+  - The validation-selected cells cost 40 ms for (16,2) (iMF, PENGUIN) and 20 ms for (32,1) (CD). The historical
+    PENGUIN (8,4) costs 78 ms.
+  - The FBC choice is therefore also the fast choice when samples are batched.
+- **Peak GPU memory (batched) scales with K:** 461 MiB for K = 32 and 42 MiB for K = 1. Sequential runs use 42 MiB.
+- **HR functional:** ≈ 1.04 ms per sample on CPU, i.e. 33 ms per window for (32,1) against 1 ms for (1,32). With
+  batched sampling, width's total cost (20 + 33 ms) is still ≈ 12× below pure depth (≈ 620 ms).
+- **FLOPs:** `torch.utils.flop_counter` counts **3.23 GFLOP per NFE per window**, identical for the three models. They
+  share one PENGUIN backbone architecture: 4,568,707 parameters, SSM blocks. That makes **103 GFLOP per window at B = 32
+  for every allocation**. The counter covers matmul / conv / attention only; custom ops such as the SSM scan may be
+  missed, so treat this as a lower bound.
+
+**Conclusion.** Equal NFE means equal FLOPs and equal sequential batch-1 time. In batched deployment, width-heavy
+allocations are much faster but need more memory and more CPU-side HR extractions.
 
 ## 15. Legacy-test confirmation — **not fresh prospective validation** (`legacy_test_confirmation.json`)
 This section re-uses VitalDB TEST, which DW1, DW2, EXP-B, M1 and M2 already analysed. Each validation-selected allocation

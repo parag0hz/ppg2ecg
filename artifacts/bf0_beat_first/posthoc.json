@@ -1,0 +1,72 @@
+{
+ "note": "POST-HOC; not preregistered; not gate evidence",
+ "vs_reference_pooled": {
+  "placed_positions": {
+   "tp": 16562,
+   "fp": 1995,
+   "fn": 5328,
+   "precision": 0.8924933987174651,
+   "recall": 0.7566011877569666,
+   "micro_f1": 0.818948253269711
+  },
+  "A1": {
+   "tp": 16565,
+   "fp": 2051,
+   "fn": 5325,
+   "precision": 0.8898259561667383,
+   "recall": 0.7567382366377341,
+   "micro_f1": 0.8179035204661037
+  },
+  "A2": {
+   "tp": 16655,
+   "fp": 2923,
+   "fn": 5235,
+   "precision": 0.8506997650423945,
+   "recall": 0.7608497030607584,
+   "micro_f1": 0.8032699913186073
+  },
+  "A3": {
+   "tp": 16388,
+   "fp": 3285,
+   "fn": 5502,
+   "precision": 0.8330198749555228,
+   "recall": 0.7486523526724532,
+   "micro_f1": 0.7885860019729086
+  }
+ },
+ "render_vs_placed": {
+  "A1": {
+   "placed": 18557,
+   "placed_without_detection": 0,
+   "detections_without_placed_beat": 59
+  },
+  "A2": {
+   "placed": 18557,
+   "placed_without_detection": 2,
+   "detections_without_placed_beat": 1023
+  },
+  "A3": {
+   "placed": 18557,
+   "placed_without_detection": 334,
+   "detections_without_placed_beat": 1450
+  }
+ },
+ "fd_windows_with_positions": {
+  "n_windows": 4384,
+  "A1": 51.06522692750357,
+  "A2": 28.565693237521884,
+  "A3": 29.546554118319662,
+  "imf_single": 3.114793597183507,
+  "A3-A1": [
+   -21.51867280918391,
+   -25.683133786861024,
+   -16.94999141727355
+  ],
+  "min_replicate_windows": 4189,
+  "A3-A2": [
+   0.9808608807977777,
+   -2.849947146925571,
+   4.656197964723354
+  ]
+ }
+}

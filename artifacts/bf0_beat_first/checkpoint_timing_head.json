@@ -1,0 +1,11 @@
+{
+ "steps": 6000,
+ "seed": 42,
+ "n_train_events": 1076903,
+ "n_train_detections": 1120172,
+ "train_seconds": 3.8527719974517822,
+ "n_params": 132610,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "sha256": "49c7e1438f1b1ccfc0c5f5307e95e1f19b6d96277662ca20ccde4586a8aa3aa4"
+}

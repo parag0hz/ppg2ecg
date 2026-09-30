@@ -1,0 +1,35 @@
+{
+ "windows": 4822,
+ "predicted_position_beats": 18557,
+ "oracle_beats": 21890,
+ "rd1_events": 18557,
+ "windows_without_positions": 438,
+ "empty_fill_value": -0.5418424606323242,
+ "train_median_rr_s": 0.78125,
+ "nonfinite_samples": {
+  "A1": 0,
+  "A2": 0,
+  "A3": 0,
+  "A3_mean": 0,
+  "O1": 0,
+  "O2": 0,
+  "O3": 0,
+  "S_PPG": 0,
+  "S_RR": 0
+ },
+ "arms": {
+  "A1": "template at predicted positions",
+  "A2": "deterministic learned beat at predicted positions",
+  "A3": "stochastic beat, realizations 0..15 at predicted positions (0 = primary)",
+  "A3_mean": "pointwise mean of the 16 A3 renders",
+  "O1/O2/O3": "template / deterministic / stochastic (s = 0) at reference R",
+  "S_PPG": "A3 s = 0 with donor PPG segments",
+  "S_RR": "A3 s = 0 with donor RR pairs"
+ },
+ "wall_clock_s": {
+  "A3_16_realizations_s": 22.19255518913269,
+  "A2_s": 0.32570433616638184,
+  "A1_s": 0.17876648902893066
+ },
+ "outputs": "outputs/bf0_beat_first/render_val.npz"
+}

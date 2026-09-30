@@ -1,0 +1,14 @@
+{
+ "training_seed": 42,
+ "beat_noise_seed": "1_000_003*n + 10_007*s + j (window n, realization s, beat j)",
+ "realizations": 16,
+ "primary_realization": 0,
+ "roles": {
+  "0": "primary render: FD (G3), single-waveform metrics, G1, G4b, S-PPG / S-RR / O3 noise",
+  "0-15": "G2 16-sample mean, G4a timing SD, seed-to-seed diversity"
+ },
+ "never": [
+  "choosing a best-looking realization",
+  "averaging the 16 realizations for G3 FD"
+ ]
+}

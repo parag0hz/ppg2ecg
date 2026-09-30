@@ -1,0 +1,25 @@
+{
+ "prereg": "docs/BF0_BEAT_FIRST_FEASIBILITY_PREREGISTRATION.md",
+ "train": {
+  "windows": 288400,
+  "patients": 4337,
+  "reference_peaks": 1306668,
+  "training_beats": 972455,
+  "windows_with_training_beats": 288332
+ },
+ "val": {
+  "windows": 4822,
+  "patients": 289,
+  "windows_per_patient": {
+   "min": 14,
+   "median": 16.0,
+   "max": 64
+  },
+  "reference_peaks": 21890,
+  "windows_without_reference_peaks": 0,
+  "half_C_patients": 144,
+  "half_E_patients": 145
+ },
+ "patient_overlap_train_val": 0,
+ "test_loaded": false
+}

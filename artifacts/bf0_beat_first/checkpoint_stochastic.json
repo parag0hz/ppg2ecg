@@ -1,0 +1,11 @@
+{
+ "kind": "stochastic",
+ "steps": 20000,
+ "seed": 42,
+ "n_params": 482049,
+ "n_train_beats": 972455,
+ "train_seconds": 105.1358745098114,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "sha256": "5fc7a8037c79f3237c0528016b37e875ee1bab23a077be38cdeb2f91af938dee"
+}

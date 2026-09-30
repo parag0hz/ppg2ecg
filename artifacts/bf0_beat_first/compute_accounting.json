@@ -1,0 +1,78 @@
+{
+ "params": {
+  "rd1_detector": 328897,
+  "timing_head": 132610,
+  "beat_stochastic": 482049,
+  "beat_deterministic": 482049
+ },
+ "train_seconds": {
+  "stochastic": 105.1358745098114,
+  "deterministic": 100.92248821258545,
+  "timing_head": 3.8527719974517822
+ },
+ "nan_steps": {
+  "stochastic": 0,
+  "deterministic": 0,
+  "timing_head": 0
+ },
+ "render_wall_clock_s_all_validation": {
+  "A3_16_realizations_s": 22.19255518913269,
+  "A2_s": 0.32570433616638184,
+  "A1_s": 0.17876648902893066
+ },
+ "network_forward_passes_per_window": {
+  "rd1_detector": 1,
+  "timing_head": 1,
+  "beat_template": 0,
+  "beat_deterministic": 1,
+  "beat_stochastic": 8,
+  "note": "beat passes are batched over the window's beats"
+ },
+ "batch1_latency_ms": {
+  "cpu_template": {
+   "median_ms": 2.240521484054625,
+   "p90_ms": 2.748811640776694,
+   "mean_beats_per_window": 3.84
+  },
+  "cpu_deterministic": {
+   "median_ms": 5.118677974678576,
+   "p90_ms": 9.350409754551949,
+   "mean_beats_per_window": 3.84
+  },
+  "cpu_stochastic": {
+   "median_ms": 23.35376851260662,
+   "p90_ms": 28.956493851728737,
+   "mean_beats_per_window": 3.84
+  },
+  "cuda_template": {
+   "median_ms": 0.7620420074090362,
+   "p90_ms": 0.8087355643510818,
+   "mean_beats_per_window": 3.84
+  },
+  "cuda_deterministic": {
+   "median_ms": 1.7288479721173644,
+   "p90_ms": 2.0855986978858745,
+   "mean_beats_per_window": 3.84
+  },
+  "cuda_stochastic": {
+   "median_ms": 7.081491407006979,
+   "p90_ms": 7.336286688223482,
+   "mean_beats_per_window": 3.84
+  }
+ },
+ "latency_protocol": "50 salted validation windows ('bf0-latency-v1'), 3 warm-up, CPU 4 threads; detector + timing head + beat model (s = 0) + overlap-add",
+ "other_gpu_processes": [],
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "504395dd967330b8ed0d80e5dad98302437632f7"
+ }
+}

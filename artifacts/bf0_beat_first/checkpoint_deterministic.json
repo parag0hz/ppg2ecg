@@ -1,0 +1,11 @@
+{
+ "kind": "deterministic",
+ "steps": 20000,
+ "seed": 42,
+ "n_params": 482049,
+ "n_train_beats": 972455,
+ "train_seconds": 100.92248821258545,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "sha256": "e06a328d231df784b03068c0fb882123cebbc918ba347cd309b0c03df0588685"
+}

@@ -506,3 +506,8 @@ artifacts/pz3_per_patient/**/*.npz
 # FBC1 — functional budget calibration (small artifacts only)
 !artifacts/fbc1_calibration_allocation/
 !artifacts/fbc1_calibration_allocation/**
+# BF0 — Beat-First feasibility (small artifacts only; checkpoints and renders live in outputs/, which stays ignored)
+!artifacts/bf0_beat_first/
+!artifacts/bf0_beat_first/**
+artifacts/bf0_beat_first/**/*.npz
+artifacts/bf0_beat_first/**/*.pt

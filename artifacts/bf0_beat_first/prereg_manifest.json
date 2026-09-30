@@ -1,0 +1,15 @@
+{
+ "prereg": "docs/BF0_BEAT_FIRST_FEASIBILITY_PREREGISTRATION.md",
+ "prereg_sha256": "eee745198e58a5a4c7e9f13241894f7a40c2b85252c3d48f1bc22425c51dbcc2",
+ "code_sha256": {
+  "scripts/bf0_run.py": "ef0bdea1bf9f9c3b3dfd27679fe264c8b27907c7c9bf49291c34b66c942535c1",
+  "src/ppg2ecg/beatfirst/__init__.py": "d210346b3e89c8fc7f59c913746a7eb0facfac9e653cedbbf1813d429e61ea40",
+  "src/ppg2ecg/beatfirst/beats.py": "6386290f545a62229262e24f45aa4e376775bcf5aeb1a575bd47c6c0eaad70c2",
+  "src/ppg2ecg/beatfirst/model.py": "d1062d3f772273de7e62dd89d2870ca06dc885190a6d21bab5c20fb12a36c825",
+  "src/ppg2ecg/beatfirst/render.py": "222e78c63a0ccc85098a60cabfd4c488f52df6481e5436877f04f033919e0e9c",
+  "src/ppg2ecg/beatfirst/timing.py": "697c3a6048406e9c04de81c04bb6ca404474036660f2afd202bef532c924b225",
+  "tests/test_bf0_beatfirst.py": "e92a6493810c465aef0b995f517b5f57768b076f8faa71fc7abd9e09f4274e74"
+ },
+ "parent_commit": "0a0852b10563eed02107e36b724f548977b12bd3",
+ "written_before_any_bf0_number": true
+}

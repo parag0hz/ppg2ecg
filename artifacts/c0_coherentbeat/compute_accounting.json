@@ -1,0 +1,59 @@
+{
+ "params": {
+  "detector": 328897,
+  "bf0det": 482049,
+  "c0": 592770,
+  "c0_localonly": 588545
+ },
+ "c0_over_bf0det_params": 1.2296882682050996,
+ "train_seconds": {
+  "detector": 55.00041484832764,
+  "bf0det": 101.22904562950134,
+  "c0": 145.0477910041809,
+  "c0_localonly": 141.11082983016968
+ },
+ "peak_gpu_mem_mib": {
+  "detector": 963.0791015625,
+  "bf0det": 1466.27099609375,
+  "c0": 1390.24951171875,
+  "c0_localonly": 1377.369140625
+ },
+ "nan_steps": {
+  "detector": 0,
+  "bf0det": 0,
+  "c0": 0,
+  "c0_localonly": 0
+ },
+ "batch1_latency_ms": {
+  "cpu_c0": {
+   "median_ms": 5.506382440216839,
+   "p90_ms": 5.9248530538752675
+  },
+  "cpu_bf0det": {
+   "median_ms": 5.326986429281533,
+   "p90_ms": 6.531112128868699
+  },
+  "cuda_c0": {
+   "median_ms": 1.8980508903041482,
+   "p90_ms": 2.002850896678865
+  },
+  "cuda_bf0det": {
+   "median_ms": 1.6629474703222513,
+   "p90_ms": 1.8929455894976865
+  }
+ },
+ "latency_protocol": "50 salted ARCH-VAL windows, 3 warm-up, CPU 4 threads; detector + waveform model",
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "3b6ea987a2b038e899a755f7495f3b4e11ee57ac"
+ }
+}

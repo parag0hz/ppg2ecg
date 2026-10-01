@@ -1,0 +1,19 @@
+{
+ "steps_seed": 42,
+ "train_seconds": 101.22904562950134,
+ "n_params": 482049,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "peak_gpu_mem_mib": 1466.27099609375,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "protocol": {
+  "steps": 20000,
+  "batch": 256,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "n_train_beats": 780498,
+ "family": "BF0 BeatFlowNet, deterministic L1",
+ "sha256": "90d24cb71ecba00ec629d5cea772e041c96ccce83944342374365222d745a4ed"
+}

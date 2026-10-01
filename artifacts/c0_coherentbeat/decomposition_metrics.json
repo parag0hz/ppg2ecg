@@ -1,0 +1,8 @@
+{
+ "global_rms": 0.45662431620320315,
+ "global_ac_rms": 0.14591779516689665,
+ "local_rms": 0.26304236465776765,
+ "qrs_energy_share_local": 0.8921620426285554,
+ "non_qrs_energy_share_global": 0.3944569594093628,
+ "definition": "QRS region = +-10 samples of placed events; global energy uses g minus its window mean"
+}

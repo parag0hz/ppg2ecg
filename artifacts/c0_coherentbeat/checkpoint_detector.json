@@ -1,0 +1,20 @@
+{
+ "steps_seed": 42,
+ "train_seconds": 55.00041484832764,
+ "n_params": 328897,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "peak_gpu_mem_mib": 963.0791015625,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "protocol": {
+  "steps": 14000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "sigma_ms": 20.0,
+  "threshold": 0.35,
+  "refractory": 32
+ },
+ "family": "RD1 RhythmTCN (Global-TCN)",
+ "sha256": "ba21597b8787e96a862a9a86b79f7f19b0fb99d1a200761de0d1eb4bb00254f1"
+}

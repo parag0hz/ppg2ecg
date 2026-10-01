@@ -1,0 +1,19 @@
+{
+ "steps_seed": 42,
+ "train_seconds": 145.0477910041809,
+ "n_params": 592770,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "peak_gpu_mem_mib": 1390.24951171875,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "use_global": true,
+ "training_events": "reference R",
+ "sha256": "9c99f53766e76b94a32a3f26106f41603db58d7b2f06e68576a7b07f6fd7e440"
+}

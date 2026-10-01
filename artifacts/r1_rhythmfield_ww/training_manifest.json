@@ -1,0 +1,19 @@
+{
+ "role": "ARCH-TRAIN only",
+ "seed": 42,
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "checkpoint": "last step",
+ "SOFT": {
+  "loss": "full-window L1",
+  "input_field": "frozen detector field on ARCH-TRAIN PPG"
+ },
+ "JOINT": {
+  "loss": "full-window L1 + 1.0 x BCE(z_R, Gaussian target)"
+ }
+}

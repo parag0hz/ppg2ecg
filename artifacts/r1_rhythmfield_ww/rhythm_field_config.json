@@ -1,0 +1,14 @@
+{
+ "soft_field": "sigmoid of the frozen C0 RhythmTCN logits, the exact tensor C0.detect_events thresholds; no temperature, recalibration, sharpening or threshold",
+ "resolution": "detector output length = 512 = ECG window, no interpolation",
+ "joint_target": {
+  "convention": "C0 timing detector (RD1 family)",
+  "field": "max of Gaussians at ARCH-TRAIN reference R",
+  "sigma_ms": 20.0,
+  "loss": "BCEWithLogitsLoss (mean), lambda = 1.0"
+ },
+ "diagnostic_extraction": {
+  "threshold": 0.35,
+  "refractory_samples": 32
+ }
+}

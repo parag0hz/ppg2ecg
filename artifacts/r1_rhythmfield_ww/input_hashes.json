@@ -1,0 +1,16 @@
+{
+ "sha256": {
+  "outputs/c0_coherentbeat/detector.pt": "ba21597b8787e96a862a9a86b79f7f19b0fb99d1a200761de0d1eb4bb00254f1",
+  "outputs/c0_coherentbeat/c0.pt": "9c99f53766e76b94a32a3f26106f41603db58d7b2f06e68576a7b07f6fd7e440",
+  "outputs/c0a_coherentbeat_ablation/ww.pt": "aef4b393aec14f0fda628d5421f8d87fb5cf154805a2695d6ab3db9b6a8f676f",
+  "outputs/c0_coherentbeat/val_renders.npz": "18b622d422030b0b71666ff0a101df7cd31e64d51a037362be87b5f41b8f6084",
+  "artifacts/c0_coherentbeat/split_manifest.json": "ccbdf54e26b9a53c7c4713a2ec1fbbf19a70e133f3005a6c7e67320e87e345f1",
+  "artifacts/c0a_coherentbeat_ablation/val_metrics.json": "e2170f9daeea0f7bf008f5817b7c56867eb2fc9bfa551f285c370800619a9d92",
+  "artifacts/c0a_coherentbeat_ablation/model_configs.json": "46bad74fe4843127bafc62d8bf8cc2c745cfd6d19b2ebe8b3e22c6121eb80026"
+ },
+ "checkpoints_equal_recorded": {
+  "detector": true,
+  "c0": true,
+  "ww": true
+ }
+}

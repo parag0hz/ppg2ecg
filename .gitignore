@@ -531,3 +531,8 @@ artifacts/c0a_coherentbeat_ablation/**/*.pt
 !artifacts/e0_wwdet_event_audit/**
 artifacts/e0_wwdet_event_audit/**/*.npz
 artifacts/e0_wwdet_event_audit/**/*.pt
+# R1 — RhythmField-WW (small artifacts only; checkpoints live in outputs/)
+!artifacts/r1_rhythmfield_ww/
+!artifacts/r1_rhythmfield_ww/**
+artifacts/r1_rhythmfield_ww/**/*.npz
+artifacts/r1_rhythmfield_ww/**/*.pt

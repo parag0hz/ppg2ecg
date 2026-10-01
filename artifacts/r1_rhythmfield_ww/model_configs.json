@@ -1,0 +1,22 @@
+{
+ "SOFT": {
+  "class": "ppg2ecg.coherentbeat.ablation.WWDet (WW-DET, unchanged)",
+  "dec_ch": 72,
+  "n_dec": 5,
+  "conditioning": "frozen detector sigmoid(logits) [B, 512] in place of the Gaussian event raster",
+  "params": 593577
+ },
+ "JOINT": {
+  "class": "ppg2ecg.rhythmfield.model.JointRhythmFieldWW",
+  "encoder": "C0 Encoder (64 ch, 8 blocks)",
+  "rhythm_head_def": "1x1 64->64, GELU, 1x1 64->1 -> z_R [B, 512]; p_R = sigmoid(z_R), not detached",
+  "decoder": "WW-DET decoder (1x1 on [h, p_R] -> 5 residual blocks, dilations 1,2,4,8,16 -> 1x1)",
+  "params": {
+   "total": 597802,
+   "rhythm_head": 4225,
+   "waveform": 593577
+  }
+ },
+ "WW_DET_params": 593577,
+ "detector_params": 328897
+}

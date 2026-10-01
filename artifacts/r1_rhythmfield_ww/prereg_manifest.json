@@ -1,0 +1,31 @@
+{
+ "prereg": {
+  "docs/R1_RHYTHMFIELD_WW_PREREGISTRATION.md": "06b8709217f537ce86db2dd46fc07366e202d50cd92d055679b653b23eb1872e"
+ },
+ "code": {
+  "scripts/r1_rhythmfield.py": "15ab5deae5b7f51353faf216b215f28aa885c2f0785d03f8b1ca74a0f2b27c7c",
+  "src/ppg2ecg/rhythmfield/__init__.py": "ecb29e62eaafa305a1aa53be73423081c55ac8813ef995d83467e681d1f56d0c",
+  "src/ppg2ecg/rhythmfield/model.py": "2ccdb6864914ee147883ba578007171af6109d45734fcdcf5d25c3f311b8de28",
+  "tests/test_r1_rhythmfield.py": "65a609d5dc7ac1a9cee19e13be6b23ee07b6ee95054693c6936ce666791568c4"
+ },
+ "frozen_design": {
+  "model_configs.json": "b3c3bda02cac4829ddfeabb0507a59487b60997f33cd4cb17913bd99eeeb6b9a",
+  "rhythm_field_config.json": "ea4b09bc70f4329a14a05e96393a21b24dcc29802f64c4530f24a092e44daf95",
+  "training_manifest.json": "e0a3d3c38060e0a547b0025025a73b4424d6d368d33c5311b2839fed76359f15",
+  "input_hashes.json": "194007bb22993c90e54b7797553346c95937af79e52b740e6c70da466c26cca1"
+ },
+ "written_before_any_r1_training_or_metric": true,
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "8e028fa6dff7e79955cf7e611a828d7d494f522f"
+ }
+}

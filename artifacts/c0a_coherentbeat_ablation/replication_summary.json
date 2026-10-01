@@ -1,0 +1,27 @@
+{
+ "replication": {
+  "M1": "REPLICATED",
+  "M2": "REPLICATED",
+  "M3": "REPLICATED",
+  "CARRIER": "REPLICATED"
+ },
+ "final_matrix": {
+  "capacity_only_explanation": "DISFAVORED",
+  "shared_absolute_context_carrier": "SUPPORTED",
+  "time_varying_global_field": "SUPPORTED",
+  "explicit_global_local_decomposition": "NOT SUPPORTED"
+ },
+ "c1": "NO-GO",
+ "val_decisions": {
+  "M1": "SUPPORTED",
+  "M2": "SUPPORTED",
+  "M3": "NOT SUPPORTED",
+  "CARRIER": "SUPPORTED"
+ },
+ "holdout_decisions": {
+  "M1": "SUPPORTED",
+  "M2": "SUPPORTED",
+  "M3": "NOT SUPPORTED",
+  "CARRIER": "SUPPORTED"
+ }
+}

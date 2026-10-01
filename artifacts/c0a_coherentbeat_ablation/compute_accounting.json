@@ -1,0 +1,118 @@
+{
+ "params": {
+  "PM": 599445,
+  "CONST": 592770,
+  "WW": 593577,
+  "BF0": 482049,
+  "LOCAL": 588545,
+  "C0": 592770
+ },
+ "train_seconds": {
+  "PM": 148.15636372566223,
+  "CONST": 144.34989857673645,
+  "WW": 130.84788036346436,
+  "BF0": 101.22904562950134,
+  "LOCAL": 141.11082983016968,
+  "C0": 145.0477910041809
+ },
+ "peak_gpu_mem_mib": {
+  "PM": 1533.4248046875,
+  "CONST": 1377.35986328125,
+  "WW": 1836.2998046875
+ },
+ "nan_steps": {
+  "pm_bf0": 0,
+  "const": 0,
+  "ww": 0
+ },
+ "batch1_latency_ms": {
+  "cpu_BF0": {
+   "median_ms": 5.127535434439778,
+   "p90_ms": 6.63865392562002
+  },
+  "cpu_PM": {
+   "median_ms": 5.5462755262851715,
+   "p90_ms": 7.665067701600492
+  },
+  "cpu_LOCAL": {
+   "median_ms": 5.6324005126953125,
+   "p90_ms": 9.728083317168057
+  },
+  "cpu_CONST": {
+   "median_ms": 5.535509088076651,
+   "p90_ms": 8.29780192580074
+  },
+  "cpu_WW": {
+   "median_ms": 5.409071105532348,
+   "p90_ms": 5.859637795947492
+  },
+  "cpu_C0": {
+   "median_ms": 5.601834855042398,
+   "p90_ms": 6.013122224248946
+  },
+  "cuda_BF0": {
+   "median_ms": 1.6961338697001338,
+   "p90_ms": 1.7940527759492397
+  },
+  "cuda_PM": {
+   "median_ms": 1.7879189690575004,
+   "p90_ms": 2.0025416044518356
+  },
+  "cuda_LOCAL": {
+   "median_ms": 1.8759110243991017,
+   "p90_ms": 2.3603734560310863
+  },
+  "cuda_CONST": {
+   "median_ms": 1.9006314687430859,
+   "p90_ms": 1.952983159571886
+  },
+  "cuda_WW": {
+   "median_ms": 1.293093548156321,
+   "p90_ms": 1.324232411570847
+  },
+  "cuda_C0": {
+   "median_ms": 1.9352835370227695,
+   "p90_ms": 2.000548830255866
+  }
+ },
+ "flops_one_window": {
+  "BF0": {
+   "flops_window_incl_detector": 772303872,
+   "events_in_window": 4
+  },
+  "PM": {
+   "flops_window_incl_detector": 903481104,
+   "events_in_window": 4
+  },
+  "LOCAL": {
+   "flops_window_incl_detector": 801032192,
+   "events_in_window": 4
+  },
+  "CONST": {
+   "flops_window_incl_detector": 801040512,
+   "events_in_window": 4
+  },
+  "WW": {
+   "flops_window_incl_detector": 941572096,
+   "events_in_window": 4
+  },
+  "C0": {
+   "flops_window_incl_detector": 801191040,
+   "events_in_window": 4
+  }
+ },
+ "notes": "parameter-matched, not compute-matched; FLOPs from torch.utils.flop_counter (one salted window, CPU), a lower bound",
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "479f13898829d619ce0997aaa8765097de7c46e9"
+ }
+}

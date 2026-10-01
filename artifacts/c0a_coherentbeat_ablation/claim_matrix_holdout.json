@@ -1,0 +1,9 @@
+{
+ "stage": "frozen secondary replication on the previously opened C0 holdout",
+ "decisions": {
+  "M1": "SUPPORTED",
+  "M2": "SUPPORTED",
+  "M3": "NOT SUPPORTED",
+  "CARRIER": "SUPPORTED"
+ }
+}

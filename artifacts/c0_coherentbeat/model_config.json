@@ -1,0 +1,47 @@
+{
+ "encoder": {
+  "channels": 64,
+  "kernel": 5,
+  "dilations": [
+   1,
+   2,
+   4,
+   8,
+   16,
+   32,
+   1,
+   2
+  ],
+  "stem": "1x1 conv 1->64"
+ },
+ "global": {
+  "basis": "centred cardinal cubic B-spline",
+  "n_coef": 17,
+  "knot_spacing_samples": 32,
+  "control_points": "t = 0, 32, ..., 512",
+  "coef_head": "avg over +-16 samples -> 1x1 conv -> GELU -> 1x1 conv"
+ },
+ "local": {
+  "tau_grid": [
+   -38,
+   57
+  ],
+  "L_max_samples": 38.4,
+  "R_max_samples": 57.6,
+  "rr_fraction": 0.45,
+  "film_dilations": [
+   1,
+   2,
+   4,
+   8
+  ],
+  "cond": "MLP([window encoder mean, RR_prev s, RR_next s]) -> 128",
+  "envelope": "b(u) = exp(1 - 1/(1 - u^2)), u = -tau/L (tau<0), tau/R (tau>=0)"
+ },
+ "rr_edge_samples": 100.0,
+ "params": {
+  "c0": 592770,
+  "c0_localonly": 588545,
+  "bf0det": 482049
+ }
+}

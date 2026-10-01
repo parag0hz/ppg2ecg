@@ -1,0 +1,14 @@
+{
+ "steps": 14000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "sigma_ms": 20.0,
+ "threshold": 0.35,
+ "refractory": 32,
+ "family": "RD1 RhythmTCN",
+ "seed": 42,
+ "train_role": "ARCH-TRAIN",
+ "targets": "Gaussian at reference R",
+ "loss": "BCE"
+}

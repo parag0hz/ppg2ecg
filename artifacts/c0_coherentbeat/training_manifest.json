@@ -1,0 +1,41 @@
+{
+ "seed": 42,
+ "train_role": "ARCH-TRAIN",
+ "c0": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0,
+  "loss": "L1 full window",
+  "training_events": "reference R"
+ },
+ "c0_localonly": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0,
+  "global": "g = 0"
+ },
+ "bf0det": {
+  "steps": 20000,
+  "batch": 256,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0,
+  "family": "BeatFlowNet deterministic",
+  "training_events": "reference R"
+ },
+ "detector": {
+  "steps": 14000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "sigma_ms": 20.0,
+  "threshold": 0.35,
+  "refractory": 32
+ },
+ "checkpoint": "last step",
+ "early_stopping": "none"
+}

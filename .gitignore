@@ -516,3 +516,8 @@ artifacts/bf0_beat_first/**/*.pt
 !artifacts/d0_event_cell_support/**
 artifacts/d0_event_cell_support/**/*.npz
 artifacts/d0_event_cell_support/**/*.pt
+# C0 — CoherentBeat deterministic feasibility (small artifacts only; checkpoints and renders live in outputs/)
+!artifacts/c0_coherentbeat/
+!artifacts/c0_coherentbeat/**
+artifacts/c0_coherentbeat/**/*.npz
+artifacts/c0_coherentbeat/**/*.pt

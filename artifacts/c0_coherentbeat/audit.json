@@ -1,0 +1,21 @@
+{
+ "arch_train": {
+  "windows": 231220,
+  "patients": 3470,
+  "reference_peaks": 1048496,
+  "windows_without_reference_peaks": 0,
+  "median_reference_rr_samples": 100.0
+ },
+ "arch_val": {
+  "windows": 28649,
+  "patients": 433,
+  "reference_peaks": 129825,
+  "windows_without_reference_peaks": 0,
+  "median_reference_rr_samples": 100.0
+ },
+ "arch_holdout": {
+  "windows_from_manifest": 28531,
+  "loaded": false
+ },
+ "test_or_old_val_loaded": false
+}

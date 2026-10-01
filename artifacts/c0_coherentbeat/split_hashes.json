@@ -1,0 +1,21 @@
+{
+ "holdout": {
+  "patients_sha256": "8ed2a440ebb172603eb1dc23ed899c79019b2acad1367a98c63e9341a72b9071",
+  "cases_sha256": "7d24280a00c418f7df0f2574ca8fcfc25a32dad275619be38053b7300c443d0d"
+ },
+ "val": {
+  "patients_sha256": "7e1a18b402ed62b17a27f140e9255c62de90020423e1ca5c7236112d248b26f8",
+  "cases_sha256": "1195b2f03badc6a8cc93c7d638bfda8ceb45b896df985334600b8cde16dcc399"
+ },
+ "train": {
+  "patients_sha256": "6b229f96061edeb45a4d6928e6919632fec0a4a51ad4150a508a4b0f6af515c8",
+  "cases_sha256": "be6dcedfdb783c415dd3d8bdf6a3272c50b2af8641c12f916c635f3a67866c06"
+ },
+ "overlap_checks": {
+  "train_val": 0,
+  "train_holdout": 0,
+  "val_holdout": 0,
+  "old_val_in_arch": 0,
+  "old_test_in_arch": 0
+ }
+}

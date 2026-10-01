@@ -1,0 +1,22 @@
+{
+ "prereg": "docs/C0_COHERENTBEAT_PREREGISTRATION.md",
+ "sha256": {
+  "docs/C0_COHERENTBEAT_PREREGISTRATION.md": "312eeb00e0f4b0a9906288a7332602c91b8ce2a13d7b17defa1d3d1fe6f4a8f6",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "src/ppg2ecg/coherentbeat/__init__.py": "737ac8e137d25972113d16ad5128e6898195c3e57e2bba149cd7c1769e729422",
+  "src/ppg2ecg/coherentbeat/split.py": "5b31afa6ad12088d9a7381bb13882e18d8c5a14f8baaee01efa031dc852c2471",
+  "src/ppg2ecg/coherentbeat/geometry.py": "af5e4f0c7646d5263757273e3b7071e009a2684db23e61a0e0aa3d9a185aa9a8",
+  "src/ppg2ecg/coherentbeat/model.py": "6c6acb3450fbd15f1125ad00b7a64175c84e7049312740510af83352fc5c6fa8",
+  "tests/test_c0_coherentbeat.py": "0e4b638ea22a793a09fdc9c3dc864d22c62068faa3a359343acb3cedf00df29d"
+ },
+ "split_files": {
+  "split_manifest.json": "ccbdf54e26b9a53c7c4713a2ec1fbbf19a70e133f3005a6c7e67320e87e345f1",
+  "split_hashes.json": "259272c25a9889d12b77697987a906d52a6ef42e78e16bbb6bb444c269b33b61",
+  "audit.json": "37da5fce927d2ffc2b176fa20e9e74b5e29ef47bf301585fa1854babb72314f6",
+  "model_config.json": "1e650aa7428c57efd17f964a84742bdf5f3acfd7d74b64c2362ad63ce24cea77",
+  "timing_detector_config.json": "ad77fe0834ca139aa4310b76957a8ebc4515aa2f3959a23e823a3a918bf8b0da",
+  "training_manifest.json": "16dbdfd066aaaacd115c0a871822ba43a01402a5d122cb9898825e0db92e5160"
+ },
+ "parent_commit": "a54ec7e9c458d017b4d38765121638318af637df",
+ "written_before_any_c0_training_or_arch_val_metric": true
+}

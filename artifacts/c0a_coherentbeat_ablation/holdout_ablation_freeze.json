@@ -1,0 +1,32 @@
+{
+ "sha256": {
+  "docs/C0A_COHERENTBEAT_ABLATION_PREREGISTRATION.md": "af8fe9c32f47e81971b0c131bbd433a140e9425eedd9ff27162a88c80c79abb5",
+  "scripts/c0a_ablation.py": "ef1204643d5ae609dfde8bb34c8177c5597279e7ca61f034f9d02180203bda3e",
+  "src/ppg2ecg/coherentbeat/ablation.py": "cddc3e160aadec9b30a8a248ddb9120896be00a5c66b2636a770191cb5a17dfb",
+  "tests/test_c0a_ablation.py": "3c0c532f5c4af8c8158efd7ffd3c560e4977b4a226882d694d97ed468750e0e2",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "src/ppg2ecg/coherentbeat/__init__.py": "737ac8e137d25972113d16ad5128e6898195c3e57e2bba149cd7c1769e729422",
+  "src/ppg2ecg/coherentbeat/split.py": "5b31afa6ad12088d9a7381bb13882e18d8c5a14f8baaee01efa031dc852c2471",
+  "src/ppg2ecg/coherentbeat/geometry.py": "af5e4f0c7646d5263757273e3b7071e009a2684db23e61a0e0aa3d9a185aa9a8",
+  "src/ppg2ecg/coherentbeat/model.py": "6c6acb3450fbd15f1125ad00b7a64175c84e7049312740510af83352fc5c6fa8",
+  "tests/test_c0_coherentbeat.py": "0e4b638ea22a793a09fdc9c3dc864d22c62068faa3a359343acb3cedf00df29d",
+  "outputs/c0a_coherentbeat_ablation/pm_bf0.pt": "6974e65bb5703d90d52f5cb5862d43cb4d4d7575b8c9826168bde99fc5621a90",
+  "outputs/c0a_coherentbeat_ablation/const.pt": "f0c817bc4cb3f00dcf7f511d4187fd44d2668bc948b1b32e5ecfaf62dfd4549f",
+  "outputs/c0a_coherentbeat_ablation/ww.pt": "aef4b393aec14f0fda628d5421f8d87fb5cf154805a2695d6ab3db9b6a8f676f",
+  "outputs/c0_coherentbeat/detector.pt": "ba21597b8787e96a862a9a86b79f7f19b0fb99d1a200761de0d1eb4bb00254f1",
+  "outputs/c0_coherentbeat/bf0det.pt": "90d24cb71ecba00ec629d5cea772e041c96ccce83944342374365222d745a4ed",
+  "outputs/c0_coherentbeat/c0.pt": "9c99f53766e76b94a32a3f26106f41603db58d7b2f06e68576a7b07f6fd7e440",
+  "outputs/c0_coherentbeat/c0_localonly.pt": "95713c4de694052c4690e6044f14425b94d17a6ebf8ee3516b1251369238aed7",
+  "outputs/c0_coherentbeat/bf0det_template.npz": "291c798ddc040cdf31508bc5cac4f4e5d0f4e7e1ce379cd4607c3229f1aa02b9",
+  "artifacts/c0a_coherentbeat_ablation/model_configs.json": "46bad74fe4843127bafc62d8bf8cc2c745cfd6d19b2ebe8b3e22c6121eb80026",
+  "artifacts/c0a_coherentbeat_ablation/parameter_match.json": "11d043242d0cde3ee3ccccf5317a7908d4ac1bef4f7acb1ed097b5e019606f95",
+  "artifacts/c0a_coherentbeat_ablation/claim_matrix_val.json": "60b95fa19dae3351700b16c2a9d60767d21c9c2a596f1c8bcda2673e2dc49930",
+  "artifacts/c0a_coherentbeat_ablation/val_bootstrap.json": "f82d86a741696f4df461f6250fe89ba6b271e2c4decac9a8fa98e679ae94a44c",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/beatfirst/render.py": "222e78c63a0ccc85098a60cabfd4c488f52df6481e5436877f04f033919e0e9c",
+  "scripts/bf0_run.py": "ef0bdea1bf9f9c3b3dfd27679fe264c8b27907c7c9bf49291c34b66c942535c1",
+  "artifacts/c0_coherentbeat/split_manifest.json": "ccbdf54e26b9a53c7c4713a2ec1fbbf19a70e133f3005a6c7e67320e87e345f1"
+ },
+ "status": "frozen before C0-A evaluation of the previously opened ARCH-HOLDOUT"
+}

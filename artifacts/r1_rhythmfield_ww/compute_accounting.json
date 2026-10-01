@@ -1,0 +1,81 @@
+{
+ "params": {
+  "SOFT_waveform": 593577,
+  "SOFT_full_pipeline_incl_frozen_detector": 922474,
+  "JOINT_total": 597802,
+  "JOINT_waveform": 593577,
+  "JOINT_rhythm_head": 4225,
+  "JOINT_full_pipeline": 597802,
+  "WW_DET_waveform": 593577,
+  "WW_DET_full_pipeline": 922474,
+  "C0_waveform": 592770,
+  "C0_full_pipeline": 921667,
+  "detector": 328897
+ },
+ "train_seconds": {
+  "soft": 131.48969078063965,
+  "joint": 135.19456577301025
+ },
+ "peak_gpu_mem_mib": {
+  "soft": 1609.37353515625,
+  "joint": 1634.7265625
+ },
+ "nan_steps": {
+  "soft": 0,
+  "joint": 0
+ },
+ "batch1_latency_ms_full_pipeline": {
+  "cpu_C0": {
+   "median_ms": 5.581550998613238,
+   "p90_ms": 8.482152130454779
+  },
+  "cpu_WW": {
+   "median_ms": 5.4284605430439115,
+   "p90_ms": 6.691695447079839
+  },
+  "cpu_SOFT": {
+   "median_ms": 5.326297017745674,
+   "p90_ms": 5.636848323047161
+  },
+  "cpu_JOINT": {
+   "median_ms": 3.551504109054804,
+   "p90_ms": 4.366328730247915
+  },
+  "cuda_C0": {
+   "median_ms": 1.953720930032432,
+   "p90_ms": 3.9764345390722156
+  },
+  "cuda_WW": {
+   "median_ms": 1.3143735704943538,
+   "p90_ms": 1.4051438076421618
+  },
+  "cuda_SOFT": {
+   "median_ms": 1.150573487393558,
+   "p90_ms": 1.1930922279134393
+  },
+  "cuda_JOINT": {
+   "median_ms": 0.7559685036540031,
+   "p90_ms": 0.7978227455168962
+  }
+ },
+ "flops_one_window_full_pipeline": {
+  "C0": 671444096,
+  "WW": 941572096,
+  "SOFT": 941572096,
+  "JOINT": 610156544
+ },
+ "notes": "full pipeline = detector + waveform model, except JOINT (integrated rhythm head, no external detector); FLOPs from torch.utils.flop_counter on one salted ARCH-VAL window (CPU), a lower bound; parameter-matched, not compute-matched",
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "2a598e427b133b55e71c6ead742ce697f2307bfd"
+ }
+}

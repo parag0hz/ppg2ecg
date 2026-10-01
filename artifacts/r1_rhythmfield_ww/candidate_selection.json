@@ -1,0 +1,12 @@
+{
+ "selected": "NONE",
+ "rule": "prereg \u00a78 (lower FD; |dFD| < 0.25 -> lower FP; |dFP| < 0.01 -> SOFT)",
+ "fd": {
+  "SOFT": 31.27433265134718,
+  "JOINT": 33.0189448969831
+ },
+ "fp": {
+  "SOFT": 0.5240065136983764,
+  "JOINT": 0.5196237251881924
+ }
+}

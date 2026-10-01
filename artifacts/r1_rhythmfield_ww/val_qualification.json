@@ -1,0 +1,18 @@
+{
+ "SOFT": {
+  "V1": false,
+  "V2": false,
+  "V3": true,
+  "V4": false,
+  "V5": false,
+  "QUALIFIED": false
+ },
+ "JOINT": {
+  "V1": false,
+  "V2": false,
+  "V3": false,
+  "V4": false,
+  "V5": false,
+  "QUALIFIED": false
+ }
+}

@@ -1,0 +1,146 @@
+{
+ "S-ORIG": {
+  "placed": 18557,
+  "redetected": 18223,
+  "redetection_rate": 0.9820014010885381,
+  "missed": 334,
+  "placed_edge": 8665,
+  "missed_edge": 310,
+  "placed_interior": 9892,
+  "missed_interior": 24,
+  "redetection_rate_edge": 0.9642238892094633,
+  "redetection_rate_interior": 0.997573797007683,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 135,
+   "0.25-0.5s": 74,
+   ">=0.5s": 125
+  },
+  "missed_with_T_zone_ge_R": 130,
+  "fn_vs_reference_total": 5502,
+  "fn_rate_patient_macro": [
+   1.127844887955182,
+   1.0222464445336958,
+   1.2377615752183224
+  ]
+ },
+ "D-ORIG": {
+  "placed": 18557,
+  "redetected": 18555,
+  "redetection_rate": 0.999892223958614,
+  "missed": 2,
+  "placed_edge": 8665,
+  "missed_edge": 2,
+  "placed_interior": 9892,
+  "missed_interior": 0,
+  "redetection_rate_edge": 0.9997691863819965,
+  "redetection_rate_interior": 1.0,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 1,
+   "0.25-0.5s": 1,
+   ">=0.5s": 0
+  },
+  "missed_with_T_zone_ge_R": 0,
+  "fn_vs_reference_total": 5235,
+  "fn_rate_patient_macro": [
+   1.0742837576206954,
+   0.9695920739619378,
+   1.1831708142815949
+  ]
+ },
+ "T-ORIG": {
+  "placed": 18557,
+  "redetected": 18557,
+  "redetection_rate": 1.0,
+  "missed": 0,
+  "placed_edge": 8665,
+  "missed_edge": 0,
+  "placed_interior": 9892,
+  "missed_interior": 0,
+  "redetection_rate_edge": 1.0,
+  "redetection_rate_interior": 1.0,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 0,
+   "0.25-0.5s": 0,
+   ">=0.5s": 0
+  },
+  "missed_with_T_zone_ge_R": 0,
+  "fn_vs_reference_total": 5325,
+  "fn_rate_patient_macro": [
+   1.0911162259021254,
+   0.984638055589883,
+   1.2013450784725652
+  ]
+ },
+ "S-CELL": {
+  "placed": 18557,
+  "redetected": 18175,
+  "redetection_rate": 0.979414776095274,
+  "missed": 382,
+  "placed_edge": 8665,
+  "missed_edge": 342,
+  "placed_interior": 9892,
+  "missed_interior": 40,
+  "redetection_rate_edge": 0.9605308713214079,
+  "redetection_rate_interior": 0.9959563283461383,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 152,
+   "0.25-0.5s": 77,
+   ">=0.5s": 153
+  },
+  "missed_with_T_zone_ge_R": 156,
+  "fn_vs_reference_total": 5594,
+  "fn_rate_patient_macro": [
+   1.1444250494315373,
+   1.037185903773274,
+   1.2545104990525622
+  ]
+ },
+ "D-CELL": {
+  "placed": 18557,
+  "redetected": 18553,
+  "redetection_rate": 0.999784447917228,
+  "missed": 4,
+  "placed_edge": 8665,
+  "missed_edge": 4,
+  "placed_interior": 9892,
+  "missed_interior": 0,
+  "redetection_rate_edge": 0.999538372763993,
+  "redetection_rate_interior": 1.0,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 1,
+   "0.25-0.5s": 1,
+   ">=0.5s": 2
+  },
+  "missed_with_T_zone_ge_R": 1,
+  "fn_vs_reference_total": 5323,
+  "fn_rate_patient_macro": [
+   1.0908458971824024,
+   0.9844907264376338,
+   1.200600258485747
+  ]
+ },
+ "T-CELL": {
+  "placed": 18557,
+  "redetected": 18557,
+  "redetection_rate": 1.0,
+  "missed": 0,
+  "placed_edge": 8665,
+  "missed_edge": 0,
+  "placed_interior": 9892,
+  "missed_interior": 0,
+  "redetection_rate_edge": 1.0,
+  "redetection_rate_interior": 1.0,
+  "missed_by_distance_to_window_edge": {
+   "<0.25s": 0,
+   "0.25-0.5s": 0,
+   ">=0.5s": 0
+  },
+  "missed_with_T_zone_ge_R": 0,
+  "fn_vs_reference_total": 5325,
+  "fn_rate_patient_macro": [
+   1.0911162259021254,
+   0.984638055589883,
+   1.2013450784725652
+  ]
+ }
+}

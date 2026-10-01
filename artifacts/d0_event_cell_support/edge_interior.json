@@ -1,0 +1,50 @@
+{
+ "S-ORIG": {
+  "fp_nearest_event_edge": 2236,
+  "fp_nearest_event_interior": 1049,
+  "missed_placed_edge": 310,
+  "missed_placed_interior": 24,
+  "redetection_rate_edge": 0.9642238892094633,
+  "redetection_rate_interior": 0.997573797007683
+ },
+ "D-ORIG": {
+  "fp_nearest_event_edge": 1988,
+  "fp_nearest_event_interior": 935,
+  "missed_placed_edge": 2,
+  "missed_placed_interior": 0,
+  "redetection_rate_edge": 0.9997691863819965,
+  "redetection_rate_interior": 1.0
+ },
+ "T-ORIG": {
+  "fp_nearest_event_edge": 1123,
+  "fp_nearest_event_interior": 928,
+  "missed_placed_edge": 0,
+  "missed_placed_interior": 0,
+  "redetection_rate_edge": 1.0,
+  "redetection_rate_interior": 1.0
+ },
+ "S-CELL": {
+  "fp_nearest_event_edge": 2328,
+  "fp_nearest_event_interior": 1861,
+  "missed_placed_edge": 342,
+  "missed_placed_interior": 40,
+  "redetection_rate_edge": 0.9605308713214079,
+  "redetection_rate_interior": 0.9959563283461383
+ },
+ "D-CELL": {
+  "fp_nearest_event_edge": 1321,
+  "fp_nearest_event_interior": 942,
+  "missed_placed_edge": 4,
+  "missed_placed_interior": 0,
+  "redetection_rate_edge": 0.999538372763993,
+  "redetection_rate_interior": 1.0
+ },
+ "T-CELL": {
+  "fp_nearest_event_edge": 1122,
+  "fp_nearest_event_interior": 928,
+  "missed_placed_edge": 0,
+  "missed_placed_interior": 0,
+  "redetection_rate_edge": 1.0,
+  "redetection_rate_interior": 1.0
+ }
+}

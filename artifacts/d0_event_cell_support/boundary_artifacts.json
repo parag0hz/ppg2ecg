@@ -1,0 +1,22 @@
+{
+ "new_fp": "CELL FP with no ORIG FP within \u00b150 ms in the same window",
+ "boundary_near": "within 4 samples of a crossfade centre or an owned-region edge limit",
+ "arms": {
+  "S": {
+   "new_cell_only_fp": 1802,
+   "boundary_near_crossfade": 1550,
+   "boundary_near_edge_limit": 48,
+   "boundary_near_total": 1598,
+   "orig_fp_removed": 898,
+   "boundary_near_over_removed": 1.7795100222717148
+  },
+  "D": {
+   "new_cell_only_fp": 149,
+   "boundary_near_crossfade": 144,
+   "boundary_near_edge_limit": 2,
+   "boundary_near_total": 146,
+   "orig_fp_removed": 809,
+   "boundary_near_over_removed": 0.18046971569839307
+  }
+ }
+}

@@ -1,0 +1,9 @@
+{
+ "point": -0.7694317281902743,
+ "ci95": [
+  -0.9266992945174132,
+  -0.6415557592988528
+ ],
+ "denominator_positive_in_every_replicate": true,
+ "definition": "(F1_S-CELL - F1_S-ORIG) / (F1_placed - F1_S-ORIG), equal patient weight"
+}

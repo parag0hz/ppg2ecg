@@ -1,0 +1,27 @@
+{
+ "windows": 4822,
+ "placed_events": 18557,
+ "windows_by_n_events": {
+  "0": 438,
+  "1": 103,
+  "2": 118,
+  "3": 756,
+  "4": 1765,
+  "5": 1133,
+  "6": 379,
+  "7": 97,
+  "8": 25,
+  "9": 8
+ },
+ "edge_events": 8665,
+ "interior_events": 9892,
+ "crossfades": 14044,
+ "crossfades_shifted_off_midpoint": 2470,
+ "gaps_without_support_overlap": 129,
+ "partition_of_unity_max_error": {
+  "S": 0.0,
+  "D": 0.0,
+  "T": 0.0
+ },
+ "outputs": "outputs/d0_event_cell_support/cell_renders_val.npz"
+}

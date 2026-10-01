@@ -1,0 +1,1098 @@
+{
+ "val": {
+  "dist_nearest_ms": {
+   "C": {
+    "patients": 106,
+    "mean_of_patient_medians": 1213.7382075471698,
+    "median_of_patient_medians": 1042.96875
+   },
+   "D": {
+    "patients": 305,
+    "mean_of_patient_medians": 1271.170594262295,
+    "median_of_patient_medians": 1195.3125
+   },
+   "C_mean": 1225.369751908397,
+   "D_mean": 1316.2177905701753,
+   "cohens_d_C_minus_D": [
+    -0.13850573778680905,
+    -0.30303790745030157,
+    0.026094280375655754
+   ],
+   "missing_C": 376,
+   "missing_D": 2708
+  },
+  "phase": {
+   "C": {
+    "patients": 8,
+    "mean_of_patient_medians": 0.5668350024521739,
+    "median_of_patient_medians": 0.5674515377446412
+   },
+   "D": {
+    "patients": 61,
+    "mean_of_patient_medians": 0.562610442250983,
+    "median_of_patient_medians": 0.5827067669172933
+   },
+   "C_mean": 0.5720034856631935,
+   "D_mean": 0.5682040157576596,
+   "cohens_d_C_minus_D": [
+    0.02697648918877763,
+    -0.8091542082843832,
+    0.8474374032845519
+   ],
+   "missing_C": 498,
+   "missing_D": 3549
+  },
+  "prev_rr_ms": {
+   "C": {
+    "patients": 69,
+    "mean_of_patient_medians": 1436.4809782608695,
+    "median_of_patient_medians": 1398.4375
+   },
+   "D": {
+    "patients": 263,
+    "mean_of_patient_medians": 1423.2414448669201,
+    "median_of_patient_medians": 1343.75
+   },
+   "C_mean": 1426.1363636363637,
+   "D_mean": 1471.697384678748,
+   "cohens_d_C_minus_D": [
+    -0.07094651884019881,
+    -0.29017292099721925,
+    0.1619816955551755
+   ],
+   "missing_C": 430,
+   "missing_D": 3013
+  },
+  "next_rr_ms": {
+   "C": {
+    "patients": 56,
+    "mean_of_patient_medians": 984.3052455357143,
+    "median_of_patient_medians": 835.9375
+   },
+   "D": {
+    "patients": 201,
+    "mean_of_patient_medians": 970.0520833333334,
+    "median_of_patient_medians": 843.75
+   },
+   "C_mean": 986.359126984127,
+   "D_mean": 1029.566988031915,
+   "cohens_d_C_minus_D": [
+    -0.08009355688997553,
+    -0.3439037377709397,
+    0.19708309773285276
+   ],
+   "missing_C": 444,
+   "missing_D": 3244
+  },
+  "amp_rel": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.058559647299409885,
+    "median_of_patient_medians": 0.02754441276192665
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.03202241936333157,
+    "median_of_patient_medians": 0.026171542704105377
+   },
+   "C_mean": 0.06228999862598009,
+   "D_mean": 0.04363946189270329,
+   "cohens_d_C_minus_D": [
+    0.17829588702108717,
+    0.04150544934921408,
+    0.3222858945981264
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "amp_abs": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": -0.031013763062958794,
+    "median_of_patient_medians": -0.03311944752931595
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": -0.03670197260080342,
+    "median_of_patient_medians": -0.03192993253469467
+   },
+   "C_mean": -0.02495653393882266,
+   "D_mean": -0.04194230867848212,
+   "cohens_d_C_minus_D": [
+    0.18630085817145128,
+    0.07715588766524281,
+    0.2988676100402373
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "prominence": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.07395153047471512,
+    "median_of_patient_medians": 0.03711782395839691
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.04321700887103971,
+    "median_of_patient_medians": 0.03647411800920963
+   },
+   "C_mean": 0.0793306276172811,
+   "D_mean": 0.05841726358383071,
+   "cohens_d_C_minus_D": [
+    0.17602836620272094,
+    0.04308918988170475,
+    0.3182319331029949
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "width_ms": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 42.218876188274436,
+    "median_of_patient_medians": 38.746409131407475
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 40.99375169104414,
+    "median_of_patient_medians": 40.367745980142146
+   },
+   "C_mean": 43.227978543333926,
+   "D_mean": 45.12574171212431,
+   "cohens_d_C_minus_D": [
+    -0.06316261664449652,
+    -0.15360428926909211,
+    0.02920469988168651
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "max_pos_slope": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 3.9007940098522154,
+    "median_of_patient_medians": 1.9768009185791016
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 2.391421213104394,
+    "median_of_patient_medians": 1.9288749694824219
+   },
+   "C_mean": 4.333833284396862,
+   "D_mean": 3.221604553507178,
+   "cohens_d_C_minus_D": [
+    0.18835502793293443,
+    0.05728177761045177,
+    0.32751750543019365
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "max_neg_slope": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": -3.9812478825328794,
+    "median_of_patient_medians": -2.006840705871582
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": -2.5323394086372337,
+    "median_of_patient_medians": -1.997358798980713
+   },
+   "C_mean": -4.423478066333417,
+   "D_mean": -3.326389789054407,
+   "cohens_d_C_minus_D": [
+    -0.17633228001208792,
+    -0.31106827824216426,
+    -0.047285199002025095
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "curvature": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 498.89022454982853,
+    "median_of_patient_medians": 209.065673828125
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 250.0112412740169,
+    "median_of_patient_medians": 193.540771484375
+   },
+   "C_mean": 540.8677477714343,
+   "D_mean": 378.18057109348024,
+   "cohens_d_C_minus_D": [
+    0.16087527452108072,
+    0.03912340209820064,
+    0.2945622298637403
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "log_symmetry": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": -0.1558190112740638,
+    "median_of_patient_medians": -0.09301104246507065
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": -0.12321996197245264,
+    "median_of_patient_medians": -0.06157113577509732
+   },
+   "C_mean": -0.12060462189608225,
+   "D_mean": -0.08976547685086914,
+   "cohens_d_C_minus_D": [
+    -0.036310702810403994,
+    -0.13429459022450912,
+    0.05198110971971703
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "diff_rms": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 1.5360639464453294,
+    "median_of_patient_medians": 0.8640112615103834
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 1.0590478322029164,
+    "median_of_patient_medians": 0.851095017232506
+   },
+   "C_mean": 1.7290902831303594,
+   "D_mean": 1.4107654212942113,
+   "cohens_d_C_minus_D": [
+    0.12793587368527795,
+    0.018177953148356917,
+    0.25024034417785107
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "hf_frac": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.4594598772347563,
+    "median_of_patient_medians": 0.43827748416209134
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.4054834226479798,
+    "median_of_patient_medians": 0.4000260552059155
+   },
+   "C_mean": 0.4547747887363236,
+   "D_mean": 0.4248167963767593,
+   "cohens_d_C_minus_D": [
+    0.14367327575441588,
+    0.057679935837846634,
+    0.2372863035267846
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "qrs_corr": {
+   "C": {
+    "patients": 243,
+    "mean_of_patient_medians": 0.5560308597205408,
+    "median_of_patient_medians": 0.6164638748420492
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.5720144860471642,
+    "median_of_patient_medians": 0.6265332766245819
+   },
+   "C_mean": 0.5330210646446639,
+   "D_mean": 0.5278740009653516,
+   "cohens_d_C_minus_D": [
+    0.01668862238107591,
+    -0.06725557613532458,
+    0.09804310340383533
+   ],
+   "missing_C": 9,
+   "missing_D": 72
+  },
+  "qrs_l2": {
+   "C": {
+    "patients": 243,
+    "mean_of_patient_medians": 0.9000200743840646,
+    "median_of_patient_medians": 0.8757902948091423
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.9041567276435155,
+    "median_of_patient_medians": 0.863987316691643
+   },
+   "C_mean": 0.9140443688250866,
+   "D_mean": 0.9236086731570577,
+   "cohens_d_C_minus_D": [
+    -0.03150847019774834,
+    -0.11431711333711682,
+    0.05186031370442911
+   ],
+   "missing_C": 9,
+   "missing_D": 72
+  },
+  "ppg_slope": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": -0.5570779836305031,
+    "median_of_patient_medians": -0.29847145080566406
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": -0.2395966553031222,
+    "median_of_patient_medians": -0.16866753101348878
+   },
+   "C_mean": -0.728656263818461,
+   "D_mean": -0.29365237342693684,
+   "cohens_d_C_minus_D": [
+    -0.1097055759855821,
+    -0.21136635365462497,
+    -0.01141511644279763
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "ppg_peak_lag_ms": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 2.3342225609756095,
+    "median_of_patient_medians": -23.4375
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": -31.960227272727273,
+    "median_of_patient_medians": -33.203125
+   },
+   "C_mean": 10.308801775147929,
+   "D_mean": -31.016855484940592,
+   "cohens_d_C_minus_D": [
+    0.09878290414511921,
+    -0.0021124824812911625,
+    0.1932283480115979
+   ],
+   "missing_C": 0,
+   "missing_D": 1
+  },
+  "c0_prominence": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.0018081751962502797,
+    "median_of_patient_medians": 0.0
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.0004591127884302413,
+    "median_of_patient_medians": 0.0
+   },
+   "C_mean": 0.002039487508568303,
+   "D_mean": 0.002741221104908055,
+   "cohens_d_C_minus_D": [
+    -0.03703215566189129,
+    -0.11337084870307533,
+    0.05634093056026275
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_amp_rel": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.0039936550325009885,
+    "median_of_patient_medians": 0.0
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.0004561547764786408,
+    "median_of_patient_medians": 0.0
+   },
+   "C_mean": 0.004137989669979442,
+   "D_mean": 0.0024254136146380674,
+   "cohens_d_C_minus_D": [
+    0.09380147438286804,
+    -0.01015736013941175,
+    0.19905704159772997
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_max_pos_slope": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.21081078730947603,
+    "median_of_patient_medians": 0.10493278503417969
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.09239913516067431,
+    "median_of_patient_medians": 0.0587693452835083
+   },
+   "C_mean": 0.22111536389036762,
+   "D_mean": 0.1556702422832257,
+   "cohens_d_C_minus_D": [
+    0.06346895938950428,
+    0.006199903973551415,
+    0.26112766054426323
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_qrs_corr": {
+   "C": {
+    "patients": 243,
+    "mean_of_patient_medians": 0.05301833103076412,
+    "median_of_patient_medians": 0.03652099639444595
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.030343062230012804,
+    "median_of_patient_medians": 0.023859720962595282
+   },
+   "C_mean": 0.06013135083110981,
+   "D_mean": 0.05139972474654054,
+   "cohens_d_C_minus_D": [
+    0.04362707763903208,
+    -0.05909785925895726,
+    0.14350530968936667
+   ],
+   "missing_C": 8,
+   "missing_D": 125
+  },
+  "d_prominence": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.0719025719577704,
+    "median_of_patient_medians": 0.03656402975320816
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.042086076980643865,
+    "median_of_patient_medians": 0.035444457083940506
+   },
+   "C_mean": 0.0772911401087128,
+   "D_mean": 0.055676042478922654,
+   "cohens_d_C_minus_D": [
+    0.18112551132265164,
+    0.0473570450793112,
+    0.3241738709711277
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_amp_rel": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.053925340518173645,
+    "median_of_patient_medians": 0.025099236518144608
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.030852294371588127,
+    "median_of_patient_medians": 0.025325626134872437
+   },
+   "C_mean": 0.05815200895600065,
+   "D_mean": 0.04121404827806523,
+   "cohens_d_C_minus_D": [
+    0.16268305195495825,
+    0.023487859137737696,
+    0.3056430774379875
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_max_pos_slope": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 3.694027786332417,
+    "median_of_patient_medians": 1.892416000366211
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 2.296216603671535,
+    "median_of_patient_medians": 1.8365988731384277
+   },
+   "C_mean": 4.112717920506494,
+   "D_mean": 3.0659343112239523,
+   "cohens_d_C_minus_D": [
+    0.18055969024993768,
+    0.04755855768196356,
+    0.31908401363784544
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_qrs_corr": {
+   "C": {
+    "patients": 243,
+    "mean_of_patient_medians": 0.49364150214461405,
+    "median_of_patient_medians": 0.5243763032264918
+   },
+   "D": {
+    "patients": 418,
+    "mean_of_patient_medians": 0.5107684870995335,
+    "median_of_patient_medians": 0.5516805781081329
+   },
+   "C_mean": 0.4734691994542294,
+   "D_mean": 0.4840448323329465,
+   "cohens_d_C_minus_D": [
+    -0.029441264527316695,
+    -0.11670763623305405,
+    0.061479100160240115
+   ],
+   "missing_C": 11,
+   "missing_D": 136
+  }
+ },
+ "holdout": {
+  "dist_nearest_ms": {
+   "C": {
+    "patients": 102,
+    "mean_of_patient_medians": 1190.219056372549,
+    "median_of_patient_medians": 1015.625
+   },
+   "D": {
+    "patients": 299,
+    "mean_of_patient_medians": 1289.5589464882944,
+    "median_of_patient_medians": 1230.46875
+   },
+   "C_mean": 1214.6214430894308,
+   "D_mean": 1340.6354983202687,
+   "cohens_d_C_minus_D": [
+    -0.19536431116968403,
+    -0.35005938451657703,
+    -0.04720923352900065
+   ],
+   "missing_C": 349,
+   "missing_D": 2436
+  },
+  "phase": {
+   "C": {
+    "patients": 7,
+    "mean_of_patient_medians": 0.48212517111707476,
+    "median_of_patient_medians": 0.4701195219123506
+   },
+   "D": {
+    "patients": 57,
+    "mean_of_patient_medians": 0.5301913865503128,
+    "median_of_patient_medians": 0.5211267605633803
+   },
+   "C_mean": 0.4821251711170747,
+   "D_mean": 0.5281281250836617,
+   "cohens_d_C_minus_D": [
+    -0.33948865806592987,
+    -1.3068620329906933,
+    0.5591530633798159
+   ],
+   "missing_C": 465,
+   "missing_D": 3265
+  },
+  "prev_rr_ms": {
+   "C": {
+    "patients": 70,
+    "mean_of_patient_medians": 1273.2700892857142,
+    "median_of_patient_medians": 1082.03125
+   },
+   "D": {
+    "patients": 274,
+    "mean_of_patient_medians": 1385.6067518248176,
+    "median_of_patient_medians": 1324.21875
+   },
+   "C_mean": 1288.783482142857,
+   "D_mean": 1442.4603174603174,
+   "cohens_d_C_minus_D": [
+    -0.2401830527562619,
+    -0.43551801821163955,
+    -0.04951101537929518
+   ],
+   "missing_C": 388,
+   "missing_D": 2699
+  },
+  "next_rr_ms": {
+   "C": {
+    "patients": 42,
+    "mean_of_patient_medians": 1039.9925595238096,
+    "median_of_patient_medians": 921.875
+   },
+   "D": {
+    "patients": 180,
+    "mean_of_patient_medians": 1049.8697916666667,
+    "median_of_patient_medians": 941.40625
+   },
+   "C_mean": 1081.0122282608695,
+   "D_mean": 1084.5279051987768,
+   "cohens_d_C_minus_D": [
+    -0.006250951948245468,
+    -0.2990366545771905,
+    0.2997021731698211
+   ],
+   "missing_C": 426,
+   "missing_D": 3002
+  },
+  "amp_rel": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.072109570170185,
+    "median_of_patient_medians": 0.02556801214814186
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.031561730033222664,
+    "median_of_patient_medians": 0.02665369212627411
+   },
+   "C_mean": 0.06063977092251939,
+   "D_mean": 0.04204951036138447,
+   "cohens_d_C_minus_D": [
+    0.1898596082576937,
+    0.05194673158662813,
+    0.33099069583004115
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "amp_abs": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": -0.013595172964719187,
+    "median_of_patient_medians": -0.03176204860210419
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": -0.033624347114393896,
+    "median_of_patient_medians": -0.03246636688709259
+   },
+   "C_mean": -0.021945082598318486,
+   "D_mean": -0.04103735014773876,
+   "cohens_d_C_minus_D": [
+    0.21959998168273692,
+    0.10774838695346119,
+    0.3303819043611296
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "prominence": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.08407220308227369,
+    "median_of_patient_medians": 0.035540834069252014
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.041734247527858044,
+    "median_of_patient_medians": 0.03688296675682068
+   },
+   "C_mean": 0.07300028036017034,
+   "D_mean": 0.055406747654989055,
+   "cohens_d_C_minus_D": [
+    0.16482390333250957,
+    0.023378168765317366,
+    0.3081136398259436
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "width_ms": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 41.90406378943026,
+    "median_of_patient_medians": 38.513432130984796
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 40.195317039005914,
+    "median_of_patient_medians": 39.14235486165918
+   },
+   "C_mean": 43.82077369531567,
+   "D_mean": 44.526996295815195,
+   "cohens_d_C_minus_D": [
+    -0.02423747616009981,
+    -0.10534685809459163,
+    0.06789323364791904
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "max_pos_slope": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 4.457490115526663,
+    "median_of_patient_medians": 1.8066539764404297
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 2.277791681582764,
+    "median_of_patient_medians": 1.992532730102539
+   },
+   "C_mean": 3.840010168188709,
+   "D_mean": 3.087290041938706,
+   "cohens_d_C_minus_D": [
+    0.13788046339016466,
+    0.005544040080055782,
+    0.2732830047119689
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "max_neg_slope": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": -4.648024906675179,
+    "median_of_patient_medians": -1.8502082824707031
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": -2.325442026692925,
+    "median_of_patient_medians": -1.9789142608642578
+   },
+   "C_mean": -3.990665209495415,
+   "D_mean": -3.122878104439366,
+   "cohens_d_C_minus_D": [
+    -0.15362604216260614,
+    -0.29526268734627514,
+    -0.012425565992539902
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "curvature": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 620.9626165747168,
+    "median_of_patient_medians": 177.36639404296875
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 233.34582331952757,
+    "median_of_patient_medians": 187.878662109375
+   },
+   "C_mean": 509.93455919168764,
+   "D_mean": 364.1625981696127,
+   "cohens_d_C_minus_D": [
+    0.14495883891943329,
+    0.01545487091158662,
+    0.2804831678818815
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "log_symmetry": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": -0.08447589617604671,
+    "median_of_patient_medians": -0.10429130340171316
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": -0.06317791589288753,
+    "median_of_patient_medians": -0.06170890846200213
+   },
+   "C_mean": -0.07415065595071378,
+   "D_mean": -0.0747490132482148,
+   "cohens_d_C_minus_D": [
+    0.0008615907739649932,
+    -0.0885442070462134,
+    0.08471737347259888
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "diff_rms": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 1.7179205400886413,
+    "median_of_patient_medians": 0.783403009186861
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 1.007419591349471,
+    "median_of_patient_medians": 0.8673986739922773
+   },
+   "C_mean": 1.5005181115443447,
+   "D_mean": 1.3351821099161556,
+   "cohens_d_C_minus_D": [
+    0.07260965403305865,
+    -0.03240386075179448,
+    0.19055975953921822
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "hf_frac": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.4396032072063883,
+    "median_of_patient_medians": 0.4329615166797335
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.4269213152880858,
+    "median_of_patient_medians": 0.42788344369757886
+   },
+   "C_mean": 0.42982644052903274,
+   "D_mean": 0.43172067681835374,
+   "cohens_d_C_minus_D": [
+    -0.009156807881570517,
+    -0.09933805743885088,
+    0.08599132560961763
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "qrs_corr": {
+   "C": {
+    "patients": 244,
+    "mean_of_patient_medians": 0.544470515133917,
+    "median_of_patient_medians": 0.6330376998500631
+   },
+   "D": {
+    "patients": 422,
+    "mean_of_patient_medians": 0.5713695621240086,
+    "median_of_patient_medians": 0.6227401044175369
+   },
+   "C_mean": 0.5395743532578615,
+   "D_mean": 0.5263779311627154,
+   "cohens_d_C_minus_D": [
+    0.0428937075051459,
+    -0.04528437858925494,
+    0.14010054304972228
+   ],
+   "missing_C": 13,
+   "missing_D": 66
+  },
+  "qrs_l2": {
+   "C": {
+    "patients": 244,
+    "mean_of_patient_medians": 0.9053024347318455,
+    "median_of_patient_medians": 0.8566920872572582
+   },
+   "D": {
+    "patients": 422,
+    "mean_of_patient_medians": 0.9044956297985952,
+    "median_of_patient_medians": 0.8675007097807123
+   },
+   "C_mean": 0.9093626258923216,
+   "D_mean": 0.9254737302223203,
+   "cohens_d_C_minus_D": [
+    -0.05335439341369868,
+    -0.1554750139290635,
+    0.039158346616727555
+   ],
+   "missing_C": 13,
+   "missing_D": 66
+  },
+  "ppg_slope": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": -0.29112893106855353,
+    "median_of_patient_medians": -0.05536304712295531
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": -0.25568127678543334,
+    "median_of_patient_medians": -0.16106994152069093
+   },
+   "C_mean": -0.39427150371756314,
+   "D_mean": -0.21438431789039997,
+   "cohens_d_C_minus_D": [
+    -0.04539145703173551,
+    -0.15071025067467242,
+    0.062320646848605936
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "ppg_peak_lag_ms": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": -37.28834661354582,
+    "median_of_patient_medians": -50.78125
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": -52.988327423167846,
+    "median_of_patient_medians": -62.5
+   },
+   "C_mean": -39.89009533898305,
+   "D_mean": -48.60719389290012,
+   "cohens_d_C_minus_D": [
+    0.02046596620429723,
+    -0.06612264897731927,
+    0.11802553208483484
+   ],
+   "missing_C": 0,
+   "missing_D": 5
+  },
+  "c0_prominence": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.004516197568866836,
+    "median_of_patient_medians": 0.0
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.0005050491515203571,
+    "median_of_patient_medians": 0.0
+   },
+   "C_mean": 0.004865785275380743,
+   "D_mean": 0.00300031581311102,
+   "cohens_d_C_minus_D": [
+    0.08835070828406816,
+    -0.026476891111108746,
+    0.21337074406835402
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_amp_rel": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.004566090660117775,
+    "median_of_patient_medians": 0.0
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.0009889075352015506,
+    "median_of_patient_medians": 0.0
+   },
+   "C_mean": 0.005497031545234939,
+   "D_mean": 0.002776118355153308,
+   "cohens_d_C_minus_D": [
+    0.14152939768017786,
+    0.04995199685224663,
+    0.2400695074013207
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_max_pos_slope": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.18407316274376978,
+    "median_of_patient_medians": 0.06680774688720703
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.09720474298400518,
+    "median_of_patient_medians": 0.05817222595214844
+   },
+   "C_mean": 0.2043650266477617,
+   "D_mean": 0.14624666694980298,
+   "cohens_d_C_minus_D": [
+    0.12616896365430386,
+    0.013593382778932078,
+    0.2504723690256999
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "c0_qrs_corr": {
+   "C": {
+    "patients": 246,
+    "mean_of_patient_medians": 0.08321454870914725,
+    "median_of_patient_medians": 0.035600992151515076
+   },
+   "D": {
+    "patients": 422,
+    "mean_of_patient_medians": 0.020279753392300173,
+    "median_of_patient_medians": 0.017786420135919034
+   },
+   "C_mean": 0.0782566731340736,
+   "D_mean": 0.048708731941573616,
+   "cohens_d_C_minus_D": [
+    0.14552622427201165,
+    0.04765198114843947,
+    0.2533903913797915
+   ],
+   "missing_C": 15,
+   "missing_D": 101
+  },
+  "d_prominence": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.07938079114454201,
+    "median_of_patient_medians": 0.03357229009270668
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.04018805626489169,
+    "median_of_patient_medians": 0.035493720322847366
+   },
+   "C_mean": 0.0681344950847896,
+   "D_mean": 0.052406431841878036,
+   "cohens_d_C_minus_D": [
+    0.14551750317936749,
+    -0.0002564867737004684,
+    0.28988792359926174
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_amp_rel": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 0.06721367225036085,
+    "median_of_patient_medians": 0.022419840097427368
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 0.029005616115093513,
+    "median_of_patient_medians": 0.025055110454559326
+   },
+   "C_mean": 0.05514273937728446,
+   "D_mean": 0.039273392006231166,
+   "cohens_d_C_minus_D": [
+    0.16454477296032857,
+    0.02509810541621253,
+    0.3116229322886494
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_max_pos_slope": {
+   "C": {
+    "patients": 251,
+    "mean_of_patient_medians": 4.262249242262062,
+    "median_of_patient_medians": 1.6951292753219604
+   },
+   "D": {
+    "patients": 423,
+    "mean_of_patient_medians": 2.1532634011960763,
+    "median_of_patient_medians": 1.8929462432861328
+   },
+   "C_mean": 3.6356451415409476,
+   "D_mean": 2.941043374988903,
+   "cohens_d_C_minus_D": [
+    0.1289535600964954,
+    -0.004854426401204112,
+    0.2647129892228304
+   ],
+   "missing_C": 0,
+   "missing_D": 0
+  },
+  "d_qrs_corr": {
+   "C": {
+    "patients": 244,
+    "mean_of_patient_medians": 0.45989978320213454,
+    "median_of_patient_medians": 0.5310197879781188
+   },
+   "D": {
+    "patients": 422,
+    "mean_of_patient_medians": 0.5189189261863025,
+    "median_of_patient_medians": 0.5459198013953557
+   },
+   "C_mean": 0.4616116244704449,
+   "D_mean": 0.4824010240724732,
+   "cohens_d_C_minus_D": [
+    -0.057030303120620844,
+    -0.15884250434577363,
+    0.04217460490654967
+   ],
+   "missing_C": 18,
+   "missing_D": 108
+  }
+ }
+}

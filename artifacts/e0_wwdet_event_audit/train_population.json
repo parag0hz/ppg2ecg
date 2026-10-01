@@ -1,0 +1,11 @@
+{
+ "windows": 231220,
+ "patients": 3470,
+ "windows_without_events": 17088,
+ "ww_type_counts": {
+  "A": 805747,
+  "B": 90856,
+  "C": 4067,
+  "D": 29455
+ }
+}

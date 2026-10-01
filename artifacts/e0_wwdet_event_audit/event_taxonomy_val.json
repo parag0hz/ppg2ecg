@@ -1,0 +1,124 @@
+{
+ "role": "val",
+ "windows": 28649,
+ "patients": 433,
+ "reference_beats": 129825,
+ "placed_events": 111577,
+ "windows_without_events": 2158,
+ "arms": {
+  "C0": {
+   "raw": {
+    "A": 100101,
+    "B": 11327,
+    "C": 10,
+    "D": 357,
+    "L": 97,
+    "M": 52,
+    "tp_placed": 100198,
+    "fp_placed": 11379,
+    "tp_rendered": 100111,
+    "fp_rendered": 11684
+   },
+   "rendered_detections": 111795,
+   "pct_of_rendered": {
+    "A": 0.8953978263786395,
+    "B": 0.10131937922089539,
+    "C": 8.944943870477213e-05,
+    "D": 0.003193344961760365
+   },
+   "pct_of_reference_beats": {
+    "A": 0.7710456383593298,
+    "C": 7.70267668014635e-05
+   },
+   "per_window_raw": {
+    "A": 3.4940486578938184,
+    "B": 0.39537156619777303,
+    "C": 0.0003490523229432092,
+    "D": 0.012461167929072568
+   },
+   "identity_TP": {
+    "C_minus_L": -87,
+    "TP_rendered_minus_TP_placed": -87
+   },
+   "identity_FP": {
+    "D_minus_M": 305,
+    "FP_rendered_minus_FP_placed": 305
+   },
+   "type_A_with_placed_not_the_ref_partner": 0
+  },
+  "WW": {
+   "raw": {
+    "A": 100193,
+    "B": 11374,
+    "C": 507,
+    "D": 3620,
+    "L": 5,
+    "M": 5,
+    "tp_placed": 100198,
+    "fp_placed": 11379,
+    "tp_rendered": 100700,
+    "fp_rendered": 14994
+   },
+   "rendered_detections": 115694,
+   "pct_of_rendered": {
+    "A": 0.8660172524072122,
+    "B": 0.09831106193925356,
+    "C": 0.004382249727730047,
+    "D": 0.03128943592580428
+   },
+   "pct_of_reference_beats": {
+    "A": 0.7717542846139034,
+    "C": 0.0039052570768341997
+   },
+   "per_window_raw": {
+    "A": 3.4972599392648958,
+    "B": 0.3970121121156061,
+    "C": 0.017696952773220705,
+    "D": 0.12635694090544172
+   },
+   "identity_TP": {
+    "C_minus_L": 502,
+    "TP_rendered_minus_TP_placed": 502
+   },
+   "identity_FP": {
+    "D_minus_M": 3615,
+    "FP_rendered_minus_FP_placed": 3615
+   },
+   "type_A_with_placed_not_the_ref_partner": 0,
+   "micro_chain": {
+    "placed": {
+     "tp": 100198,
+     "fp": 11379,
+     "fn": 29627,
+     "precision": 0.8980166163277378,
+     "recall": 0.771792797997304,
+     "f1": 0.8301339674070637
+    },
+    "carried_A_B": {
+     "tp": 100193,
+     "fp": 11374,
+     "fn": 29632,
+     "precision": 0.8980522914481881,
+     "recall": 0.7717542846139034,
+     "f1": 0.830126930469941
+    },
+    "plus_C": {
+     "tp": 100700,
+     "fp": 11374,
+     "fn": 29125,
+     "precision": 0.8985134821635705,
+     "recall": 0.7756595416907376,
+     "f1": 0.8325788862293768
+    },
+    "plus_C_D_(=WW)": {
+     "tp": 100700,
+     "fp": 14994,
+     "fn": 29125,
+     "precision": 0.8703995021349422,
+     "recall": 0.7756595416907376,
+     "f1": 0.8203031129973649
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,169 @@
+{
+ "status": "post-hoc descriptive readings added after the E0 outcomes; not preregistered; not used by the case rule",
+ "val": {
+  "chance_coincidence": {
+   "all": {
+    "n": 4127,
+    "observed_C_share": 0.1228495275018173,
+    "expected_C_share_random_timing": 0.11513357160164768
+   },
+   "no_placed": {
+    "n": 3084,
+    "observed_C_share": 0.1219195849546044,
+    "expected_C_share_random_timing": 0.1143078439121271
+   },
+   "before_first": {
+    "n": 359,
+    "observed_C_share": 0.15041782729805014,
+    "expected_C_share_random_timing": 0.1158382660167131
+   },
+   "between": {
+    "n": 80,
+    "observed_C_share": 0.1125,
+    "expected_C_share_random_timing": 0.1158447265625
+   },
+   "after_last": {
+    "n": 604,
+    "observed_C_share": 0.11258278145695365,
+    "expected_C_share_random_timing": 0.11883666183774834
+   }
+  },
+  "structure_size": {
+   "WW_type_A": {
+    "prominence": {
+     "median_of_patient_medians": 1.6633714437484741,
+     "event_median": 1.6538712978363037
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 1.5359541177749634,
+     "event_median": 1.52363520860672
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.9982459818528672,
+     "event_median": 0.998166731382942
+    }
+   },
+   "WW_type_C": {
+    "prominence": {
+     "median_of_patient_medians": 0.03711782395839691,
+     "event_median": 0.03605467081069946
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 0.02754441276192665,
+     "event_median": 0.02643466740846634
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.6164638748420492,
+     "event_median": 0.6288736430207489
+    }
+   },
+   "WW_type_D": {
+    "prominence": {
+     "median_of_patient_medians": 0.03647411800920963,
+     "event_median": 0.03718874603509903
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 0.026171542704105377,
+     "event_median": 0.02709265798330307
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.6265332766245819,
+     "event_median": 0.6310119512508467
+    }
+   }
+  },
+  "f1_gain_location": {
+   "evaluable_windows": 28649,
+   "windows_without_events": 2158,
+   "mean_window_dF1_all": 0.003138846718029238,
+   "contribution_from_windows_without_events": 0.003866404227673382,
+   "contribution_from_windows_with_events": -0.0007275575096441445,
+   "placed_F1_in_windows_without_events": 0.0,
+   "WW_F1_in_windows_without_events": 0.051329293196763076,
+   "WW_windows_without_events_with_any_detection": 1726
+  }
+ },
+ "holdout": {
+  "chance_coincidence": {
+   "all": {
+    "n": 3801,
+    "observed_C_share": 0.12417784793475402,
+    "expected_C_share_random_timing": 0.11305104742173112
+   },
+   "no_placed": {
+    "n": 2785,
+    "observed_C_share": 0.1253141831238779,
+    "expected_C_share_random_timing": 0.11231415507181329
+   },
+   "before_first": {
+    "n": 302,
+    "observed_C_share": 0.1291390728476821,
+    "expected_C_share_random_timing": 0.111315190397351
+   },
+   "between": {
+    "n": 71,
+    "observed_C_share": 0.09859154929577464,
+    "expected_C_share_random_timing": 0.11372139084507042
+   },
+   "after_last": {
+    "n": 643,
+    "observed_C_share": 0.11975116640746501,
+    "expected_C_share_random_timing": 0.11698398619751166
+   }
+  },
+  "structure_size": {
+   "WW_type_A": {
+    "prominence": {
+     "median_of_patient_medians": 1.6635594367980957,
+     "event_median": 1.654154658317566
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 1.5373066663742065,
+     "event_median": 1.524775743484497
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.9982265586962535,
+     "event_median": 0.9981663567111065
+    }
+   },
+   "WW_type_C": {
+    "prominence": {
+     "median_of_patient_medians": 0.035540834069252014,
+     "event_median": 0.03545407950878143
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 0.02556801214814186,
+     "event_median": 0.02590276300907135
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.6330376998500631,
+     "event_median": 0.6432315019863429
+    }
+   },
+   "WW_type_D": {
+    "prominence": {
+     "median_of_patient_medians": 0.03688296675682068,
+     "event_median": 0.03685122728347778
+    },
+    "amp_rel": {
+     "median_of_patient_medians": 0.02665369212627411,
+     "event_median": 0.026899561285972595
+    },
+    "qrs_corr": {
+     "median_of_patient_medians": 0.6227401044175369,
+     "event_median": 0.6283831416608339
+    }
+   }
+  },
+  "f1_gain_location": {
+   "evaluable_windows": 28531,
+   "windows_without_events": 1993,
+   "mean_window_dF1_all": 0.0029295036735859617,
+   "contribution_from_windows_without_events": 0.003688039282655665,
+   "contribution_from_windows_with_events": -0.0007585356090697029,
+   "placed_F1_in_windows_without_events": 0.0,
+   "WW_F1_in_windows_without_events": 0.05279651217935212,
+   "WW_windows_without_events_with_any_detection": 1593
+  }
+ }
+}

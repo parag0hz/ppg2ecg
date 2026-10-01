@@ -1,0 +1,12 @@
+{
+ "seed": 42,
+ "train_seconds": 144.34989857673645,
+ "n_params": 592770,
+ "nan_steps": 0,
+ "checkpoint": "last step (no selection)",
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "peak_gpu_mem_mib": 1377.35986328125,
+ "steps": 20000,
+ "batch": 64,
+ "sha256": "f0c817bc4cb3f00dcf7f511d4187fd44d2668bc948b1b32e5ecfaf62dfd4549f"
+}

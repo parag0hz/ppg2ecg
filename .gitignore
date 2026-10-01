@@ -521,3 +521,8 @@ artifacts/d0_event_cell_support/**/*.pt
 !artifacts/c0_coherentbeat/**
 artifacts/c0_coherentbeat/**/*.npz
 artifacts/c0_coherentbeat/**/*.pt
+# C0-A — CoherentBeat architecture-attribution ablations (small artifacts only; checkpoints live in outputs/)
+!artifacts/c0a_coherentbeat_ablation/
+!artifacts/c0a_coherentbeat_ablation/**
+artifacts/c0a_coherentbeat_ablation/**/*.npz
+artifacts/c0a_coherentbeat_ablation/**/*.pt

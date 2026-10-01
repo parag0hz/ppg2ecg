@@ -1,0 +1,44 @@
+{
+ "PM": {
+  "family": "BF0 BeatFlowNet deterministic (x_t = 0, t = 0)",
+  "ch": 73,
+  "kernel": 5,
+  "dilations": [
+   1,
+   2,
+   4,
+   8,
+   16,
+   32,
+   1,
+   2
+  ],
+  "t_dim": 32,
+  "cond_hidden": 128,
+  "segment": [
+   -64,
+   101
+  ],
+  "render": "BF0 Hann overlap-add + renormalization, BF0 conditioning, ARCH-TRAIN template baseline"
+ },
+ "CONST": {
+  "family": "CoherentBeat-C0 with g(t) = a_global",
+  "global": "Linear(64,64) -> GELU -> Linear(64,1) on the window encoder mean",
+  "local": "identical to C0 (encoder, FiLM local residual, supports, C-infinity bump)"
+ },
+ "WW": {
+  "family": "event-conditioned whole-window predictor",
+  "encoder": "C0 Encoder (64 ch, 8 blocks)",
+  "dec_ch": 72,
+  "n_dec": 5,
+  "dec_dilations": [
+   1,
+   2,
+   4,
+   8,
+   16
+  ],
+  "raster": "max of Gaussians, sigma = 20 ms (RD1 / C0 detector target convention), at the window's events",
+  "output": "512 samples directly; no decomposition, supports or stitching"
+ }
+}

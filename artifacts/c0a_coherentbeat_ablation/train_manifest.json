@@ -1,0 +1,31 @@
+{
+ "role": "ARCH-TRAIN only",
+ "seed": 42,
+ "checkpoint": "last step",
+ "PM": {
+  "protocol": "BF0 deterministic beat: 20,000 steps x 256 beats, AdamW 1e-3 / 0.01, clip 1.0",
+  "training_events": "reference R"
+ },
+ "CONST": {
+  "protocol": {
+   "steps": 20000,
+   "batch": 64,
+   "lr": 0.001,
+   "wd": 0.01,
+   "clip": 1.0
+  },
+  "loss": "L1 full window",
+  "training_events": "reference R"
+ },
+ "WW": {
+  "protocol": {
+   "steps": 20000,
+   "batch": 64,
+   "lr": 0.001,
+   "wd": 0.01,
+   "clip": 1.0
+  },
+  "loss": "L1 full window",
+  "training_raster": "reference R"
+ }
+}

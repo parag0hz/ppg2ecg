@@ -1,0 +1,33 @@
+{
+ "target_c0_params": 592770,
+ "criterion": "parameter count only; closest to the target, ties to the first",
+ "PM": {
+  "grid": "BeatFlowNet channel width 32..128 (all other BF0 settings unchanged)",
+  "selected_ch": 73,
+  "params": 599445,
+  "mismatch": 0.011260691330532922,
+  "within_2pct": true,
+  "neighbours": {
+   "71": 572237,
+   "72": 585761,
+   "73": 599445,
+   "74": 613289,
+   "75": 627293
+  }
+ },
+ "WW": {
+  "grid": "decoder width {32..96 step 8} x depth 1..12 on the C0 encoder",
+  "selected": {
+   "dec_ch": 72,
+   "n_dec": 5
+  },
+  "params": 593577,
+  "mismatch": 0.0013614049293992612,
+  "within_5pct": true
+ },
+ "CONST": {
+  "params": 592770,
+  "mismatch": 0.0,
+  "note": "the scalar head has the same layers as C0's spline-coefficient head (1x1 conv == linear on one position)"
+ }
+}

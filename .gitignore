@@ -526,3 +526,8 @@ artifacts/c0_coherentbeat/**/*.pt
 !artifacts/c0a_coherentbeat_ablation/**
 artifacts/c0a_coherentbeat_ablation/**/*.npz
 artifacts/c0a_coherentbeat_ablation/**/*.pt
+# E0 — WW-DET spontaneous event audit (small artifacts only; caches live in outputs/)
+!artifacts/e0_wwdet_event_audit/
+!artifacts/e0_wwdet_event_audit/**
+artifacts/e0_wwdet_event_audit/**/*.npz
+artifacts/e0_wwdet_event_audit/**/*.pt

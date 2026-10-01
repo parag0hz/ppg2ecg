@@ -1,0 +1,25 @@
+{
+ "sha256": {
+  "outputs/c0_coherentbeat/detector.pt": "ba21597b8787e96a862a9a86b79f7f19b0fb99d1a200761de0d1eb4bb00254f1",
+  "outputs/c0_coherentbeat/c0.pt": "9c99f53766e76b94a32a3f26106f41603db58d7b2f06e68576a7b07f6fd7e440",
+  "outputs/c0a_coherentbeat_ablation/ww.pt": "aef4b393aec14f0fda628d5421f8d87fb5cf154805a2695d6ab3db9b6a8f676f",
+  "outputs/c0_coherentbeat/val_renders.npz": "18b622d422030b0b71666ff0a101df7cd31e64d51a037362be87b5f41b8f6084",
+  "outputs/c0_coherentbeat/holdout_renders.npz": "499fabea5ff64304a555fa7a41ed225ef038ed050a3d0377b64fa664acae05fe",
+  "artifacts/c0_coherentbeat/split_manifest.json": "ccbdf54e26b9a53c7c4713a2ec1fbbf19a70e133f3005a6c7e67320e87e345f1",
+  "artifacts/c0_coherentbeat/checkpoint_hashes.json": "631934a1865df07bbed54f084e17706fb4a39fe49145cfe31d5ed38f4e652947",
+  "artifacts/c0a_coherentbeat_ablation/checkpoint_hashes.json": "eef987165764b1dca68cb882f1146c3f4c940217e2fcc734cceba1d1e9fdb228",
+  "artifacts/c0a_coherentbeat_ablation/val_metrics.json": "e2170f9daeea0f7bf008f5817b7c56867eb2fc9bfa551f285c370800619a9d92",
+  "artifacts/c0a_coherentbeat_ablation/holdout_metrics.json": "f05e594ad403eee6d2211a54149330b289ef7530028edcec9650a3aff9d7909f",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "scripts/c0a_ablation.py": "ef1204643d5ae609dfde8bb34c8177c5597279e7ca61f034f9d02180203bda3e",
+  "src/ppg2ecg/coherentbeat/model.py": "6c6acb3450fbd15f1125ad00b7a64175c84e7049312740510af83352fc5c6fa8",
+  "src/ppg2ecg/coherentbeat/ablation.py": "cddc3e160aadec9b30a8a248ddb9120896be00a5c66b2636a770191cb5a17dfb",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e"
+ },
+ "checkpoints_equal_recorded_hashes": {
+  "detector": true,
+  "c0": true,
+  "ww": true
+ }
+}

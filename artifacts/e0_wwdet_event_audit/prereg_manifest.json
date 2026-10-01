@@ -1,0 +1,46 @@
+{
+ "prereg": {
+  "docs/E0_WWDET_SPONTANEOUS_EVENT_AUDIT_PREREGISTRATION.md": "76ae2d31a3a347789091a32276a2d0f700f9fe4cfa8023190ce07c4b97412ae2"
+ },
+ "code": {
+  "scripts/e0_event_audit.py": "bc75825a92fbbcd91a0f3f0928b43c026e0cd0b17864f052169b695994240261",
+  "src/ppg2ecg/eventaudit/__init__.py": "e0d82255d2562fa6db992de4a8366afcc1e1ef5f3fdfc759d5598b5873e203cf",
+  "src/ppg2ecg/eventaudit/taxonomy.py": "fba87a9a14724563b87eb3debb456b13412e4524d9436cfdeb2d1e6bbcd391a9",
+  "src/ppg2ecg/eventaudit/features.py": "e87140a5e7361899b3f13b863dd1e3154c54e23f0714f9213cc34247042334a2",
+  "src/ppg2ecg/eventaudit/probe.py": "63c6b8e759b81222c4608da13397593a25b7273ce983fd0b7bc046a6c684f18a",
+  "tests/test_e0_event_audit.py": "f20a143dd6e46a873789c44dc44f57f0559b19700dbfcc64d9e28018ab3d0362"
+ },
+ "frozen_inputs": {
+  "outputs/c0_coherentbeat/detector.pt": "ba21597b8787e96a862a9a86b79f7f19b0fb99d1a200761de0d1eb4bb00254f1",
+  "outputs/c0_coherentbeat/c0.pt": "9c99f53766e76b94a32a3f26106f41603db58d7b2f06e68576a7b07f6fd7e440",
+  "outputs/c0a_coherentbeat_ablation/ww.pt": "aef4b393aec14f0fda628d5421f8d87fb5cf154805a2695d6ab3db9b6a8f676f",
+  "outputs/c0_coherentbeat/val_renders.npz": "18b622d422030b0b71666ff0a101df7cd31e64d51a037362be87b5f41b8f6084",
+  "outputs/c0_coherentbeat/holdout_renders.npz": "499fabea5ff64304a555fa7a41ed225ef038ed050a3d0377b64fa664acae05fe",
+  "artifacts/c0_coherentbeat/split_manifest.json": "ccbdf54e26b9a53c7c4713a2ec1fbbf19a70e133f3005a6c7e67320e87e345f1",
+  "artifacts/c0_coherentbeat/checkpoint_hashes.json": "631934a1865df07bbed54f084e17706fb4a39fe49145cfe31d5ed38f4e652947",
+  "artifacts/c0a_coherentbeat_ablation/checkpoint_hashes.json": "eef987165764b1dca68cb882f1146c3f4c940217e2fcc734cceba1d1e9fdb228",
+  "artifacts/c0a_coherentbeat_ablation/val_metrics.json": "e2170f9daeea0f7bf008f5817b7c56867eb2fc9bfa551f285c370800619a9d92",
+  "artifacts/c0a_coherentbeat_ablation/holdout_metrics.json": "f05e594ad403eee6d2211a54149330b289ef7530028edcec9650a3aff9d7909f",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "scripts/c0a_ablation.py": "ef1204643d5ae609dfde8bb34c8177c5597279e7ca61f034f9d02180203bda3e",
+  "src/ppg2ecg/coherentbeat/model.py": "6c6acb3450fbd15f1125ad00b7a64175c84e7049312740510af83352fc5c6fa8",
+  "src/ppg2ecg/coherentbeat/ablation.py": "cddc3e160aadec9b30a8a248ddb9120896be00a5c66b2636a770191cb5a17dfb",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e"
+ },
+ "reproduction": "abd907e1da738ef545438444a235b9694e2e0c6bf722d7492f71c0cda63468ba",
+ "written_before_any_event_level_e0_outcome": true,
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "e3dc3f750411e4281726a8d9212d6ddbc0a0e5d4"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "prereg": "docs/D0_EVENT_CELL_SUPPORT_PREREGISTRATION.md",
+ "sha256": {
+  "docs/D0_EVENT_CELL_SUPPORT_PREREGISTRATION.md": "800a874d540a2572ca93c758f367cce2a91d0c3f71c48eecda3b0a58a7c71dec",
+  "scripts/d0_event_cell.py": "e7038f138064445423eb7094f8ffc0c54e742012342c3001bbd4317da900362c",
+  "src/ppg2ecg/beatfirst/eventcell.py": "a97a4d6810672d5bfabb1d75c1475dce370d743c8c12e30ac1cc0fbc340121d2",
+  "tests/test_d0_event_cell.py": "828a31a18d9caeafac1cb6e34424b3d27106c288e1d3a2dc76c6b19eddd4e83f"
+ },
+ "frozen_design_files": {
+  "renderer_config.json": "61e40eaff46a0dfce4b7afde586690a2e87d3592c58ede4619c8cd88d9b3e858",
+  "crossfade_train_selection.json": "b591e91b4124e24eed1d33cc9adfd4981d4ffec18f960e25bea1c0a74bf98727",
+  "original_reproduction.json": "89d91c22f325a1014bc0ccf1630a8c75aa9657660a0e773ba6a7045065a937c2",
+  "input_hashes.json": "ed852d826dd785c04da76b92802dee6df00654282686d9f64d142c1716f33761"
+ },
+ "parent_commit": "d380e3b53ebcbaf6627300345f08a92a6e794988",
+ "written_before_any_event_cell_validation_result": true
+}

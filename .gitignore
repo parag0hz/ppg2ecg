@@ -511,3 +511,8 @@ artifacts/pz3_per_patient/**/*.npz
 !artifacts/bf0_beat_first/**
 artifacts/bf0_beat_first/**/*.npz
 artifacts/bf0_beat_first/**/*.pt
+# D0 — event-cell support diagnostic on frozen BF0 outputs (small artifacts only; rerenders live in outputs/)
+!artifacts/d0_event_cell_support/
+!artifacts/d0_event_cell_support/**
+artifacts/d0_event_cell_support/**/*.npz
+artifacts/d0_event_cell_support/**/*.pt

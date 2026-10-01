@@ -1,0 +1,21 @@
+{
+ "crossfade": "complementary raised cosine",
+ "crossfade_width_samples": 4,
+ "crossfade_width_ms": 31.25,
+ "crossfade_cap": "min(width, r_{i+1} - r_i - 2) so no crossfade reaches an R sample",
+ "boundary_rule": "interior: midpoint of adjacent placed events, moved the least amount that keeps the crossfade inside both beats' output supports (R-64 .. R+101); supports overlapping by less than the width: crossfade over the overlap; no overlap: gap, BF0 nearest-covered-value fill",
+ "first_last_rule": "L_1 = r_1 - (r_2 - r_1)/2, U_N = r_N + (r_N - r_{N-1})/2, clipped to the beat's output support and the window; no crossfade into the fill",
+ "singleton_rule": "r_1 +- RR_train_median/2",
+ "rr_single_samples": 100.0,
+ "rr_train_median_s": 0.78125,
+ "rr_source": "outputs/bf0_beat_first/template.npz (BF0 train_beat stage, TRAIN reference peaks)",
+ "outside_cells": "BF0 nearest-covered-value fill (ties to the left)",
+ "empty_window_fill": -0.5418424606323242,
+ "renormalization": "none (weights sum to 1 by construction)",
+ "time_warp": "none",
+ "beat_support_samples": {
+  "before_R": 64,
+  "after_R": 101,
+  "length": 166
+ }
+}

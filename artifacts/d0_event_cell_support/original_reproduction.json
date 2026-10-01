@@ -1,0 +1,30 @@
+{
+ "arms": {
+  "S": "stochastic seed 0",
+  "D": "deterministic",
+  "T": "template"
+ },
+ "renderer": "ppg2ecg.beatfirst.render.assemble (BF0, unchanged)",
+ "all_exact": true,
+ "S": {
+  "max_abs_diff": 0.0,
+  "windows_bit_identical": 4822,
+  "windows": 4822,
+  "saved_render_sha256": "844cd30317816c7a45d8b276efaa41afad39c6c41f63aa7dcdbfb1b8f2902522",
+  "regenerated_beats_sha256": "cb7eccb133c223434694a698cce505dbe0c9392ebcbcdeabdb7f30a43472e8e8"
+ },
+ "D": {
+  "max_abs_diff": 0.0,
+  "windows_bit_identical": 4822,
+  "windows": 4822,
+  "saved_render_sha256": "d0353d716a3f94cd2eb3b03860dab706ff4c53e308c39d33be2d463ac9264a01",
+  "regenerated_beats_sha256": "ff45fd8949f70d7f1810a9704c4d8bd3e7d23e80e03b123bb827c3c773a982b4"
+ },
+ "T": {
+  "max_abs_diff": 0.0,
+  "windows_bit_identical": 4822,
+  "windows": 4822,
+  "saved_render_sha256": "0dad0381ea3901a907c9e79a41de1296f0079bd753febb6b06a3387e6790c9dc",
+  "regenerated_beats_sha256": "c81e798a2ebe30a7038d54b4a7ecd88d352ff954ae0330eaeec560d481ea3d51"
+ }
+}

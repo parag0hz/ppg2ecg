@@ -1,0 +1,31 @@
+{
+ "bf0_prereg_commit": "504395dd967330b8ed0d80e5dad98302437632f7",
+ "bf0_result_commit": "d380e3b53ebcbaf6627300345f08a92a6e794988",
+ "beat_stochastic.pt": "5fc7a8037c79f3237c0528016b37e875ee1bab23a077be38cdeb2f91af938dee",
+ "beat_deterministic.pt": "e06a328d231df784b03068c0fb882123cebbc918ba347cd309b0c03df0588685",
+ "bf0_recorded_checkpoint_sha256": {
+  "stochastic": "5fc7a8037c79f3237c0528016b37e875ee1bab23a077be38cdeb2f91af938dee",
+  "deterministic": "e06a328d231df784b03068c0fb882123cebbc918ba347cd309b0c03df0588685"
+ },
+ "checkpoints_match_bf0_record": true,
+ "render_val.npz": "91344a0d7f19700c5028fcfa8494d14714b4b1c5f62994d2df79bfa9015bd69e",
+ "template.npz": "db967faf16d7079580d8e0ab76f00420b32f0f229dc92eff425ce73183c7330f",
+ "val_rpeaks.npz": "b867e27231e1823dcc17f48ed127d3c053fe3a050519707d44773c5a54804052",
+ "rd1_checkpoint": "084a316fa663f9dc239b936223104c7022cb9adb146e9a5f58967ff6190d1b85",
+ "rd1_train_peaks_cache": "498935a69f2251fb37688694ae139d91ac45db1d29e44027c278c0b31c398511",
+ "split_manifest": "374315b5ebbbb67b58c113eaf7c524fdfd50bc59ea9a794bd534b09143f38750",
+ "bf0_gate_metrics.json": "1df7fc85921a14c05ccbc3ba4d964fdad15f165d0700a33d4f838a2d440755de",
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "d380e3b53ebcbaf6627300345f08a92a6e794988"
+ }
+}

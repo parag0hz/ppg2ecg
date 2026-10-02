@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B0",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c01",
+ "parent": "",
+ "change": "base (A0 norm, B0 concat anchor, C1 concatenative coupling, width 50, NFE 8)",
+ "hypothesis": "AnchorFlow base: per-band normalized Haar residual, anchor and PPG conditioned, coarse->mid->fine coupled flow"
+}

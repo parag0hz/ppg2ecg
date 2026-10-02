@@ -1,0 +1,14 @@
+{
+ "af_train": {
+  "patients_sha256": "1f6441577c57e7afce134fbf609e78bed6bd0db8308dcf5e09b2a5c73d0e801a",
+  "window_index_sha256": "5f11d88f6354f45fc119a27638c4b3e683fc563c51f15fb8271a66cfecb51669"
+ },
+ "af_dev": {
+  "patients_sha256": "563135c311fe14c85d48409facc631393a30c9bee1e490d6952c77c79aca4af2",
+  "window_index_sha256": "6ede945e55aba622bd886a66291151d5fce8ca610694fb59729f659faa747add"
+ },
+ "af_lock": {
+  "patients_sha256": "d3a5becec7445b21ea39c3c80d9b919a5c18cd33cf3547b5b8e7213556edbc1c",
+  "window_index_sha256": "2de9d2f3e826b48a3dc06ef67f53fa6abc5b8773181f2363c2a8ff0c12c23cd8"
+ }
+}

@@ -1,0 +1,14 @@
+{
+ "class": "WWDet(72, 5) (SF0 WW-L1)",
+ "loss": "L1",
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "training": "AF-TRAIN, reference-R raster, seed 42",
+ "inference": "AF detector events raster",
+ "frozen": "after training; never updated during the search"
+}

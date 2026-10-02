@@ -1,0 +1,20 @@
+{
+ "adaptive_population": "AF-DEV (300 patients)",
+ "locked_population": "AF-LOCK (337), opened once after freeze",
+ "old_test": "never opened in AF0",
+ "gates": "D1-D7 (protocol \u00a78)",
+ "bootstrap": {
+  "replicates": 2000,
+  "seed": 20261002
+ },
+ "k16": {
+  "windows": 2000,
+  "K": 16,
+  "subset": "salted rank 'af0-k16-v1' over AF-DEV windows"
+ },
+ "noise": "scaleflow.window_noise (sha256 'patient:window:20261002', ':k{k}' for k > 0)",
+ "budget": {
+  "candidates": 10,
+  "training_jobs": 30
+ }
+}

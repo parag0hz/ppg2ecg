@@ -1,0 +1,50 @@
+{
+ "stage_A_norm": [
+  "A0 per-band TRAIN mean/std",
+  "A1 per-band TRAIN median/IQR",
+  "A2 global TRAIN mean/std"
+ ],
+ "stage_B_anchor_injection": [
+  "B0 concat mu_s",
+  "B1 FiLM from mu_s",
+  "B2 concat + FiLM"
+ ],
+ "stage_C_coupling": [
+  "C0 additive projected features",
+  "C1 concatenative fusion (SF0 form, base)",
+  "C2 gated additive (learned channel-wise sigmoid gates, init 0)"
+ ],
+ "stage_D_width_mult": [
+  0.75,
+  1.0,
+  1.25
+ ],
+ "stage_E_nfe": [
+  4,
+  8,
+  16
+ ],
+ "stage_F_amp": [
+  "F0 none",
+  "F1 global alpha",
+  "F2 per-band alpha"
+ ],
+ "stage_G_ppg_dropout": [
+  0.0,
+  0.05,
+  0.1
+ ],
+ "base": {
+  "norm": "A0",
+  "anchor": "B0",
+  "coupling": "C1",
+  "width_mult": 1.0,
+  "nfe": 8,
+  "amp": "F0",
+  "ppg_dropout": 0.0
+ },
+ "max_candidates": 10,
+ "max_training_jobs": 30,
+ "width_rule": "every structural variant is re-matched to ~600k by parameter count (16..160); stage D multiplies the matched width",
+ "nfe_rule": "NFE variants of a trained candidate are evaluated only if its NFE-8 run passes D1-D7; lowest passing NFE kept"
+}

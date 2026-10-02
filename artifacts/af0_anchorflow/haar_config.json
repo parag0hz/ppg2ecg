@@ -1,0 +1,14 @@
+{
+ "transform": "fixed two-level orthonormal Haar (no parameters)",
+ "level1": "low=(x[2k]+x[2k+1])/sqrt2, high=(x[2k]-x[2k+1])/sqrt2",
+ "coarse": "low_2 (128)",
+ "mid": "high_2 (128)",
+ "fine": "high_1 (256)",
+ "applied_to": [
+  "x_t",
+  "PPG",
+  "event raster"
+ ],
+ "loss_space": "velocity coefficients are inverse-transformed to the 512-sample waveform before the MSE",
+ "source": "SF0, unchanged"
+}

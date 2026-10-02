@@ -1,0 +1,14 @@
+{
+ "family": "RD1 RhythmTCN",
+ "protocol": {
+  "steps": 14000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "sigma_ms": 20.0,
+  "threshold": 0.35,
+  "refractory": 32
+ },
+ "training": "AF-TRAIN only, seed 42",
+ "events": "threshold 0.35, refractory 32; one event sequence per window, shared by every model"
+}

@@ -1,0 +1,36 @@
+{
+ "protocol": {
+  "docs/AF0_ANCHORFLOW_DEVELOPMENT_PROTOCOL.md": "71f67d16609fea641a39ac49d701fcf438a27151e66934429c1e5d8c54a37698"
+ },
+ "code": {
+  "scripts/af0_anchorflow.py": "4a313d57ee874b803c8e2175231a81cfb10f6e317a9c64a3e947daa9a64d6ff1",
+  "src/ppg2ecg/anchorflow/__init__.py": "bbc4305b10b07b98de7aa77840ce4c53be08fe2e01458c2bc682c6d67df267d2",
+  "src/ppg2ecg/anchorflow/model.py": "d2d1113aaf5479223ffad5ddb7ba915c2e06962347408b56eb435a9e108db21a",
+  "src/ppg2ecg/anchorflow/fastfd.py": "677679599aeb0bcc01d53302a64f5694249f5126d260ccf05ba6584efa8952eb",
+  "tests/test_af0_anchorflow.py": "3b677e636b7e000686cc0cd32065551ca3ad74116a3e2fdeeadc494a154a565c"
+ },
+ "design": {
+  "split_manifest.json": "fc49fc6687b2ef7ccbbbfd3cf855ffd3daee606fc8b3f7631c4cea9497825656",
+  "split_hashes.json": "7da9fec29eb9d1d5bd5a95d7b7a69f03f0188575ac7bfe41f3bc96a8fdb616a8",
+  "baseline_configs.json": "5ecadf9a1c3c2cdd8bd99b5cf7d8febc1417e6c5a91e5560ad38c0ca5e648a36",
+  "search_space.json": "c293a5499bade80e1666233645ee34de36415133a6fd01fb8333cb102d9d7f60",
+  "development_protocol.json": "0b6108da8bb7c24c4745bf8c3ecac71ee60afbaf04ffdd24a1689299324b6679",
+  "anchor_config.json": "6ee6084e8e9be4f63b242a1267d7e387a33529caa6cc2a8e36085cf490b01e1a",
+  "detector_config.json": "bb47b36793456e6ad9549af4b99d272c5a0260645e9c899b2b4731f27df261f2",
+  "haar_config.json": "252d135695ea9301dc2d96d724b928ac2783d293adfe219697ea405bed4e8e06"
+ },
+ "written_before_any_af_dev_metric": true,
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "423042cd29bc86d936d436c74d6f6a73fa9c8a9a"
+ }
+}

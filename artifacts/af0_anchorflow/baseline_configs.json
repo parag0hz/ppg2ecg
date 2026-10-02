@@ -1,0 +1,32 @@
+{
+ "B0_anchor": {
+  "class": "WWDet(72, 5)",
+  "params": 593577,
+  "loss": "L1",
+  "training_raster": "reference R (SF0 WW-L1 protocol)"
+ },
+ "B1_full_scaleflow": {
+  "class": "scaleflow ScaleFM(50, coupled=True)",
+  "params": 598333,
+  "protocol": "SF0 unchanged on AF-TRAIN"
+ },
+ "B2_vanilla_residual": {
+  "class": "anchorflow VanillaResidualFM",
+  "dec_width": 63,
+  "params": 597727,
+  "norm": "waveform (global mean / std)",
+  "inputs": "[h(PPG), raster, mu, y_t]"
+ },
+ "B3_independent_residual": {
+  "class": "anchorflow ResidualScaleFM(coupling=None, anchor=B0)",
+  "width": 50,
+  "params": 593635,
+  "norm": "A0"
+ },
+ "B4_base": {
+  "class": "anchorflow ResidualScaleFM(coupling=C1, anchor=B0)",
+  "width": 50,
+  "params": 598483,
+  "norm": "A0"
+ }
+}

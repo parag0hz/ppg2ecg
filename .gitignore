@@ -541,3 +541,8 @@ artifacts/r1_rhythmfield_ww/**/*.pt
 !artifacts/sf0_scaleflow/**
 artifacts/sf0_scaleflow/**/*.npz
 artifacts/sf0_scaleflow/**/*.pt
+# AF0 — AnchorFlow-ECG (small artifacts only; checkpoints and generated outputs live in outputs/)
+!artifacts/af0_anchorflow/
+!artifacts/af0_anchorflow/**
+artifacts/af0_anchorflow/**/*.npz
+artifacts/af0_anchorflow/**/*.pt

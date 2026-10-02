@@ -1,0 +1,46 @@
+{
+ "evidence_label": "ECG-target-blind cross-task external cohort",
+ "primary_seed": 42,
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "nfe": 8,
+ "bootstrap": {
+  "replicates": 2000,
+  "seed": 20261002
+ },
+ "shuffle_seed": 20261002,
+ "sha256": {
+  "docs/DP3_MIMICBP_TARGET_BLIND_PREREGISTRATION.md": "9c5657fcfcac1148c9845400af2c4a06835f0a0dd9f98adc386a45950d50037d",
+  "scripts/dp3_mimicbp.py": "5742e5f74a1670fd1a38a5be2c2f97a52139de4cb30913e2d01088821058384c",
+  "tests/test_dp3_mimicbp.py": "9f23580415fb7abff1fe703f020ca6aaf6d217e2b56365ea354bcdecdf8e8dd9",
+  "scripts/dp0_dualreadout.py": "a9ff630187b5d5811dc25ec1b07ca00e2e6a5f49ac720b0c6ec204d4fc81bafb",
+  "src/ppg2ecg/dualreadout/model.py": "6efa4a89cb8eaa08e0c06a996bea327cc11b8e3e069a99edec81f467ac20f6c0",
+  "src/ppg2ecg/scaleflow/model.py": "90f99ab7630e569d32a51ecb86007f18c52af8f3c5e51ebee3f880858dffe8e2",
+  "src/ppg2ecg/data/preprocess.py": "9312299c3f075a0b52cd0e60e593c0bb983f55ad477e5a70cdf6147943f27210",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e",
+  "src/ppg2ecg/anchorflow/fastfd.py": "677679599aeb0bcc01d53302a64f5694249f5126d260ccf05ba6584efa8952eb",
+  "src/ppg2ecg/probes/rhythm_tcn.py": "113d3ef1a9edb69c955d0534cbffe7e1b58325485b245a1ed58378564067527b",
+  "src/ppg2ecg/coherentbeat/ablation.py": "cddc3e160aadec9b30a8a248ddb9120896be00a5c66b2636a770191cb5a17dfb",
+  "scripts/bf0_run.py": "ef0bdea1bf9f9c3b3dfd27679fe264c8b27907c7c9bf49291c34b66c942535c1",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "artifacts/dp3_mimicbp/dataset_adapter.json": "f0b6944b5064097ffc7eaad5f20998b4128afd4814fcea63209a2aa20750b759",
+  "artifacts/dp3_mimicbp/external_exclusion_rules.json": "9f1f9438bb4584326ca054bb6cde4d5e4967cb903cc05e63005714543063c69d",
+  "artifacts/dp3_mimicbp/external_subject_manifest.json": "daed5b056c36d294adefb06a598921952a6db55e7ac8fd94043386f6025236cb",
+  "artifacts/dp3_mimicbp/target_blind_audit.json": "0580e30054c81aa27277e0fa8e51f11f3f07dd9d9c111586b0df1be6f6790164",
+  "artifacts/dp0_dualreadout/split_manifest.json": "c62ef3d14125242e2f89807aabc080b9bb5cf31285367c02ab452b64b06d8751",
+  "outputs/dp0_dualreadout/detector.pt": "828110bb9615c6e44de782c00f41d2b0c9df58a3325c776726cc0f72323f2a4c",
+  "outputs/dp0_dualreadout/point.pt": "3a4cd6c4f4626c34360ba9dabd78daa55e3f4379b3aa00e2dd51d4cd6536b973",
+  "outputs/dp0_dualreadout/gen.pt": "07589e61650123d772453df94ab663ba17bd004e4b4f1d6ca19cc83fc2c90d59",
+  "outputs/dp0_dualreadout/S1.pt": "10e22aedf906129767f55a762e48b42909623266c49708f8678d080e98e9ca8a",
+  "outputs/dp3_mimicbp/seed43/point.pt": "71cefc8cbe5936368922e360688be64b18b6cc10336aaa93cee76962f60fcbb1",
+  "outputs/dp3_mimicbp/seed43/gen.pt": "0a160d0a6ae49d6239ee639ae345566edc4a1d3061d3cb36b920637e4339405e",
+  "outputs/dp3_mimicbp/seed43/S1.pt": "61ba253b97902af1b080b6dfff508b7f3c0dbba5ebcfc4c13f7d3159d76180a6",
+  "outputs/dp3_mimicbp/seed44/point.pt": "74126fc79bf86ba053025c9b235969cf9b8e09b166eebed66ebbe57b05b8751b",
+  "outputs/dp3_mimicbp/seed44/gen.pt": "14d2518f2480a43edead0e3808daeca3c36cca48301eb1eee2e100ab4992719d",
+  "outputs/dp3_mimicbp/seed44/S1.pt": "9294042ed35a145e4c0b7887422387de4fa3374509154f597284107e90005e5e"
+ }
+}

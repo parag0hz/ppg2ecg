@@ -1,0 +1,10 @@
+{
+ "subjects_total": 1524,
+ "subjects_eligible": 1524,
+ "subjects_excluded": 0,
+ "windows_possible": 320040,
+ "windows_eligible": 319493,
+ "exclusions_by_rule": {
+  "R4": 547
+ }
+}

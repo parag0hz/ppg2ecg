@@ -1,0 +1,4 @@
+seed,dcorr,dcorr_lo,dfp,dfp_hi,drecall,drecall_lo,dfd,dfd_hi,shuffle_fd,shuffle_fd_lo,shuffle_corr,shuffle_corr_hi,T1,T2,T3,T4,T5,overall_T1_T4
+42,-0.0116,-0.0169,-0.0028,0.0004,-0.0002,-0.0004,-0.175,-0.057,3.653,-0.875,-0.2247,-0.2119,True,True,True,False,True,False
+43,0.0051,-0.0006,-0.0152,-0.0125,0.0003,0.0001,-0.689,-0.238,35.195,31.918,-0.2361,-0.2224,True,True,True,True,True,True
+44,-0.0119,-0.0167,-0.0011,0.0010,-0.0001,-0.0004,0.626,0.747,11.154,7.055,-0.1870,-0.1759,True,True,True,True,True,True

@@ -1,0 +1,34 @@
+{
+ "winner": "S1",
+ "nfe": 8,
+ "noise": "scaleflow.window_noise",
+ "shuffle_seed": 20261002,
+ "bootstrap": {
+  "replicates": 2000,
+  "seed": 20261002
+ },
+ "sha256": {
+  "docs/DP0_DUALREADOUT_PREREGISTRATION.md": "cf0878c8f4018aa8259e3a124a942939bf231a10b14531ec18da07ce6ce27ab9",
+  "scripts/dp0_dualreadout.py": "a9ff630187b5d5811dc25ec1b07ca00e2e6a5f49ac720b0c6ec204d4fc81bafb",
+  "src/ppg2ecg/dualreadout/__init__.py": "f1e1d96ef77d976ec0f3ee9d912ad2190f3d0f8d8859a3ce9b739cef131f31ac",
+  "src/ppg2ecg/dualreadout/model.py": "6efa4a89cb8eaa08e0c06a996bea327cc11b8e3e069a99edec81f467ac20f6c0",
+  "tests/test_dp0_dualreadout.py": "9a99e027af646b9386d918d8663e2894a114cdd537587340cac6b833a5417cfd",
+  "outputs/dp0_dualreadout/detector.pt": "828110bb9615c6e44de782c00f41d2b0c9df58a3325c776726cc0f72323f2a4c",
+  "outputs/dp0_dualreadout/point.pt": "3a4cd6c4f4626c34360ba9dabd78daa55e3f4379b3aa00e2dd51d4cd6536b973",
+  "outputs/dp0_dualreadout/gen.pt": "07589e61650123d772453df94ab663ba17bd004e4b4f1d6ca19cc83fc2c90d59",
+  "outputs/dp0_dualreadout/S1.pt": "10e22aedf906129767f55a762e48b42909623266c49708f8678d080e98e9ca8a",
+  "artifacts/dp0_dualreadout/sharing_graph.json": "12140fc4066189b4e535e8298c1684d66efa884563bcb241e4afdc90b34e9981",
+  "artifacts/dp0_dualreadout/training_manifest.json": "16c908e032393ef2baf74a094de0bf6337beef9d06b89005f57a24d4c8bdf0a9",
+  "artifacts/dp0_dualreadout/parameter_accounting.json": "2b7df682b16134f898bb2df70dbf7324fb6fa6508386bee76ec62eb06d9f5542",
+  "artifacts/dp0_dualreadout/split_manifest.json": "c62ef3d14125242e2f89807aabc080b9bb5cf31285367c02ab452b64b06d8751",
+  "artifacts/dp0_dualreadout/candidate_selection.json": "950683edf99f5c0390d5b507c0bec4e9370d577f58da18c9210f72b13c4d05da",
+  "artifacts/af0_anchorflow/split_manifest.json": "fc49fc6687b2ef7ccbbbfd3cf855ffd3daee606fc8b3f7631c4cea9497825656",
+  "src/ppg2ecg/scaleflow/model.py": "90f99ab7630e569d32a51ecb86007f18c52af8f3c5e51ebee3f880858dffe8e2",
+  "src/ppg2ecg/anchorflow/fastfd.py": "677679599aeb0bcc01d53302a64f5694249f5126d260ccf05ba6584efa8952eb",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/probes/rhythm_tcn.py": "113d3ef1a9edb69c955d0534cbffe7e1b58325485b245a1ed58378564067527b",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "scripts/bf0_run.py": "ef0bdea1bf9f9c3b3dfd27679fe264c8b27907c7c9bf49291c34b66c942535c1"
+ }
+}

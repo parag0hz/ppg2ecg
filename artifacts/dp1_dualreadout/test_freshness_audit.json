@@ -1,0 +1,184 @@
+{
+ "verdict": "NOT FRESH",
+ "audit_type": "metadata and repository-record audit only; no TEST ECG / PPG waveform and no TEST array was loaded or opened",
+ "repository_head_at_audit": "724b883274165b15a8763f99091a5e29fffc410f",
+ "test_population": {
+  "manifest": "data/manifests/split_v1_vitaldb_seed42.json",
+  "split": "splits[0]['test']",
+  "cases": 1224,
+  "patients": 1156,
+  "windows_reported_in_records": 19543
+ },
+ "rules_applied": {
+  "dp1_spec_section_5": "NOT FRESH if prior TEST outcomes were used for architecture selection, loss design, checkpoint selection, threshold tuning, metric selection, hypothesis generation or performance reporting",
+  "sf0_frozen_rule": {
+   "source": "docs/SF0_SCALEFLOW_PREREGISTRATION.md section 11 (frozen at dbf60d7)",
+   "a": "V1 TEST outcomes computed for any model, detector or convention reused (RD1 / C0 detector family with its threshold / refractory / target convention, WW-DET family, C0 encoder)",
+   "b": "V1 TEST outcomes cited as motivation for a design choice or hypothesis of the line or of the closed line it follows"
+  }
+ },
+ "categories": {
+  "performance_reporting": {
+   "status": "FOUND",
+   "evidence": [
+    {
+     "commit": "5d3d274",
+     "file": "docs/V1_VITALDB_PAIRED_REPORT.md",
+     "quote": "Test = 1,156 patients / 1,224 cases / 19,543 windows"
+    },
+    {
+     "commit": "4507165",
+     "file": "docs/SR1_SEED_REPLICATION_REPORT.md",
+     "quote": "Nine evaluations on the V1 test set"
+    },
+    {
+     "commit": "4507165",
+     "file": "docs/PZ3_PER_PATIENT_COMPARISON_REPORT.md",
+     "quote": "V1 test: 1,156 patients"
+    },
+    {
+     "commit": "1d53ccc",
+     "file": "docs/BB1_BACKBONE_SENSITIVITY_REPORT.md",
+     "quote": "Test = 1,156 VitalDB patients / 19,543 windows"
+    },
+    {
+     "commit": "547f062",
+     "file": "docs/RF1_REFLOW_REPORT.md",
+     "quote": "Evaluated with the SR1 protocol on the V1 test set"
+    },
+    {
+     "commit": "70206eb",
+     "file": "docs/AB1_CONSENSUS_ABLATION_REPORT.md",
+     "quote": "V1 VitalDB test (1,156 patients, 19,543 windows)"
+    },
+    {
+     "commit": "f596b79",
+     "file": "docs/ED1_EVENT_CONSENSUS_DECODING_REPORT.md",
+     "quote": "VitalDB V1 test: 1,156 patients, 19,543 windows"
+    },
+    {
+     "commit": "f777a16",
+     "file": "docs/LW1_WEIGHTED_AUX_LOSS_REPORT.md",
+     "quote": "Test = 1,156 patients / 19,543 windows"
+    },
+    {
+     "commit": "a926bc8",
+     "file": "docs/KN1_KAN_FFN_REPORT.md",
+     "quote": "test = 1,156"
+    },
+    {
+     "commit": "102520f",
+     "file": "docs/DW1_DEPTH_VS_WIDTH_REPORT.md",
+     "quote": "V1 VitalDB test (1,156 patients, 19,543 windows)"
+    },
+    {
+     "commit": "102520f",
+     "file": "docs/DB1_DISCRIMINATIVE_HR_BASELINE_REPORT.md",
+     "quote": "Test = 1,156 patients"
+    },
+    {
+     "commit": "02628f3",
+     "file": "docs/RD1_DIRECT_RPEAK_DETECTOR_REPORT.md",
+     "quote": "V1 test: 1,156 patients, 19,543 windows"
+    },
+    {
+     "commit": "489885c",
+     "file": "docs/RDDM_EXTERNAL_CONSENSUS_REPORT.md",
+     "quote": "19,543 V1 test windows / 1,156 patients"
+    },
+    {
+     "commit": "eb3f2d7",
+     "file": "docs/PPGFLOWECG_EXTERNAL_FIXED_BUDGET_REPORT.md",
+     "quote": "V1 test split only"
+    },
+    {
+     "commit": "2d86f9e",
+     "file": "docs/M1_PILOT_GAIN_PREDICTION_REPORT.md",
+     "quote": "5,000-replicate patient-clustered bootstrap (1,156 test patients"
+    },
+    {
+     "commit": "77764da",
+     "file": "docs/M2_ACTION_VALUE_REPORT.md",
+     "quote": "(1,156 patients, seed 20260925)"
+    },
+    {
+     "commit": "c9c2004",
+     "file": "docs/FBC1_CALIBRATION_ALLOCATION_REPORT.md",
+     "quote": "These cells were derived from 1,156 legacy-test patients"
+    }
+   ]
+  },
+  "hypothesis_generation": {
+   "status": "FOUND",
+   "evidence": [
+    {
+     "commit": "02628f3",
+     "file": "docs/RD1_DIRECT_RPEAK_DETECTOR_REPORT.md",
+     "quote": "# RD1 — A direct PPG → R-peak detector matches consensus decoding on F1 and beats it on RR-MAE; generation is not necessary for event estimation",
+     "context": "results section headed '## Results (V1 VitalDB test)'"
+    },
+    {
+     "commit": "504395d",
+     "file": "docs/BEAT_FIRST_ARCHITECTURE_DESIGN_KO.md",
+     "quote": "VitalDB 수치는 test 1,156명 기준 (artifacts/paper_tables/numbers.json)이다."
+    },
+    {
+     "commit": "504395d",
+     "file": "docs/BEAT_FIRST_ARCHITECTURE_DESIGN_KO.md",
+     "quote": "타이밍은 PPG에서 추정되고, 직접 검출기가 생성기보다 정확하다. RD1 F1 0.772 vs 샘플 하나 0.645–0.674 (VitalDB). ... | 타이밍은 판별 이벤트 단이 정한다"
+    }
+   ]
+  },
+  "architecture_selection": {
+   "status": "FOUND (indirect)",
+   "evidence": "The discriminative event stage (RD1 detector family + event-raster conditioning) adopted by BF0 and inherited unchanged by C0, C0-A, E0, R1, SF0, AF0 and DP0 was motivated with V1 TEST numbers (504395d design document). No DP0 sharing pattern, width or adapter was selected on TEST (DP-DEV / AF-LOCK only)."
+  },
+  "threshold_tuning": {
+   "status": "NOT FOUND",
+   "evidence": "threshold 0.35 / refractory 32 come from the R1 rhythm-observability probe (71aefb4, 2026-09-02, before VitalDB entered the project on 2026-09-17). The detector with this exact convention was, however, evaluated on V1 TEST (RD1, 02628f3), which is SF0 rule (a)."
+  },
+  "checkpoint_selection": {
+   "status": "NOT FOUND",
+   "evidence": "BF0 ... DP0 used last-step checkpoints only."
+  },
+  "loss_design": {
+   "status": "NOT FOUND for DP0",
+   "evidence": "DP0 uses L1 and the SF0 flow-matching MSE; LW1 (f777a16) evaluated auxiliary endpoint losses on V1 TEST, none of which DP0 uses."
+  },
+  "metric_selection": {
+   "status": "NOT ESTABLISHED",
+   "evidence": "The metric suite predates the VitalDB V1 split; FBC1 (c9c2004) selected against cells derived from legacy-test patients, not used by DP0."
+  }
+ },
+ "sf0_rule_a": {
+  "triggered": true,
+  "evidence": "RD1 detector (RhythmTCN, 328,897 parameters, Gaussian sigma 20 ms targets, threshold 0.35, refractory 32) evaluated on V1 TEST (02628f3); DP0 / DP1 reuse exactly this detector family and convention (artifacts/dp0_dualreadout/detector_config.json)."
+ },
+ "sf0_rule_b": {
+  "triggered": true,
+  "evidence": "docs/BEAT_FIRST_ARCHITECTURE_DESIGN_KO.md (504395d) cites V1 TEST numbers as the basis for the discriminative event stage; DP0 descends from that closed chain (BF0 -> C0 -> C0-A -> R1 -> SF0 -> AF0 -> DP0)."
+ },
+ "cached_test_outputs_present_by_name_not_opened": [
+  "outputs/rd1_detector/test_metrics.npz",
+  "outputs/rd1_detector/test_rpeaks.npz",
+  "outputs/rd1_detector/decoded_I_test.npz",
+  "outputs/rd1_detector/decoded_D_test.npz",
+  "outputs/ed1_cache/samples_I_test.npy",
+  "outputs/ed1_cache/samples_D_test.npy",
+  "outputs/m1_pilot_gain_prediction/test_predictions_full.npz",
+  "outputs/m1_pilot_gain_prediction/table_test.npz",
+  "outputs/m2_action_value/rows_test.npz",
+  "outputs/m2_action_value/test_policy_rows.npz",
+  "outputs/db1_hr_regressor/test_errors.npz"
+ ],
+ "prior_disclosures": [
+  "docs/SF0_SCALEFLOW_PREREGISTRATION.md §11: 'Earlier-phase reporting of V1 TEST metrics is disclosed here as known.'",
+  "artifacts/r1_rhythmfield_ww/test_freshness_audit.md: NOT PERFORMED; 'earlier program phases (8/25–9/25) report V1 TEST metrics for earlier models'"
+ ],
+ "mitigating_facts": [
+  "BF0, D0, C0, C0-A, E0, R1, SF0, AF0 and DP0 never loaded V1 TEST waveforms (each line sealed TEST; reports state it was never opened)",
+  "DP0 candidate selection used DP-DEV only and its confirmation used AF-LOCK only",
+  "no DP0 architecture parameter, width, sharing depth, loss, threshold or checkpoint was chosen from TEST outcomes"
+ ],
+ "consequence": "DP1 TEST NOT FRESH. Per DP1 spec section 5: STOP; the final TEST is not run. No DP1 preregistration, no seed 43 / 44 training, no DP-DEV multi-seed evaluation, no compute baseline and no final freeze were performed."
+}

@@ -551,3 +551,8 @@ artifacts/af0_anchorflow/**/*.pt
 !artifacts/dp0_dualreadout/**
 artifacts/dp0_dualreadout/**/*.npz
 artifacts/dp0_dualreadout/**/*.pt
+# DP1 — DualReadout-ECG final confirmation (small artifacts only)
+!artifacts/dp1_dualreadout/
+!artifacts/dp1_dualreadout/**
+artifacts/dp1_dualreadout/**/*.npz
+artifacts/dp1_dualreadout/**/*.pt

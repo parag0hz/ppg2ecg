@@ -1,0 +1,12 @@
+{
+ "seed_pass": {
+  "42": false,
+  "43": true,
+  "44": false
+ },
+ "classification": "SEED-SENSITIVE",
+ "seed42_pass": false,
+ "G6_compute_supported": true,
+ "principle_verdict": "NOT SUPPORTED",
+ "evidence_label": "CROSS-TASK GENERALIZATION (historically used ABP dataset; not fresh external confirmation)"
+}

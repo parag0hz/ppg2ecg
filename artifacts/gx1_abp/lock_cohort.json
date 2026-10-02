@@ -1,0 +1,9 @@
+{
+ "subjects": 229,
+ "subjects_eligible": 229,
+ "windows": 48089,
+ "windows_possible": 48090,
+ "exclusions": {
+  "R4": 1
+ }
+}

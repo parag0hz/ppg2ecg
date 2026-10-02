@@ -1,0 +1,21 @@
+{
+ "G1": true,
+ "G2": true,
+ "G3": true,
+ "G4": true,
+ "G5": true,
+ "PASS": true,
+ "margins": {
+  "G1_corr_margin": -0.02,
+  "G2_mae_margin_z": 0.020001482306351716,
+  "G2_mae_margin_mmhg_equiv": 0.44554524694508835,
+  "G2_derivation": "the ECG point gate used 0.02 on a unit-free correlation; the same 0.02 is applied as a fraction of the GX-TRAIN SD of the normalized (A8 global z) ABP target, the unit of the normalized-waveform MAE",
+  "train_target_sd_z": 1.0000741153175858,
+  "G3_trace_abp_mmhg2": 254029.1084825451,
+  "G3_trace_ecg_dp_train": 91.19883321083967,
+  "G3_margin_mmhg2": 2785.4425274856676,
+  "G3_derivation": "DP0 FD margin +1.0 (ECG units) x tr(Cov_GX-TRAIN ABP windows, mmHg) / tr(Cov_DP-TRAIN ECG windows); FD scales with the square of the signal unit, so the trace ratio converts the margin; TRAIN data only",
+  "n_train_windows_abp": 230812,
+  "n_train_windows_ecg": 139962
+ }
+}

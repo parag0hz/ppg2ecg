@@ -134,6 +134,40 @@
    "nan_steps": 0,
    "peak_gpu_mem_mib": 1867.33447265625,
    "checkpoint_sha256": "636e29348bf53efca605139812336506aacaf50091e81aed1350bc40d84f3212"
+  },
+  {
+   "seed": 42,
+   "role": "S0",
+   "diagnostic": true,
+   "git_commit": "ef374e64a07ba3c205a7355de534fc3550be8aed",
+   "params": 861196,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 303.40370774269104,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1866.39111328125,
+   "checkpoint_sha256": "c830f23c78b19af1c569d7dbd2ede44572c6d3e895c47a074e294a497868ffb0"
+  },
+  {
+   "seed": 42,
+   "role": "S2",
+   "diagnostic": true,
+   "git_commit": "ef374e64a07ba3c205a7355de534fc3550be8aed",
+   "params": 1189900,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 304.40786504745483,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1870.16455078125,
+   "checkpoint_sha256": "1f9d35cb68780f4c7f7781672d15a73bf2b51359e782d854a305cfe1d7808545"
   }
  ]
 }

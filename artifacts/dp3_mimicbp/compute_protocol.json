@@ -1,0 +1,11 @@
+{
+ "systems": {
+  "naive": "P and G as two independent pipelines: each runs the detector + event extraction + raster; G recomputes Haar(PPG) and Haar(raster) inside every vector-field evaluation",
+  "cached": "one detector + raster shared by P and G; G's Haar(PPG) / Haar(raster) computed once per window and reused by all 8 NFE (numerically identical, checked); no weight merged, no network altered. P and G have no other shareable computation: G mixes x_t into every layer from its first convolution, so its condition path cannot be precomputed",
+  "s1": "one detector + raster; S1 shared trunk once; point branch; flow features once; 8 velocity evaluations"
+ },
+ "timing": "batch-1, 10 warm-up calls then 200 (GPU) / 60 (CPU, 4 threads) calls over 50 salted DP-DEV windows; median and IQR",
+ "flops": "torch.utils.flop_counter on one window (CPU); element-wise Haar arithmetic is not counted by the counter",
+ "memory": "CUDA max_memory_allocated during one batch-1 request minus the resident baseline (weights)",
+ "nfe": 8
+}

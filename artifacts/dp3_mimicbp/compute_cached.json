@@ -1,0 +1,100 @@
+{
+ "system": "cached",
+ "params": {
+  "waveform": 1191910,
+  "full_pipeline": 1520807
+ },
+ "flops_waveform_only": {
+  "point": 605896704,
+  "gen": 1245782016,
+  "both": 1851678720
+ },
+ "flops_with_detector": {
+  "point": 941572096,
+  "gen": 1581457408,
+  "both": 2187354112
+ },
+ "latency_ms": {
+  "cuda_cached_point_with_detector": {
+   "median": 1.2558974558487535,
+   "q25": 1.2412146897986531,
+   "q75": 1.2780122924596071,
+   "n": 200
+  },
+  "cuda_cached_point_waveform_only": {
+   "median": 0.7065939716994762,
+   "q25": 0.6982903578318655,
+   "q75": 0.7250697235576808,
+   "n": 200
+  },
+  "cuda_cached_gen_with_detector": {
+   "median": 12.353537487797439,
+   "q25": 12.245123856700957,
+   "q75": 12.607752927578986,
+   "n": 200
+  },
+  "cuda_cached_gen_waveform_only": {
+   "median": 11.686805402860045,
+   "q25": 11.613300070166588,
+   "q75": 11.791556840762496,
+   "n": 200
+  },
+  "cuda_cached_both_with_detector": {
+   "median": 13.102473458275199,
+   "q25": 13.017686607781798,
+   "q75": 13.34679446881637,
+   "n": 200
+  },
+  "cuda_cached_both_waveform_only": {
+   "median": 12.435963959433138,
+   "q25": 12.335724022705108,
+   "q75": 12.538674171082675,
+   "n": 200
+  },
+  "cpu_cached_point_with_detector": {
+   "median": 5.436877021566033,
+   "q25": 5.411159188952297,
+   "q75": 5.821286933496594,
+   "n": 60
+  },
+  "cpu_cached_point_waveform_only": {
+   "median": 3.4103000070899725,
+   "q25": 3.3860974945127964,
+   "q75": 3.4413993707858026,
+   "n": 60
+  },
+  "cpu_cached_gen_with_detector": {
+   "median": 29.223514022305608,
+   "q25": 28.82865723222494,
+   "q75": 30.656379647552967,
+   "n": 60
+  },
+  "cpu_cached_gen_waveform_only": {
+   "median": 27.08939998410642,
+   "q25": 26.499618776142597,
+   "q75": 29.08606652636081,
+   "n": 60
+  },
+  "cpu_cached_both_with_detector": {
+   "median": 32.4730493593961,
+   "q25": 31.879062356892973,
+   "q75": 35.4149155318737,
+   "n": 60
+  },
+  "cpu_cached_both_waveform_only": {
+   "median": 30.696943518705666,
+   "q25": 30.23466403828934,
+   "q75": 33.54417911032215,
+   "n": 60
+  }
+ },
+ "gpu_peak_inference_mib_above_weights": {
+  "cached_point": 0.92919921875,
+  "cached_gen": 0.70361328125,
+  "cached_both": 0.92919921875
+ },
+ "numerical_equivalence": {
+  "cached_equals_naive_generation": true,
+  "cached_point_equals_naive": true
+ }
+}

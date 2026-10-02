@@ -796,12 +796,144 @@ def _multiseed_summary(allres):
                                                    "verdict": "TARGET-BLIND EXTERNAL CONFIRMED" if primary else "TARGET-BLIND EXTERNAL FAILED",
                                                    "paper_readiness": ("STRONG GO" if primary and rob == "ROBUST-3/3" else "GO WITH SEED LIMITATION"
                                                                        if primary and rob == "ROBUST-2/3" else "INTERNAL + CROSS-TASK EVIDENCE ONLY"
-                                                                       if not primary else "INTERNAL + CROSS-TASK EVIDENCE ONLY (seed-sensitive)"),
+                                                                       if not primary else "CONFIRMED PRIMARY, SEED-SENSITIVE (no GO label)"),
                                                    "summary": summ, "note": "descriptive across n = 3 seeds; no inferential test over seeds"})
 
 
+# ----------------------------------------------------------------------------------------------- Stage I: tables and figures
+def _f(v, nd):
+    return "" if v is None or (isinstance(v, float) and not np.isfinite(v)) else f"{v:.{nd}f}"
+
+
+def _cs(v, nd=4):
+    return "n/a" if v is None or any(x is None for x in v) else f"{v[0]:+.{nd}f} [{v[1]:+.{nd}f}, {v[2]:+.{nd}f}]"
+
+
+def stage_summarize(ex, dev):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    acc = F.accounting()
+    ext = {s: read_json(f"external_seed{s}_metrics.json") for s in SEEDS}
+    boot = {s: read_json(f"external_seed{s}_bootstrap.json")["comparisons"] for s in SEEDS}
+    gts = {s: read_json(f"external_seed{s}_gates.json") for s in SEEDS}
+    comp = {k: read_json(f"compute_{k}.json") for k in ("naive", "cached", "s1")}
+    inter = read_json("internal_multiseed_metrics.json")["results"]
+    gate_str = lambda g: " ".join(f"{k}:{'P' if g[k] else 'F'}" for k in ("P1", "P2", "G1", "CONDITION", "E1"))  # noqa: E731
+    with open(ART / "table_external_main.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["seed", "role", "params", "corr", "fp_per_window", "recall", "f1", "rr_mae_ms", "hr_mae_bpm", "mae", "fd", "same_seed_delta", "gate"])
+        for s in SEEDS:
+            e, b, g = ext[s], boot[s], gts[s]
+            for role, par, m, fd, delta in (("P", acc["specialist_point"], e["point"]["P"], e["point"]["P"]["fd_descriptive"], ""),
+                                            ("S1-P", acc["S1"]["point_path"], e["point"]["S1"], e["point"]["S1"]["fd_descriptive"],
+                                             f"dcorr {_cs(b['corr'])}; dFP {_cs(b['fp'])}; drecall {_cs(b['recall'])}"),
+                                            ("G", acc["specialist_gen"], e["gen"]["G"]["single_sample"], e["gen"]["G"]["fd"], ""),
+                                            ("S1-G", acc["S1"]["total"], e["gen"]["S1"]["single_sample"], e["gen"]["S1"]["fd"],
+                                             f"dFD {_cs(b['fd'], 3)}")):
+                w.writerow([s, role, par, _f(m["corr"][0], 4), _f(m["pm_fp_rate"][0], 4), _f(m["pm_recall"][0], 4), _f(m["pm_f1"][0], 4),
+                            _f(m["rr_mae_ms"][0], 2), _f(m["hr_mae_bpm"][0], 2), _f(m["mae"][0], 4), _f(fd, 3), delta,
+                            gate_str(g) if role.startswith("S1") else ""])
+    with open(ART / "table_external_seeds.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["seed", "dcorr", "dcorr_lo", "dfp", "dfp_hi", "drecall", "drecall_lo", "dfd", "dfd_hi", "shuffle_fd", "shuffle_fd_lo", "shuffle_corr",
+                    "shuffle_corr_hi", "T1", "T2", "T3", "T4", "T5", "overall_T1_T4"])
+        for s in SEEDS:
+            b, g = boot[s], gts[s]
+            w.writerow([s, _f(b["corr"][0], 4), _f(b["corr"][1], 4), _f(b["fp"][0], 4), _f(b["fp"][2], 4), _f(b["recall"][0], 4), _f(b["recall"][1], 4),
+                        _f(b["fd"][0], 3), _f(b["fd"][2], 3), _f(b["fd_shuf"][0], 3), _f(b["fd_shuf"][1], 3), _f(b["corr_shuf"][0], 4),
+                        _f(b["corr_shuf"][2], 4), g["P1"], g["P2"], g["G1"], g["CONDITION"], g["E1"], g["P1"] and g["P2"] and g["G1"] and g["CONDITION"]])
+    cols = {42: "#4a3aa7", 43: "#2a7f3f", 44: "#d59a54"}
+
+    def ci_panel(a, key, title, margin, src=boot):
+        for i, s in enumerate(SEEDS):
+            v = src[s][key]
+            a.plot([i, i], [v[1], v[2]], color=cols[s], lw=4)
+            a.plot([i], [v[0]], "o", color=cols[s], ms=7)
+        a.axhline(margin, color="k", ls="--", lw=1)
+        a.axhline(0, color="0.75", lw=0.6)
+        a.set_xticks(range(3), [f"seed {s}" + (" (primary)" if s == 42 else "") for s in SEEDS], fontsize=8)
+        a.set_title(title, loc="left", fontsize=10)
+    fig, ax = plt.subplots(2, 4, figsize=(25, 10.5))
+    a = ax[0, 0]
+    a.axis("off")
+    a.set_title("A  frozen DualReadout-ECG S1 MIDDLE", loc="left")
+    a.text(0.0, 0.95, "        PPG + event raster (frozen DP0 detector)\n                    |\n     shared stem + blocks 1-6 (246,720)\n"
+           "             /              \\\n   point adapter          flow adapter\n   blocks 7-8 (private)   blocks 7-8 (private)\n"
+           "   point decoder          ScaleFlow decoder (x_t, t)\n        |                       |\n       mu               ECG samples (Euler 8)\n\n"
+           "MIMIC-BP: ECG-target-blind cross-task external cohort\n(PPG previously used for PPG->ABP; ECG targets withheld)",
+           va="top", family="monospace", fontsize=9)
+    ci_panel(ax[0, 1], "corr", "B  T1  corr(S1 point) - corr(P)   margin -0.02", -D.M_CORR)
+    ci_panel(ax[0, 2], "fp", "C  T2  FP/window(S1) - FP(P)   margin +0.05", D.M_FP)
+    ci_panel(ax[0, 3], "recall", "D  T2  recall(S1) - recall(P)   margin -0.01", -D.M_RECALL)
+    ci_panel(ax[1, 0], "fd", "E  T3  FD(S1 gen) - FD(G)   margin +1.0", D.M_FD)
+    a = ax[1, 1]
+    for i, s in enumerate(SEEDS):
+        v = boot[s]["fd_shuf"]
+        a.plot([i, i], [v[1], v[2]], color=cols[s], lw=4)
+        a.plot([i], [v[0]], "o", color=cols[s])
+        c = boot[s]["corr_shuf"]
+        a.annotate("corr " + _cs(c, 3).replace(" [", "\n["), (i, v[2]), xytext=(4, 4), textcoords="offset points", fontsize=8)
+    a.axhline(0, color="k", ls="--", lw=1)
+    a.set_xticks(range(3), [f"seed {s}" for s in SEEDS], fontsize=8)
+    a.set_title("F  T4  PPG shuffle: FD shuffled - conditioned (> 0); corr shift (< 0)", loc="left", fontsize=10)
+    a = ax[1, 2]
+    vals = [acc["separate_waveform_params"], acc["S1"]["total"]]
+    a.bar([0, 1], vals, color=["0.5", "#4a3aa7"])
+    for i, v in enumerate(vals):
+        a.text(i, v, f"{v:,}" + ("" if i == 0 else f"\n-{100 * acc['S1']['saving']:.2f} %"), ha="center", va="bottom", fontsize=9)
+    a.axhline(acc["e1_threshold"], color="k", ls="--", lw=0.8)
+    a.set_xticks([0, 1], ["P + G separate", "S1"])
+    a.set_ylim(0, 1.35e6)
+    a.set_title("G  T5  waveform parameters (dashed: 0.85 x separate)", loc="left", fontsize=10)
+    a = ax[1, 3]
+    names = ("naive", "cached", "s1")
+    for j, (dname, lab) in enumerate((("cuda", "GPU"), ("cpu", "CPU 4 thr"))):
+        med = [comp[n]["latency_ms"][f"{dname}_{n}_both_with_detector"]["median"] for n in names]
+        lo = [med[i] - comp[n]["latency_ms"][f"{dname}_{n}_both_with_detector"]["q25"] for i, n in enumerate(names)]
+        hi = [comp[n]["latency_ms"][f"{dname}_{n}_both_with_detector"]["q75"] - med[i] for i, n in enumerate(names)]
+        a.bar(np.arange(3) + (j - 0.5) * 0.38, med, width=0.38, yerr=[lo, hi], capsize=3, label=lab, color=["#7a6fd0", "#d59a54"][j])
+    a.set_xticks(range(3), ["separate naive", "separate cached", "S1"])
+    a.set_ylabel("both outputs, batch-1 (ms, median, IQR)")
+    a.legend(fontsize=8)
+    fl = [comp[n]["flops_with_detector"]["both"] / 1e9 for n in names]
+    a.set_title(f"H  compute (FLOPs both: {fl[0]:.2f} / {fl[1]:.2f} / {fl[2]:.2f} G)", loc="left", fontsize=10)
+    ms = read_json("external_multiseed_summary.json")
+    fig.suptitle(f"DP3 MIMIC-BP (ECG-target-blind cross-task external): {ms['verdict']} | seeds {ms['robustness']} | {ms['paper_readiness']}", fontsize=12)
+    fig.tight_layout()
+    fig.savefig(ART / "figure_external_main.png", dpi=105)
+    fig, ax = plt.subplots(1, 4, figsize=(24, 5))
+    for a, (key, title, m) in zip(ax, (("corr", "delta corr", -D.M_CORR), ("fp", "delta FP/window", D.M_FP), ("recall", "delta recall", -D.M_RECALL),
+                                       ("fd", "delta FD", D.M_FD))):
+        for j, (pop, lab) in enumerate((("dp_dev", "DP-DEV"), ("af_lock", "AF-LOCK"), ("ext", "MIMIC-BP"))):
+            for i, s in enumerate(SEEDS):
+                v = boot[s][key] if pop == "ext" else inter[pop][str(s)]["comparisons"][key]
+                x = j * 4 + i
+                a.plot([x, x], [v[1], v[2]], color=cols[s], lw=3)
+                a.plot([x], [v[0]], "o", color=cols[s])
+        a.axhline(m, color="k", ls="--", lw=0.8)
+        a.axhline(0, color="0.75", lw=0.6)
+        a.set_xticks([1, 5, 9], ["DP-DEV (internal)", "AF-LOCK (internal)", "MIMIC-BP (external)"], fontsize=8)
+        a.set_title(f"S1 - specialist: {title} (seeds 42 / 43 / 44)", loc="left", fontsize=10)
+    fig.tight_layout()
+    fig.savefig(ART / "figure_multiseed.png", dpi=105)
+    fig, ax = plt.subplots(1, 3, figsize=(20, 5))
+    for a, mode in zip(ax, ("point", "gen", "both")):
+        for j, dname in enumerate(("cuda", "cpu")):
+            med = [comp[n]["latency_ms"][f"{dname}_{n}_{mode}_with_detector"]["median"] for n in names]
+            lo = [med[i] - comp[n]["latency_ms"][f"{dname}_{n}_{mode}_with_detector"]["q25"] for i, n in enumerate(names)]
+            hi = [comp[n]["latency_ms"][f"{dname}_{n}_{mode}_with_detector"]["q75"] - med[i] for i, n in enumerate(names)]
+            a.bar(np.arange(3) + (j - 0.5) * 0.38, med, width=0.38, yerr=[lo, hi], capsize=3, label="GPU" if dname == "cuda" else "CPU 4 thr")
+        a.set_xticks(range(3), ["naive", "cached", "S1"])
+        a.set_title(f"{mode}: batch-1 latency incl. detector (median, IQR); FLOPs " +
+                    " / ".join(f"{comp[n]['flops_with_detector'][mode] / 1e9:.2f}" for n in names) + " G", loc="left", fontsize=9)
+        a.legend(fontsize=8)
+    fig.tight_layout()
+    fig.savefig(ART / "figure_compute.png", dpi=105)
+
+
 STAGES = {"target_audit": stage_target_audit, "integrity": stage_integrity, "internal": stage_internal, "compute": stage_compute,
-          "interface": stage_interface, "freeze": stage_freeze, "eval_external": stage_eval_external}
+          "interface": stage_interface, "freeze": stage_freeze, "eval_external": stage_eval_external, "summarize": stage_summarize}
 
 
 def main():

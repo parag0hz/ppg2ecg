@@ -1,0 +1,13 @@
+{
+ "seed": 44,
+ "train_seconds": 75.94120383262634,
+ "n_params": 943372,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1336.92041015625,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+ "cycle": 5000,
+ "share": "S1",
+ "sha256": "bb29ac5c6e17e238e498658d957e6e7543ef5ac31e09952da04fd087d5460154"
+}

@@ -1,0 +1,98 @@
+{
+ "system": "naive",
+ "params": {
+  "waveform": 1191910,
+  "full_pipeline": 1849704,
+  "note": "two independent pipelines, each with its own detector pass (same detector weights)"
+ },
+ "flops_waveform_only": {
+  "point": 605896704,
+  "gen": 1245782016,
+  "both": 1851678720
+ },
+ "flops_with_detector": {
+  "point": 941572096,
+  "gen": 1581457408,
+  "both": 2523029504
+ },
+ "latency_ms": {
+  "cuda_naive_point_with_detector": {
+   "median": 1.273579546250403,
+   "q25": 1.259922981262207,
+   "q75": 1.2951605604030192,
+   "n": 200
+  },
+  "cuda_naive_point_waveform_only": {
+   "median": 0.7242090068757534,
+   "q25": 0.7146137650124729,
+   "q75": 0.7427457603625953,
+   "n": 200
+  },
+  "cuda_naive_gen_with_detector": {
+   "median": 13.076103990897536,
+   "q25": 12.981855019461364,
+   "q75": 13.263056753203273,
+   "n": 200
+  },
+  "cuda_naive_gen_waveform_only": {
+   "median": 12.466671993024647,
+   "q25": 12.391677126288414,
+   "q75": 12.59071397362277,
+   "n": 200
+  },
+  "cuda_naive_both_with_detector": {
+   "median": 14.397150021977723,
+   "q25": 14.293734973762184,
+   "q75": 14.683290966786444,
+   "n": 200
+  },
+  "cuda_naive_both_waveform_only": {
+   "median": 12.956950929947197,
+   "q25": 12.89061806164682,
+   "q75": 13.076233270112425,
+   "n": 200
+  },
+  "cpu_naive_point_with_detector": {
+   "median": 5.4136564722284675,
+   "q25": 5.3650851477868855,
+   "q75": 5.705575691536069,
+   "n": 60
+  },
+  "cpu_naive_point_waveform_only": {
+   "median": 3.453120472840965,
+   "q25": 3.395789652131498,
+   "q75": 4.362825013231486,
+   "n": 60
+  },
+  "cpu_naive_gen_with_detector": {
+   "median": 30.27953952550888,
+   "q25": 29.30192241910845,
+   "q75": 33.0888744792901,
+   "n": 60
+  },
+  "cpu_naive_gen_waveform_only": {
+   "median": 27.482784003950655,
+   "q25": 26.762590918224305,
+   "q75": 29.389605741016567,
+   "n": 60
+  },
+  "cpu_naive_both_with_detector": {
+   "median": 34.45270156953484,
+   "q25": 34.25411012722179,
+   "q75": 34.92586285574362,
+   "n": 60
+  },
+  "cpu_naive_both_waveform_only": {
+   "median": 30.31266387552023,
+   "q25": 30.007983616087586,
+   "q75": 30.89638549135998,
+   "n": 60
+  }
+ },
+ "gpu_peak_inference_mib_above_weights": {
+  "naive_point": 0.92919921875,
+  "naive_gen": 0.70361328125,
+  "naive_both": 0.92919921875
+ },
+ "numerical_equivalence": null
+}

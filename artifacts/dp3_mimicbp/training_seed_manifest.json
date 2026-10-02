@@ -1,0 +1,130 @@
+{
+ "jobs": [
+  {
+   "seed": 43,
+   "role": "point",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "a7c63f73a562df008663bab4d61a09d74e4a2dd3e5c93f68a00131829794684f",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 593577,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 130.8114287853241,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1302.1748046875,
+   "nan_steps": 0,
+   "checkpoint_sha256": "71cefc8cbe5936368922e360688be64b18b6cc10336aaa93cee76962f60fcbb1"
+  },
+  {
+   "seed": 43,
+   "role": "gen",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "c0cdb1e3648a0df2743bcc0ad29d1efa4139abf025e742cadaa609c6b5c72a88",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 598333,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 133.19610381126404,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1016.74658203125,
+   "nan_steps": 0,
+   "checkpoint_sha256": "0a160d0a6ae49d6239ee639ae345566edc4a1d3061d3cb36b920637e4339405e"
+  },
+  {
+   "seed": 43,
+   "role": "S1",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "af27cac9a9224da728d87c49f97ef4889328f32013dea8c6189104e7ab4ff8f4",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 943372,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 303.2843871116638,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1336.92041015625,
+   "nan_steps": 0,
+   "checkpoint_sha256": "61ba253b97902af1b080b6dfff508b7f3c0dbba5ebcfc4c13f7d3159d76180a6"
+  },
+  {
+   "seed": 44,
+   "role": "point",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "a7c63f73a562df008663bab4d61a09d74e4a2dd3e5c93f68a00131829794684f",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 593577,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 130.69253635406494,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1302.1748046875,
+   "nan_steps": 0,
+   "checkpoint_sha256": "74126fc79bf86ba053025c9b235969cf9b8e09b166eebed66ebbe57b05b8751b"
+  },
+  {
+   "seed": 44,
+   "role": "gen",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "c0cdb1e3648a0df2743bcc0ad29d1efa4139abf025e742cadaa609c6b5c72a88",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 598333,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 132.89632773399353,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1016.74658203125,
+   "nan_steps": 0,
+   "checkpoint_sha256": "14d2518f2480a43edead0e3808daeca3c36cca48301eb1eee2e100ab4992719d"
+  },
+  {
+   "seed": 44,
+   "role": "S1",
+   "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+   "config_sha256": "af27cac9a9224da728d87c49f97ef4889328f32013dea8c6189104e7ab4ff8f4",
+   "split_sha256": {
+    "patients_sha256": "aaffbaf923ea5e8a692c885b8958af878eda89c304efe9da1ebe675251499a53",
+    "window_index_sha256": "736f092a89df060c2d3e7c995751a1fcf14342976a0dff83ebcb6b80b849bee0"
+   },
+   "params": 943372,
+   "optimizer": "AdamW",
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 303.59379982948303,
+   "gpu": "NVIDIA GeForce RTX 5090",
+   "peak_gpu_mem_mib": 1336.92041015625,
+   "nan_steps": 0,
+   "checkpoint_sha256": "9294042ed35a145e4c0b7887422387de4fa3374509154f597284107e90005e5e"
+  }
+ ]
+}

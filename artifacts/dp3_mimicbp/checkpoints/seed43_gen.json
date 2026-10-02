@@ -1,0 +1,18 @@
+{
+ "seed": 43,
+ "train_seconds": 133.19610381126404,
+ "n_params": 598333,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1016.74658203125,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "git_commit": "7c2274c9ae9188632b1a7fe8dcc4d497ce1b8f64",
+ "steps": 20000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "clip": 1.0,
+ "loss": "flow-matching MSE",
+ "training_role": "dp_train",
+ "sha256": "0a160d0a6ae49d6239ee639ae345566edc4a1d3061d3cb36b920637e4339405e"
+}

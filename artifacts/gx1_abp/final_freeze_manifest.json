@@ -1,0 +1,46 @@
+{
+ "evidence_label": "CROSS-TASK GENERALIZATION (historically used ABP dataset; not fresh external confirmation)",
+ "primary_seed": 42,
+ "seeds": [
+  42,
+  43,
+  44
+ ],
+ "nfe": 8,
+ "bootstrap": {
+  "replicates": 2000,
+  "seed": 20261002
+ },
+ "shuffle_seed": 20261002,
+ "sha256": {
+  "docs/GX1_ABP_GENERALIZATION_PREREGISTRATION.md": "7eb01d86392ed2dad907338182216adf66bf8aa127bee4298bed1f5ef282a4dd",
+  "scripts/gx1_abp.py": "5664175072f7ec181b77d98139be9e154b34312beff46548f2ef4d08f8ce0907",
+  "tests/test_gx1_abp.py": "2463312d634b8b5ec91ce513f6ca69b78caf7dcecc50e8c161abac1ac895d787",
+  "scripts/dp0_dualreadout.py": "a9ff630187b5d5811dc25ec1b07ca00e2e6a5f49ac720b0c6ec204d4fc81bafb",
+  "scripts/dp3_mimicbp.py": "5742e5f74a1670fd1a38a5be2c2f97a52139de4cb30913e2d01088821058384c",
+  "src/ppg2ecg/dualreadout/model.py": "6efa4a89cb8eaa08e0c06a996bea327cc11b8e3e069a99edec81f467ac20f6c0",
+  "src/ppg2ecg/scaleflow/model.py": "90f99ab7630e569d32a51ecb86007f18c52af8f3c5e51ebee3f880858dffe8e2",
+  "src/ppg2ecg/data/preprocess.py": "9312299c3f075a0b52cd0e60e593c0bb983f55ad477e5a70cdf6147943f27210",
+  "src/ppg2ecg/data/target_norm.py": "381c0ce519bc36499f1669c7db5b524405899325ae76f9141572e1ca79b70532",
+  "src/ppg2ecg/evaluation/rpeaks.py": "36deb7a1935b4d2a7cbd8e268f23451278e56b32f5c83874045a905641b2791f",
+  "src/ppg2ecg/evaluation/paper_metrics.py": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e",
+  "src/ppg2ecg/anchorflow/fastfd.py": "677679599aeb0bcc01d53302a64f5694249f5126d260ccf05ba6584efa8952eb",
+  "src/ppg2ecg/probes/rhythm_tcn.py": "113d3ef1a9edb69c955d0534cbffe7e1b58325485b245a1ed58378564067527b",
+  "scripts/bf0_run.py": "ef0bdea1bf9f9c3b3dfd27679fe264c8b27907c7c9bf49291c34b66c942535c1",
+  "scripts/c0_coherentbeat.py": "72ad2ee4d210bf254a9f03d3d95cc7a3d693b2b52461ea432e188eb2343521f2",
+  "data/manifests/split_a7_mimicbp_official.json": "c52de946993604fa14be2741160293d3a5777f7e507ae617a4b90031e5217a7e",
+  "artifacts/a8_abp_scale_control/normalization.json": "81d7c1b6ceb60a0af1ae2a6ac2058abac42acbcbdcff44b20b34f3e916991341",
+  "artifacts/gx1_abp/margins.json": "4a9dd169d6d68e485e6d0f3c21661bdb691cf7c6b8969ee69b3e89a7321c9c73",
+  "artifacts/gx1_abp/evaluator_manifest.json": "0338f46b454afc37d738df66e605d2dbe679937226a9fcb19e2c5e6cff7db882",
+  "outputs/gx1_abp/detector/detector.pt": "fefdae3688277b15e632b6d3a77c87ed472cfe06d01f4c900649886e2775c6f4",
+  "outputs/gx1_abp/seed42/point.pt": "2d4e6d868336342f601249ab049ac76b9a3d2e165f63d5343875089ee176ca95",
+  "outputs/gx1_abp/seed42/gen.pt": "bc65a68fee0d04c860dfbb460119ef7e3261786956acea2b97cc8f29ebf64e4f",
+  "outputs/gx1_abp/seed42/S1.pt": "7b114d4e79d9ca0bbdb53c1667af1a4610a4999fa45858dd8dca9573764a9044",
+  "outputs/gx1_abp/seed43/point.pt": "3bc07577c3dd8778b119444a5ab3324780f6e1797ef2dcff0eba20ef7f3ae2a5",
+  "outputs/gx1_abp/seed43/gen.pt": "e50125a3f94d39b3c5bb9d550dea366ce526b39c517aa1fd001cf26ca8161459",
+  "outputs/gx1_abp/seed43/S1.pt": "e37bd2f021850e7fe1f293dc427596bc70131afd3e123ec2e3c143f05e405ae4",
+  "outputs/gx1_abp/seed44/point.pt": "c96f935672bc2badbe0a0301df915cb63291ee3e10328d117f3eb0e0129866b2",
+  "outputs/gx1_abp/seed44/gen.pt": "4ba0f93dc03ead0be6ff969d5b0e0a61e347274ab4c2c81c61f9e77e55236ba5",
+  "outputs/gx1_abp/seed44/S1.pt": "636e29348bf53efca605139812336506aacaf50091e81aed1350bc40d84f3212"
+ }
+}

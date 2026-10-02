@@ -1,0 +1,50 @@
+{
+ "evidence_label": "ECG-target-blind cross-task external cohort",
+ "disclosure": "MIMIC-BP PPG had previously been used in unrelated PPG-to-ABP experiments, whereas ECG reconstruction targets were withheld from the PPG-to-ECG architecture-development process.",
+ "cohort": "all 1,524 subjects (no calibration split)",
+ "ppg_channel": "the single ppg file per subject",
+ "ecg_channel": "the single ecg file per subject (lead identity UNKNOWN; rule: exactly one ECG channel exists -> use it)",
+ "windows": {
+  "length_s": 4,
+  "raw_samples": 500,
+  "start_rule": "segment start (t = 0) of each 30 s segment",
+  "stride_s": 4,
+  "overlap": 0,
+  "per_segment": 7,
+  "edge": "the last 2 s of each 30 s segment are dropped (no padding, no cross-segment window)",
+  "order": "subjects sorted by id, then segment, then window",
+  "window_id": "subject_rank * 210 + segment * 7 + k",
+  "patient_id_for_noise": "int(pid[1:])"
+ },
+ "resampling": "scipy.signal.resample (FFT) 500 -> 512 samples per window inside ppg2ecg.data.preprocess.preprocess_windows (the V1 / DP0 implementation, unchanged since a15b354)",
+ "normalization": {
+  "ppg": {
+   "bandpass": true,
+   "freq_range": [
+    0.5,
+    4
+   ],
+   "zscore": true,
+   "normalize": true
+  },
+  "ecg": {
+   "bandpass": true,
+   "freq_range": [
+    0.5,
+    -1
+   ],
+   "zscore": true,
+   "normalize": true
+  },
+  "semantics": "per-window statistics only (nothing fitted); identical to the DP0 corpus"
+ },
+ "temporal_alignment": "none applied: PPG and ECG windows take identical sample indices of the same segment; no shift, no PTT compensation, no offset search",
+ "detector": {
+  "checkpoint": "outputs/dp0_dualreadout/detector.pt",
+  "threshold": 0.35,
+  "refractory": 32,
+  "raster": "Gaussian sigma 20 ms (ablation.event_raster)"
+ },
+ "reference_r": "neurokit (ppg2ecg.evaluation.rpeaks.detect_rpeaks) on the preprocessed 128 Hz ECG window",
+ "noise": "scaleflow.window_noise(int pid, window_id) (sha256 'patient:window:20261002')"
+}

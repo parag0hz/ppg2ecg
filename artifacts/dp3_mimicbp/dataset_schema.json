@@ -1,0 +1,44 @@
+{
+ "path": "/home/kwy00/ppg2ecg-one-step/data/raw/MIMIC-BP",
+ "subjects": 1524,
+ "files_per_kind": {
+  "ppg": 1524,
+  "ecg": 1524,
+  "abp": 1524,
+  "resp": 1524,
+  "labels": 1524
+ },
+ "array_shapes": {
+  "ppg": {
+   "[30, 3750] float64": 1524
+  },
+  "ecg": {
+   "[30, 3750] float64": 1524
+  },
+  "abp": {
+   "[30, 3750] float64": 1524
+  },
+  "resp": {
+   "[30, 3750] float64": 1524
+  },
+  "labels": {
+   "[30, 2] float64": 1524
+  }
+ },
+ "sampling_rate_hz": 125,
+ "fs_source": "data/raw/MIMIC-BP/read_data.py ('fs = 125')",
+ "channels": {
+  "ppg": "one channel per file (p<ID>_ppg.npy)",
+  "ecg": "one channel per file (p<ID>_ecg.npy); lead identity not stated in local metadata (UNKNOWN)",
+  "abp": "not used",
+  "resp": "not used"
+ },
+ "segments": "30 x 3750 samples = 30 s per segment",
+ "official_split_lists": {
+  "train": 1100,
+  "val": 195,
+  "test": 229
+ },
+ "synchronisation": "PPG and ECG of a segment share sample indices (one MIMIC-III record); curated by the dataset authors (ECG/PPG fundamental frequency within 0.3 Hz, pulse-arrival-time consistency; A7 audit)",
+ "access": "file names, mmap shapes / dtypes and loader text only; no waveform value read"
+}

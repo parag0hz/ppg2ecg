@@ -1,0 +1,19 @@
+{
+ "order": [
+  "R1 unreadable / missing file or shape != (30, 3750) -> subject excluded",
+  "R2 raw window: any non-finite PPG or ECG sample, or zero standard deviation of PPG or ECG -> window excluded",
+  "R3 after preprocessing: any non-finite value in x or y -> window excluded",
+  "R4 frozen V1 / DP0 reference-ECG validity rule: neurokit HR of the preprocessed ECG window not finite or outside [30, 200] bpm -> window excluded",
+  "R5 subject with no remaining window -> subject excluded"
+ ],
+ "source": "R2-R4 are the scripts/v1_build_vitaldb.py rules that defined every DP0 window; nothing depends on any model output",
+ "not_allowed": [
+  "model correlation",
+  "ECG morphology",
+  "FP",
+  "F1",
+  "FD",
+  "subject difficulty"
+ ],
+ "v1_candidate_subsampling": "not applied (all windows)"
+}

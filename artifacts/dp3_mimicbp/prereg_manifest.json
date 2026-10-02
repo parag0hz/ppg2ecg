@@ -1,0 +1,18 @@
+{
+ "sha256": {
+  "docs/DP3_MIMICBP_TARGET_BLIND_PREREGISTRATION.md": "9c5657fcfcac1148c9845400af2c4a06835f0a0dd9f98adc386a45950d50037d",
+  "docs/DP3_MIMICBP_INTERFACE.md": "ecf8a0b3d868005071580559602a1692f6de00906baaf40ef59fae15c7088a8e",
+  "docs/DP3_MIMICBP_TARGET_BLIND_AUDIT.md": "dfb690c02e53a2108148076336c9783e1d1c2697720f4acf081baa0c39ed5f9a",
+  "scripts/dp3_mimicbp.py": "5742e5f74a1670fd1a38a5be2c2f97a52139de4cb30913e2d01088821058384c",
+  "tests/test_dp3_mimicbp.py": "9f23580415fb7abff1fe703f020ca6aaf6d217e2b56365ea354bcdecdf8e8dd9",
+  "artifacts/dp3_mimicbp/dataset_schema.json": "c2141045ae43a3026dca718a895176bc4abc071b23106b2c6435b55141b2fe29",
+  "artifacts/dp3_mimicbp/dataset_adapter.json": "f0b6944b5064097ffc7eaad5f20998b4128afd4814fcea63209a2aa20750b759",
+  "artifacts/dp3_mimicbp/external_subject_manifest.json": "daed5b056c36d294adefb06a598921952a6db55e7ac8fd94043386f6025236cb",
+  "artifacts/dp3_mimicbp/external_exclusion_rules.json": "9f1f9438bb4584326ca054bb6cde4d5e4967cb903cc05e63005714543063c69d",
+  "artifacts/dp3_mimicbp/target_blind_audit.json": "0580e30054c81aa27277e0fa8e51f11f3f07dd9d9c111586b0df1be6f6790164",
+  "artifacts/dp3_mimicbp/s1_integrity_audit.json": "12f6b32c4b5b2a0d823d5b469016e463662c42cce71f28f408e2ceca25cfc513",
+  "artifacts/dp3_mimicbp/training_seed_manifest.json": "53157d6fe5965641835f49aa2e1b285c6e1cb2ba554e05d43b8a77cc4d04722f"
+ },
+ "written_before_any_mimicbp_waveform_value": true,
+ "git_head_at_write": "3a2d8bdddcec6c23c94153ae885cebb371eeded6"
+}

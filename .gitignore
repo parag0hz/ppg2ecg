@@ -566,3 +566,8 @@ artifacts/dp2_external/**/*.pt
 !artifacts/dp3_mimicbp/**
 artifacts/dp3_mimicbp/**/*.npz
 artifacts/dp3_mimicbp/**/*.pt
+# DP4 — project-naive external confirmation (small artifacts only)
+!artifacts/dp4_external/
+!artifacts/dp4_external/**
+artifacts/dp4_external/**/*.npz
+artifacts/dp4_external/**/*.pt

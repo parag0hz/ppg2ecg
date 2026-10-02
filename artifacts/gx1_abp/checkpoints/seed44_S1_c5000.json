@@ -1,0 +1,15 @@
+{
+ "seed": 44,
+ "train_seconds": 75.7249128818512,
+ "n_params": 943372,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1867.33447265625,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+ "target": "MIMIC-BP ABP, A8 global z",
+ "training_role": "GX-TRAIN",
+ "cycle": 5000,
+ "share": "S1",
+ "sha256": "7b17434309bb444c5942f518686e8671ced5430cc99e95e28de1c11421226a32"
+}

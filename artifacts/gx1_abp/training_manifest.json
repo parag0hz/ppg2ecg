@@ -1,0 +1,139 @@
+{
+ "jobs": [
+  {
+   "seed": 42,
+   "role": "point",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 593577,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 130.72162461280823,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1832.5888671875,
+   "checkpoint_sha256": "2d4e6d868336342f601249ab049ac76b9a3d2e165f63d5343875089ee176ca95"
+  },
+  {
+   "seed": 42,
+   "role": "gen",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 598333,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 133.88738822937012,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1547.16064453125,
+   "checkpoint_sha256": "bc65a68fee0d04c860dfbb460119ef7e3261786956acea2b97cc8f29ebf64e4f"
+  },
+  {
+   "seed": 42,
+   "role": "S1",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 943372,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 303.3146197795868,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1867.33447265625,
+   "checkpoint_sha256": "7b114d4e79d9ca0bbdb53c1667af1a4610a4999fa45858dd8dca9573764a9044"
+  },
+  {
+   "seed": 43,
+   "role": "point",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 593577,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 130.91903853416443,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1832.5888671875,
+   "checkpoint_sha256": "3bc07577c3dd8778b119444a5ab3324780f6e1797ef2dcff0eba20ef7f3ae2a5"
+  },
+  {
+   "seed": 43,
+   "role": "gen",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 598333,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 133.3464024066925,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1547.16064453125,
+   "checkpoint_sha256": "e50125a3f94d39b3c5bb9d550dea366ce526b39c517aa1fd001cf26ca8161459"
+  },
+  {
+   "seed": 43,
+   "role": "S1",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 943372,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 305.96843576431274,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1867.33447265625,
+   "checkpoint_sha256": "e37bd2f021850e7fe1f293dc427596bc70131afd3e123ec2e3c143f05e405ae4"
+  },
+  {
+   "seed": 44,
+   "role": "point",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 593577,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 130.46192288398743,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1832.5888671875,
+   "checkpoint_sha256": "c96f935672bc2badbe0a0301df915cb63291ee3e10328d117f3eb0e0129866b2"
+  },
+  {
+   "seed": 44,
+   "role": "gen",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 598333,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": 20000,
+   "train_seconds": 133.2262225151062,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1547.16064453125,
+   "checkpoint_sha256": "4ba0f93dc03ead0be6ff969d5b0e0a61e347274ab4c2c81c61f9e77e55236ba5"
+  },
+  {
+   "seed": 44,
+   "role": "S1",
+   "diagnostic": false,
+   "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+   "params": 943372,
+   "lr": 0.001,
+   "batch": 64,
+   "updates": {
+    "point": 20000,
+    "flow": 20000
+   },
+   "train_seconds": 303.53586983680725,
+   "nan_steps": 0,
+   "peak_gpu_mem_mib": 1867.33447265625,
+   "checkpoint_sha256": "636e29348bf53efca605139812336506aacaf50091e81aed1350bc40d84f3212"
+  }
+ ]
+}

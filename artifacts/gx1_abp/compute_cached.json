@@ -1,0 +1,56 @@
+{
+ "system": "cached",
+ "waveform_params": 1191910,
+ "pipeline_params": 1520807,
+ "flops_with_detector": {
+  "point": 941572096,
+  "gen": 1581457408,
+  "both": 2187354112
+ },
+ "latency_ms": {
+  "cuda_cached_point": {
+   "median": 1.275416580028832,
+   "q25": 1.258942997083068,
+   "q75": 1.2963240151293576,
+   "n": 200
+  },
+  "cuda_cached_gen": {
+   "median": 12.632904574275017,
+   "q25": 12.495855044107884,
+   "q75": 12.918831431306899,
+   "n": 200
+  },
+  "cuda_cached_both": {
+   "median": 13.334722607396543,
+   "q25": 13.209809956606477,
+   "q75": 13.56474426575005,
+   "n": 200
+  },
+  "cpu_cached_point": {
+   "median": 5.424157017841935,
+   "q25": 5.378448055125773,
+   "q75": 5.499255668837577,
+   "n": 60
+  },
+  "cpu_cached_gen": {
+   "median": 28.96724094171077,
+   "q25": 28.25238328659907,
+   "q75": 29.684324224945158,
+   "n": 60
+  },
+  "cpu_cached_both": {
+   "median": 32.02850103843957,
+   "q25": 31.458271318115294,
+   "q75": 34.12358777131885,
+   "n": 60
+  }
+ },
+ "gpu_peak_inference_mib_above_weights": {
+  "cached_point": 0.92919921875,
+  "cached_gen": 0.70361328125,
+  "cached_both": 0.92919921875
+ },
+ "numerical_equivalence": {
+  "cached_equals_naive_generation": true
+ }
+}

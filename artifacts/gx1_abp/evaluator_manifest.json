@@ -1,0 +1,25 @@
+{
+ "D_ABP": "paper_metrics.kanflow_fd (KANFlow Eq. 23 Gaussian Frechet distance on the raw flattened 512-sample windows; >= 3000 windows -> direct raw-space FD; covariance ddof 1 + 1e-4 I) on ABP in mmHg (predictions inverse-transformed with the frozen A8 pair)",
+ "pre_gx1_use_on_abp": [
+  {
+   "commit": "c753d13",
+   "record": "docs/U2_PAIRED_IMEANFLOW_VS_PENGUIN_REPORT.md",
+   "detail": "FD_kanflow on MIMIC-BP ABP in raw mmHg ('MIMIC-BP 38.6k vs 234k'); scripts/u2_evaluate.py pooled_extras"
+  },
+  {
+   "commit": "b1eb66a",
+   "record": "docs/EXP_D_ABP_REPORT.md",
+   "detail": "upstream raw-signal FD on MIMIC-BP ABP in mmHg^2"
+  }
+ ],
+ "implementation_sha256": "52d70c4ac7d2b95b2eecb027165ad3f08105e3de4d452acb1e0365e3e5202d4e",
+ "implementation_unchanged_since": "a15b354 (session 0)",
+ "bootstrap": "anchorflow.fastfd exact sufficient-statistics patient bootstrap, verified against kanflow_fd at run time",
+ "lower_is_better": true,
+ "margin": "artifacts/gx1_abp/margins.json (TRAIN-only derivation)",
+ "point_metrics": {
+  "corr": "per-window Pearson r between predicted and true normalized ABP (equal patient weight)",
+  "mae_z": "per-window MAE of the normalized (A8 global z) ABP",
+  "sbp_dbp_map_mae_mmhg": "window max / min / mean of the inverse-transformed prediction vs the reference (EXP-D / PENGUIN window definitions)"
+ }
+}

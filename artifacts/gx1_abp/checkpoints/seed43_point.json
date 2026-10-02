@@ -1,0 +1,19 @@
+{
+ "seed": 43,
+ "train_seconds": 130.91903853416443,
+ "n_params": 593577,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1832.5888671875,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "git_commit": "1659e08ea36e3cbb2288b90294dba17d59e43213",
+ "target": "MIMIC-BP ABP, A8 global z",
+ "training_role": "dp_train",
+ "steps": 20000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "clip": 1.0,
+ "loss": "L1",
+ "sha256": "3bc07577c3dd8778b119444a5ab3324780f6e1797ef2dcff0eba20ef7f3ae2a5"
+}

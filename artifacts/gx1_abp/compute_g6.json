@@ -1,0 +1,6 @@
+{
+ "flops_lower": true,
+ "gpu_lower": true,
+ "cpu_lower": true,
+ "G6_SUPPORTED": true
+}

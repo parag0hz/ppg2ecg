@@ -571,3 +571,8 @@ artifacts/dp3_mimicbp/**/*.pt
 !artifacts/dp4_external/**
 artifacts/dp4_external/**/*.npz
 artifacts/dp4_external/**/*.pt
+# GX1 — PPG->ABP cross-target generalization (small artifacts only)
+!artifacts/gx1_abp/
+!artifacts/gx1_abp/**
+artifacts/gx1_abp/**/*.npz
+artifacts/gx1_abp/**/*.pt

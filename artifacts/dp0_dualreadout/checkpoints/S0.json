@@ -1,0 +1,27 @@
+{
+ "seed": 42,
+ "train_seconds": 302.9723861217499,
+ "n_params": 861196,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1335.97705078125,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "steps": 20000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "clip": 1.0,
+ "cycle": 20000,
+ "share": "S0",
+ "updates": {
+  "point": 20000,
+  "flow": 20000
+ },
+ "first_task_odd_even": [
+  "point",
+  "flow"
+ ],
+ "loss": "round-robin L1 / flow-matching MSE",
+ "training_role": "dp_train",
+ "sha256": "533997de573c8c6d004a743543a910b47aa4ae35ad68924d21fdcd007f0b4289"
+}

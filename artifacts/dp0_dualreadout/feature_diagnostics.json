@@ -1,0 +1,104 @@
+{
+ "S0": {
+  "shared_output": {
+   "rms": 0.8788909912109375,
+   "channel_variance_mean": 0.6700149774551392,
+   "channel_variance_min": 0.005914811976253986,
+   "dead_channels": 0
+  },
+  "point_adapter_output": {
+   "rms": 0.5727737545967102,
+   "channel_variance_mean": 0.28780198097229004,
+   "channel_variance_min": 0.0062612611800432205,
+   "dead_channels": 0
+  },
+  "flow_adapter_output": {
+   "rms": 0.1045486330986023,
+   "channel_variance_mean": 0.010283314622938633,
+   "channel_variance_min": 0.0008278048480860889,
+   "dead_channels": 0
+  },
+  "point_tower_output": {
+   "rms": 0.5727737545967102,
+   "channel_variance_mean": 0.28780198097229004,
+   "channel_variance_min": 0.0062612611800432205,
+   "dead_channels": 0
+  },
+  "flow_tower_output_H256": {
+   "rms": 0.1381639540195465,
+   "channel_variance_mean": 0.01779509149491787,
+   "channel_variance_min": 0.0012151944683864713,
+   "dead_channels": 0
+  },
+  "point_adapter_norm": 0.5727737545967102,
+  "flow_adapter_norm": 0.1045486330986023
+ },
+ "S1": {
+  "shared_output": {
+   "rms": 1.1500130891799927,
+   "channel_variance_mean": 1.1658930778503418,
+   "channel_variance_min": 0.03477668762207031,
+   "dead_channels": 0
+  },
+  "point_adapter_output": {
+   "rms": 0.6330280303955078,
+   "channel_variance_mean": 0.34801116585731506,
+   "channel_variance_min": 0.02792554348707199,
+   "dead_channels": 0
+  },
+  "flow_adapter_output": {
+   "rms": 0.24528557062149048,
+   "channel_variance_mean": 0.05288282781839371,
+   "channel_variance_min": 0.003416602034121752,
+   "dead_channels": 0
+  },
+  "point_tower_output": {
+   "rms": 0.8232368230819702,
+   "channel_variance_mean": 0.49994438886642456,
+   "channel_variance_min": 0.02286539413034916,
+   "dead_channels": 0
+  },
+  "flow_tower_output_H256": {
+   "rms": 0.17798054218292236,
+   "channel_variance_mean": 0.02524980530142784,
+   "channel_variance_min": 0.0001188280584756285,
+   "dead_channels": 0
+  },
+  "point_adapter_norm": 0.6330280303955078,
+  "flow_adapter_norm": 0.24528557062149048
+ },
+ "S2": {
+  "shared_output": {
+   "rms": 0.20181086659431458,
+   "channel_variance_mean": 0.024694953113794327,
+   "channel_variance_min": 9.560375474393368e-06,
+   "dead_channels": 0
+  },
+  "point_adapter_output": {
+   "rms": 0.18048153817653656,
+   "channel_variance_mean": 0.022626318037509918,
+   "channel_variance_min": 3.4288950701011345e-06,
+   "dead_channels": 0
+  },
+  "flow_adapter_output": {
+   "rms": 0.1304052770137787,
+   "channel_variance_mean": 0.010931416414678097,
+   "channel_variance_min": 2.844523976364144e-07,
+   "dead_channels": 1
+  },
+  "point_tower_output": {
+   "rms": 1.041760802268982,
+   "channel_variance_mean": 0.961627721786499,
+   "channel_variance_min": 0.003371118800714612,
+   "dead_channels": 0
+  },
+  "flow_tower_output_H256": {
+   "rms": 0.16823004186153412,
+   "channel_variance_mean": 0.027229540050029755,
+   "channel_variance_min": 0.002263374160975218,
+   "dead_channels": 0
+  },
+  "point_adapter_norm": 0.18048153817653656,
+  "flow_adapter_norm": 0.1304052770137787
+ }
+}

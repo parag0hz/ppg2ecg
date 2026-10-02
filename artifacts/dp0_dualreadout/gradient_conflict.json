@@ -1,0 +1,121 @@
+{
+ "minibatches": 512,
+ "batch": 64,
+ "seed": 20261002,
+ "population": "DP-TRAIN (reference-R raster, training convention)",
+ "fm_draw": "per minibatch i: CPU Generator(20261002 + i) -> x0 then t",
+ "S0": {
+  "init": {
+   "cycle": 0,
+   "median": 0.043338214978575706,
+   "q25": 0.03911873232573271,
+   "q75": 0.04732999298721552,
+   "iqr": 0.008211260661482811,
+   "fraction_negative": 0.0,
+   "mean": 0.04320685591301299,
+   "point_grad_norm_median": 0.001942930044606328,
+   "flow_grad_norm_median": 0.0011497827945277095,
+   "shared_params": 328896
+  },
+  "25pct": {
+   "cycle": 5000,
+   "median": 0.3126676082611084,
+   "q25": 0.20276594907045364,
+   "q75": 0.409280888736248,
+   "iqr": 0.20651493966579437,
+   "fraction_negative": 0.02734375,
+   "mean": 0.3059948680438538,
+   "point_grad_norm_median": 0.044583601877093315,
+   "flow_grad_norm_median": 0.02082571294158697,
+   "shared_params": 328896
+  },
+  "final": {
+   "cycle": 20000,
+   "median": 0.19753818213939667,
+   "q25": 0.11493249237537384,
+   "q75": 0.2913711667060852,
+   "iqr": 0.17643867433071136,
+   "fraction_negative": 0.048828125,
+   "mean": 0.20664336460140476,
+   "point_grad_norm_median": 0.059143196791410446,
+   "flow_grad_norm_median": 0.021935989148914814,
+   "shared_params": 328896
+  }
+ },
+ "S1": {
+  "init": {
+   "cycle": 0,
+   "median": 0.21342657506465912,
+   "q25": 0.2094205915927887,
+   "q75": 0.21695806458592415,
+   "iqr": 0.007537472993135452,
+   "fraction_negative": 0.0,
+   "mean": 0.2133898732427042,
+   "point_grad_norm_median": 0.0005347495898604393,
+   "flow_grad_norm_median": 0.00039532109803985804,
+   "shared_params": 246720
+  },
+  "25pct": {
+   "cycle": 5000,
+   "median": 0.28589460253715515,
+   "q25": 0.18298087269067764,
+   "q75": 0.391355462372303,
+   "iqr": 0.20837458968162537,
+   "fraction_negative": 0.02734375,
+   "mean": 0.2819825174765356,
+   "point_grad_norm_median": 0.04378198832273483,
+   "flow_grad_norm_median": 0.017357129603624344,
+   "shared_params": 246720
+  },
+  "final": {
+   "cycle": 20000,
+   "median": 0.20979344099760056,
+   "q25": 0.12452052533626556,
+   "q75": 0.29819418489933014,
+   "iqr": 0.17367365956306458,
+   "fraction_negative": 0.029296875,
+   "mean": 0.21723809667400928,
+   "point_grad_norm_median": 0.058149514719843864,
+   "flow_grad_norm_median": 0.017890022136271,
+   "shared_params": 246720
+  }
+ },
+ "S2": {
+  "init": {
+   "cycle": 0,
+   "median": -0.06379791349172592,
+   "q25": -0.07012251392006874,
+   "q75": -0.05662100948393345,
+   "iqr": 0.013501504436135292,
+   "fraction_negative": 1.0,
+   "mean": -0.06390221364563331,
+   "point_grad_norm_median": 2.2407411961467005e-05,
+   "flow_grad_norm_median": 1.2396602414810332e-05,
+   "shared_params": 192
+  },
+  "25pct": {
+   "cycle": 5000,
+   "median": 0.14564674347639084,
+   "q25": -0.09141943044960499,
+   "q75": 0.3241681531071663,
+   "iqr": 0.4155875835567713,
+   "fraction_negative": 0.33984375,
+   "mean": 0.10779145886408514,
+   "point_grad_norm_median": 0.0021029181079939008,
+   "flow_grad_norm_median": 0.0013190391473472118,
+   "shared_params": 192
+  },
+  "final": {
+   "cycle": 20000,
+   "median": 0.1668175384402275,
+   "q25": -0.09704402089118958,
+   "q75": 0.3811381608247757,
+   "iqr": 0.47818218171596527,
+   "fraction_negative": 0.33203125,
+   "mean": 0.13476661419917946,
+   "point_grad_norm_median": 0.004498607711866498,
+   "flow_grad_norm_median": 0.0017667210195213556,
+   "shared_params": 192
+  }
+ }
+}

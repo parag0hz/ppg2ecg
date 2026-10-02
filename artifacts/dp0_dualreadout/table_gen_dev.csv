@@ -1,0 +1,5 @@
+model,total_params,fd,morph_corr_desc,fp_desc,diversity_ratio_rms_dev_from_P,nfe,gpu_latency_ms
+SPECIALIST G,598333,10.501,0.7644,0.6903,0.5049,8,12.59
+S0 gen,861196,11.151,0.7648,0.7142,0.5056,8,10.71
+S1 gen,943372,9.844,0.7685,0.6936,0.5061,8,10.75
+S2 gen,1189900,10.652,0.7709,0.7124,0.4889,8,10.73

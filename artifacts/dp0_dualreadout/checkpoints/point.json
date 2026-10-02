@@ -1,0 +1,17 @@
+{
+ "seed": 42,
+ "train_seconds": 130.75591135025024,
+ "n_params": 593577,
+ "nan_steps": 0,
+ "peak_gpu_mem_mib": 1302.1748046875,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "steps": 20000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "clip": 1.0,
+ "loss": "L1",
+ "training_role": "dp_train",
+ "sha256": "3a4cd6c4f4626c34360ba9dabd78daa55e3f4379b3aa00e2dd51d4cd6536b973"
+}

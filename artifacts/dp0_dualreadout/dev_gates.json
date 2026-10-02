@@ -1,0 +1,26 @@
+{
+ "S0": {
+  "P1": true,
+  "P2": false,
+  "G1": false,
+  "CONDITION": true,
+  "E1": true,
+  "QUALIFIED": false
+ },
+ "S1": {
+  "P1": true,
+  "P2": true,
+  "G1": true,
+  "CONDITION": true,
+  "E1": true,
+  "QUALIFIED": true
+ },
+ "S2": {
+  "P1": true,
+  "P2": true,
+  "G1": true,
+  "CONDITION": true,
+  "E1": false,
+  "QUALIFIED": false
+ }
+}

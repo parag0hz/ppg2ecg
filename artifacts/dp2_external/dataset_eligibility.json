@@ -1,0 +1,312 @@
+{
+ "precedence": "INELIGIBLE > CONTAMINATED > PROVENANCE-UNCERTAIN > FRESH (exactly one label)",
+ "datasets": {
+  "PPG-DaLiA": {
+   "label": "CONTAMINATED",
+   "reason": "training, final reporting and hypothesis formation in this project; 15 subjects; PPG/ECG only second-level synchronised (A0)",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR DEVELOPMENT",
+    "USED FOR FINAL PERFORMANCE REPORTING",
+    "USED FOR HYPOTHESIS FORMATION"
+   ],
+   "evidence": [
+    {
+     "commit": "5e0aa35",
+     "record": "docs/A0_PENGUIN_REPRODUCTION_REPORT.md",
+     "description": "A0 PENGUIN reproduction trained / tested on PPG-DaLiA (train 13, val S11, test S2)"
+    },
+    {
+     "commit": "ce13126",
+     "record": "A3 results",
+     "description": "one-step recovery tested on DaLiA subject S1"
+    },
+    {
+     "commit": "150669b",
+     "record": "docs/D1_MULTI_DATASET_BENCHMARK_REPORT.md",
+     "description": "five-corpus benchmark incl. PPG-DaLiA"
+    },
+    {
+     "commit": "c753d13",
+     "record": "docs/U2_PAIRED_IMEANFLOW_VS_PENGUIN_REPORT.md",
+     "description": "U2 paired iMF vs PENGUIN incl. DaLiA"
+    },
+    {
+     "commit": "542e6be",
+     "record": "P1 RESULT",
+     "description": "'DaLiA samples disagree on beat positions' (hypothesis)"
+    },
+    {
+     "commit": "c3d672d",
+     "record": "docs/MC1_MULTI_CORPUS_REPORT.md",
+     "description": "MC1 PPG-DaLiA 15 subjects, 4 test"
+    }
+   ]
+  },
+  "WESAD": {
+   "label": "CONTAMINATED",
+   "reason": "training and final reporting (D3 / U1 / U2); 15 subjects",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR FINAL PERFORMANCE REPORTING"
+   ],
+   "evidence": [
+    {
+     "commit": "8d53f65",
+     "record": "docs/D3_PENGUIN_SIX_DATASET_REPORT.md",
+     "description": "D3 six-dataset replication incl. WESAD (respiration target)"
+    },
+    {
+     "commit": "2842c11",
+     "record": "docs/U1_UPSTREAM_PENGUIN_ASSHIPPED_REPORT.md",
+     "description": "U1 upstream PENGUIN on six datasets"
+    },
+    {
+     "commit": "8bd682b",
+     "record": "U2",
+     "description": "'U2: WESAD evaluated -- non-inferior at k=1, but only just'"
+    }
+   ]
+  },
+  "WildPPG": {
+   "label": "CONTAMINATED",
+   "reason": "training, final reporting and hypothesis formation (A4 / A9 / D1 / U1 / U2 / WP1 / ED2 / WD1; cited by the BF0 design document); 16 participants",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR DEVELOPMENT",
+    "USED FOR FINAL PERFORMANCE REPORTING",
+    "USED FOR HYPOTHESIS FORMATION"
+   ],
+   "evidence": [
+    {
+     "commit": "bae0142",
+     "record": "docs/A4_WILDPPG_REPLICATION_REPORT.md",
+     "description": "A4: test participants kjd, ssx; val an0, k2s"
+    },
+    {
+     "commit": "3f93a4d",
+     "record": "A9",
+     "description": "ECG target-representation robustness on WildPPG"
+    },
+    {
+     "commit": "ec7f1d4",
+     "record": "docs/WP1_WILDPPG_4FOLD_REPORT.md",
+     "description": "WP1 subject-level 4-fold"
+    },
+    {
+     "commit": "74858d0",
+     "record": "ED2",
+     "description": "decoding transferred to WildPPG"
+    },
+    {
+     "commit": "d22d2ae",
+     "record": "WD1",
+     "description": "WildPPG regression + allocation"
+    },
+    {
+     "commit": "504395d",
+     "record": "docs/BEAT_FIRST_ARCHITECTURE_DESIGN_KO.md",
+     "description": "cites 'WildPPG\uc5d0\uc11c \uac19\uc740 \uad6c\uc870(R1) 0.62' as design evidence"
+    }
+   ]
+  },
+  "BIDMC": {
+   "label": "CONTAMINATED",
+   "reason": "training and final reporting (D1 / D3 / U1 / U2 / MC1 / EXP-D); 53 subjects; MIMIC-II provenance",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR FINAL PERFORMANCE REPORTING"
+   ],
+   "evidence": [
+    {
+     "commit": "150669b",
+     "record": "docs/D1_MULTI_DATASET_BENCHMARK_REPORT.md",
+     "description": "D1 BIDMC 36 train / 8 test subjects"
+    },
+    {
+     "commit": "8d53f65",
+     "record": "D3",
+     "description": "BIDMC respiration"
+    },
+    {
+     "commit": "c3d672d",
+     "record": "docs/MC1_MULTI_CORPUS_REPORT.md",
+     "description": "MC1 BIDMC 51 subjects, 15 test"
+    },
+    {
+     "commit": "a4d66e5",
+     "record": "EXP-D respiration",
+     "description": "BIDMC (6 subj) width/depth"
+    }
+   ]
+  },
+  "CapnoBase": {
+   "label": "CONTAMINATED",
+   "reason": "training and final reporting (D1 / MC1); 42 subjects",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR FINAL PERFORMANCE REPORTING"
+   ],
+   "evidence": [
+    {
+     "commit": "150669b",
+     "record": "docs/D1_MULTI_DATASET_BENCHMARK_REPORT.md",
+     "description": "D1 five-corpus benchmark incl. CapnoBase"
+    },
+    {
+     "commit": "c3d672d",
+     "record": "docs/MC1_MULTI_CORPUS_REPORT.md",
+     "description": "MC1 CapnoBase 42 subjects, 13 test"
+    }
+   ]
+  },
+  "MIMIC-BP": {
+   "label": "CONTAMINATED",
+   "reason": "prior outcome-based model / loss / selection use in this project for PPG->ABP (A7, A8, U1, U2, EXP-D) on all 1,524 subjects (criterion 7 fails); its ECG channel and PPG->ECG outcomes were never computed; MIMIC-III provenance",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR DEVELOPMENT",
+    "USED FOR FINAL PERFORMANCE REPORTING",
+    "USED FOR HYPOTHESIS FORMATION",
+    "USED FOR THRESHOLD / MODEL / LOSS SELECTION"
+   ],
+   "evidence": [
+    {
+     "commit": "fed5b8c",
+     "record": "docs/A7_ABP_GENERALIZATION_REPORT.md",
+     "description": "A7 PPG->ABP on the official split (train 1,100 / val 195 / test 229 subjects; all 1,524)"
+    },
+    {
+     "commit": "9ff77b5",
+     "record": "A8",
+     "description": "ABP target-scale sensitivity (target representation decided from A7 outcomes)"
+    },
+    {
+     "commit": "e09ee6d",
+     "record": "U2",
+     "description": "'U2: MIMIC-BP evaluated -- and it exposes a defect in my own frozen gate'"
+    },
+    {
+     "commit": "b1eb66a",
+     "record": "docs/EXP_D_ABP_REPORT.md",
+     "description": "EXP-D ABP width / depth allocation"
+    },
+    {
+     "commit": "\u2014",
+     "record": "docs/D1_MULTI_DATASET_BENCHMARK_PREREGISTRATION.md",
+     "description": "excluded from ECG work: 'target is ABP, not ECG'; ECG channel never used as a target"
+    }
+   ]
+  },
+  "UCI-BP": {
+   "label": "INELIGIBLE",
+   "reason": "no subject identifiers (patient-level split infeasible); also used in D3 / U1 / U2; MIMIC-II provenance",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR FINAL PERFORMANCE REPORTING"
+   ],
+   "evidence": [
+    {
+     "commit": "8d53f65",
+     "record": "D3",
+     "description": "D3 incl. UCI-BP"
+    },
+    {
+     "commit": "2842c11",
+     "record": "U1",
+     "description": "U1 incl. UCI-BP"
+    },
+    {
+     "commit": "\u2014",
+     "record": "data/manifests/split_u2_ucibp_seed42.json",
+     "description": "U2 split"
+    }
+   ]
+  },
+  "VitalDB": {
+   "label": "CONTAMINATED",
+   "reason": "the DP0 development source (training, development, lock); old V1 TEST NOT FRESH (DP1 audit)",
+   "prior_use": [
+    "USED FOR TRAINING",
+    "USED FOR DEVELOPMENT",
+    "USED FOR FINAL PERFORMANCE REPORTING",
+    "USED FOR HYPOTHESIS FORMATION",
+    "USED FOR THRESHOLD / MODEL / LOSS SELECTION"
+   ],
+   "evidence": [
+    {
+     "commit": "080ec1c",
+     "record": "V0",
+     "description": "VitalDB availability audit"
+    },
+    {
+     "commit": "5d3d274",
+     "record": "docs/V1_VITALDB_PAIRED_REPORT.md",
+     "description": "V1 test 1,156 patients"
+    },
+    {
+     "commit": "724b883",
+     "record": "docs/DP0_DUALREADOUT_REPORT.md",
+     "description": "all DP0 training / development / lock populations"
+    },
+    {
+     "commit": "17b43a6",
+     "record": "docs/DP1_TEST_FRESHNESS_AUDIT.md",
+     "description": "old V1 TEST NOT FRESH"
+    }
+   ]
+  },
+  "VitalDB residual (V0-excluded)": {
+   "label": "INELIGIBLE",
+   "reason": "113 cases / 104 subjects not in V1: excluded by the frozen V0 finite-fraction rule (< 0.95); same source, devices and institution as all DP0 development data, so not an external dataset shift",
+   "prior_use": [
+    "REFERENCED ONLY"
+   ],
+   "evidence": [
+    {
+     "commit": "080ec1c",
+     "record": "artifacts/v0_vitaldb_audit/cases_audit.csv",
+     "description": "V0 eligibility audit only (finite fraction); excluded, never windowed or modelled"
+    },
+    {
+     "commit": "\u2014",
+     "record": "data/manifests/split_v1_vitaldb_seed42.json",
+     "description": "9 of the 104+9 residual subjects also own V1 cases (used)"
+    }
+   ]
+  },
+  "MIT-BIH (DESTINATION)": {
+   "label": "INELIGIBLE",
+   "reason": "ECG only (MLII + one precordial lead, 360 Hz); no PPG",
+   "prior_use": [
+    "NEVER REFERENCED"
+   ],
+   "evidence": [
+    {
+     "commit": "\u2014",
+     "record": "repository grep",
+     "description": "no 'mitdb' / 'MIT-BIH' in docs, scripts, src or artifacts"
+    }
+   ]
+  },
+  "MIMIC-AFib (index only)": {
+   "label": "INELIGIBLE",
+   "reason": "only a header index CSV; no waveform present locally",
+   "prior_use": [
+    "REFERENCED ONLY"
+   ],
+   "evidence": [
+    {
+     "commit": "\u2014",
+     "record": "scripts/scan_mimic3wdb.py",
+     "description": "index scan only; no waveform downloaded"
+    },
+    {
+     "commit": "\u2014",
+     "record": "docs/PREPROCESSING_CONVENTIONS_SURVEY.md",
+     "description": "'Do not use MIMIC-AFib for any comparative claim until a subject list is fixed'"
+    }
+   ]
+  }
+ }
+}

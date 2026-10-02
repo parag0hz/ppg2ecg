@@ -1,0 +1,36 @@
+{
+ "selected_dataset": null,
+ "verdict": "DP2 NO ELIGIBLE PRIMARY DATASET",
+ "selection_reason": "no dataset satisfies all FRESH-PRIMARY criteria",
+ "all_candidates": {
+  "PPG-DaLiA": "CONTAMINATED",
+  "WESAD": "CONTAMINATED",
+  "WildPPG": "CONTAMINATED",
+  "BIDMC": "CONTAMINATED",
+  "CapnoBase": "CONTAMINATED",
+  "MIMIC-BP": "CONTAMINATED",
+  "UCI-BP": "INELIGIBLE",
+  "VitalDB": "CONTAMINATED",
+  "VitalDB residual (V0-excluded)": "INELIGIBLE",
+  "MIT-BIH (DESTINATION)": "INELIGIBLE",
+  "MIMIC-AFib (index only)": "INELIGIBLE"
+ },
+ "why_other_candidates_were_not_selected": {
+  "PPG-DaLiA": "training, final reporting and hypothesis formation in this project; 15 subjects; PPG/ECG only second-level synchronised (A0)",
+  "WESAD": "training and final reporting (D3 / U1 / U2); 15 subjects",
+  "WildPPG": "training, final reporting and hypothesis formation (A4 / A9 / D1 / U1 / U2 / WP1 / ED2 / WD1; cited by the BF0 design document); 16 participants",
+  "BIDMC": "training and final reporting (D1 / D3 / U1 / U2 / MC1 / EXP-D); 53 subjects; MIMIC-II provenance",
+  "CapnoBase": "training and final reporting (D1 / MC1); 42 subjects",
+  "MIMIC-BP": "prior outcome-based model / loss / selection use in this project for PPG->ABP (A7, A8, U1, U2, EXP-D) on all 1,524 subjects (criterion 7 fails); its ECG channel and PPG->ECG outcomes were never computed; MIMIC-III provenance",
+  "UCI-BP": "no subject identifiers (patient-level split infeasible); also used in D3 / U1 / U2; MIMIC-II provenance",
+  "VitalDB": "the DP0 development source (training, development, lock); old V1 TEST NOT FRESH (DP1 audit)",
+  "VitalDB residual (V0-excluded)": "113 cases / 104 subjects not in V1: excluded by the frozen V0 finite-fraction rule (< 0.95); same source, devices and institution as all DP0 development data, so not an external dataset shift",
+  "MIT-BIH (DESTINATION)": "ECG only (MLII + one precordial lead, 360 Hz); no PPG",
+  "MIMIC-AFib (index only)": "only a header index CSV; no waveform present locally"
+ },
+ "closest_to_eligible": {
+  "dataset": "MIMIC-BP",
+  "fails": "criterion 7 (prior outcome-based model / loss / selection use in this project, PPG->ABP)",
+  "would_otherwise_meet": "simultaneous PPG + ECG, 1,524 subject ids, curated synchronisation, 125 Hz, no overlap with VitalDB, PPG->ECG outcomes never computed; ECG lead UNKNOWN locally"
+ }
+}

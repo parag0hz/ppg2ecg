@@ -1,0 +1,654 @@
+{
+ "searched_roots": {
+  "/home": "searched (kwy00 only readable; excluding sci, taeho, anaconda3, caches, site-packages)",
+  "/mnt": "empty",
+  "/opt": "no physiological data (innorix-ex only)",
+  "/data": "absent",
+  "/datasets": "absent",
+  "/scratch": "absent",
+  "/workspace": "absent"
+ },
+ "excluded_by_project_rule": [
+  "/home/kwy00/sci",
+  "/home/kwy00/taeho"
+ ],
+ "derived_copies_not_separate_datasets": [
+  ".gitkeep",
+  "bidmc_8s",
+  "bidmc_resp_4s",
+  "capnobase_8s",
+  "capnobase_8s_clean",
+  "dalia_8s",
+  "mc1_bidmc_4s",
+  "mc1_capnobase_4s",
+  "mimicbp_8s",
+  "u2_bidmc",
+  "u2_dalia",
+  "u2_mimicbp",
+  "u2_ucibp",
+  "u2_wesad",
+  "u2_wildppg",
+  "uci_bp_8s",
+  "upstream",
+  "upstream_8s",
+  "upstream_u1",
+  "v0_8s",
+  "v1_vitaldb",
+  "vitaldb_8s",
+  "wesad_resp_4s",
+  "wildppg_8s",
+  "wildppg_8s_prenorm",
+  "data/raw_u1_wildppg_view"
+ ],
+ "model_weights_not_datasets": [
+  "data/pretrained/{imf,ppgflowecg,rddm}"
+ ],
+ "datasets": [
+  {
+   "dataset_name": "PPG-DaLiA",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/PPG-DaLiA",
+   "source_provenance": "PPG-DaLiA (Reiss et al. 2019), 15 subjects, daily-life protocol",
+   "disk_size_gib": 25.146,
+   "file_format": [
+    "csv",
+    "zip",
+    "pkl",
+    "h5",
+    "pdf"
+   ],
+   "number_of_files": 78,
+   "estimated_subject_count": 15,
+   "estimated_record_count": 15,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 64,
+   "sampling_rate_ECG": 700,
+   "signal_length_duration": "2.5 h per subject (ecg_s 9212 s for S1)",
+   "ECG_leads": "chest single channel",
+   "PPG_channels": "wrist BVP",
+   "timestamps_available": "NO",
+   "known_synchronization": "UNCERTAIN (second-level only, A0 report)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "training, final reporting and hypothesis formation in this project; 15 subjects; PPG/ECG only second-level synchronised (A0)",
+   "schema_probe": {
+    "subjects": 15,
+    "records": 15,
+    "fs_ecg": [
+     700
+    ],
+    "fs_ppg": [
+     64
+    ],
+    "duration_s_range": [
+     5250.0,
+     10648.0
+    ],
+    "ecg_leads": "chest RespiBAN ECG (single channel)",
+    "ppg_channels": [
+     "wrist Empatica E4 BVP"
+    ],
+    "subject_id": "S1..S15",
+    "metadata_source": "data/manifests/dalia_raw_inventory.json (project-generated)"
+   }
+  },
+  {
+   "dataset_name": "WESAD",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/WESAD",
+   "source_provenance": "WESAD (Schmidt et al. 2018), 15 subjects",
+   "disk_size_gib": 16.371,
+   "file_format": [
+    "txt",
+    "zip",
+    "pkl",
+    "csv",
+    "pdf"
+   ],
+   "number_of_files": 76,
+   "estimated_subject_count": 15,
+   "estimated_record_count": 15,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 64,
+   "sampling_rate_ECG": 700,
+   "signal_length_duration": "UNKNOWN",
+   "ECG_leads": "chest single channel",
+   "PPG_channels": "wrist BVP",
+   "timestamps_available": "NO",
+   "known_synchronization": "UNCERTAIN (same device pair as PPG-DaLiA)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "training and final reporting (D3 / U1 / U2); 15 subjects",
+   "schema_probe": {
+    "subjects": 15,
+    "records": 15,
+    "fs_ecg": 700,
+    "fs_ppg": 64,
+    "ecg_leads": "chest RespiBAN ECG (single channel)",
+    "ppg_channels": [
+     "wrist Empatica E4 BVP"
+    ],
+    "subject_id": "S2..S17 (no S1, S12)",
+    "metadata_source": "docs/D3_PENGUIN_SIX_DATASET_PREREGISTRATION.md (signal.wrist.BVP @64 Hz, chest @700 Hz); pkl not opened"
+   }
+  },
+  {
+   "dataset_name": "WildPPG",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/WildPPG",
+   "source_provenance": "WildPPG (ETH Zurich, polybox), 16 participants, multi-site wearable",
+   "disk_size_gib": 18.262,
+   "file_format": [
+    "mat",
+    "zip",
+    "json",
+    "sha256"
+   ],
+   "number_of_files": 19,
+   "estimated_subject_count": 16,
+   "estimated_record_count": 16,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 128,
+   "sampling_rate_ECG": 128,
+   "signal_length_duration": "~12 h per participant",
+   "ECG_leads": "sternum single channel",
+   "PPG_channels": "green / IR / red at head, sternum, wrist, ankle",
+   "timestamps_available": "YES",
+   "known_synchronization": "YES (one recording device per site, 128 Hz)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "training, final reporting and hypothesis formation (A4 / A9 / D1 / U1 / U2 / WP1 / ED2 / WD1; cited by the BF0 design document); 16 participants",
+   "schema_probe": {
+    "subjects": 16,
+    "records": 16,
+    "ids": [
+     "an0",
+     "e61",
+     "fex",
+     "k2s",
+     "kjd",
+     "l38",
+     "n31",
+     "ngh",
+     "p5d",
+     "p9p",
+     "qm9",
+     "ssx",
+     "trh",
+     "tz8",
+     "u7y",
+     "w4p"
+    ],
+    "fs": [
+     0.5,
+     128
+    ],
+    "ecg_duration_h": [
+     12.3,
+     12.3,
+     13.4,
+     15.2,
+     13.4,
+     13.3,
+     13.2,
+     14.7,
+     14.5,
+     12.5,
+     13.2,
+     12.7,
+     14.4,
+     14.5,
+     13.3,
+     13.9
+    ],
+    "sites": [
+     "sternum",
+     "head",
+     "wrist",
+     "ankle"
+    ],
+    "ecg_leads": "sternum ECG (single channel)",
+    "ppg_channels": [
+     "ppg_g",
+     "ppg_ir",
+     "ppg_r",
+     "at sites sternum,head,wrist,ankle"
+    ],
+    "subject_id": "3-character participant code",
+    "metadata_source": "data/raw/WildPPG/INVENTORY.json (project-generated, 2026-08-26)"
+   }
+  },
+  {
+   "dataset_name": "BIDMC",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/BIDMC",
+   "source_provenance": "BIDMC PPG and Respiration (PhysioNet), records from MIMIC-II matched subset",
+   "disk_size_gib": 0.342,
+   "file_format": [
+    "csv",
+    "hea",
+    "dat",
+    "breath",
+    "txt",
+    "",
+    "html",
+    "mat"
+   ],
+   "number_of_files": 526,
+   "estimated_subject_count": 53,
+   "estimated_record_count": 53,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 125,
+   "sampling_rate_ECG": 125,
+   "signal_length_duration": "480 s",
+   "ECG_leads": "II in every record (also V, AVR, ...)",
+   "PPG_channels": "PLETH",
+   "timestamps_available": "YES",
+   "known_synchronization": "YES (one WFDB multi-signal record)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "training and final reporting (D1 / D3 / U1 / U2 / MC1 / EXP-D); 53 subjects; MIMIC-II provenance",
+   "schema_probe": {
+    "subjects": 53,
+    "records": 53,
+    "fs_ppg": [
+     125.0
+    ],
+    "fs_ecg": [
+     125.0
+    ],
+    "signals": [
+     "ABP",
+     "ART",
+     "AVR",
+     "CVP",
+     "I",
+     "II",
+     "III",
+     "MCL",
+     "PLETH",
+     "RESP",
+     "V"
+    ],
+    "duration_s": [
+     480.008
+    ],
+    "ecg_leads_records": {
+     "II": 53,
+     "V": 49,
+     "AVR": 47,
+     "I": 5,
+     "III": 1,
+     "MCL": 4
+    },
+    "pleth_records": 53,
+    "ppg_channels": [
+     "PLETH"
+    ],
+    "subject_id": "bidmcNN (header source: MIMIC-II matched subject sNNNNN)",
+    "source_records_mimic2": 46,
+    "source_example": [
+     "mimic2wdb/matched/s01182",
+     "mimic2wdb/matched/s01241"
+    ]
+   }
+  },
+  {
+   "dataset_name": "CapnoBase",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/CapnoBase",
+   "source_provenance": "CapnoBase IEEE TBME RR benchmark (Karlen et al. 2013)",
+   "disk_size_gib": 0.13,
+   "file_format": [
+    "csv",
+    "png",
+    "mat",
+    "txt"
+   ],
+   "number_of_files": 337,
+   "estimated_subject_count": 42,
+   "estimated_record_count": 42,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 300,
+   "sampling_rate_ECG": 300,
+   "signal_length_duration": "480 s",
+   "ECG_leads": "UNKNOWN",
+   "PPG_channels": "pleth",
+   "timestamps_available": "YES",
+   "known_synchronization": "YES (one acquisition, common 300 Hz clock)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "training and final reporting (D1 / MC1); 42 subjects",
+   "schema_probe": {
+    "subjects": 42,
+    "records": 42,
+    "fs_ppg_ecg": [
+     [
+      300,
+      300
+     ]
+    ],
+    "channels": "\"co2_y\",\"pleth_y\",\"ecg_y\"",
+    "duration_s": 480,
+    "ecg_leads": "UNKNOWN",
+    "ppg_channels": [
+     "pleth"
+    ],
+    "subject_id": "case id NNNN_8min (one record per subject)"
+   }
+  },
+  {
+   "dataset_name": "MIMIC-BP",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/MIMIC-BP",
+   "source_provenance": "MIMIC-BP (curated from the MIMIC-III Waveform Matched Subset; Dataverse)",
+   "disk_size_gib": 5.969,
+   "file_format": [
+    "npy",
+    "zip",
+    "txt",
+    "ipynb",
+    "py",
+    "sha256"
+   ],
+   "number_of_files": 7631,
+   "estimated_subject_count": 1524,
+   "estimated_record_count": 45720,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "YES",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 125,
+   "sampling_rate_ECG": 125,
+   "signal_length_duration": "30 segments x 30 s per subject",
+   "ECG_leads": "UNKNOWN",
+   "PPG_channels": "ppg (single)",
+   "timestamps_available": "NO",
+   "known_synchronization": "YES (curated: ECG/PPG fundamental frequency within 0.3 Hz, pulse-arrival-time consistency; A7 audit)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "prior outcome-based model / loss / selection use in this project for PPG->ABP (A7, A8, U1, U2, EXP-D) on all 1,524 subjects (criterion 7 fails); its ECG channel and PPG->ECG outcomes were never computed; MIMIC-III provenance",
+   "schema_probe": {
+    "subjects": 1524,
+    "records": 45720,
+    "official_split": {
+     "train": 1100,
+     "val": 195,
+     "test": 229
+    },
+    "files_per_kind": {
+     "ppg": 1524,
+     "ecg": 1524,
+     "abp": 1524,
+     "resp": 1524,
+     "labels": 1524
+    },
+    "array_shape_example": {
+     "ppg": [
+      [
+       30,
+       3750
+      ],
+      "float64"
+     ],
+     "ecg": [
+      [
+       30,
+       3750
+      ],
+      "float64"
+     ],
+     "abp": [
+      [
+       30,
+       3750
+      ],
+      "float64"
+     ]
+    },
+    "fs_ppg": 125,
+    "fs_ecg": 125,
+    "duration_s": "30 segments x 30 s per subject",
+    "ecg_leads": "UNKNOWN",
+    "ppg_channels": [
+     "ppg"
+    ],
+    "subject_id": "pNNNNNN (MIMIC-III Waveform Matched Subset subject id)"
+   }
+  },
+  {
+   "dataset_name": "UCI-BP",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/UCI-BP",
+   "source_provenance": "UCI Cuff-Less Blood Pressure Estimation (records from MIMIC-II)",
+   "disk_size_gib": 6.309,
+   "file_format": [
+    "mat",
+    "zip"
+   ],
+   "number_of_files": 9,
+   "estimated_subject_count": "UNKNOWN",
+   "estimated_record_count": 12000,
+   "subject_identifier_available": "NO",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "YES",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 125,
+   "sampling_rate_ECG": 125,
+   "signal_length_duration": "variable per record",
+   "ECG_leads": "UNKNOWN",
+   "PPG_channels": "PPG (single)",
+   "timestamps_available": "NO",
+   "known_synchronization": "UNCERTAIN",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "NO",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "no subject identifiers (patient-level split infeasible); also used in D3 / U1 / U2; MIMIC-II provenance",
+   "schema_probe": {
+    "subjects": "UNKNOWN",
+    "records": 12000,
+    "fs": 125,
+    "channels": "per record [n, 3] = PPG, ABP, ECG (A7 audit)",
+    "ecg_leads": "UNKNOWN",
+    "subject_id": "none (records from MIMIC-II, identifiers suppressed; docs/A7_ABP_DATASET_AUDIT.md)"
+   }
+  },
+  {
+   "dataset_name": "VitalDB",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/VitalDB",
+   "source_provenance": "VitalDB (Seoul National University Hospital, intra-operative)",
+   "disk_size_gib": 26.098,
+   "file_format": [
+    "npz",
+    "csv"
+   ],
+   "number_of_files": 6158,
+   "estimated_subject_count": 5782,
+   "estimated_record_count": 6156,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "UNKNOWN",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 500,
+   "sampling_rate_ECG": 500,
+   "signal_length_duration": "median case > 10 min (V0 rule)",
+   "ECG_leads": "ECG_II",
+   "PPG_channels": "PLETH",
+   "timestamps_available": "YES",
+   "known_synchronization": "YES (one 500 Hz clock)",
+   "window_extraction_feasible": "YES",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "the DP0 development source (training, development, lock); old V1 TEST NOT FRESH (DP1 audit)",
+   "schema_probe": {
+    "cases_local": 6156,
+    "eligible_cases_v0": 6043,
+    "eligible_subjects_v0": 5782,
+    "v1_cases": 6043,
+    "v1_patients": {
+     "train": 4337,
+     "val": 289,
+     "test": 1156
+    },
+    "fs_ppg": 500,
+    "fs_ecg": 500,
+    "ecg_leads": "ECG_II",
+    "ppg_channels": [
+     "PLETH (SNUADC)"
+    ],
+    "subject_id": "VitalDB subjectid",
+    "v0_rule": {
+     "min_duration_s": 600.0,
+     "min_finite_frac": 0.95
+    },
+    "v0_fail_reasons": {
+     "missing_track": 0,
+     "short": 0,
+     "nan": 113
+    },
+    "residual_not_in_v1": {
+     "cases": 113,
+     "subjects": 113,
+     "subjects_also_in_v1": 9,
+     "reason": "V0 rule: finite fraction < 0.95 (nan)"
+    }
+   }
+  },
+  {
+   "dataset_name": "VitalDB residual (V0-excluded)",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/VitalDB/cases",
+   "source_provenance": "VitalDB (same source as DP0 development)",
+   "disk_size_gib": null,
+   "file_format": [
+    "npz"
+   ],
+   "number_of_files": 113,
+   "estimated_subject_count": 113,
+   "estimated_record_count": 113,
+   "subject_identifier_available": "YES",
+   "PPG_present": "YES",
+   "ECG_present": "YES",
+   "ABP_present": "UNKNOWN",
+   "simultaneous_PPG_ECG": "YES",
+   "sampling_rate_PPG": 500,
+   "sampling_rate_ECG": 500,
+   "signal_length_duration": "UNKNOWN",
+   "ECG_leads": "ECG_II",
+   "PPG_channels": "PLETH",
+   "timestamps_available": "YES",
+   "known_synchronization": "YES",
+   "window_extraction_feasible": "UNCERTAIN (failed finite-fraction rule)",
+   "patient_disjoint_split_feasible": "YES",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "113 cases / 104 subjects not in V1: excluded by the frozen V0 finite-fraction rule (< 0.95); same source, devices and institution as all DP0 development data, so not an external dataset shift",
+   "schema_probe": null
+  },
+  {
+   "dataset_name": "MIT-BIH (DESTINATION)",
+   "absolute_path": "/home/kwy00/DESTINATION",
+   "source_provenance": "MIT-BIH Arrhythmia Database (PhysioNet)",
+   "disk_size_gib": 0.102,
+   "file_format": [
+    "xws",
+    "atr",
+    "dat",
+    "hea",
+    "",
+    "gz",
+    "at_",
+    "tr"
+   ],
+   "number_of_files": 706,
+   "estimated_subject_count": "UNKNOWN",
+   "estimated_record_count": 48,
+   "subject_identifier_available": "NO",
+   "PPG_present": "NO",
+   "ECG_present": "YES",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "NO",
+   "sampling_rate_PPG": "n/a",
+   "sampling_rate_ECG": 360,
+   "signal_length_duration": "~30 min",
+   "ECG_leads": "MLII + V1/V2/V4/V5",
+   "PPG_channels": "n/a",
+   "timestamps_available": "YES",
+   "known_synchronization": "NO",
+   "window_extraction_feasible": "NO",
+   "patient_disjoint_split_feasible": "NO",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "ECG only (MLII + one precordial lead, 360 Hz); no PPG",
+   "schema_probe": {
+    "records": 48,
+    "subjects": "UNKNOWN",
+    "fs_ecg": [
+     360.0
+    ],
+    "signals": [
+     "MLII",
+     "V1",
+     "V2",
+     "V4",
+     "V5"
+    ],
+    "ppg_present": false,
+    "also": "23 headers in x_mitdb/"
+   }
+  },
+  {
+   "dataset_name": "MIMIC-AFib (index only)",
+   "absolute_path": "/home/kwy00/ppg2ecg-one-step/data/raw/MIMIC-AFib",
+   "source_provenance": "index of the MIMIC-III Waveform Matched Subset (no waveforms)",
+   "disk_size_gib": 0.001,
+   "file_format": [
+    "csv"
+   ],
+   "number_of_files": 1,
+   "estimated_subject_count": "UNKNOWN",
+   "estimated_record_count": 0,
+   "subject_identifier_available": "UNKNOWN",
+   "PPG_present": "NO",
+   "ECG_present": "NO",
+   "ABP_present": "NO",
+   "simultaneous_PPG_ECG": "NO",
+   "sampling_rate_PPG": "n/a",
+   "sampling_rate_ECG": "n/a",
+   "signal_length_duration": "n/a",
+   "ECG_leads": "n/a",
+   "PPG_channels": "n/a",
+   "timestamps_available": "NO",
+   "known_synchronization": "NO",
+   "window_extraction_feasible": "NO",
+   "patient_disjoint_split_feasible": "NO",
+   "raw_or_processed": "raw (project processed copies under data/processed are derived from it)",
+   "notes": "only a header index CSV; no waveform present locally",
+   "schema_probe": {
+    "index_rows": 20067,
+    "records_with_pleth_and_II": 12940,
+    "waveforms_present": false,
+    "content": "header index of the MIMIC-III Waveform Matched Subset written by scripts/scan_mimic3wdb.py"
+   }
+  }
+ ]
+}

@@ -556,3 +556,8 @@ artifacts/dp0_dualreadout/**/*.pt
 !artifacts/dp1_dualreadout/**
 artifacts/dp1_dualreadout/**/*.npz
 artifacts/dp1_dualreadout/**/*.pt
+# DP2 — local dataset audit / external confirmation (small artifacts only)
+!artifacts/dp2_external/
+!artifacts/dp2_external/**
+artifacts/dp2_external/**/*.npz
+artifacts/dp2_external/**/*.pt

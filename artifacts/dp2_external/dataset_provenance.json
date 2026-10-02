@@ -1,0 +1,33 @@
+{
+ "groups": {
+  "MIMIC (Beth Israel Deaconess ICU)": {
+   "members": [
+    "BIDMC (MIMIC-II matched)",
+    "UCI-BP (MIMIC-II)",
+    "MIMIC-BP (MIMIC-III matched)",
+    "MIMIC-AFib index (MIMIC-III matched)"
+   ],
+   "overlap": "possible: MIMIC-III waveform records span the MIMIC-II period and no local mapping between MIMIC-II sNNNNN and MIMIC-III pNNNNNN identifiers exists; never independent replications"
+  },
+  "Empatica E4 + RespiBAN (Univ. Siegen / Bosch)": {
+   "members": [
+    "PPG-DaLiA",
+    "WESAD"
+   ],
+   "overlap": "same device pair and research group; subject overlap UNKNOWN"
+  },
+  "VitalDB (SNUH)": {
+   "members": [
+    "VitalDB",
+    "VitalDB residual (V0-excluded)"
+   ],
+   "overlap": "same source as all DP0 development data; 9 residual subjects also have V1 cases"
+  },
+  "independent single sources": [
+   "WildPPG (ETH Zurich)",
+   "CapnoBase (UBC)",
+   "MIT-BIH (ECG only)"
+  ]
+ },
+ "dp0_development_population": "VitalDB only; no MIMIC / wearable dataset shares institutions with it"
+}

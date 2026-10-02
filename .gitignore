@@ -536,3 +536,8 @@ artifacts/e0_wwdet_event_audit/**/*.pt
 !artifacts/r1_rhythmfield_ww/**
 artifacts/r1_rhythmfield_ww/**/*.npz
 artifacts/r1_rhythmfield_ww/**/*.pt
+# SF0 — ScaleFlow-ECG feasibility (small artifacts only; checkpoints and generations live in outputs/)
+!artifacts/sf0_scaleflow/
+!artifacts/sf0_scaleflow/**
+artifacts/sf0_scaleflow/**/*.npz
+artifacts/sf0_scaleflow/**/*.pt

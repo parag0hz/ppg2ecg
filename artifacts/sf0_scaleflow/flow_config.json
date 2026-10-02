@@ -1,0 +1,9 @@
+{
+ "path": "x_t = (1 - t) x0 + t x1, x0 ~ N(0, I), t ~ U(0, 1)",
+ "target": "u = x1 - x0",
+ "loss": "MSE(v, u), waveform space",
+ "inference": "Euler, NFE = 8, t = 0 -> 1 (secondary NFE 4 / 16 after the primary verdict)",
+ "noise": "one N(0, I) 512-vector per window from sha256('patient:window:20261002'), identical for WW-FM / IND / SF",
+ "primary": "exactly one sample per window",
+ "normalization": "stored ECG / PPG units, as WW-L1"
+}

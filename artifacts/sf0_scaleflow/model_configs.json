@@ -1,0 +1,33 @@
+{
+ "WWL1": {
+  "class": "coherentbeat.ablation.WWDet(72, 5)",
+  "inputs": "PPG, event raster",
+  "loss": "L1",
+  "params": 593577
+ },
+ "WWFM": {
+  "class": "scaleflow.model.WWFM",
+  "dec_width": 63,
+  "encoder": "C0 Encoder 64 ch, 8 blocks (PPG)",
+  "decoder": "1x1 on [h, raster, x_t] -> 5 time-conditioned residual blocks (dil 1,2,4,8,16) -> 1x1",
+  "params": 597664
+ },
+ "IND": {
+  "class": "scaleflow.model.ScaleFM(coupled=False)",
+  "width": 50,
+  "branches": "coarse 128 / mid 128 / fine 256; input [x_t, PPG, raster] coefficient of the scale; 6 time-conditioned residual blocks",
+  "params": 593485
+ },
+ "SF": {
+  "class": "scaleflow.model.ScaleFM(coupled=True)",
+  "width": 50,
+  "coupling": "1x1 projections (16 ch): coarse -> mid input; mid and coarse -> fine input (nearest x2 upsampling); no fine -> coarse",
+  "params": 598333
+ },
+ "time_embedding": {
+  "sinusoidal_dim": 64,
+  "mlp": "Linear(64,128) GELU Linear(128,128)",
+  "injection": "additive Linear projection after the first conv of every residual block",
+  "scale": "1000 t"
+ }
+}

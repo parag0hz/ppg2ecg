@@ -1,0 +1,25 @@
+{
+ "SF": {
+  "width": 50,
+  "params": 598333,
+  "vs_600k": -0.002778333333333333
+ },
+ "IND": {
+  "width": 50,
+  "params": 593485,
+  "vs_SF": -0.008102511477722271
+ },
+ "WWFM": {
+  "dec_width": 63,
+  "params": 597664,
+  "vs_SF": -0.0011181064724827144
+ },
+ "WWL1": {
+  "params": 593577
+ },
+ "rule": "widths by parameter count only; depths fixed (WW-FM decoder 5 blocks as WW-DET; 6 blocks per scale branch, dilations 1..32); SCALEFLOW closest to 600k; INDEPENDENT and WW-FM closest to SCALEFLOW's count",
+ "grid": [
+  16,
+  160
+ ]
+}

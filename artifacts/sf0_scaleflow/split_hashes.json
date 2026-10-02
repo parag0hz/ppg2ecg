@@ -1,0 +1,10 @@
+{
+ "sf_train": {
+  "patients_sha256": "54804fea60c2af6fdb1716dd9e2968465f976ebc554d9337c28391a90e1cfa3a",
+  "window_index_sha256": "bfa68b7855f37ffb7636c190e094b5d99c3ee4d7a0b4acbf3641a19866462cc4"
+ },
+ "sf_val": {
+  "patients_sha256": "bd05825b6719b461108eeccd312cdbae2c950c708e94a86d2ce8ff753530cc71",
+  "window_index_sha256": "52b3a89b132ac86ef2e10641e9490c86e564945ac2e0976a187034047d9b56dd"
+ }
+}

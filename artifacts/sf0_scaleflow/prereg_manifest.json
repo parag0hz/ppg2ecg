@@ -1,0 +1,35 @@
+{
+ "prereg": {
+  "docs/SF0_SCALEFLOW_PREREGISTRATION.md": "c70e4cdad2993f4f7e04c3eb506bb1b0cdaaef0a5700fb15e40c3e86e5c96840"
+ },
+ "code": {
+  "scripts/sf0_scaleflow.py": "122eb510e496601f1d759f9a5b78d3e3f83d40f51a4a27acc81d1c2c7f721577",
+  "src/ppg2ecg/scaleflow/__init__.py": "9d4721ebce6d5991770472cedfaa8e2e14d4d7ccf9f84705ce7bfeda157f16b5",
+  "src/ppg2ecg/scaleflow/model.py": "90f99ab7630e569d32a51ecb86007f18c52af8f3c5e51ebee3f880858dffe8e2",
+  "tests/test_sf0_scaleflow.py": "e1651522a991ef857fd4a76b778512fecd336216cac29c612e2f1c71f0c510ff"
+ },
+ "frozen_design": {
+  "split_manifest.json": "9a5209e5f0524b6ed31794630f0c51694fe2d400de58adfe8da3201cf042487d",
+  "split_hashes.json": "67a4fc4b3f01f238d72a6c796d03d26e38257f79810c6f2960474737b45ebd75",
+  "parameter_match.json": "f1a764d2a321623f46f415e2746ef66ed2c406229dbc7e1495f7bc6018b43242",
+  "model_configs.json": "2543b98e67460acc7255aa3295865ca8b98c61d97c2a60ea845e66470b44bba8",
+  "haar_config.json": "f9f2e34371fd455cd7a34f69109c42368409e51cf19426133312e16b79b18396",
+  "flow_config.json": "9c4b59033aa6bdff34a18925801d57e934295817dca4090d3b15eea2cb5e3063",
+  "detector_config.json": "bc0549f197d346003c822afa43663c8ca14c86b73831d18121a8deef03abdd71",
+  "training_manifest.json": "21a1668983269dab8d715ae7187c2190813f2cf5ea0c296ceae11b210452c7ff"
+ },
+ "written_before_any_sf0_training_or_sf_val_metric": true,
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "ffda6aff01d756f0ac253d79f43301beb2f76680"
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "role": "SF-TRAIN only",
+ "seed": 42,
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "checkpoint": "last step",
+ "training_raster": "Gaussian event raster at SF-TRAIN reference R (WW-DET convention), all four models",
+ "evaluation_raster": "the SF detector's events (threshold 0.35, refractory 32), identical for all four models",
+ "WWL1": "L1",
+ "FM": "MSE flow matching, torch.Generator(cuda) seeded 42 for x0 and t"
+}

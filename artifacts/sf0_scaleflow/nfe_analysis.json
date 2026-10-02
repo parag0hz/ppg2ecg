@@ -1,0 +1,45 @@
+{
+ "wwfm_nfe4": {
+  "fd": 12.810509599651766,
+  "beat_corr": 0.7700584754967489,
+  "fp_rate": 0.5896402316965237,
+  "recall": 0.7722645910409026,
+  "gpu_ms_batch1_waveform_model": 3.4281625412404537
+ },
+ "wwfm_nfe8": {
+  "fd": 13.430903785304707,
+  "beat_corr": 0.745728332109909,
+  "fp_rate": 0.6535893239557277,
+  "recall": 0.7732494565780178,
+  "gpu_ms_batch1_waveform_model": 6.820562062785029
+ },
+ "wwfm_nfe16": {
+  "fd": 13.966483384399424,
+  "beat_corr": 0.7302817952310386,
+  "fp_rate": 0.6978108813237395,
+  "recall": 0.7720894705258279,
+  "gpu_ms_batch1_waveform_model": 13.41606501955539
+ },
+ "sf_nfe4": {
+  "fd": 4.681180374256883,
+  "beat_corr": 0.7609137952470227,
+  "fp_rate": 0.5925155464217317,
+  "recall": 0.7705684008535288,
+  "gpu_ms_batch1_waveform_model": 6.293365033343434
+ },
+ "sf_nfe8": {
+  "fd": 2.7126255824647387,
+  "beat_corr": 0.7402249201721548,
+  "fp_rate": 0.62353634677197,
+  "recall": 0.7695387432481473,
+  "gpu_ms_batch1_waveform_model": 12.403225526213646
+ },
+ "sf_nfe16": {
+  "fd": 2.2724302764424067,
+  "beat_corr": 0.7272718986449842,
+  "fp_rate": 0.6432391278552269,
+  "recall": 0.7684743083603068,
+  "gpu_ms_batch1_waveform_model": 24.577120086178184
+ },
+ "note": "secondary, after the frozen NFE = 8 verdict; FD point estimates; beat_corr on each window's own pairs"
+}

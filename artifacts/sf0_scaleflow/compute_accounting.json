@@ -1,0 +1,110 @@
+{
+ "params": {
+  "WWL1": 593577,
+  "WWFM": 597664,
+  "IND": 593485,
+  "SF": 598333,
+  "detector": 328897
+ },
+ "pipeline_params": {
+  "WWL1": 922474,
+  "WWFM": 926561,
+  "IND": 922382,
+  "SF": 927230
+ },
+ "train_seconds": {
+  "detector": 54.92891311645508,
+  "wwl1": 130.88486003875732,
+  "wwfm": 146.95792293548584,
+  "ind": 127.93492269515991,
+  "sf": 131.72633171081543
+ },
+ "peak_gpu_mem_mib": {
+  "detector": 877.6044921875,
+  "wwl1": 1663.7509765625,
+  "wwfm": 1653.6484375,
+  "ind": 1373.24072265625,
+  "sf": 1378.32275390625
+ },
+ "nan_steps": {
+  "detector": 0,
+  "wwl1": 0,
+  "wwfm": 0,
+  "ind": 0,
+  "sf": 0
+ },
+ "batch1_latency_ms_full_pipeline": {
+  "cpu_WWL1": {
+   "median_ms": 5.39541500620544,
+   "p90_ms": 6.009824527427555
+  },
+  "cpu_WWFM": {
+   "median_ms": 30.157570028677583,
+   "p90_ms": 37.8120519220829
+  },
+  "cpu_IND": {
+   "median_ms": 28.779421583749354,
+   "p90_ms": 32.704096380621195
+  },
+  "cpu_SF": {
+   "median_ms": 29.856724431738257,
+   "p90_ms": 33.758265199139714
+  },
+  "cuda_WWL1": {
+   "median_ms": 1.278980984352529,
+   "p90_ms": 1.36084605474025
+  },
+  "cuda_WWFM": {
+   "median_ms": 7.52842694055289,
+   "p90_ms": 9.51133326161653
+  },
+  "cuda_IND": {
+   "median_ms": 12.660994427278638,
+   "p90_ms": 14.365689642727375
+  },
+  "cuda_SF": {
+   "median_ms": 13.17897706758231,
+   "p90_ms": 14.940822450444104
+  }
+ },
+ "flops": {
+  "WWL1": {
+   "per_vector_field_eval": 605896704,
+   "detector": 335675392,
+   "total_pipeline": 941572096,
+   "nfe": 1
+  },
+  "WWFM": {
+   "per_vector_field_eval": 543274752,
+   "detector": 335675392,
+   "total_pipeline": 4681873408,
+   "nfe": 8
+  },
+  "IND": {
+   "per_vector_field_eval": 154084352,
+   "detector": 335675392,
+   "total_pipeline": 1568350208,
+   "nfe": 8
+  },
+  "SF": {
+   "per_vector_field_eval": 155722752,
+   "detector": 335675392,
+   "total_pipeline": 1581457408,
+   "nfe": 8
+  }
+ },
+ "notes": "full pipeline = SF detector + waveform model (NFE 8 for FM arms); FLOPs from torch.utils.flop_counter on one window (CPU), a lower bound; parameter-matched, not compute-matched",
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "dbf60d7175a4938151570caad671f59b71f3d9e1"
+ }
+}

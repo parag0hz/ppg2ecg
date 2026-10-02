@@ -1,0 +1,14 @@
+{
+ "G1": "MIXED",
+ "G2": true,
+ "G3": true,
+ "G4": false,
+ "G5": false,
+ "G6": true,
+ "G7": true,
+ "QUALIFIED": false,
+ "failure_categories": [
+  "morphology degradation",
+  "event degradation"
+ ]
+}

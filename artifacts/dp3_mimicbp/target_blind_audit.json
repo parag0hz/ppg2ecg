@@ -1,0 +1,235 @@
+{
+ "verdict": "PASS",
+ "prior_mimicbp_ecg_target_use": "NONE",
+ "evidence_label": "ECG-target-blind cross-task external cohort",
+ "required_disclosure": "MIMIC-BP PPG had previously been used in unrelated PPG-to-ABP experiments, whereas ECG reconstruction targets were withheld from the PPG-to-ECG architecture-development process.",
+ "method": "metadata-only: repository text scan, code-path inspection, processed-file array names (zip listing), output path names, git log; no MIMIC-BP waveform value was read",
+ "scan": {
+  "dirs": [
+   "docs",
+   "scripts",
+   "src",
+   "artifacts",
+   "configs",
+   "data/manifests",
+   "tests",
+   "external/PENGUIN/src",
+   "external/PENGUIN/config"
+  ],
+  "excluded_self": [
+   "scripts/dp2_dataset_audit.py",
+   "scripts/dp3_mimicbp.py",
+   "tests/test_dp2_dataset_audit.py",
+   "tests/test_dp3_mimicbp.py"
+  ],
+  "files_mentioning_mimicbp": 116,
+  "same_line_ecg_term_comentions": [
+   {
+    "file": "docs/A7_ABP_DATASET_AUDIT.md",
+    "line": 42,
+    "text": "- Reproduced by `src/ppg2ecg/data/mimicbp.py` + `scripts/build_processed_mimicbp.py` → `data/processed/mimicbp_8s/<pid>.npz`"
+   },
+   {
+    "file": "docs/D1_MULTI_DATASET_BENCHMARK_PREREGISTRATION.md",
+    "line": 62,
+    "text": "| `mimicbp` | MIMIC-BP | — | 1,524 | 137,160 | **EXCLUDED** — target is ABP, not ECG |"
+   },
+   {
+    "file": "docs/D3_PENGUIN_SIX_DATASET_PREREGISTRATION.md",
+    "line": 140,
+    "text": "ECG/MIMIC-BP arms rather than retraining them."
+   },
+   {
+    "file": "docs/DP2_LOCAL_DATASET_AUDIT.md",
+    "line": 54,
+    "text": "| MIMIC-BP | `data/raw/MIMIC-BP` (6.0 GiB) | 1,524 | 45,720 × 30 s | ppg / ecg (lead UNKNOWN), abp, resp | 125 / 125 | yes (curated: f0 match ≤ 0.3 Hz, PAT consistency) | yes (pNNNNNN) | training, development, final reporting, hypothesis fo"
+   },
+   {
+    "file": "docs/FIGURES_BY_STAGE.md",
+    "line": 114,
+    "text": "**데이터** MIMIC-BP (ABP) · WildPPG test (global-z ECG)"
+   },
+   {
+    "file": "docs/PROGRAM_SUMMARY_ALL_STAGES.md",
+    "line": 37,
+    "text": "- **데이터**: MIMIC-BP (ABP), WildPPG (global-z ECG)"
+   },
+   {
+    "file": "docs/PROJECT_STATUS_SUMMARY_FOR_LLM.md",
+    "line": 29,
+    "text": "3. 이 결과는 ECG에 특이적이다. PPG→ABP(MIMIC-BP)에서는 결정론적 MSE 회귀기가 최선이고 one-step 감쇠가 없다(A7 NOT GENERALIZED; A8: iMF의 ABP 실패는 타깃 스케일 문제). ECG 타깃 정규화 방식을 바꿔도 결론은 유지(A9 REPRESENTATION-ROBUST)."
+   },
+   {
+    "file": "docs/PROJECT_STATUS_SUMMARY_FOR_LLM.md",
+    "line": 163,
+    "text": "- **A7(PPG→ABP, MIMIC-BP raw mmHg)**: MSE proxy가 모든 지표 최선(SBP/DBP MAE 14.31/8.72, 펄스 템플릿 상관 0.929, 피크 F1 0.945); O1(15.09/9.51, .904)이 O50(15.94/9.80, .884)보다 좋음(50 NFE는 HF·기울기 과잉); **iMF-1 붕괴**(corr 0.140, HF 0.550 vs GT 0.043, slope ratio"
+   },
+   {
+    "file": "docs/TECHNICAL_SPEC_MODEL_DATA_TRAINING_2026-09-03.md",
+    "line": 86,
+    "text": "- 원시 `data/raw/MIMIC-BP/{ppg,abp,ecg,resp,labels}/p<ID>_<kind>.npy` + `train/val/test_subjects.txt` (Python 리스트 리터럴, `ast.literal_eval`). 피험자당 `[30 세그먼트, 3750 샘플]` float64 @125 Hz; `labels [30,2]` = 세그먼트별 중앙값 (SBP, DBP). ABP 범위 28.4–188.7 m"
+   },
+   {
+    "file": "docs/TECHNICAL_SPEC_MODEL_DATA_TRAINING_2026-09-03.md",
+    "line": 1003,
+    "text": "- 데이터: `src/ppg2ecg/data/{preprocess,dalia,wildppg,wildppg_sites,mimicbp,splits,target_norm,leakage}.py`"
+   },
+   {
+    "file": "scripts/build_processed_mimicbp.py",
+    "line": 14,
+    "text": "from ppg2ecg.data.mimicbp import FS_RAW, subject_ids, windows_for_subject"
+   },
+   {
+    "file": "scripts/predict_a7.py",
+    "line": 1,
+    "text": "\"\"\"A7: dump paired predictions of one arm on the (subsampled) MIMIC-BP test set — no ECG metrics (ABP metrics are computed in"
+   },
+   {
+    "file": "scripts/preflight_a0.py",
+    "line": 108,
+    "text": "norm_y = check_windowwise_normalization(lambda a: preprocess_windows(a, args.sample_rate, args.window_s, **(ECG_KW if args.dataset != \"MIMIC-BP\" else dict(bandpass=False, freq_range=(-1, -1), zscore=False, normalize=False))), arrays[\"test\"]"
+   },
+   {
+    "file": "scripts/preflight_a0.py",
+    "line": 144,
+    "text": "\"preprocess\": {\"ppg\": PPG_KW, \"target\": (dict(bandpass=False, freq_range=(-1, -1), zscore=False, normalize=False, unit=\"mmHg (raw, resampled only)\") if args.dataset == \"MIMIC-BP\" else ECG_KW), \"per_window_stats\": True, \"global_stats\": None,"
+   },
+   {
+    "file": "src/ppg2ecg/data/mimicbp.py",
+    "line": 3,
+    "text": "Raw layout: data/raw/MIMIC-BP/{ppg,abp,ecg,resp,labels}/p<ID>_<kind>.npy ; waveforms [30 segments, 3750 samples] at 125 Hz (raw, ABP in"
+   },
+   {
+    "file": "artifacts/dp2_external/dataset_inventory.json",
+    "line": 362,
+    "text": "\"absolute_path\": \"/home/kwy00/ppg2ecg-one-step/data/raw/MIMIC-BP\","
+   },
+   {
+    "file": "artifacts/dp2_external/primary_dataset_selection.json",
+    "line": 24,
+    "text": "\"MIMIC-BP\": \"prior outcome-based model / loss / selection use in this project for PPG->ABP (A7, A8, U1, U2, EXP-D) on all 1,524 subjects (criterion 7 fails); its ECG channel and PPG->ECG outcomes were never computed; MIMIC-III provenance\","
+   },
+   {
+    "file": "artifacts/dp2_external/table_dataset_inventory.csv",
+    "line": 7,
+    "text": "MIMIC-BP,1524,45720,YES,YES,125,125,\"YES (curated: ECG/PPG fundamental frequency within 0.3 Hz, pulse-arrival-time consistency; A7 audit)\",YES,/home/kwy00/ppg2ecg-one-step/data/raw/MIMIC-BP,USED FOR TRAINING; USED FOR DEVELOPMENT; USED FOR "
+   }
+  ],
+  "adjudication": {
+   "docs/FIGURES_BY_STAGE.md": "figure index: 'MIMIC-BP (ABP)' next to a WildPPG ECG panel; MIMIC-BP target is ABP",
+   "docs/D3_PENGUIN_SIX_DATASET_PREREGISTRATION.md": "reuse of frozen 'ECG/MIMIC-BP arms' = ECG-dataset arms and the MIMIC-BP ABP arms",
+   "docs/D1_MULTI_DATASET_BENCHMARK_PREREGISTRATION.md": "MIMIC-BP EXCLUDED from the ECG benchmark: 'target is ABP, not ECG'",
+   "docs/A7_ABP_DATASET_AUDIT.md": "dataset audit lists the channels (incl. ECG) of the PPG->ABP corpus; ABP processing only",
+   "scripts/predict_a7.py": "'no ECG metrics (ABP metrics ...)' on MIMIC-BP",
+   "scripts/preflight_a0.py": "target preprocessing switches to raw ABP when dataset == MIMIC-BP (ECG_KW only for ECG datasets)",
+   "docs/PROGRAM_SUMMARY_ALL_STAGES.md": "figure data line: 'MIMIC-BP (ABP), WildPPG (global-z ECG)'",
+   "docs/TECHNICAL_SPEC_MODEL_DATA_TRAINING_2026-09-03.md": "raw layout listing {ppg,abp,ecg,resp,labels}; loader reads ppg/abp/labels only",
+   "src/ppg2ecg/data/mimicbp.py": "raw layout docstring; windows_for_subject loads ppg, abp and labels only",
+   "docs/PROJECT_STATUS_SUMMARY_FOR_LLM.md": "A7 PPG->ABP results contrasted with ECG findings on other datasets",
+   "src/ppg2ecg/evaluation/abp_metrics.py": "ABP metric definitions (MIMIC-BP label definition)",
+   "scripts/build_processed_mimicbp.py": "imports the ppg/abp loader; builds PPG -> ABP windows",
+   "docs/DP2_LOCAL_DATASET_AUDIT.md": "DP2 audit inventory (metadata)",
+   "artifacts/dp2_external/primary_dataset_selection.json": "DP2 audit record (metadata)",
+   "artifacts/dp2_external/table_dataset_inventory.csv": "DP2 audit record (metadata)",
+   "artifacts/dp2_external/dataset_inventory.json": "DP2 audit record (metadata)",
+   "artifacts/dp2_external/dataset_eligibility.json": "DP2 audit record (metadata)"
+  },
+  "unadjudicated_files": []
+ },
+ "code_paths": {
+  "project_loader_kinds (src/ppg2ecg/data/mimicbp.py)": [
+   "abp",
+   "labels",
+   "ppg"
+  ],
+  "upstream_penguin_loader_kinds": [
+   "abp",
+   "ppg"
+  ],
+  "u2_build_target": "ABP",
+  "python_lines_loading_mimicbp_ecg_arrays": []
+ },
+ "processed_files": {
+  "data/processed/mimicbp_8s": {
+   "files": 1524,
+   "array_names": [
+    "label_dbp.npy",
+    "label_sbp.npy",
+    "pid.npy",
+    "segment_idx.npy",
+    "window_start_s.npy",
+    "x.npy",
+    "y.npy"
+   ]
+  },
+  "data/processed/u2_mimicbp": {
+   "files": 1524,
+   "array_names": [
+    "subject.npy",
+    "window_index.npy",
+    "x.npy",
+    "y.npy"
+   ]
+  }
+ },
+ "outputs_with_mimic_in_name": [
+  "outputs/a7_imeanflow_mimicbp_seed42",
+  "outputs/a7_mse_fullbackbone_mimicbp_seed42",
+  "outputs/a7_otcfm_mimicbp_seed42",
+  "outputs/a8_imeanflow_mimicbp_globalz_seed42",
+  "outputs/a8_mse_fullbackbone_mimicbp_globalz_seed42",
+  "outputs/a8_otcfm_mimicbp_globalz_seed42",
+  "outputs/scan_mimic.log",
+  "outputs/u2_mimicbp_armC_seed42",
+  "outputs/u2_mimicbp_armI_seed42"
+ ],
+ "output_files_with_ecg_in_name_under_mimic_outputs": [],
+ "git_commits_mentioning_mimic": [
+  "c0822f1 DP2 Stage A — local dataset audit: DP2 NO ELIGIBLE PRIMARY DATASET; HARD STOP before any external split, training or inference. Metadata-only discovery ",
+  "eddbe60 EXP-D audit + preregistration: functional generalisation (U1 upstream PENGUIN as shipped; BIDMC RR primary, WESAD exploratory, MIMIC-BP SBP/DBP/MAP; ABP",
+  "e09ee6d U2: MIMIC-BP evaluated -- and it exposes a defect in my own frozen gate",
+  "84223f0 A7 dataset audit + preregister A7 PPG->ABP generalisation (MIMIC-BP)"
+ ],
+ "prior_ppg_abp_use": [
+  {
+   "commit": "84223f0",
+   "description": "A7 dataset audit + preregistration (PPG -> ABP, MIMIC-BP)"
+  },
+  {
+   "commit": "fed5b8c",
+   "description": "A7 result: one-step structural attenuation on ABP (train 1,100 / val 195 / test 229 subjects)"
+  },
+  {
+   "commit": "9ff77b5",
+   "description": "A8: ABP target-scale sensitivity"
+  },
+  {
+   "commit": "2842c11",
+   "description": "U1: upstream PENGUIN incl. MIMIC-BP (ABP task)"
+  },
+  {
+   "commit": "e09ee6d",
+   "description": "U2: MIMIC-BP evaluated (ABP target)"
+  },
+  {
+   "commit": "eddbe60",
+   "description": "EXP-D preregistration (MIMIC-BP SBP / DBP / MAP)"
+  },
+  {
+   "commit": "b1eb66a",
+   "description": "EXP-D ABP result (U1 PENGUIN ABP checkpoint, 190 test subjects)"
+  }
+ ],
+ "checked_uses": {
+  "training": "NOT FOUND",
+  "model selection": "NOT FOUND",
+  "checkpoint selection": "NOT FOUND",
+  "architecture design": "NOT FOUND",
+  "loss design": "NOT FOUND",
+  "threshold selection": "NOT FOUND",
+  "reconstruction performance": "NOT FOUND",
+  "ECG morphology analysis": "NOT FOUND",
+  "ECG-derived event analysis": "NOT FOUND",
+  "PPG->ECG hypothesis formation": "NOT FOUND"
+ }
+}

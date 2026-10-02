@@ -1,0 +1,83 @@
+{
+ "checks": {
+  "total_params": true,
+  "shared_params": true,
+  "adapter_params": true,
+  "separate_params": true,
+  "saving_2085": true,
+  "shared_blocks_1_6": true,
+  "private_blocks_7_8": true,
+  "widths_71_30": true,
+  "checkpoint_hashes": true,
+  "detector_rule": true,
+  "dp0_lock_freeze_intact": true,
+  "preprocess_unchanged_since_v1": true
+ },
+ "pass": true,
+ "accounting": {
+  "shared": 246720,
+  "point_private": 343783,
+  "flow_private": 352869,
+  "total": 943372,
+  "adapters": 8320,
+  "adapter_fraction": 0.00881942648287208,
+  "point_path": 590503,
+  "flow_path": 599589,
+  "saving": 0.20852077757548804,
+  "E1": true
+ },
+ "separate": 1191910,
+ "ownership_counts": {
+  "shared": 26,
+  "point": 34,
+  "flow": 140
+ },
+ "hashes": {
+  "detector": {
+   "dp0": "828110bb9615c6e44de782c00f41d2b0c9df58a3325c776726cc0f72323f2a4c",
+   "now": "828110bb9615c6e44de782c00f41d2b0c9df58a3325c776726cc0f72323f2a4c"
+  },
+  "point": {
+   "dp0": "3a4cd6c4f4626c34360ba9dabd78daa55e3f4379b3aa00e2dd51d4cd6536b973",
+   "now": "3a4cd6c4f4626c34360ba9dabd78daa55e3f4379b3aa00e2dd51d4cd6536b973"
+  },
+  "gen": {
+   "dp0": "07589e61650123d772453df94ab663ba17bd004e4b4f1d6ca19cc83fc2c90d59",
+   "now": "07589e61650123d772453df94ab663ba17bd004e4b4f1d6ca19cc83fc2c90d59"
+  },
+  "S1": {
+   "dp0": "10e22aedf906129767f55a762e48b42909623266c49708f8678d080e98e9ca8a",
+   "now": "10e22aedf906129767f55a762e48b42909623266c49708f8678d080e98e9ca8a"
+  }
+ },
+ "preprocessing": {
+  "file": "src/ppg2ecg/data/preprocess.py",
+  "sha256": "9312299c3f075a0b52cd0e60e593c0bb983f55ad477e5a70cdf6147943f27210",
+  "commits": [
+   "a15b354"
+  ],
+  "PPG_KW": {
+   "bandpass": true,
+   "freq_range": [
+    0.5,
+    4
+   ],
+   "zscore": true,
+   "normalize": true
+  },
+  "ECG_KW": {
+   "bandpass": true,
+   "freq_range": [
+    0.5,
+    -1
+   ],
+   "zscore": true,
+   "normalize": true
+  }
+ },
+ "detector": {
+  "threshold": 0.35,
+  "refractory": 32,
+  "sigma_ms": 20.0
+ }
+}

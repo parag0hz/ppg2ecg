@@ -561,3 +561,8 @@ artifacts/dp1_dualreadout/**/*.pt
 !artifacts/dp2_external/**
 artifacts/dp2_external/**/*.npz
 artifacts/dp2_external/**/*.pt
+# DP3 — MIMIC-BP ECG-target-blind external validation (small artifacts only)
+!artifacts/dp3_mimicbp/
+!artifacts/dp3_mimicbp/**
+artifacts/dp3_mimicbp/**/*.npz
+artifacts/dp3_mimicbp/**/*.pt

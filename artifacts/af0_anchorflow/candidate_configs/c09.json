@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B1",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.1,
+ "id": "c09",
+ "parent": "c05",
+ "change": "stage G: PPG-condition dropout 0.10 at training; A0 + B1 + C1 kept",
+ "hypothesis": "the PPG-only shuffle never worsened residual FD (c05: -0.16 [-0.27, -0.04]), i.e. the flow ignores PPG beyond the anchor; stage G is the predeclared remedy for this pattern"
+}

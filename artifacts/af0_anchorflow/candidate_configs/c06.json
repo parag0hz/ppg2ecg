@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B1",
+ "coupling": "C2",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c06",
+ "parent": "c05",
+ "change": "stage C: gated coupling C2 (learned channel-wise sigmoid gates, init 0) instead of C1; A0 + B1 kept (best of stage B)",
+ "hypothesis": "stage B kept B1 FiLM (lowest FD 9.05 / residual FD 10.81, D1 D4 D5 pass). Gated additive coupling lets each finer scale learn how much coarse context to admit; the coarse band carries the centre drift, so admitting it selectively may reduce drift propagation"
+}

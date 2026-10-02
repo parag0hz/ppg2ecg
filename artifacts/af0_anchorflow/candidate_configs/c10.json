@@ -1,0 +1,13 @@
+{
+ "norm": "A1",
+ "anchor": "B1",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c10",
+ "parent": "c05",
+ "change": "stage A revisited on the best configuration: A1 median/IQR normalization with B1 FiLM + C1 (c05 had A0)",
+ "hypothesis": "D6 passed only once, with A1 (c02: PPG-only shuffle +0.33 [+0.16, +0.51], anchor shuffle +0.81), while B1 FiLM gave the best FD / residual FD; changing only the normalization of c05 tests whether condition use (D6) and the FD gain combine. Stages C, D and G did not improve on c05 (c06 / c07 / c08 / c09); stage F is not implementable under the FM-only objective; NFE only for passing candidates"
+}

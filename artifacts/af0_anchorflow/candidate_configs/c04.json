@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B2",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c04",
+ "parent": "c01",
+ "change": "stage B: anchor injection B2 concat + FiLM (was B0 concat); A0 kept (best of stage A)",
+ "hypothesis": "stage A kept A0 (lowest FD / residual FD, D4 and D5 pass). The centre still drifts (corr16 -0.13, R-time SD ~17 ms) and the anchor shuffle does not hurt residual FD, i.e. mu is weakly used; FiLM modulation by per-scale anchor features should tie residual corrections to the anchor's local morphology"
+}

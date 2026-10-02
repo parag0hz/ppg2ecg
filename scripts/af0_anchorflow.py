@@ -320,9 +320,12 @@ def build_job(job: str):
         w, _ = A.width_for(lambda w: A.ResidualScaleFM(w, None, "B0"))
         return A.ResidualScaleFM(w, None, "B0"), A.Normalizer.from_json(st["A0"]), {"kind": "B3", "ppg_dropout": 0.0}
     cfg = read_json(f"candidate_configs/{job}.json")
-    w, _ = A.width_for(lambda w: A.ResidualScaleFM(w, cfg["coupling"], cfg["anchor"]))
-    w = int(round(w * cfg["width_mult"]))
-    return A.ResidualScaleFM(w, cfg["coupling"], cfg["anchor"]), A.Normalizer.from_json(st[cfg["norm"]]), cfg
+    w0, p0 = A.width_for(lambda w: A.ResidualScaleFM(w, cfg["coupling"], cfg["anchor"]))
+    w = int(w0 * cfg["width_mult"])                                              # floor: stage D never exceeds the 1.5x cap
+    net = A.ResidualScaleFM(w, cfg["coupling"], cfg["anchor"])
+    if A.n_params(net) > 1.5 * p0:
+        raise SystemExit(f"STOP: width {w} exceeds 1.5x the matched residual-flow parameters ({A.n_params(net)} > {1.5 * p0})")
+    return net, A.Normalizer.from_json(st[cfg["norm"]]), cfg
 
 
 def stage_train(ex, dev, job):
@@ -631,6 +634,161 @@ def stage_winner(ex, dev, cid):
                                            "fd": m["fd"]["cand"], "residual_fd": m["residual_fd"]["cand"]})
 
 
+def stage_summarize(ex, dev):
+    """Aggregate the development record: winner (or NONE), controls, residual distribution, diversity, checkpoints, compute,
+    figure_dev.png and table_dev.csv. Reads stored AF-DEV results only (plus one latency / FLOP measurement)."""
+    from torch.utils.flop_counter import FlopCounterMode
+    base = read_json("dev_baselines.json")
+    cands = {p.stem: json.loads(p.read_text()) for p in sorted((ART / "candidate_metrics").glob("c*.json"))}
+    passing = [c for c, m in cands.items() if m["gates"]["overall"]]
+    if passing:
+        win = sorted(passing, key=lambda c: (cands[c]["residual_fd"]["cand"], cands[c]["fd"]["cand"], -cands[c]["mean16"]["corr"][0], cands[c]["nfe"], cands[c]["params"]))[0]
+        write_json("development_winner.json", {"winner": win})
+    else:
+        write_json("development_winner.json", {"winner": None, "verdict": "AF0 DEVELOPMENT FAILED", "candidates_evaluated": sorted(cands),
+                                               "training_jobs": len(ledger()["jobs"])})
+    write_json("condition_shuffle.json", {c: {"S1_ppg_flow_only_residual_fd_minus_cond": m["comparisons"]["rfd_s1_minus_cond"],
+                                              "S1_fd": m["condition_controls"]["S1_ppg_flow_only"]["fd"], "S2_whole_pipeline_fd": m["condition_controls"]["S2_ppg_whole_pipeline"]["fd"],
+                                              "S2_point_corr": m["condition_controls"]["S2_ppg_whole_pipeline"]["point"]["corr"]} for c, m in cands.items()})
+    write_json("anchor_shuffle.json", {c: {"residual_fd_minus_cond": m["comparisons"]["rfd_anchorshuf_minus_cond"],
+                                           "fd": m["condition_controls"]["anchor_shuffle"]["fd"]} for c, m in cands.items()})
+    keys = ("fd", "residual_fd", "diversity_ratio", "residual_spectral_discrepancy", "residual_band_stats_gen", "residual_band_stats_real")
+    write_json("residual_distribution.json", {**{b: {k: base[b][k] for k in keys} for b in ("b1", "b2", "b3")},
+                                              **{c: {k: m["generative"][k] for k in keys} for c, m in cands.items()}})
+    dk = ("diversity_ratio", "k16_within_condition_diversity", "k16_within_diversity_over_real_residual_rms", "k16_scale_diversity_sd",
+          "k16_beat_aligned_diversity", "k16_r_time_seed_sd_ms", "k16_events_per_window_mean", "k16_center_minus_anchor_mae", "k16_center_minus_anchor_band_mae")
+    write_json("diversity.json", {**{b: {k: base[b][k] for k in dk} for b in ("b1", "b2", "b3")}, **{c: {k: m["generative"][k] for k in dk} for c, m in cands.items()}})
+    cks = {p.stem: json.loads(p.read_text()) for p in sorted((ART / "checkpoints").glob("*.json"))}
+    write_json("candidate_checkpoints.json", {k: {"sha256": v["sha256"], "params": v["n_params"], "train_seconds": v["train_seconds"],
+                                                   "peak_gpu_mem_mib": v["peak_gpu_mem_mib"], "nan_steps": v["nan_steps"]} for k, v in cks.items()})
+    best = min(cands, key=lambda c: (cands[c]["residual_fd"]["cand"], cands[c]["fd"]["cand"]))
+    X = load_role("af_dev", ex)[0][:64]
+    mu, ev = load_prep("af_dev")
+    R = AB.event_raster(ev[:64]).astype(np.float32)
+    lat, flops = {}, {}
+    torch.set_num_threads(4)
+    for dname in ("cpu", "cuda"):
+        d = torch.device(dname)
+        anc, det = load_ckpt("anchor", d), load_ckpt("detector", d)
+        arms = {"anchor": None, "b1": load_ckpt("b1", d)} | {k: load_ckpt(k, d, build_job(k)[0]) for k in ("b2", "b3", best)}
+        for k, net in arms.items():
+            ts = []
+            for i in range(23):
+                xi, ri = torch.from_numpy(X[i:i + 1]).to(d), torch.from_numpy(R[i:i + 1]).to(d)
+                if dname == "cuda":
+                    torch.cuda.synchronize()
+                t0 = time.perf_counter()
+                with torch.no_grad():
+                    p = torch.sigmoid(det(xi[:, None])[:, 0])
+                    m = anc(xi, ri)
+                    if k == "b1":
+                        SM.euler(net, torch.zeros(1, T, device=d), xi, ri, 8)
+                    elif k != "anchor":
+                        A.euler(net, torch.zeros(1, T, device=d), xi, ri, m, 8)
+                if dname == "cuda":
+                    torch.cuda.synchronize()
+                if i >= 3:
+                    ts.append((time.perf_counter() - t0) * 1000)
+            lat[f"{dname}_{k}"] = float(np.median(ts))
+            if dname == "cpu" and net is not None:
+                xi, ri = torch.from_numpy(X[:1]), torch.from_numpy(R[:1])
+                with torch.no_grad():
+                    m1 = anc(xi, ri)                                                   # anchor pass counted separately
+                fc = FlopCounterMode(display=False)
+                with fc, torch.no_grad():
+                    net(torch.zeros(1, T), torch.zeros(1), xi, ri) if k == "b1" else net(torch.zeros(1, T), torch.zeros(1), xi, ri, m1)
+                flops[k] = {"per_vector_field_eval": int(fc.get_total_flops()), "nfe": 8}
+        if dname == "cpu":
+            for name, net in (("anchor", anc), ("detector", det)):
+                fc = FlopCounterMode(display=False)
+                with fc, torch.no_grad():
+                    net(torch.from_numpy(X[:1]), torch.from_numpy(R[:1])) if name == "anchor" else net(torch.from_numpy(X[:1])[:, None])
+                flops[name] = {"per_pass": int(fc.get_total_flops())}
+    write_json("compute_accounting.json", {"checkpoints": {k: {"params": v["n_params"], "train_seconds": v["train_seconds"], "peak_gpu_mem_mib": v["peak_gpu_mem_mib"]}
+                                                           for k, v in cks.items()},
+                                           "batch1_latency_ms_full_pipeline": lat, "flops": flops, "best_candidate_measured": best,
+                                           "notes": "pipeline = detector + anchor (+ NFE-8 residual flow); FLOPs from torch.utils.flop_counter (one window, CPU)",
+                                           "training_jobs": ledger()["jobs"], "software": B.software()})
+    _figure_dev(base, cands)
+
+
+def _figure_dev(base, cands):
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    names = sorted(cands)
+    fig, ax = plt.subplots(2, 4, figsize=(25, 10.5))
+    a = ax[0, 0]
+    a.axis("off")
+    a.set_title("A  AnchorFlow pipeline", loc="left")
+    a.text(0.0, 0.97, "PPG + event raster\n   |\n frozen WW anchor -> mu(c)  (point output)\n   |\n residual r = x - mu\n   |\n fixed Haar"
+           " -> coarse -> mid -> fine\n   (scale-coupled residual FM,\n    conditioned on PPG_s, event_s, mu_s)\n   |\n residual sample r_k\n   |\n"
+           " x_k = mu + r_k  (conditional samples)", va="top", family="monospace", fontsize=10)
+    a = ax[0, 1]
+    ap = base["anchor_point"]
+    vals = [ap["corr"][0], ap["pm_recall"][0], ap["pm_precision"][0], ap["pm_f1"][0], ap["pm_fp_rate"][0]]
+    a.bar(range(5), vals, color="#0e7c86")
+    a.set_xticks(range(5), ["corr", "recall", "precision", "F1", "FP / win"])
+    a.set_title("B  anchor point estimate (AF-DEV)", loc="left")
+    a = ax[0, 2]
+    arms = ["anchor", "B1 full SF", "B2 vanilla res", "B3 indep res"] + names
+    fds = [base["anchor_fd"], base["b1"]["fd"], base["b2"]["fd"], base["b3"]["fd"]] + [cands[c]["fd"]["cand"] for c in names]
+    a.bar(range(len(arms)), fds, color=["0.4", "#a23b52", "#d59a54", "#7a6fd0"] + ["#4a3aa7"] * len(names))
+    a.axhline(base["b1"]["fd"] + 1.0, color="k", ls="--", lw=0.8)
+    a.set_xticks(range(len(arms)), arms, rotation=60, fontsize=7)
+    a.set_title("C  population FD (dashed: full SF + 1.0)", loc="left")
+    a = ax[0, 3]
+    rf = [base["b2"]["residual_fd"], base["b3"]["residual_fd"]] + [cands[c]["residual_fd"]["cand"] for c in names]
+    a.bar(range(len(rf)), rf, color=["#d59a54", "#7a6fd0"] + ["#4a3aa7"] * len(names))
+    a.set_xticks(range(len(rf)), ["B2", "B3"] + names, rotation=60, fontsize=8)
+    a.set_title("D  residual FD (D4 vs B2, D5 vs B3)", loc="left")
+    def ciplot(a, key, title, margin=None, ylab=""):
+        for i, c in enumerate(names):
+            v = cands[c]["comparisons"][key]
+            a.plot([i, i], [v[1], v[2]], color="k", lw=3)
+            a.plot([i], [v[0]], "o", color="#4a3aa7")
+        if margin is not None:
+            a.axhline(margin, color="k", ls="--", lw=0.8)
+        a.axhline(0, color="0.7", lw=0.6)
+        a.set_xticks(range(len(names)), names, rotation=60, fontsize=8)
+        a.set_title(title, loc="left")
+        a.set_ylabel(ylab)
+    ciplot(ax[1, 0], "corr16_vs_anchor", "E  D2: corr(mean16) - corr(anchor) (margin -0.02)", -0.02)
+    ciplot(ax[1, 1], "fp16_vs_anchor", "E'  D3: FP(mean16) - FP(anchor) (margin +0.05)", 0.05)
+    a = ax[1, 2]
+    for i, c in enumerate(names):
+        for j, (k, col) in enumerate((("rfd_s1_minus_cond", "#2a7f3f"), ("rfd_anchorshuf_minus_cond", "#a23b52"))):
+            v = cands[c]["comparisons"][k]
+            a.plot([i + (j - 0.5) * 0.3] * 2, [v[1], v[2]], color=col, lw=3, label=("PPG-only shuffle S1" if j == 0 else "anchor shuffle") if i == 0 else None)
+    a.axhline(0, color="k", lw=0.8)
+    a.set_xticks(range(len(names)), names, rotation=60, fontsize=8)
+    a.set_title("F  D6: residual FD shuffled - conditioned (must be > 0)", loc="left")
+    a.legend(fontsize=8)
+    a = ax[1, 3]
+    dv = [base["b1"]["diversity_ratio"], base["b2"]["diversity_ratio"], base["b3"]["diversity_ratio"]] + [cands[c]["generative"]["diversity_ratio"] for c in names]
+    a.bar(range(len(dv)), dv, color=["#a23b52", "#d59a54", "#7a6fd0"] + ["#4a3aa7"] * len(names))
+    a.axhline(0.5, color="k", ls="--", lw=0.8); a.axhline(1.5, color="k", ls="--", lw=0.8)
+    a.set_xticks(range(len(dv)), ["B1", "B2", "B3"] + names, rotation=60, fontsize=8)
+    a.set_title("G  D7: residual diversity ratio (0.5-1.5)", loc="left")
+    win = read_json("development_winner.json")["winner"]
+    fig.suptitle(f"AF0 AnchorFlow — AF-DEV adaptive development (AF-LOCK not opened). Development winner: {win or 'NONE (AF0 DEVELOPMENT FAILED)'}", fontsize=12)
+    fig.tight_layout()
+    fig.savefig(ART / "figure_dev.png", dpi=105)
+    with open(ART / "table_dev.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["arm", "params", "nfe", "fd", "residual_fd", "mean16_corr", "mean16_fp", "mean16_recall", "diversity_ratio"])
+        w.writerow(["anchor (point)", 593577, 1, f"{base['anchor_fd']:.3f}", "", f"{base['anchor_point']['corr'][0]:.4f}", f"{base['anchor_point']['pm_fp_rate'][0]:.4f}",
+                    f"{base['anchor_point']['pm_recall'][0]:.4f}", ""])
+        for b, lab in (("b1", "B1 full-signal ScaleFlow"), ("b2", "B2 vanilla residual FM"), ("b3", "B3 independent residual FM")):
+            g = base[b]
+            w.writerow([lab, "", 8, f"{g['fd']:.3f}", f"{g['residual_fd']:.3f}", f"{g['mean16']['corr'][0]:.4f}", f"{g['mean16']['pm_fp_rate'][0]:.4f}",
+                        f"{g['mean16']['pm_recall'][0]:.4f}", f"{g['diversity_ratio']:.4f}"])
+        for c in names:
+            m = cands[c]
+            w.writerow([c, m["params"], m["nfe"], f"{m['fd']['cand']:.3f}", f"{m['residual_fd']['cand']:.3f}", f"{m['mean16']['corr'][0]:.4f}",
+                        f"{m['mean16']['pm_fp_rate'][0]:.4f}", f"{m['mean16']['pm_recall'][0]:.4f}", f"{m['generative']['diversity_ratio']:.4f}"])
+
+
 def new_candidate(cid: str, parent: str, change: str, hypothesis: str, **overrides):
     """Write candidate_configs/<cid>.json (base config + overrides); refuses beyond the 10-candidate budget."""
     if cid not in candidate_ids() and len(candidate_ids()) >= MAX_CANDIDATES:
@@ -642,7 +800,7 @@ def new_candidate(cid: str, parent: str, change: str, hypothesis: str, **overrid
 
 
 STAGES = {"split": stage_split, "audit": stage_audit, "manifest": stage_manifest, "train_detector": stage_train_detector,
-          "train_anchor": stage_train_anchor, "prep": stage_prep, "eval_baselines": stage_eval_baselines, "eval_lock": stage_eval_lock}
+          "train_anchor": stage_train_anchor, "prep": stage_prep, "eval_baselines": stage_eval_baselines, "eval_lock": stage_eval_lock, "summarize": stage_summarize}
 ARG_STAGES = {"train": stage_train, "eval_cand": stage_eval_cand, "nfe": stage_nfe, "freeze": stage_freeze, "winner": stage_winner}
 
 

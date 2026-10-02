@@ -1,0 +1,249 @@
+{
+ "b1": {
+  "diversity_ratio": 0.5969820313015294,
+  "k16_within_condition_diversity": 0.2844375776319658,
+  "k16_within_diversity_over_real_residual_rms": 0.6480391520352807,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.3909901305070644,
+   "mid": 0.06398396746244998,
+   "fine": 0.04746839882111601
+  },
+  "k16_beat_aligned_diversity": 0.26343572295063605,
+  "k16_r_time_seed_sd_ms": 0.0,
+  "k16_events_per_window_mean": 4.16928125,
+  "k16_center_minus_anchor_mae": 0.09161211866570523,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.1776462307725929,
+   "mid": 0.024838054164009464,
+   "fine": 0.01694818834079163
+  }
+ },
+ "b2": {
+  "diversity_ratio": 0.6940232266577643,
+  "k16_within_condition_diversity": 0.3585624751262824,
+  "k16_within_diversity_over_real_residual_rms": 0.8169192139343898,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.41473671239540794,
+   "mid": 0.09389535044248055,
+   "fine": 0.05912804544665082
+  },
+  "k16_beat_aligned_diversity": 0.3617063146531384,
+  "k16_r_time_seed_sd_ms": 16.564044177790926,
+  "k16_events_per_window_mean": 4.53234375,
+  "k16_center_minus_anchor_mae": 0.09941494768926766,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.18175729472412297,
+   "mid": 0.05306431827388553,
+   "fine": 0.027855753512992208
+  }
+ },
+ "b3": {
+  "diversity_ratio": 0.7140246015809517,
+  "k16_within_condition_diversity": 0.3462106129025225,
+  "k16_within_diversity_over_real_residual_rms": 0.7887777482807236,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.442746037588506,
+   "mid": 0.0799153938829519,
+   "fine": 0.044449894433838844
+  },
+  "k16_beat_aligned_diversity": 0.3660739934697114,
+  "k16_r_time_seed_sd_ms": 15.875274255340965,
+  "k16_events_per_window_mean": 4.66234375,
+  "k16_center_minus_anchor_mae": 0.1314711433200204,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.24819634546922173,
+   "mid": 0.04835435950846328,
+   "fine": 0.029146966883151555
+  }
+ },
+ "c01": {
+  "diversity_ratio": 0.7313000608686493,
+  "k16_within_condition_diversity": 0.35587101557787554,
+  "k16_within_diversity_over_real_residual_rms": 0.8107872141543058,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.4516905367641006,
+   "mid": 0.08818713280829028,
+   "fine": 0.05484448697248691
+  },
+  "k16_beat_aligned_diversity": 0.3700401502252346,
+  "k16_r_time_seed_sd_ms": 17.56430959619276,
+  "k16_events_per_window_mean": 4.56796875,
+  "k16_center_minus_anchor_mae": 0.1278873199800889,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.2398692163947338,
+   "mid": 0.05578381179157002,
+   "fine": 0.027790678678473135
+  }
+ },
+ "c02": {
+  "diversity_ratio": 0.6844894471211216,
+  "k16_within_condition_diversity": 0.3343235725808446,
+  "k16_within_diversity_over_real_residual_rms": 0.7616952945683784,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.43758204053715516,
+   "mid": 0.07253785990410154,
+   "fine": 0.02833967460280975
+  },
+  "k16_beat_aligned_diversity": 0.34325168922951593,
+  "k16_r_time_seed_sd_ms": 16.98956816497381,
+  "k16_events_per_window_mean": 4.65340625,
+  "k16_center_minus_anchor_mae": 0.11117304691578446,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.20407572500216578,
+   "mid": 0.05703685680575866,
+   "fine": 0.0247472365226609
+  }
+ },
+ "c03": {
+  "diversity_ratio": 0.6703631420755701,
+  "k16_within_condition_diversity": 0.32343171641991075,
+  "k16_within_diversity_over_real_residual_rms": 0.7368801864895342,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.3845766766586858,
+   "mid": 0.08921583636967403,
+   "fine": 0.061728349223754336
+  },
+  "k16_beat_aligned_diversity": 0.33972132529949667,
+  "k16_r_time_seed_sd_ms": 16.668991653309302,
+  "k16_events_per_window_mean": 4.52475,
+  "k16_center_minus_anchor_mae": 0.1199425600616082,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.22300195618615748,
+   "mid": 0.05354523660537974,
+   "fine": 0.02931440837302617
+  }
+ },
+ "c04": {
+  "diversity_ratio": 0.7167432573553925,
+  "k16_within_condition_diversity": 0.3508347603106129,
+  "k16_within_diversity_over_real_residual_rms": 0.799313024913906,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.45305052919482364,
+   "mid": 0.08549686315524556,
+   "fine": 0.04284207868646247
+  },
+  "k16_beat_aligned_diversity": 0.3641928096920019,
+  "k16_r_time_seed_sd_ms": 16.755945773068138,
+  "k16_events_per_window_mean": 4.56178125,
+  "k16_center_minus_anchor_mae": 0.12915261030078715,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.24101172590408856,
+   "mid": 0.054876670331641064,
+   "fine": 0.026724396088553704
+  }
+ },
+ "c05": {
+  "diversity_ratio": 0.7321033654669672,
+  "k16_within_condition_diversity": 0.3570705497095495,
+  "k16_within_diversity_over_real_residual_rms": 0.8135201339323429,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.4616628053794656,
+   "mid": 0.08730474812865958,
+   "fine": 0.04477377143301834
+  },
+  "k16_beat_aligned_diversity": 0.3688006924090209,
+  "k16_r_time_seed_sd_ms": 17.256821990731094,
+  "k16_events_per_window_mean": 4.5843125,
+  "k16_center_minus_anchor_mae": 0.13446078885891155,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.25201974027015606,
+   "mid": 0.055598148687362896,
+   "fine": 0.02747310235312979
+  }
+ },
+ "c06": {
+  "diversity_ratio": 0.7263192206342091,
+  "k16_within_condition_diversity": 0.34748227124997566,
+  "k16_within_diversity_over_real_residual_rms": 0.7916749899322062,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.449006835418615,
+   "mid": 0.08588421508996226,
+   "fine": 0.042826663561693665
+  },
+  "k16_beat_aligned_diversity": 0.3629153356087099,
+  "k16_r_time_seed_sd_ms": 16.668991653309302,
+  "k16_events_per_window_mean": 4.5695,
+  "k16_center_minus_anchor_mae": 0.13901220303499637,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.26159992388145703,
+   "mid": 0.05449530796258398,
+   "fine": 0.026999174630521837
+  }
+ },
+ "c07": {
+  "diversity_ratio": 0.7283371636763575,
+  "k16_within_condition_diversity": 0.34724043377057967,
+  "k16_within_diversity_over_real_residual_rms": 0.7911240073356629,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.44690022216714,
+   "mid": 0.08595782885690413,
+   "fine": 0.04242692704553215
+  },
+  "k16_beat_aligned_diversity": 0.36275630006201043,
+  "k16_r_time_seed_sd_ms": 17.181515161251077,
+  "k16_events_per_window_mean": 4.58821875,
+  "k16_center_minus_anchor_mae": 0.14259704228785683,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.2691491112476896,
+   "mid": 0.05553349445062097,
+   "fine": 0.02722005010479018
+  }
+ },
+ "c08": {
+  "diversity_ratio": 0.7245986909018614,
+  "k16_within_condition_diversity": 0.3504376836778599,
+  "k16_within_diversity_over_real_residual_rms": 0.7984083582150662,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.4522616709474796,
+   "mid": 0.08330265934033852,
+   "fine": 0.04495083850729179
+  },
+  "k16_beat_aligned_diversity": 0.36784185871624364,
+  "k16_r_time_seed_sd_ms": 16.997050908417418,
+  "k16_events_per_window_mean": 4.53684375,
+  "k16_center_minus_anchor_mae": 0.134543476393008,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.25305095005384465,
+   "mid": 0.053936273596407174,
+   "fine": 0.026884359305951597
+  }
+ },
+ "c09": {
+  "diversity_ratio": 0.726788720195512,
+  "k16_within_condition_diversity": 0.3392270424003247,
+  "k16_within_diversity_over_real_residual_rms": 0.7728669563800888,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.43532162414737124,
+   "mid": 0.08742340366615062,
+   "fine": 0.03715291344549494
+  },
+  "k16_beat_aligned_diversity": 0.3527673778022861,
+  "k16_r_time_seed_sd_ms": 17.90068630842125,
+  "k16_events_per_window_mean": 4.58346875,
+  "k16_center_minus_anchor_mae": 0.1510655178836368,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.2834142593878752,
+   "mid": 0.059308790238907776,
+   "fine": 0.028121590879865762
+  }
+ },
+ "c10": {
+  "diversity_ratio": 0.7105112324854254,
+  "k16_within_condition_diversity": 0.3417538697605496,
+  "k16_within_diversity_over_real_residual_rms": 0.7786238717408941,
+  "k16_scale_diversity_sd": {
+   "coarse": 0.44789995156539203,
+   "mid": 0.06320188280191842,
+   "fine": 0.026987848661611955
+  },
+  "k16_beat_aligned_diversity": 0.35145119415829407,
+  "k16_r_time_seed_sd_ms": 17.717084672307525,
+  "k16_events_per_window_mean": 4.71065625,
+  "k16_center_minus_anchor_mae": 0.13208939672208003,
+  "k16_center_minus_anchor_band_mae": {
+   "coarse": 0.24997307142797628,
+   "mid": 0.050356957885039404,
+   "fine": 0.023555967560767607
+  }
+ }
+}

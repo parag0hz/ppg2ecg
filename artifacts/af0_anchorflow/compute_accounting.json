@@ -1,0 +1,196 @@
+{
+ "checkpoints": {
+  "anchor": {
+   "params": 593577,
+   "train_seconds": 130.03073143959045,
+   "peak_gpu_mem_mib": 1416.1748046875
+  },
+  "b1": {
+   "params": 598333,
+   "train_seconds": 131.65020179748535,
+   "peak_gpu_mem_mib": 1130.74658203125
+  },
+  "b2": {
+   "params": 597727,
+   "train_seconds": 148.14387440681458,
+   "peak_gpu_mem_mib": 1718.322265625
+  },
+  "b3": {
+   "params": 593635,
+   "train_seconds": 127.52006769180298,
+   "peak_gpu_mem_mib": 1437.66015625
+  },
+  "c01": {
+   "params": 598483,
+   "train_seconds": 133.69659614562988,
+   "peak_gpu_mem_mib": 1440.22314453125
+  },
+  "c02": {
+   "params": 598483,
+   "train_seconds": 134.74241185188293,
+   "peak_gpu_mem_mib": 1440.22314453125
+  },
+  "c03": {
+   "params": 598483,
+   "train_seconds": 136.13303804397583,
+   "peak_gpu_mem_mib": 1440.22314453125
+  },
+  "c04": {
+   "params": 597583,
+   "train_seconds": 177.3869984149933,
+   "peak_gpu_mem_mib": 1507.4970703125
+  },
+  "c05": {
+   "params": 597445,
+   "train_seconds": 178.05673575401306,
+   "peak_gpu_mem_mib": 1507.4326171875
+  },
+  "c06": {
+   "params": 599605,
+   "train_seconds": 178.6393780708313,
+   "peak_gpu_mem_mib": 1514.34814453125
+  },
+  "c07": {
+   "params": 599467,
+   "train_seconds": 177.84719610214233,
+   "peak_gpu_mem_mib": 1507.1533203125
+  },
+  "c08": {
+   "params": 869794,
+   "train_seconds": 178.09875798225403,
+   "peak_gpu_mem_mib": 1563.24169921875
+  },
+  "c09": {
+   "params": 597445,
+   "train_seconds": 177.4809844493866,
+   "peak_gpu_mem_mib": 1507.43310546875
+  },
+  "c10": {
+   "params": 597445,
+   "train_seconds": 177.79981756210327,
+   "peak_gpu_mem_mib": 1507.4326171875
+  },
+  "detector": {
+   "params": 328897,
+   "train_seconds": 54.66335582733154,
+   "peak_gpu_mem_mib": 753.0791015625
+  }
+ },
+ "batch1_latency_ms_full_pipeline": {
+  "cpu_anchor": 5.272437003441155,
+  "cpu_b1": 31.777877011336386,
+  "cpu_b2": 33.422964974306524,
+  "cpu_b3": 31.92360035609454,
+  "cpu_c05": 36.73466295003891,
+  "cuda_anchor": 1.1226650094613433,
+  "cuda_b1": 13.70452402625233,
+  "cuda_b2": 8.034895989112556,
+  "cuda_b3": 12.926199589855969,
+  "cuda_c05": 18.29092437401414
+ },
+ "flops": {
+  "b1": {
+   "per_vector_field_eval": 155722752,
+   "nfe": 8
+  },
+  "b2": {
+   "per_vector_field_eval": 543339264,
+   "nfe": 8
+  },
+  "b3": {
+   "per_vector_field_eval": 154135552,
+   "nfe": 8
+  },
+  "c05": {
+   "per_vector_field_eval": 158012416,
+   "nfe": 8
+  },
+  "anchor": {
+   "per_pass": 605896704
+  },
+  "detector": {
+   "per_pass": 335675392
+  }
+ },
+ "best_candidate_measured": "c05",
+ "notes": "pipeline = detector + anchor (+ NFE-8 residual flow); FLOPs from torch.utils.flop_counter (one window, CPU)",
+ "training_jobs": [
+  {
+   "name": "detector",
+   "time": "2026-10-02 14:18:50"
+  },
+  {
+   "name": "anchor",
+   "time": "2026-10-02 14:19:52"
+  },
+  {
+   "name": "b1",
+   "time": "2026-10-02 14:22:40"
+  },
+  {
+   "name": "b2",
+   "time": "2026-10-02 14:25:02"
+  },
+  {
+   "name": "b3",
+   "time": "2026-10-02 14:27:41"
+  },
+  {
+   "name": "c01",
+   "time": "2026-10-02 14:30:00"
+  },
+  {
+   "name": "c02",
+   "time": "2026-10-02 14:41:14"
+  },
+  {
+   "name": "c03",
+   "time": "2026-10-02 14:43:40"
+  },
+  {
+   "name": "c04",
+   "time": "2026-10-02 14:59:25"
+  },
+  {
+   "name": "c05",
+   "time": "2026-10-02 15:02:34"
+  },
+  {
+   "name": "c06",
+   "time": "2026-10-02 15:19:03"
+  },
+  {
+   "name": "c07",
+   "time": "2026-10-02 15:22:13"
+  },
+  {
+   "name": "c08",
+   "time": "2026-10-02 15:37:54"
+  },
+  {
+   "name": "c08",
+   "time": "2026-10-02 15:38:58"
+  },
+  {
+   "name": "c09",
+   "time": "2026-10-02 15:42:08"
+  },
+  {
+   "name": "c10",
+   "time": "2026-10-02 15:57:59"
+  }
+ ],
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "0fcb5d10842a227b1f1f7703e9eafd8a41293a60"
+ }
+}

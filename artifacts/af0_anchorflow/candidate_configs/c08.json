@@ -1,0 +1,14 @@
+{
+ "norm": "A0",
+ "anchor": "B1",
+ "coupling": "C1",
+ "width_mult": 1.25,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c08",
+ "parent": "c05",
+ "change": "stage D: width multiplier 1.25 (parameter-matched width 46 -> 58); A0 + B1 + C1 kept (best of stage C)",
+ "hypothesis": "stage C kept C1 (C2 / C0 raised FD to 11.2 / 11.3). A modestly larger residual flow may model the residual conditional distribution more accurately and reduce the conditional-centre drift",
+ "note": "first training attempt (2026-10-02 15:37) stopped by the operator before completion: width round(46 x 1.25) = 58 gave 897,145 parameters, 1.0016 x the 1.5x cap; the width rule was changed to floor (57 -> 869,794 = 1.456x) and the job restarted; both attempts count in training_jobs.json"
+}

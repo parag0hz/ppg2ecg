@@ -1,0 +1,17 @@
+{
+ "winner": null,
+ "verdict": "AF0 DEVELOPMENT FAILED",
+ "candidates_evaluated": [
+  "c01",
+  "c02",
+  "c03",
+  "c04",
+  "c05",
+  "c06",
+  "c07",
+  "c08",
+  "c09",
+  "c10"
+ ],
+ "training_jobs": 16
+}

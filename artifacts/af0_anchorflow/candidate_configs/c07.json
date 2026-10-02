@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B1",
+ "coupling": "C0",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c07",
+ "parent": "c05",
+ "change": "stage C: additive coupling C0 instead of C1; A0 + B1 kept",
+ "hypothesis": "ungated additive projected features (full-width projections) as the alternative fusion form to C1 / C2"
+}

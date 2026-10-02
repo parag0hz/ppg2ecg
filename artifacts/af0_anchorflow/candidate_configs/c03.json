@@ -1,0 +1,13 @@
+{
+ "norm": "A2",
+ "anchor": "B0",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c03",
+ "parent": "c01",
+ "change": "stage A: A2 global TRAIN mean/std normalization (was A0)",
+ "hypothesis": "with one global scale the coarse band (residual var 0.58 vs 0.07 / 0.04) dominates the FM loss, which should fit the coarse residual conditional distribution - where the centre drifts - more accurately"
+}

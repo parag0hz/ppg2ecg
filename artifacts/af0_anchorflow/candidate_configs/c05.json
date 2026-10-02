@@ -1,0 +1,13 @@
+{
+ "norm": "A0",
+ "anchor": "B1",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c05",
+ "parent": "c01",
+ "change": "stage B: anchor injection B1 FiLM only (was B0 concat); A0 kept",
+ "hypothesis": "same hypothesis as c04 with FiLM replacing the concatenated anchor channel"
+}

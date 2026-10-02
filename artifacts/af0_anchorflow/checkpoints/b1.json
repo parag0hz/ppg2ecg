@@ -1,0 +1,17 @@
+{
+ "seed": 42,
+ "train_seconds": 131.65020179748535,
+ "n_params": 598333,
+ "nan_steps": 0,
+ "checkpoint": "last step",
+ "peak_gpu_mem_mib": 1130.74658203125,
+ "gpu": "NVIDIA GeForce RTX 5090",
+ "optimizer": "AdamW",
+ "steps": 20000,
+ "batch": 64,
+ "lr": 0.001,
+ "wd": 0.01,
+ "clip": 1.0,
+ "loss": "flow-matching MSE",
+ "sha256": "0dee2d6819db2d1e71c5f8f3698ead2ed5455cac5302b312e4a17d84d0e2a47b"
+}

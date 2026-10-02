@@ -1,0 +1,13 @@
+{
+ "norm": "A1",
+ "anchor": "B0",
+ "coupling": "C1",
+ "width_mult": 1.0,
+ "nfe": 8,
+ "amp": "F0",
+ "ppg_dropout": 0.0,
+ "id": "c02",
+ "parent": "c01",
+ "change": "stage A: A1 per-band TRAIN median/IQR normalization (was A0)",
+ "hypothesis": "c01 failed D1(vs full SF)/D2/D3/D6 with a large coarse-band conditional-centre drift (|xbar-mu| coarse 0.24) and heavy-tailed mid/fine residuals (IQR << std); robust per-band scaling changes how heavy tails are represented in the flow space"
+}

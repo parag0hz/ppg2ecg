@@ -1,0 +1,107 @@
+{
+ "anchor": {
+  "sha256": "92fe43f5ea645d5e1161c9bdca5e94db08616cef0fc2bd2788cb2d409d0d4515",
+  "params": 593577,
+  "train_seconds": 130.03073143959045,
+  "peak_gpu_mem_mib": 1416.1748046875,
+  "nan_steps": 0
+ },
+ "b1": {
+  "sha256": "0dee2d6819db2d1e71c5f8f3698ead2ed5455cac5302b312e4a17d84d0e2a47b",
+  "params": 598333,
+  "train_seconds": 131.65020179748535,
+  "peak_gpu_mem_mib": 1130.74658203125,
+  "nan_steps": 0
+ },
+ "b2": {
+  "sha256": "d85926aaeeaeee962e31dd3dcc04ceb4a5abe5e39d767eb9fefd1dc2b64f5899",
+  "params": 597727,
+  "train_seconds": 148.14387440681458,
+  "peak_gpu_mem_mib": 1718.322265625,
+  "nan_steps": 0
+ },
+ "b3": {
+  "sha256": "fd4444ea7b045e79ae02ca262f3aa05a0e4a03f01a981bb6781626847c84e009",
+  "params": 593635,
+  "train_seconds": 127.52006769180298,
+  "peak_gpu_mem_mib": 1437.66015625,
+  "nan_steps": 0
+ },
+ "c01": {
+  "sha256": "f6934f02ceb716e0c08936913f97dee0dc22ef960d87eb7ede4c5eba0f504d0e",
+  "params": 598483,
+  "train_seconds": 133.69659614562988,
+  "peak_gpu_mem_mib": 1440.22314453125,
+  "nan_steps": 0
+ },
+ "c02": {
+  "sha256": "832688e994056af21e413c1125964e7c00fd1787b74b800e3afe12f2083c4e43",
+  "params": 598483,
+  "train_seconds": 134.74241185188293,
+  "peak_gpu_mem_mib": 1440.22314453125,
+  "nan_steps": 0
+ },
+ "c03": {
+  "sha256": "83272b961c56bc407cd9bf964f34e960393ec75333e5dbadadab150986d37a70",
+  "params": 598483,
+  "train_seconds": 136.13303804397583,
+  "peak_gpu_mem_mib": 1440.22314453125,
+  "nan_steps": 0
+ },
+ "c04": {
+  "sha256": "c12204d2d004d9a047fa18a319598df7b26bc74351cc14c9e3f9d52b4604820a",
+  "params": 597583,
+  "train_seconds": 177.3869984149933,
+  "peak_gpu_mem_mib": 1507.4970703125,
+  "nan_steps": 0
+ },
+ "c05": {
+  "sha256": "60da5091dae037bfef67c54c4a95f4159266e682996dd74963f94a341b38ac91",
+  "params": 597445,
+  "train_seconds": 178.05673575401306,
+  "peak_gpu_mem_mib": 1507.4326171875,
+  "nan_steps": 0
+ },
+ "c06": {
+  "sha256": "a2d908dd26e3d9a0d37ddcaee9c4e23fdf783de0a9caf2c886d66e50ec786899",
+  "params": 599605,
+  "train_seconds": 178.6393780708313,
+  "peak_gpu_mem_mib": 1514.34814453125,
+  "nan_steps": 0
+ },
+ "c07": {
+  "sha256": "3fdf99a6ea9f6ac991cd9d5c992c798b1b68ea1a08d8e267a517a744200c9bee",
+  "params": 599467,
+  "train_seconds": 177.84719610214233,
+  "peak_gpu_mem_mib": 1507.1533203125,
+  "nan_steps": 0
+ },
+ "c08": {
+  "sha256": "4c1931d7f6daa553971f37c7f578bf967d6d7fe34c002bae44ac368b7b258b15",
+  "params": 869794,
+  "train_seconds": 178.09875798225403,
+  "peak_gpu_mem_mib": 1563.24169921875,
+  "nan_steps": 0
+ },
+ "c09": {
+  "sha256": "2f64d556682458e1349b198819b6ccb7d88b9058ad08fc662eb2d6822b86f9a5",
+  "params": 597445,
+  "train_seconds": 177.4809844493866,
+  "peak_gpu_mem_mib": 1507.43310546875,
+  "nan_steps": 0
+ },
+ "c10": {
+  "sha256": "365987608f7819748f89ad3d5e9d28880a084bd9d0eb20eca0dcd097818b59c9",
+  "params": 597445,
+  "train_seconds": 177.79981756210327,
+  "peak_gpu_mem_mib": 1507.4326171875,
+  "nan_steps": 0
+ },
+ "detector": {
+  "sha256": "ef87d14b601b836c5a08763fb273c1f5a93700ad6bc0d19d0537f48712b54f2e",
+  "params": 328897,
+  "train_seconds": 54.66335582733154,
+  "peak_gpu_mem_mib": 753.0791015625,
+  "nan_steps": 0
+ }
+}

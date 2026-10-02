@@ -1,0 +1,51 @@
+{
+ "specialist_point": 593577,
+ "specialist_gen": 598333,
+ "separate_waveform_params": 1191910,
+ "e1_threshold": 1013123.5,
+ "timing_detector_params_not_counted": 328897,
+ "widths": {
+  "w_point": 71,
+  "w_flow": 30,
+  "point_path": 590503,
+  "flow_path": 599589,
+  "point_path_vs_P": -0.0051787720885411665,
+  "flow_path_vs_G": 0.00209916551485544
+ },
+ "S0": {
+  "shared": 328896,
+  "point_private": 261607,
+  "flow_private": 270693,
+  "total": 861196,
+  "adapters": 8320,
+  "adapter_fraction": 0.009660983097924281,
+  "point_path": 590503,
+  "flow_path": 599589,
+  "saving": 0.2774655804549001,
+  "E1": true
+ },
+ "S1": {
+  "shared": 246720,
+  "point_private": 343783,
+  "flow_private": 352869,
+  "total": 943372,
+  "adapters": 8320,
+  "adapter_fraction": 0.00881942648287208,
+  "point_path": 590503,
+  "flow_path": 599589,
+  "saving": 0.20852077757548804,
+  "E1": true
+ },
+ "S2": {
+  "shared": 192,
+  "point_private": 590311,
+  "flow_private": 599397,
+  "total": 1189900,
+  "adapters": 8320,
+  "adapter_fraction": 0.006992184217161106,
+  "point_path": 590503,
+  "flow_path": 599589,
+  "saving": 0.0016863689372519364,
+  "E1": false
+ }
+}

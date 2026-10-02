@@ -1,0 +1,17 @@
+{
+ "name": "SPECIALIST P (WW-L1)",
+ "class": "coherentbeat.ablation.WWDet(72, 5) = scaleflow.ww_l1()",
+ "params": 593577,
+ "loss": "L1",
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "seed": 42,
+ "training_raster": "reference-R raster (SF0 / AF0 WW-L1 protocol)",
+ "inference_raster": "frozen DP detector events",
+ "checkpoint": "last step"
+}

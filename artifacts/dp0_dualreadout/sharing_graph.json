@@ -1,0 +1,106 @@
+{
+ "encoder": {
+  "input": "[PPG, event raster] (2 channels); never x_t",
+  "stem": "Conv1d(2, 64, 1)",
+  "blocks": [
+   1,
+   2,
+   4,
+   8,
+   16,
+   32,
+   1,
+   2
+  ],
+  "stages": {
+   "E0": "stem 1x1 (2 -> 64)",
+   "E1": "blocks 1-6 (dilations 1..32)",
+   "E2": "blocks 7-8 (dilations 1, 2)"
+  },
+  "multiscale": "H_256 = Haar low1(H_512), H_128 = Haar low1(H_256) (fixed, parameter-free)"
+ },
+ "patterns": {
+  "S0": {
+   "label": "FULL",
+   "shared_stages": [
+    "E0",
+    "E1",
+    "E2"
+   ],
+   "shared_blocks": 8,
+   "private_tower_blocks_per_task": 0,
+   "ownership_prefixes": {
+    "shared": [
+     "stem",
+     "shared_blocks"
+    ],
+    "point": [
+     "point_adapter",
+     "point_tower",
+     "point_dec"
+    ],
+    "flow": [
+     "flow_adapter",
+     "flow_tower",
+     "flow_dec"
+    ]
+   }
+  },
+  "S1": {
+   "label": "MIDDLE",
+   "shared_stages": [
+    "E0",
+    "E1"
+   ],
+   "shared_blocks": 6,
+   "private_tower_blocks_per_task": 2,
+   "ownership_prefixes": {
+    "shared": [
+     "stem",
+     "shared_blocks"
+    ],
+    "point": [
+     "point_adapter",
+     "point_tower",
+     "point_dec"
+    ],
+    "flow": [
+     "flow_adapter",
+     "flow_tower",
+     "flow_dec"
+    ]
+   }
+  },
+  "S2": {
+   "label": "STEM-ONLY",
+   "shared_stages": [
+    "E0"
+   ],
+   "shared_blocks": 0,
+   "private_tower_blocks_per_task": 8,
+   "ownership_prefixes": {
+    "shared": [
+     "stem",
+     "shared_blocks"
+    ],
+    "point": [
+     "point_adapter",
+     "point_tower",
+     "point_dec"
+    ],
+    "flow": [
+     "flow_adapter",
+     "flow_tower",
+     "flow_dec"
+    ]
+   }
+  }
+ },
+ "readouts": {
+  "point": "point adapter -> point tower -> PointDecoder(w_p) on H_512 -> mu",
+  "flow": "flow adapter -> flow tower -> (H_256, H_128) -> FlowDecoder(w_f)(x_t, t, H) -> velocity; Euler NFE 8 from noise",
+  "never_added": true,
+  "no_anchor_residual_path": true
+ },
+ "path_rule": "every readout path has the same architecture in S0 / S1 / S2; private towers are fresh copies of the blocks they replace"
+}

@@ -1,0 +1,40 @@
+{
+ "specialists": {
+  "protocol": {
+   "steps": 20000,
+   "batch": 64,
+   "lr": 0.001,
+   "wd": 0.01,
+   "clip": 1.0
+  },
+  "seed": 42,
+  "batches": "C0 _epoch_batches(n, 64, Generator(42))",
+  "fm_noise": "Generator(cuda).manual_seed(42)"
+ },
+ "dual": {
+  "cycles": 20000,
+  "point_updates": 20000,
+  "flow_updates": 20000,
+  "order": "cycle c = 1..20000: odd POINT -> FLOW, even FLOW -> POINT",
+  "optimizer": "ONE AdamW(all parameters, lr 1e-3, weight decay 0.01), constant LR; per substep zero_grad(set_to_none) -> task loss backward -> the other task's private parameters have grad None (checked) and are skipped by AdamW -> clip_grad_norm 1.0 over shared + this task's private parameters -> step",
+  "point_stream": "batches identical to SPECIALIST P's (Generator(42))",
+  "flow_stream": "batches and FM noise / t identical to SPECIALIST G's",
+  "point_loss": "L1(mu, ECG)",
+  "flow_loss": "MSE(v, x1 - x0) (scaleflow draw order: x0 then t)",
+  "seed": 42,
+  "training_raster": "reference-R raster",
+  "checkpoints": {
+   "init": 0,
+   "25pct": 5000,
+   "final": 20000
+  },
+  "early_stopping": null,
+  "excluded": [
+   "loss weighting",
+   "GradNorm",
+   "PCGrad",
+   "gradient surgery",
+   "adaptive task weighting"
+  ]
+ }
+}

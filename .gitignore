@@ -546,3 +546,8 @@ artifacts/sf0_scaleflow/**/*.pt
 !artifacts/af0_anchorflow/**
 artifacts/af0_anchorflow/**/*.npz
 artifacts/af0_anchorflow/**/*.pt
+# DP0 — DualReadout-ECG (small artifacts only; checkpoints and generated outputs live in outputs/)
+!artifacts/dp0_dualreadout/
+!artifacts/dp0_dualreadout/**
+artifacts/dp0_dualreadout/**/*.npz
+artifacts/dp0_dualreadout/**/*.pt

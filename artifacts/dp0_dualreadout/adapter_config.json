@@ -1,0 +1,18 @@
+{
+ "design": "Conv1d(64, 64, 1) + GELU (same input / output channels), no attention",
+ "placement": "one point adapter and one flow adapter at the output of the last shared stage",
+ "params_each": 4160,
+ "S0": {
+  "adapters": 8320,
+  "fraction_of_total": 0.009660983097924281
+ },
+ "S1": {
+  "adapters": 8320,
+  "fraction_of_total": 0.00881942648287208
+ },
+ "S2": {
+  "adapters": 8320,
+  "fraction_of_total": 0.006992184217161106
+ },
+ "limit": "< 5 % of total waveform-model parameters"
+}

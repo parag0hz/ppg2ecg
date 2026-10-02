@@ -1,0 +1,37 @@
+{
+ "prereg": {
+  "docs/DP0_DUALREADOUT_PREREGISTRATION.md": "cf0878c8f4018aa8259e3a124a942939bf231a10b14531ec18da07ce6ce27ab9"
+ },
+ "code": {
+  "scripts/dp0_dualreadout.py": "a9ff630187b5d5811dc25ec1b07ca00e2e6a5f49ac720b0c6ec204d4fc81bafb",
+  "src/ppg2ecg/dualreadout/__init__.py": "f1e1d96ef77d976ec0f3ee9d912ad2190f3d0f8d8859a3ce9b739cef131f31ac",
+  "src/ppg2ecg/dualreadout/model.py": "6efa4a89cb8eaa08e0c06a996bea327cc11b8e3e069a99edec81f467ac20f6c0",
+  "tests/test_dp0_dualreadout.py": "9a99e027af646b9386d918d8663e2894a114cdd537587340cac6b833a5417cfd"
+ },
+ "design": {
+  "split_manifest.json": "c62ef3d14125242e2f89807aabc080b9bb5cf31285367c02ab452b64b06d8751",
+  "split_hashes.json": "f8837bbd7a174afb291bf1fc46aae47794bac3ab900bd3adfc14bacdbead6189",
+  "detector_config.json": "011b7897eb13f05eed50a0dd9e6b7c7b57744c83cfef0b996ab1188ddc5cf131",
+  "specialist_point_config.json": "216dd7afb464b3c47eb24703bdfa7dacf8d1e217c55c3fa017bc52d50bf4206b",
+  "specialist_gen_config.json": "6871ea0b1db456fb309dd1320c29ca4da3059978ea9f83ad01d31191c2651f92",
+  "sharing_graph.json": "12140fc4066189b4e535e8298c1684d66efa884563bcb241e4afdc90b34e9981",
+  "adapter_config.json": "893dbc02c6f845237e25eef91750fa50be1dc582675db74f510b80ec9b8173dd",
+  "training_manifest.json": "16c908e032393ef2baf74a094de0bf6337beef9d06b89005f57a24d4c8bdf0a9",
+  "parameter_accounting.json": "2b7df682b16134f898bb2df70dbf7324fb6fa6508386bee76ec62eb06d9f5542",
+  "audit.md": "6eb2a8dbb53308cf7cfbef9e66ddda9e5d04a2ba18f96fea6d3d45b2c52961dc"
+ },
+ "written_before_any_dp_dev_outcome": true,
+ "software": {
+  "python": "3.13.9",
+  "torch": "2.11.0+cu130",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "neurokit2": "0.2.12",
+  "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+  "cpu": "Intel(R) Core(TM) i5-14600K",
+  "n_cpu": 20,
+  "cuda_device": "NVIDIA GeForce RTX 5090",
+  "cuda": "13.0",
+  "git_head": "2a71bb3154b43920df770b9b6bf0bf06f7617d99"
+ }
+}

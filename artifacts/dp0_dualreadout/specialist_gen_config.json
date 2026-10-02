@@ -1,0 +1,20 @@
+{
+ "name": "SPECIALIST G (SCALEFLOW-COUPLED)",
+ "class": "scaleflow.ScaleFM(50, coupled=True)",
+ "params": 598333,
+ "objective": "linear-path flow matching, x_t = (1 - t) x0 + t x1, u = x1 - x0, MSE",
+ "protocol": {
+  "steps": 20000,
+  "batch": 64,
+  "lr": 0.001,
+  "wd": 0.01,
+  "clip": 1.0
+ },
+ "seed": 42,
+ "training_raster": "reference-R raster (SF0 protocol)",
+ "inference": {
+  "solver": "Euler",
+  "nfe": 8,
+  "noise": "scaleflow.window_noise (sha256 'patient:window:20261002')"
+ }
+}
